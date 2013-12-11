@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+ <struts>
+ 	<package name="struts2" extends="struts-default">
+ 	
+ 		<action name="login" class="com.nari.sun.struts2.LoginAction">
+ 			<result>/result.jsp</result>
+ 		</action>
+ 		<action name="upload" class="com.nari.sun.action.svgShowAction">
+ 			<result>/result.jsp</result>
+ 			
+ 		</action>
+ 		
+ 	</package>
+ </struts>
+  
