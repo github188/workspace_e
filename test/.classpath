@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Batik"/>
+	<classpathentry kind="lib" path="batik-rasterizer.jar"/>
+	<classpathentry kind="lib" path="batik-slideshow.jar"/>
+	<classpathentry kind="lib" path="batik-squiggle.jar"/>
+	<classpathentry kind="lib" path="batik-svgpp.jar"/>
+	<classpathentry kind="lib" path="batik-ttf2svg.jar"/>
+	<classpathentry kind="lib" path="batik.jar"/>
+	<classpathentry kind="lib" path="mysql-connector-java-5.1.12-bin.jar"/>
+	<classpathentry kind="lib" path="batik-1.7.zip"/>
+	<classpathentry kind="lib" path="batik-src-1.7.zip"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

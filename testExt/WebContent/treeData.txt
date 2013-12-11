@@ -1,0 +1,15 @@
+[{text : '西宁供电', children:[
+			{text : '西宁变电所 ' children:[
+				{text : '拉宁线', leaf : true},
+				{text : '宁武线', leaf : true},
+				{text : '拉宁1线', leaf : true},
+				{text : '宁武1线', leaf : true},
+				{text : '拉宁2线', leaf : true},
+				{text : '宁武2线', leaf : true},
+				{text : '拉宁3线', leaf : true},
+				{text : '宁武3线', leaf : true},
+				{text : '拉宁4线', leaf : true},
+				{text : '宁武4线', leaf : true}
+			]}	
+		]}
+]
