@@ -1,0 +1,81 @@
+package com.nari.quartz;
+
+import org.apache.log4j.Logger;
+
+import com.nari.service.SynDataForMarketingManager;
+
+public class QuartzJob {
+	
+	private SynDataForMarketingManager synDataForMarketingManager;
+	
+    public void setSynDataForMarketingManager(SynDataForMarketingManager synDataForMarketingManager) {
+		this.synDataForMarketingManager = synDataForMarketingManager;
+	}
+    
+    private static Logger logger = Logger.getLogger(QuartzJob.class); 
+    
+	public void working(){
+		logger.info("Quartz的任务调度开始！！！");
+    	//档案同步
+    	/*flag=synDataForMarketingManager.synData("p_code_sort");
+    	if(flag){
+    		logger.info(date+"p_code_sort档案同步成功完成!");
+    	}else{
+    		logger.info(date+"p_code_sort档案同步出现错误!");
+    	}
+    	
+    	flag=synDataForMarketingManager.synData("p_code");
+    	if(flag){
+    		logger.info(date+"p_code档案同步成功完成!");
+    	}else{
+    		logger.info(date+"p_code档案同步出现错误!");
+    	}
+    	
+    	flag=synDataForMarketingManager.synData("o_org");
+    	if(flag){
+    		logger.info(date+"o_org档案同步成功完成!");
+    	}else{
+    		logger.info(date+"o_org档案同步出现错误!");
+    	}
+    	
+    	flag=synDataForMarketingManager.synData("o_dept");
+    	if(flag){
+    		logger.info(date+"o_dept档案同步成功完成!");
+    	}else{
+    		logger.info(date+"o_dept档案同步出现错误!");
+    	}
+    	
+    	flag=synDataForMarketingManager.synData("g_subs");
+    	if(flag){
+    		logger.info(date+"g_subs档案同步成功完成!");
+    	}else{
+    		logger.info(date+"g_subs档案同步出现错误!");
+    	}
+    	
+    	flag=synDataForMarketingManager.synData("g_subs_line_rela");
+    	if(flag){
+    		logger.info(date+"g_subs_line_rela档案同步成功完成!");
+    	}else{
+    		logger.info(date+"g_subs_line_rela档案同步出现错误!");
+    	}
+    	
+    	flag=synDataForMarketingManager.synData("g_line_rela");
+    	if(flag){
+    		logger.info(date+"g_line_rela档案同步成功完成!");
+    	}else{
+    		logger.info(date+"g_line_rela档案同步出现错误!");
+    	}*/
+    	
+    	/**
+    	flag=synDataForMarketingManager.synData("c_run_other_dev");
+    	if(flag){
+    		logger.info(date+"c_run_other_dev档案同步成功完成!");
+    	}else{
+    		logger.info(date+"c_run_other_dev档案同步出现错误!");
+    	}*/
+    	
+    	//自动化抄表数据同步
+//    	flag=synDataForMarketingManager.synDataCollect(date);
+    	logger.info("Quartz的任务调度结束！！！");
+    }
+}

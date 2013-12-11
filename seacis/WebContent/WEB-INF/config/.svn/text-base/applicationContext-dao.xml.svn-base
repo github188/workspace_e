@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans-2.0.xsd" 
+						default-autowire="byName">
+	<!--定义数据源：本地开发测试请注释掉jndi-->
+	<!--使用c3p0 jdbc 数据源-->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:database.properties</value>
+                <value>classpath:configuration.properties</value>
+            </list>
+        </property>
+    </bean>
+    
+	<!--采集数据库-->
+	<!--
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${dataSource.connection.driver_class}"></property>
+		<property name="url" value="${dataSource.connection.url}"></property>
+		<property name="username" value="${dataSource.connection.username}"></property>
+		<property name="password" value="${dataSource.connection.password}"></property>
+	</bean>
+	-->
+	<!--中间数据库-->
+	<!--
+	<bean id="dataYXSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${dataSource.connection.driver_class.mid}"></property>
+		<property name="url" value="${dataSource.connection.url.mid}"></property>
+		<property name="username" value="${dataSource.connection.username.mid}"></property>
+		<property name="password" value="${dataSource.connection.password.mid}"></property>
+	</bean>
+	-->
+	<!--生产库JNDI-->
+	
+	<bean id="dataSource"
+		class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>${jndiName}</value>
+		</property>
+		<property name="resourceRef">
+			<value>false</value>
+		</property>
+		<property name="jndiEnvironment">
+			<props>
+				<prop key="java.naming.provider.url">
+					${java.naming.provider.url}这里需要配置指向的机器与端口
+				</prop>
+				<prop key="java.naming.factory.initial">
+					weblogic.jndi.WLInitialContextFactory
+				</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!--中间库JNDI-->
+	
+	<bean id="dataYXSource"
+		class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>${jndiName.mid}</value>
+		</property>
+		<property name="resourceRef">
+			<value>false</value>
+		</property>
+		<property name="jndiEnvironment">
+			<props>
+				<prop key="java.naming.provider.url">
+					${java.naming.provider.url.mid}这里需要配置指向的机器与端口
+				</prop>
+				<prop key="java.naming.factory.initial">
+					weblogic.jndi.WLInitialContextFactory
+				</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!--设定 transactionManager-->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
+		<property name="dataSource">
+			<ref local="dataSource"/>
+		</property>
+	</bean> 
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref local="dataSource"/>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>com/nari/model/BClearProtocol.hbm.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<!--<prop key="hibernate.dialect">net.sf.hibernate.dialect.MySQLDialect</prop>-->
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle9Dialect</prop>
+				<!--<prop key="hibernate.connection.pool.size">8</prop>-->
+				<!--<prop key="hibernate.statement_cache.size">32</prop>-->
+				<prop key="hibernate.c3p0.min_size">5</prop>
+				<prop key="hibernate.c3p0.max_size">20</prop>
+				<prop key="hibernate.c3p0.timeout">1800</prop>
+				<prop key="hibernate.c3p0.max_statements">50</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.jdbc.fetch_size">32</prop>
+				<prop key="hibernate.jdbc.batch_size">16</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="hibernateDAO" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory">
+			<ref local="sessionFactory"/>
+		</property>
+	</bean>
+	<bean id="jdbcDAO" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource">
+			<ref local="dataSource"/>
+		</property>
+	</bean>
+	<bean id="jdbcYXDAO" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource">
+			<ref local="dataYXSource"/>
+		</property>
+	</bean>
+	
+	<!--档案同步处理DAO-->
+	<bean id="synDataForMarketingDao" class="${classNameForSynData}">
+		<property name="hibernateDAO">
+			<ref bean="hibernateDAO"/>
+		</property>
+		<property name="jdbcDAO">
+			<ref bean="jdbcDAO"/>
+		</property>
+		<property name="jdbcYXDAO">
+			<ref bean="jdbcYXDAO"/>
+		</property>
+		<property name="transactionManager">
+			<ref local="transactionManager"/>
+		</property>
+	</bean>
+	
+	<!--WebService处理DAO-->
+	<bean id="wsForMarketingDao" class="${classNameForWS}">
+		<property name="hibernateDAO">
+			<ref bean="hibernateDAO"/>
+		</property>
+		<property name="jdbcDAO">
+			<ref bean="jdbcDAO"/>
+		</property>
+		<property name="jdbcYXDAO">
+			<ref bean="jdbcYXDAO"/>
+		</property>
+		<property name="transactionManager">
+			<ref local="transactionManager"/>
+		</property>
+	</bean>
+	
+	<!--终端运行管理-采集-DAO-->
+	<bean id="marketTerminalConfigDAOJdbc" class="${classNameForTerminal}">
+		<property name="hibernateDAO">
+			<ref bean="hibernateDAO"/>
+		</property>
+		<property name="jdbcDAO">
+			<ref bean="jdbcDAO"/>
+		</property>
+		<property name="jdbcYXDAO">
+			<ref bean="jdbcYXDAO"/>
+		</property>
+		<property name="transactionManager">
+			<ref local="transactionManager"/>
+		</property>
+	</bean>
+	
+	<!--终端运行管理-中间库-DAO-->
+	<bean id="publicDbDAO" class="${classNameForMid}">
+		<property name="hibernateDAO">
+			<ref bean="hibernateDAO"/>
+		</property>
+		<property name="jdbcDAO">
+			<ref bean="jdbcDAO"/>
+		</property>
+		<property name="jdbcYXDAO">
+			<ref bean="jdbcYXDAO"/>
+		</property>
+		<property name="transactionManager">
+			<ref local="transactionManager"/>
+		</property>
+	</bean>
+</beans>

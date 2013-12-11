@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+	<form-beans>	
+		<form-bean name="testForm" type="com.nari.form.TestForm"/>
+	</form-beans>
+	<global-forwards></global-forwards> 
+	<action-mappings>
+		<action path="/test" 
+				parameter="method" 
+				type="com.nari.action.test.TestAction">	
+				<forward name="test"   
+						 path="/WEB-INF/pages/Test.jsp"/>	 	 	 	 
+		</action>
+		<action path="/FK" 
+				parameter="method" 
+				type="com.nari.action.test.TestAction">	
+				<forward name="test"   
+						 path="/WEB-INF/pages/Test.jsp"/>	 	 	 	 
+		</action>
+		<action path="/JC" 
+				parameter="method" 
+				type="com.nari.action.test.TestAction">	
+				<forward name="test"   
+						 path="/WEB-INF/pages/Test.jsp"/>	 	 	 	 
+		</action>
+		<action path="/backfeed" 
+				parameter="method" 
+				type="com.nari.action.test.TestAction">	
+				<forward name="test"   
+						 path="/WEB-INF/pages/Test.jsp"/>	 	 	 	 
+		</action>
+		<action path="/coherenceStatement" 
+				parameter="method" 
+				type="com.nari.action.test.TestAction">	
+				<forward name="test"   
+						 path="/WEB-INF/pages/Test.jsp"/>	 	 	 	 
+		</action>
+		<action path="/isOnline" 
+				parameter="method" 
+				type="com.nari.action.test.TestAction">	
+				<forward name="test"   
+						 path="/WEB-INF/pages/index.jsp"/>	 	 	 	 
+		</action>
+	</action-mappings>
+	<controller processorClass="org.springframework.web.struts.AutowiringRequestProcessor"/>
+	<message-resources parameter="com.nari.struts.ApplicationResources"/>
+	<plug-in className="com.nari.util.SpringStrutsPlugin"/>
+</struts-config>

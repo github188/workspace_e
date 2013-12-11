@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4" 
+	     xmlns="http://java.sun.com/xml/ns/j2ee" 
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	     xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+						     http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	
+	<display-name>IEIGInterface</display-name>
+	<context-param>
+		<param-name>corePoolSize</param-name>
+		<param-value>100</param-value>
+	</context-param>
+	<context-param>
+		<param-name>maximumPoolSize</param-name>
+		<param-value>100</param-value>
+	</context-param>
+	<context-param>
+		<param-name>keepAliveTime</param-name>
+		<param-value>99999</param-value>
+	</context-param>
+	<!-- Spring配置 -->   
+  	<context-param> 
+	<param-name>contextConfigLocation</param-name> 
+     	<param-value>
+     		classpath:org/codehaus/xfire/spring/xfire.xml,
+     		/WEB-INF/config/applicationContext.xml,
+     		/WEB-INF/config/applicationContext-*.xml
+     	</param-value> 
+	</context-param> 
+   	<!--<listener><listener-class>org.springframework.web.context.ContextLoaderListener</listener-class></listener>-->  
+  	<!--负责加载ESPER框架-->
+  	<listener>
+		<listener-class>
+			com.nari.listener.StartupListener
+		</listener-class>
+	</listener>        
+	<!--struts 配置文件 -->
+    <servlet>
+		<servlet-name>action</servlet-name>
+		<servlet-class>org.apache.struts.action.ActionServlet
+		</servlet-class>
+		<init-param>
+			<param-name>config</param-name>
+			<param-value>
+				/WEB-INF/struts-config.xml
+			</param-value>
+		</init-param>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>2</param-value>
+		</init-param>
+		<init-param>
+			<param-name>pageSize</param-name>
+			<param-value>10</param-value>
+		</init-param>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>    
+    <!-- XFire 配置 -->     
+    <servlet>     
+        <servlet-name>xfireServlet</servlet-name>     
+        <servlet-class>org.codehaus.xfire.spring.XFireSpringServlet</servlet-class>     
+  	</servlet>    
+  	<servlet-mapping>     
+        <servlet-name>xfireServlet</servlet-name>     
+        <url-pattern>/service/*</url-pattern>     
+  	</servlet-mapping>    
+  	<welcome-file-list>
+    	<welcome-file>index.jsp</welcome-file>
+  	</welcome-file-list>
+  	<!-- coherence 配置 -->  
+  	<servlet>
+	    <servlet-name>InitListener</servlet-name>
+	    <servlet-class>com.nari.coherence.TaskServlet</servlet-class>
+	    <load-on-startup>1</load-on-startup>
+	 </servlet>
+</web-app>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="XFire-WsGen" basedir="." default="wsgen">
+	<path id="classpathId">
+		<fileset file="./WebContent/WEB-INF/lib/*.jar">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+	<target name="clean" description="Prepare for clean build">
+		<delete dir="${basedir}/test/client" />
+		<mkdir dir="${basedir}/test/client" />
+	</target>
+	<taskdef classpathref="classpathId" name="wsgen" classname="org.codehaus.xfire.gen.WsGenTask">
+	</taskdef>
+	<target name="wsgen" depends="clean">
+		<taskdef name='WsGenTask' classname="org.codehaus.xfire.gen.WsGenTask" classpathref="classpathId" />
+		<!--定义web service发布的配置-->
+		<WsGenTask outputDirectory="${basedir}/test/client" wsdl="http://localhost:8888/IEIGInterface/service/IEIGWSForMarketing?wsdl" package="client" overwrite="true"/>
+	</target>
+</project>

@@ -1,0 +1,31 @@
+package com.nari.test.webserviceclient;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import org.codehaus.xfire.client.Client;
+
+public class TestSayHelloXfire {
+
+	public static void main(String[] args) throws MalformedURLException, Exception {
+		test();
+	}
+	public static void test() throws MalformedURLException, Exception{
+		
+		/*String[] paths = { "D:/workspace/IEIGInterface/WebRoot/WEB-INF/config/applicationContext-*.xml" };
+		ApplicationContext ctx = new FileSystemXmlApplicationContext(paths);		
+        ctx = new FileSystemXmlApplicationContext(paths);
+		ApplicationContext ctx = new ClassPathXmlApplicationContext(paths); 
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("xFireSpring.xml"); 
+		System.out.println("第一种调用XFireWS的方法");*/
+		
+		/*SayHello hs = (SayHello)ctx.getBean("testWebService"); 
+	    System.out.println("调用接口服务" + hs.sayHello("hello, webservice")); 
+	    System.out.println("第二种调用XFireWS的方法");*/
+		
+	    Client client = new Client(new URL("http://localhost:8888/IEIGInterface/service/SayHello?wsdl"));
+	    client.addOutHandler(new ClientAuthenticationHandler("abc","123"));
+		Object[] results = client.invoke("sayHello", new Object[] {"hello, webservice"});
+		System.out.println(results[0]);
+		System.out.println("第三种调用XFireWS的方法");
+	}
+}

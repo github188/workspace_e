@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>    
+	<!-- 要调用的工作类 -->
+	<bean id="quartzJob" class="com.nari.quartz.QuartzJob">
+		<property name="synDataForMarketingManager">
+			<ref bean="synDataForMarketingManager"/>
+		</property>
+	</bean>
+	<bean id="synDataForMarketingManager" class="com.nari.serviceimpl.synDataForMarketingManagerImpl"></bean>
+	
+	<!-- 定义调用对象和调用对象的方法 -->
+	<bean id="jobtask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="quartzJob"/>
+		</property>
+		<property name="targetMethod">
+			<value>working</value>
+		</property>
+	</bean>
+	<!-- 定义触发时间 -->
+	<bean id="doTime" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="jobtask"/>
+		</property>
+		<property name="cronExpression">
+			<value>0 20 06 ? * *</value>
+		</property>
+	</bean>
+	<!-- 总管理类若lazy-init=false,则容器启动执行定时任务 -->
+	<bean id="startQuartz" lazy-init="false" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="doTime"/>
+			</list>
+		</property>
+	</bean>   
+</beans>

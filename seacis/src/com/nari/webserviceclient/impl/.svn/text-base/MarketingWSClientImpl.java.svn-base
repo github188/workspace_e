@@ -1,0 +1,211 @@
+package com.nari.webserviceclient.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.log4j.Logger;
+import com.nari.util.XMLSwitchUtil;
+import com.nari.webserviceclient.MarketingWSClient;
+import com.nari.webserviceconfig.WSInvokeClient;
+
+@SuppressWarnings("unchecked")
+public class MarketingWSClientImpl implements MarketingWSClient{
+
+	private static Logger logger = Logger.getLogger(MarketingWSClientImpl.class); 
+
+	public List qryDataPcodeSort(String xml){
+		logger.debug("qryDataPcodeSort xml:" + xml) ;
+		List ls=new ArrayList<Object>();
+		String classPath = "epm/epc/inf/service/ArchiveDataService";
+		String methodName = "WS_P_CODE_SORT";
+		XMLSwitchUtil xmlSwitchUtil=new XMLSwitchUtil();
+		try{
+			WSInvokeClient wSInvokeClient = new WSInvokeClient();
+			String resultResponse = wSInvokeClient.invoke(classPath, methodName, xml);
+			logger.debug("qryDataPcodeSort,返回xml:" + resultResponse);
+			ls=xmlSwitchUtil.switchXMLToList(resultResponse);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return ls;
+	}
+	
+	public List qryDataPcode(String xml){
+		logger.debug("qryDataPcode xml:" + xml) ;
+		List ls=new ArrayList<Object>();
+		String classPath = "epm/epc/inf/service/ArchiveDataService";
+		String methodName = "WS_RT_P_CODE";
+		XMLSwitchUtil xmlSwitchUtil=new XMLSwitchUtil();
+		try{
+			WSInvokeClient wSInvokeClient = new WSInvokeClient();
+			String resultResponse = wSInvokeClient.invoke(classPath, methodName, xml);
+			logger.debug("qryDataPcode,返回xml:" + resultResponse);
+			ls=xmlSwitchUtil.switchXMLToList(resultResponse);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return ls;
+	}
+	
+	public List qryDataCust(String xml){
+		logger.debug("qryDataCust xml:" + xml) ;
+		List ls=new ArrayList<Object>();
+		String classPath = "epm/epc/inf/service/ArchiveDataService";
+		String methodName = "WS_C_CUST";
+		XMLSwitchUtil xmlSwitchUtil=new XMLSwitchUtil();
+		try{
+			WSInvokeClient wSInvokeClient = new WSInvokeClient();
+			String resultResponse = wSInvokeClient.invoke(classPath, methodName, xml);
+			logger.debug("qryDataCust,返回xml:" + resultResponse);
+			ls=xmlSwitchUtil.switchXMLToList(resultResponse);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return ls;
+	}
+	
+	public List qryDataCons(String xml){
+		logger.debug("qryDataCons xml:" + xml) ;
+		List ls=new ArrayList<Object>();
+		String classPath = "epm/epc/inf/service/ArchiveDataService";
+		String methodName = "WS_RT_C_CONS";
+		XMLSwitchUtil xmlSwitchUtil=new XMLSwitchUtil();
+		try{
+			WSInvokeClient wSInvokeClient = new WSInvokeClient();
+			String resultResponse = wSInvokeClient.invoke(classPath, methodName, xml);
+			logger.debug("qryDataCons,返回xml:" + resultResponse);
+			ls=xmlSwitchUtil.switchXMLToList(resultResponse);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return ls;
+	}
+
+	public List qryDataContact(String xml){
+		logger.debug("qryDataContact xml:" + xml) ;
+		List ls=new ArrayList<Object>();
+		String classPath = "epm/epc/inf/service/ArchiveDataService";
+		String methodName = "WS_RT_C_CONTACT";
+		XMLSwitchUtil xmlSwitchUtil=new XMLSwitchUtil();
+		try{
+			WSInvokeClient wSInvokeClient = new WSInvokeClient();
+			String resultResponse = wSInvokeClient.invoke(classPath, methodName, xml);
+			logger.debug("qryDataContact,返回xml:" + resultResponse);
+			ls=xmlSwitchUtil.switchXMLToList(resultResponse);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return ls;
+	}
+	
+	public int backFeedTmnlDebugInfo(String xmlString) {
+		logger.debug("backFeedTmnlDebugInfo xml:" + xmlString) ;
+		int result=0;
+		String classPath = "epm/epc/inf/service/ArchiveDataService";
+		String methodName = "WS_TMNL_DEBUG_INFO";
+		try{
+			WSInvokeClient wSInvokeClient = new WSInvokeClient();
+			String resultResponse = wSInvokeClient.invoke(classPath, methodName, xmlString);
+			logger.debug("backFeedTmnlDebugInfo,返回xml:" + resultResponse);
+			result = 1;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public int crcyForResult(String xml) {
+		logger.debug("crcyForResult xml:" + xml) ;
+		int result=0;
+		String classPath = "epm/epc/inf/service/ArchiveDataService";
+		String methodName = "WS_R_CR_CTRL_EXEC";
+		try{
+			WSInvokeClient wSInvokeClient = new WSInvokeClient();
+			String resultResponse = wSInvokeClient.invoke(classPath, methodName, xml);
+			logger.debug("crcyForResult,返回xml:" + resultResponse);
+			result = 1;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public int prepayForResult(String xml) {
+		logger.debug("prepayForResult xml:" + xml) ;
+		int result=0;
+		String classPath = "epm/epc/inf/service/ArchiveDataService";
+		String methodName = "WS_R_PREPAY_CTRL_EXEC";
+		try{
+			WSInvokeClient wSInvokeClient = new WSInvokeClient();
+			String resultResponse = wSInvokeClient.invoke(classPath, methodName, xml);
+			logger.debug("prepayForResult,返回xml:" + resultResponse);
+			result = 1;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public int stopCtrlForResult(String xml) {
+		logger.debug("stopCtrlForResult xml:" + xml) ;
+		int result=0;
+		String classPath = "epm/epc/inf/service/ArchiveDataService";
+		String methodName = "WS_R_BUSI_STOP_CTRL_EXEC";
+		try{
+			WSInvokeClient wSInvokeClient = new WSInvokeClient();
+			String resultResponse = wSInvokeClient.invoke(classPath, methodName, xml);
+			logger.debug("stopCtrlForResult,返回xml:" + resultResponse);
+			result = 1;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public int cpCtrlPara(String xml) {
+		logger.debug("cpCtrlPara xml:" + xml) ;
+		int result=0;
+		String classPath = "epm/epc/inf/service/ArchiveDataService";
+		String methodName = "WS_ CP_CTRL_PARA";
+		try{
+			WSInvokeClient wSInvokeClient = new WSInvokeClient();
+			String resultResponse = wSInvokeClient.invoke(classPath, methodName, xml);
+			logger.debug("cpCtrlPara,返回xml:" + resultResponse);
+			result = 1;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public int rExcpAlarm(String xml) {
+		logger.debug("rExcpAlarm xml:" + xml) ;
+		int result=0;
+		String classPath = "epm/epc/inf/service/ArchiveDataService";
+		String methodName = "WS_R_EXCP_ALARM";
+		try{
+			WSInvokeClient wSInvokeClient = new WSInvokeClient();
+			String resultResponse = wSInvokeClient.invoke(classPath, methodName, xml);
+			logger.debug("rExcpAlarm,返回xml:" + resultResponse);
+			result = 1;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public int rTaskExec(String xml) {
+		logger.debug("rTaskExec xml:" + xml) ;
+		int result=0;
+		String classPath = "epm/epc/inf/service/ArchiveDataService";
+		String methodName = "WS_R_TASK_EXEC";
+		try{
+			WSInvokeClient wSInvokeClient = new WSInvokeClient();
+			String resultResponse = wSInvokeClient.invoke(classPath, methodName, xml);
+			logger.debug("rTaskExec,返回xml:" + resultResponse);
+			result = 1;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
+	}
+}

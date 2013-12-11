@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/app/!svn/ver/4038/trunk/IEIGInterface/WebContent/WEB-INF/config
+END
+applicationContext-service.xml
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/app/!svn/ver/5991/trunk/IEIGInterface/WebContent/WEB-INF/config/applicationContext-service.xml
+END
+applicationContext-quartz.xml
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/app/!svn/ver/4656/trunk/IEIGInterface/WebContent/WEB-INF/config/applicationContext-quartz.xml
+END
+xFireSpring.xml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/2431/trunk/IEIGInterface/WebContent/WEB-INF/config/xFireSpring.xml
+END
+applicationContext.xml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/3718/trunk/IEIGInterface/WebContent/WEB-INF/config/applicationContext.xml
+END
+applicationContext-dao.xml
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/app/!svn/ver/4663/trunk/IEIGInterface/WebContent/WEB-INF/config/applicationContext-dao.xml
+END

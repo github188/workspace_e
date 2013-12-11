@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/app/!svn/ver/4361/trunk/IEIGInterface/src/com/nari/coherence
+END
+TaskServlet.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/5683/trunk/IEIGInterface/src/com/nari/coherence/TaskServlet.java
+END
+FrontScheme.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/5683/trunk/IEIGInterface/src/com/nari/coherence/FrontScheme.java
+END
+IFuture.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/app/!svn/ver/5683/trunk/IEIGInterface/src/com/nari/coherence/IFuture.java
+END
+FrontListern.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/5683/trunk/IEIGInterface/src/com/nari/coherence/FrontListern.java
+END
+Dispatcher.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/5683/trunk/IEIGInterface/src/com/nari/coherence/Dispatcher.java
+END
+TaskTmnlPnRelation.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/app/!svn/ver/5683/trunk/IEIGInterface/src/com/nari/coherence/TaskTmnlPnRelation.java
+END
+TaskDeal.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/5683/trunk/IEIGInterface/src/com/nari/coherence/TaskDeal.java
+END
+StartListern.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/5683/trunk/IEIGInterface/src/com/nari/coherence/StartListern.java
+END

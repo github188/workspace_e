@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/app/!svn/ver/2431/trunk/IEIGInterface/src/com/nari/dao/hibernate
+END
+DaoHibernate.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/app/!svn/ver/2431/trunk/IEIGInterface/src/com/nari/dao/hibernate/DaoHibernate.java
+END
+DaoHibernateImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/2431/trunk/IEIGInterface/src/com/nari/dao/hibernate/DaoHibernateImpl.java
+END

@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/app/!svn/ver/3236/trunk/IEIGInterface/WebContent/WEB-INF
+END
+struts-config.xml
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/4656/trunk/IEIGInterface/WebContent/WEB-INF/struts-config.xml
+END
+web.xml
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/app/!svn/ver/3105/trunk/IEIGInterface/WebContent/WEB-INF/web.xml
+END

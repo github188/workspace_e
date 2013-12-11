@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+	http://www.springframework.org/schema/jee 
+	http://www.springframework.org/schema/jee/spring-jee-2.0.xsd">
+	
+	<!--测试的WEBSERVICE-->
+	<bean id="helloService" class="com.nari.webserviceimpl.SayHelloImpl"/>
+	<bean id="getHelloService" class="org.codehaus.xfire.spring.ServiceBean">
+		<property name="serviceBean" ref="helloService"/>
+		<property name="serviceClass" value="com.nari.webservice.SayHello"/> 
+		<property name="inHandlers">
+			<list>
+				<ref bean="addressingHandler"/>
+				<ref bean="authenticationHandler"/>
+			</list>
+		</property>
+	</bean>
+	
+	<!--WEBSERVICE-->
+	<bean id="ieigwsformarketingservice" class="com.nari.webserviceimpl.IEIGWSForMarketingImpl"/>
+	<bean id="getieigwsformarketingservice" class="org.codehaus.xfire.spring.ServiceBean">
+		<property name="serviceBean" ref="ieigwsformarketingservice"/>
+		<property name="serviceClass" value="com.nari.webservice.IEIGWSForMarketing"/> 
+		<property name="inHandlers">
+			<list>
+				<ref bean="addressingHandler"/>
+				<ref bean="authenticationHandler"/>
+			</list>
+		</property>
+	</bean>
+	
+	<!--定义验证-->
+	<bean id="addressingHandler" class="org.codehaus.xfire.addressing.AddressingInHandler"/>
+	<bean id="authenticationHandler" class="com.nari.webserviceconfig.AuthenticationHandler"/>
+</beans>
