@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/sysman/templateman
+END
+模板管理
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/sysman/templateman/%E6%A8%A1%E6%9D%BF%E7%AE%A1%E7%90%86
+END
+VwProtocolCode.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/sysman/templateman/VwProtocolCode.hbm.xml
+END
+VwTaskProperty.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/sysman/templateman/VwTaskProperty.java
+END
+VwTaskProperty.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/sysman/templateman/VwTaskProperty.hbm.xml
+END
+VwProtocolCode.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/sysman/templateman/VwProtocolCode.java
+END

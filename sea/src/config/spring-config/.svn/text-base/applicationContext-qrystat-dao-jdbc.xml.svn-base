@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<!--SIM卡运行状况-->
+	<bean id="sIMStatDao" class="com.nari.qrystat.simquery.impl.SIMStatDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!--采集数据综合分析 -->
+	<bean id="generalAnalyseDao" class="com.nari.qrystat.colldataanalyse.impl.GeneralAnalyseDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!--行业用电趋势分析 -->
+	<bean id="tradeTrendlineDao" class="com.nari.qrystat.colldataanalyse.impl.TradeTrendlineDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+    
+    <!--客户综合查询-->
+    <bean id="consumerInfoDao" class="com.nari.qrystat.querycollpoint.impl.ConsumerInfoDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+    
+     <!--公变采集点查询-->
+    <bean id="publicTerminalDao" class="com.nari.qrystat.querycollpoint.impl.PublicTerminalDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+    
+       <!--居名集抄户查询-->
+    <bean id="autoSendQueryDao" class="com.nari.qrystat.querycollpoint.impl.AutoSendQueryDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+    
+      <!--抄表数据查询-->
+    <bean id="sendDataQueryDao" class="com.nari.qrystat.querycollpoint.impl.SendDataQueryDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+    
+     <!--客户编号查询-->
+    <bean id="ccustDao" class="com.nari.qrystat.querycollpoint.impl.CCustDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+    
+      <!--运行终端查询-->
+    <bean id="rcpDao" class="com.nari.qrystat.querycollpoint.impl.RCPDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+    
+    <!--台区用电损耗查询-->
+	<bean id="losePowerStatJdbcDao" class="com.nari.qrystat.colldataanalyse.impl.LosePowerStatJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!--台区用电损耗统计-->
+	<bean id="tgLosePowerStatJdbcDao" class="com.nari.qrystat.colldataanalyse.impl.TGLosePowerStatJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	 <!--台区线损管理-->
+	<bean id="losePowerManJdbcDao" class="com.nari.qrystat.colldataanalyse.impl.LosePowerManJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!--线路用电损耗查询-->
+	<bean id="lineLosePowerQryJdbcDao" class="com.nari.qrystat.colldataanalyse.impl.LineLosePowerQryJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!--线路用电损耗统计-->
+	<bean id="lineLosePowerStatJdbcDao" class="com.nari.qrystat.colldataanalyse.impl.LineLosePowerStatJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!--地区电量分布查询-->
+	<bean id="areaPowerDistJdbcDao" class="com.nari.qrystat.colldataanalyse.impl.AreaPowerDistJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!--用电客户排名分析-->
+	<bean id="powerSortAnalyseJdbcDao" class="com.nari.qrystat.colldataanalyse.impl.PowerSortAnalyseJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+ 
+    <!--当日用电负荷监测-->
+	<bean id="currLoadMonitorJdbcDao" class="com.nari.qrystat.colldataanalyse.impl.CurrLoadMonitorJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	  <!--昨日电量分布-->
+	<bean id="aOrgStatDDaoImpl" class="com.nari.mydesk.impl.AOrgStatDDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!--工单统计查询 DAO-->
+	<bean id="taskStateDao" class="com.nari.qrystat.taskQuery.impl.TaskStateDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource"/>
+		</property>
+	</bean>
+	
+	<!--工单明细DAO-->
+	<bean id="taskDetailsDao" class="com.nari.qrystat.taskQuery.impl.TaskDetailsDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource"/>
+		</property>
+	</bean>
+	<!--采集点统计DAO-->
+	<bean id="collectionCountDao" class="com.nari.qrystat.querycollpoint.impl.CollectionCountDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource"/>
+		</property>
+	</bean>
+	<!--报表管理DAO-->
+	<bean id="iReportTypeQueryManDao" class="com.nari.qrystat.reportQuery.impl.ReportTypeQueryManDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource"/>
+		</property>
+	</bean>
+	
+	<!--线路电量查询 DAO-->
+	<bean id="lineEceltricQuantityDao" class="com.nari.qrystat.colldataanalyse.impl.LineEceltricQuantityDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource"/>
+		</property>
+	</bean>
+	<!--异常告警统计 DAO-->
+	<bean id="excptionReportDao" class="com.nari.qrystat.querycollpoint.impl.ExcptionReportDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource"/>
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/app/!svn/ver/6961/trunk/sea/src/dao/com/nari/qrystat/colldataanalyse/impl
+END
+LosePowerManJdbcDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/app/!svn/ver/6176/trunk/sea/src/dao/com/nari/qrystat/colldataanalyse/impl/LosePowerManJdbcDaoImpl.java
+END
+LineLosePowerQryJdbcDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/app/!svn/ver/6737/trunk/sea/src/dao/com/nari/qrystat/colldataanalyse/impl/LineLosePowerQryJdbcDaoImpl.java
+END
+AreaPowerDistJdbcDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/app/!svn/ver/5501/trunk/sea/src/dao/com/nari/qrystat/colldataanalyse/impl/AreaPowerDistJdbcDaoImpl.java
+END
+GeneralAnalyseDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/app/!svn/ver/6456/trunk/sea/src/dao/com/nari/qrystat/colldataanalyse/impl/GeneralAnalyseDaoImpl.java
+END
+PowerSortAnalyseJdbcDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/app/!svn/ver/5508/trunk/sea/src/dao/com/nari/qrystat/colldataanalyse/impl/PowerSortAnalyseJdbcDaoImpl.java
+END
+LineLosePowerStatJdbcDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/app/!svn/ver/6173/trunk/sea/src/dao/com/nari/qrystat/colldataanalyse/impl/LineLosePowerStatJdbcDaoImpl.java
+END
+TGLosePowerStatJdbcDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/app/!svn/ver/6121/trunk/sea/src/dao/com/nari/qrystat/colldataanalyse/impl/TGLosePowerStatJdbcDaoImpl.java
+END
+LineEceltricQuantityDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/app/!svn/ver/5450/trunk/sea/src/dao/com/nari/qrystat/colldataanalyse/impl/LineEceltricQuantityDaoImpl.java
+END
+TradeTrendlineDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/app/!svn/ver/5503/trunk/sea/src/dao/com/nari/qrystat/colldataanalyse/impl/TradeTrendlineDaoImpl.java
+END
+CurrLoadMonitorJdbcDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/app/!svn/ver/5506/trunk/sea/src/dao/com/nari/qrystat/colldataanalyse/impl/CurrLoadMonitorJdbcDaoImpl.java
+END
+LosePowerStatJdbcDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/app/!svn/ver/6961/trunk/sea/src/dao/com/nari/qrystat/colldataanalyse/impl/LosePowerStatJdbcDaoImpl.java
+END

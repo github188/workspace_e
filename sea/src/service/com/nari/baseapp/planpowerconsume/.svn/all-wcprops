@@ -1,0 +1,137 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/app/!svn/ver/7346/trunk/sea/src/service/com/nari/baseapp/planpowerconsume
+END
+PowerCtrlQueryManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/app/!svn/ver/6666/trunk/sea/src/service/com/nari/baseapp/planpowerconsume/PowerCtrlQueryManager.java
+END
+IWTmnlRejectManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/app/!svn/ver/5773/trunk/sea/src/service/com/nari/baseapp/planpowerconsume/IWTmnlRejectManager.java
+END
+IWTmnlPaulPowerManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/app/!svn/ver/3192/trunk/sea/src/service/com/nari/baseapp/planpowerconsume/IWTmnlPaulPowerManager.java
+END
+IProtItemNoManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/app/!svn/ver/2464/trunk/sea/src/service/com/nari/baseapp/planpowerconsume/IProtItemNoManager.java
+END
+WFloatDownCtrlManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/app/!svn/ver/2464/trunk/sea/src/service/com/nari/baseapp/planpowerconsume/WFloatDownCtrlManager.java
+END
+WPwrctrlSchemeManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/app/!svn/ver/6514/trunk/sea/src/service/com/nari/baseapp/planpowerconsume/WPwrctrlSchemeManager.java
+END
+IWTmnlManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/app/!svn/ver/3442/trunk/sea/src/service/com/nari/baseapp/planpowerconsume/IWTmnlManager.java
+END
+IPlanCompileManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/app/!svn/ver/6336/trunk/sea/src/service/com/nari/baseapp/planpowerconsume/IPlanCompileManager.java
+END
+EnergyCtrlManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/app/!svn/ver/6533/trunk/sea/src/service/com/nari/baseapp/planpowerconsume/EnergyCtrlManager.java
+END
+RemoteCtrlManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/app/!svn/ver/5495/trunk/sea/src/service/com/nari/baseapp/planpowerconsume/RemoteCtrlManager.java
+END
+WPwrctrlTemplateManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/app/!svn/ver/2464/trunk/sea/src/service/com/nari/baseapp/planpowerconsume/WPwrctrlTemplateManager.java
+END
+IVwCtrlSchemeTypeManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/app/!svn/ver/2464/trunk/sea/src/service/com/nari/baseapp/planpowerconsume/IVwCtrlSchemeTypeManager.java
+END
+IPlanExcuteManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/app/!svn/ver/3180/trunk/sea/src/service/com/nari/baseapp/planpowerconsume/IPlanExcuteManager.java
+END
+IGroupSetManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/app/!svn/ver/5441/trunk/sea/src/service/com/nari/baseapp/planpowerconsume/IGroupSetManager.java
+END
+ITTmnlGroupUserManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/app/!svn/ver/2487/trunk/sea/src/service/com/nari/baseapp/planpowerconsume/ITTmnlGroupUserManager.java
+END
+WFactctrlTemplateManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/app/!svn/ver/2464/trunk/sea/src/service/com/nari/baseapp/planpowerconsume/WFactctrlTemplateManager.java
+END
+IWCtrlSchemeManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/app/!svn/ver/6848/trunk/sea/src/service/com/nari/baseapp/planpowerconsume/IWCtrlSchemeManager.java
+END
+WtmnlCtrlStatusManger.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/app/!svn/ver/2942/trunk/sea/src/service/com/nari/baseapp/planpowerconsume/WtmnlCtrlStatusManger.java
+END
+SuspensionCtrlManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/app/!svn/ver/3157/trunk/sea/src/service/com/nari/baseapp/planpowerconsume/SuspensionCtrlManager.java
+END
+IWTmnlSchemePublicManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/app/!svn/ver/4039/trunk/sea/src/service/com/nari/baseapp/planpowerconsume/IWTmnlSchemePublicManager.java
+END
+基本应用-有序用电
+K 25
+svn:wc:ra_dav:version-url
+V 152
+/svn/app/!svn/ver/2464/trunk/sea/src/service/com/nari/baseapp/planpowerconsume/%E5%9F%BA%E6%9C%AC%E5%BA%94%E7%94%A8-%E6%9C%89%E5%BA%8F%E7%94%A8%E7%94%B5
+END
+ILOpTmnlLogManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/app/!svn/ver/3503/trunk/sea/src/service/com/nari/baseapp/planpowerconsume/ILOpTmnlLogManager.java
+END

@@ -1,0 +1,209 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/app/!svn/ver/5425/trunk/sea/WebContent/baseApp/dataGatherMan
+END
+autoSend.js
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/app/!svn/ver/5029/trunk/sea/WebContent/baseApp/dataGatherMan/autoSend.js
+END
+loadPage.js
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/app/!svn/ver/4927/trunk/sea/WebContent/baseApp/dataGatherMan/loadPage.js
+END
+queryTlData.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/2464/trunk/sea/WebContent/baseApp/dataGatherMan/queryTlData.jsp
+END
+origFrameQrySub.js
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/4903/trunk/sea/WebContent/baseApp/dataGatherMan/origFrameQrySub.js
+END
+origFrameQry.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/2464/trunk/sea/WebContent/baseApp/dataGatherMan/origFrameQry.jsp
+END
+dataFetch.js
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/app/!svn/ver/5425/trunk/sea/WebContent/baseApp/dataGatherMan/dataFetch.js
+END
+dataFetch.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/5279/trunk/sea/WebContent/baseApp/dataGatherMan/dataFetch.jsp
+END
+origFrameQry.js
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/5392/trunk/sea/WebContent/baseApp/dataGatherMan/origFrameQry.js
+END
+gatherTaskCompile.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/app/!svn/ver/5202/trunk/sea/WebContent/baseApp/dataGatherMan/gatherTaskCompile.jsp
+END
+queryTlData.js
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/2464/trunk/sea/WebContent/baseApp/dataGatherMan/queryTlData.js
+END
+dataPublish.js
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/2464/trunk/sea/WebContent/baseApp/dataGatherMan/dataPublish.js
+END
+deviceMonitor.js
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/3412/trunk/sea/WebContent/baseApp/dataGatherMan/deviceMonitor.js
+END
+IllegalFrameQry.js
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/3810/trunk/sea/WebContent/baseApp/dataGatherMan/IllegalFrameQry.js
+END
+gatherQualityEvaluate.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/3557/trunk/sea/WebContent/baseApp/dataGatherMan/gatherQualityEvaluate.jsp
+END
+gatherByHand.js
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/5197/trunk/sea/WebContent/baseApp/dataGatherMan/gatherByHand.js
+END
+batchFetch.js
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/5279/trunk/sea/WebContent/baseApp/dataGatherMan/batchFetch.js
+END
+gatherByHand.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/2464/trunk/sea/WebContent/baseApp/dataGatherMan/gatherByHand.jsp
+END
+gatherQualityEvaluate.js
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/app/!svn/ver/5292/trunk/sea/WebContent/baseApp/dataGatherMan/gatherQualityEvaluate.js
+END
+IllegalFrameQry.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/3684/trunk/sea/WebContent/baseApp/dataGatherMan/IllegalFrameQry.jsp
+END
+lowQualityEvaluateFail.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/app/!svn/ver/4200/trunk/sea/WebContent/baseApp/dataGatherMan/lowQualityEvaluateFail.jsp
+END
+lowQualityEvaluate.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/app/!svn/ver/5141/trunk/sea/WebContent/baseApp/dataGatherMan/lowQualityEvaluate.jsp
+END
+dataPublish.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/2464/trunk/sea/WebContent/baseApp/dataGatherMan/dataPublish.jsp
+END
+gatherTaskQuery.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/5412/trunk/sea/WebContent/baseApp/dataGatherMan/gatherTaskQuery.jsp
+END
+gatherTaskCompile.js
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/app/!svn/ver/5202/trunk/sea/WebContent/baseApp/dataGatherMan/gatherTaskCompile.js
+END
+gatherTaskQuery.js
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/5412/trunk/sea/WebContent/baseApp/dataGatherMan/gatherTaskQuery.js
+END
+autoSend.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/app/!svn/ver/4270/trunk/sea/WebContent/baseApp/dataGatherMan/autoSend.jsp
+END
+deviceException.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/2464/trunk/sea/WebContent/baseApp/dataGatherMan/deviceException.jsp
+END
+lowQualityEvaluate.js
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/app/!svn/ver/5314/trunk/sea/WebContent/baseApp/dataGatherMan/lowQualityEvaluate.js
+END
+lowQualityEvaluateFail.js
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/5231/trunk/sea/WebContent/baseApp/dataGatherMan/lowQualityEvaluateFail.js
+END
+meterRegist.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/3408/trunk/sea/WebContent/baseApp/dataGatherMan/meterRegist.jsp
+END
+meterRegist.js
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/3408/trunk/sea/WebContent/baseApp/dataGatherMan/meterRegist.js
+END
+batchFetch.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/4749/trunk/sea/WebContent/baseApp/dataGatherMan/batchFetch.jsp
+END
+deviceMonitor.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/2464/trunk/sea/WebContent/baseApp/dataGatherMan/deviceMonitor.jsp
+END
+deviceException.js
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/2464/trunk/sea/WebContent/baseApp/dataGatherMan/deviceException.js
+END

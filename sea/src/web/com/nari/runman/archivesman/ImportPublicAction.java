@@ -1,0 +1,1445 @@
+package com.nari.runman.archivesman;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import jxl.Sheet;
+import jxl.Workbook;
+
+import com.nari.action.baseaction.BaseAction;
+import com.nari.action.baseaction.Errors;
+import com.nari.customer.CCons;
+import com.nari.grid.GTg;
+import com.nari.measurepoint.CMeterMpRela;
+import com.nari.runcontrol.CmeterJdbc;
+import com.nari.runcontrol.CmpJdbc;
+import com.nari.runcontrol.RConsTmnlRela;
+import com.nari.runcontrol.RCpConsRela;
+import com.nari.runcontrol.RcpParaJdbc;
+import com.nari.runcontrol.RcpRunJdbc;
+import com.nari.runcontrol.RtmnlRunJdbc;
+import com.nari.util.ParseString;
+
+/**
+ * ImportPublicAction
+ * 
+ * @author zhangzhw
+ * @describe 导入集抄档案Action
+ */
+public class ImportPublicAction extends BaseAction {
+
+	// 返回确认
+	public boolean success = true;
+	public Errors errors;
+
+	public String msg;
+
+	// 文件
+	public String uploadFileName;
+	public File upload;
+	private String uploadContentType;
+	private String savePath;
+
+	// 注入类
+	IImportExcelManager iImportExcelManager;
+
+	// 返回值 同保存值
+	private List<GTg> gtgList;
+	private List<CCons> cconsList;
+	private List<RcpRunJdbc> rcpList;
+	private List<RcpParaJdbc> rcpparaList;
+	private List<RtmnlRunJdbc> tmnlList;
+	private List<CmpJdbc> cmpList;
+	private List<CmeterJdbc> cmeterList;
+	private List<RCpConsRela> rCpConsRelaList;
+	private List<RConsTmnlRela> rConsTmnlRelaList;
+	private List<CMeterMpRela> cMeterMpRelaList;
+
+	/**
+	 * 导入集抄数据
+	 */
+	public String importPublic() throws Exception {
+		getResponse().setContentType("text/html; charset=utf-8");
+
+		String rtn = parseExcel2List();
+		if (rtn != null) {
+			errors = new Errors();
+			errors.setTitle("错误");
+			errors.setMsg(rtn);
+			return SUCCESS;
+		}
+
+		try {
+			this.msg = this.iImportExcelManager.savePrivacyExcel(gtgList,
+					cconsList, rcpList, rcpparaList, tmnlList, cmpList,
+					cmeterList, rCpConsRelaList, rConsTmnlRelaList,
+					cMeterMpRelaList);
+		} catch (Exception e) {
+			errors = new Errors();
+			errors.setTitle("错误");
+			errors.setMsg(e.getMessage());
+			return SUCCESS;
+		}
+		return SUCCESS;
+	}
+
+	/**
+	 * 测试导入集抄数据
+	 */
+	public String importPublicTest() {
+
+		getResponse().setContentType("text/html; charset=utf-8");
+		return SUCCESS;
+	}
+
+	/**
+	 * 从用户sheet中解析出用户
+	 */
+	private String parseExcel2List() {
+
+		InputStream is = null;
+		Workbook rwb = null;
+
+		String rtnmsg = "success";
+
+		try {
+			is = new FileInputStream(getUpload());
+			rwb = Workbook.getWorkbook(is);
+
+		} catch (Exception e) {
+			return "读取EXCEL文件错误！";
+		}
+
+		if (rwb.getNumberOfSheets() < 5)
+			return "EXCEL 文件并未包含所需要的表单！";
+
+		// 取得三个表单
+		Sheet gtg = rwb.getSheet(0);
+		Sheet ccons = rwb.getSheet(1);
+		Sheet tmnl = rwb.getSheet(2);
+		Sheet cmp = rwb.getSheet(3);
+		Sheet meter = rwb.getSheet(4);
+
+		try {
+			this.gtgList = new ArrayList<GTg>();
+			this.cconsList = new ArrayList<CCons>();
+			this.rcpList = new ArrayList<RcpRunJdbc>();
+			this.rcpparaList = new ArrayList<RcpParaJdbc>();
+			this.tmnlList = new ArrayList<RtmnlRunJdbc>();
+			this.rCpConsRelaList = new ArrayList<RCpConsRela>();
+			this.rConsTmnlRelaList = new ArrayList<RConsTmnlRela>();
+			this.cmpList = new ArrayList<CmpJdbc>();
+			this.cmeterList = new ArrayList<CmeterJdbc>();
+			this.cMeterMpRelaList = new ArrayList<CMeterMpRela>();
+			rtnmsg = parseGtgSheet(gtg);
+			if (rtnmsg != null)
+				return rtnmsg;
+			rtnmsg = parseConsSheet(ccons);
+			if (rtnmsg != null)
+				return rtnmsg;
+			rtnmsg = parseTmnlSheet(tmnl);
+			if (rtnmsg != null)
+				return rtnmsg;
+
+			rtnmsg = parseCmp(cmp);
+			if (rtnmsg != null)
+				return rtnmsg;
+
+			rtnmsg = parseMeterSheet(meter);
+			if (rtnmsg != null)
+				return rtnmsg;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			rwb.close();
+
+		}
+		rwb.close();
+
+		return rtnmsg;
+	}
+
+	/**
+	 * parseGtgSheet
+	 * 
+	 * @param s
+	 * @return 从EXCEL中解析GTG
+	 * @throws Exception
+	 */
+	private String parseGtgSheet(Sheet s) throws Exception {
+		for (int i = 1; i < s.getRows(); i++) {
+
+			String[] str = new String[s.getColumns()];
+			for (int j = 0; j < s.getColumns(); j++) {
+				try {
+					str[j] = s.getCell(j, i).getContents().trim();
+					if ("缺省".equals(str[j]))
+						str[j] = "";
+				} catch (Exception e) {
+					return "台区表第" + (i + 1) + "行,第" + (j + 1) + "列读取错误!";
+				}
+			}
+			try {
+
+				if (null == str[0] || "".equals(str[0]))
+					break;
+
+				GTg gtg = new GTg();
+
+				if (str[0].length() > 16)
+					throw new LengthException("台区ID长度应小于16");
+				try {
+					gtg.setTgId(ParseString.str2long(str[0]));
+				} catch (Exception e) {
+					throw new TypeMatchException("台区ID转换错误");
+				}
+
+				gtg.setTgNo(str[0]);
+
+				if (str[1].length() > 16)
+					throw new LengthException("单位编码长度应小于16");
+				try {
+					gtg.setOrgNo(str[1]);
+				} catch (Exception e) {
+					throw new TypeMatchException("台区ID转换错误");
+				}
+
+				if (str[2].length() > 2566)
+					throw new LengthException("台区ID长度应小于256");
+				gtg.setTgName(str[2]);
+
+				try {
+					gtg.setTgCap(ParseString.str2double(str[3]));
+				} catch (Exception e) {
+					throw new TypeMatchException("台区容量转换错误");
+				}
+				if (str[2].length() > 2566)
+					throw new LengthException("台区安装地址长度应小于256");
+				gtg.setInstAddr(str[4]);
+
+				try {
+					gtg.setChgDate(ParseString.str2Date(str[5]));
+				} catch (Exception e) {
+					throw new TypeMatchException("台区变更时间转换错误");
+				}
+				try {
+					gtg.setPubPrivFlag(ParseString.str2cut(str[6]));
+				} catch (Exception e) {
+					throw new TypeMatchException("台区容量转换错误");
+				}
+
+				gtg.setRunStatusCode("1");
+				// gtg.setRunStatusCode(str[7]);
+
+				this.gtgList.add(gtg);
+
+				CCons c = new CCons();
+				// 对CCons校验赋值
+				c.setConsId(ParseString.str2long(str[0]));
+				c.setCustId(-1L);
+				c.setOrgNo(str[1]);
+				// c.setAreaNo(str[1]); // 截掉后两位
+				if (null != str[1]) {
+					c.setAreaNo(str[1].substring(0, str[1].length() - 2));
+				}
+
+				c.setConsNo(str[0]);
+				c.setConsName("虚拟台区用户" + str[0]);
+				c.setCustNo(str[0]);
+				c.setSubsId(ParseString.str2long(str[0]));
+				c.setTgId(ParseString.str2long(str[0]));
+				c.setLineId(ParseString.str2long(str[0]));
+				c.setCustQueryNo(str[0]);
+				// c.setTmpPayRelaNo(str[9]);
+				// c.setOrgnConsNo(str[10]);
+				c.setConsSortCode("03");
+				c.setElecAddr(str[4]);
+
+				// c.setTradeCode(str[13]);
+				c.setConsType(ParseString.str2byte(ParseString.str2cut("2")));
+				// c.setElecTypeCode(str[15]);
+				// c.setContractCap(ParseString.str2double(str[16]));
+				// c.setRunCap(ParseString.str2double(str[17]));
+				// c.setCapGradeNo("");
+				// c.setShiftNo(ParseString.str2cut(str[19]));
+				// c.setLodeAttrCode(ParseString.str2cut(str[20]));
+				// c.setVoltCode(str[21]);
+				// c.setHecIndustryCode(str[22]);
+				// c.setHoliday(str[23]);
+				// c.setBuildDate(ParseString.str2Date(str[24]));
+				// c.setPsDate(ParseString.str2Date(str[25]));
+				// c.setCancelDate(ParseString.str2Date(str[26]));
+				// c.setDueDate(ParseString.str2Date(str[27]));
+				// c.setNotifyMode(str[28]);
+				// c.setSettleMode(str[29]);
+				// c.setStatusCode(str[30]);
+				// c.setRrioCode(str[31]);
+				// c.setChkCycle(ParseString.str2int(str[32]));
+				// c.setLastChkDate(ParseString.str2Date(str[33]));
+				// c.setCheckerNo(str[34]);
+				// c.setPoweroffCode(ParseString.str2cut(str[35]));
+				// c.setTransferCode(ParseString.str2cut(str[36]));
+				// c.setMrSectNo(str[37]);
+				// c.setNoteTypeCode(str[38]);
+				// c.setTmpFlag(ParseString.str2cut(str[39]));
+				// c.setTmpDate(ParseString.str2Date(str[40]));
+				// c.setApplyNo(str[41]);
+				// c.setApplyDate(ParseString.str2Date(str[42]));
+
+				this.cconsList.add(c);
+
+			} catch (LengthException l) {
+				return "台区表第" + (i + 1) + "行转换错误!\n" + l.getMessage();
+			} catch (TypeMatchException t) {
+				return "台区表第" + (i + 1) + "行转换错误!\n" + t.getMessage();
+			} catch (Exception e) {
+				return "台区表第" + (i + 1) + "行转换错误!";
+			}
+
+		}
+		return null;
+	}
+
+	/**
+	 * parseCCons
+	 * 
+	 * @param sheet
+	 * @return 从EXCEL表单中解析出CCons
+	 */
+	private String parseConsSheet(Sheet s) throws Exception {
+		// 从第二行开始循环
+		for (int i = 1; i < s.getRows(); i++) {
+
+			String[] str = new String[s.getColumns()];
+			for (int j = 0; j < s.getColumns(); j++) {
+				try {
+					str[j] = s.getCell(j, i).getContents().trim();
+					if ("缺省".equals(str[j]))
+						str[j] = "";
+				} catch (Exception e) {
+					return "用户表第" + (i + 1) + "行,第" + (j + 1) + "列读取错误!";
+				}
+			}
+
+			if (str[2] == null || "".equals(str[2])) {
+				break;
+			}
+			if (str[3] == null || "".equals(str[3])) {
+				break;
+			}
+			try {
+				CCons c = new CCons();
+				// 对CCons校验赋值
+
+				if (str[2].length() > 16)
+					throw new LengthException("用户ID长度应小于16");
+				try {
+					c.setConsId(ParseString.str2long(str[2]));
+				} catch (Exception e) {
+					throw new TypeMatchException("用户ID转换错误");
+				}
+				c.setCustId(-1L);
+				if (str[0].length() > 16)
+					throw new LengthException("单位编号长度应小于16");
+				c.setOrgNo(str[0]);
+
+				if (null == str[1] || "".equals(str[1]))
+					c.setAreaNo(str[0].substring(0, str[0].length() - 3));
+				else
+					c.setAreaNo(str[1]);
+
+				c.setConsNo(str[2]);
+
+				c.setConsName(str[3]);
+
+				if (str[4].length() > 16)
+					throw new LengthException("客户编码长度应小于16");
+				c.setCustNo(str[4]);
+
+				if (str[5].length() > 16)
+					throw new LengthException("变电站ID长度应小于16");
+				try {
+					c.setSubsId(ParseString.str2long(str[5]));
+				} catch (Exception e) {
+					throw new TypeMatchException("变电站ID转换错误");
+				}
+
+				if (str[6].length() > 16)
+					throw new LengthException("台区ID长度应小于16");
+				try {
+					c.setTgId(ParseString.str2long(str[6]));
+				} catch (Exception e) {
+					throw new TypeMatchException("台区ID转换错误");
+				}
+				if (str[7].length() > 16)
+					throw new LengthException("线路ID长度应小于16");
+				try {
+					c.setLineId(ParseString.str2long(str[7]));
+				} catch (Exception e) {
+					throw new TypeMatchException("线路ID转换错误");
+				}
+				if (str[8].length() > 132)
+					throw new LengthException("自定义查询码长度应小于32");
+				c.setCustQueryNo(str[8]);
+
+				if (str[9].length() > 16)
+					throw new LengthException("缴费关系标识长度应小于16");
+				c.setTmpPayRelaNo(str[9]);
+				if (str[10].length() > 16)
+					throw new LengthException("原用户编号长度应小于16");
+				c.setOrgnConsNo(str[10]);
+
+				try {
+					if (null == str[11] || "".equals(str[11]))
+						c.setConsSortCode("03");
+					else
+						c.setConsSortCode(ParseString.str2cut(str[11]));
+				} catch (Exception e) {
+					throw new TypeMatchException("用户分类转换错误");
+				}
+				c.setElecAddr(str[12]);
+
+				if (str[13].length() > 8)
+					throw new LengthException("行业分类长度应小于8");
+				c.setTradeCode(str[13]);
+
+				try {
+					if (null == str[14] || "".equals(str[14]))
+						c.setConsType(ParseString.str2byte("5"));
+					else
+						c.setConsType(ParseString.str2byte(ParseString
+								.str2cut(str[14])));
+				} catch (Exception e) {
+					throw new TypeMatchException("用户分类转换错误");
+				}
+
+				if (str[15].length() > 8)
+					throw new LengthException("用电类型长度应小于8");
+				c.setElecTypeCode(str[15]);
+				try {
+					c.setContractCap(ParseString.str2double(str[16]));
+				} catch (Exception e) {
+					throw new TypeMatchException("合同容量转换错误");
+				}
+
+				try {
+					c.setRunCap(ParseString.str2double(str[17]));
+				} catch (Exception e) {
+					throw new TypeMatchException("运行容量转换错误");
+				}
+
+				if (str[18].length() > 2)
+					throw new LengthException("用电类型长度应小于2,请使用代码");
+				c.setCapGradeNo(str[18]);
+
+				try {
+					if (null == str[19] || "".equals(str[19]))
+						c.setShiftNo("1");
+					else
+						c.setShiftNo(ParseString.str2cut(str[19]));
+				} catch (Exception e) {
+					throw new TypeMatchException("班次转换错误");
+				}
+
+				try {
+					if (null == str[20] || "".equals(str[20]))
+						c.setLodeAttrCode("3");
+					else
+						c.setLodeAttrCode(ParseString.str2cut(str[20]));
+				} catch (Exception e) {
+					throw new TypeMatchException("负荷等级转换错误");
+				}
+
+				if (str[21].length() > 8)
+					throw new LengthException("电压等级长度应小于8,请使用代码");
+				c.setVoltCode(str[21]);
+
+				if (str[22].length() > 8)
+					throw new LengthException("高耗能行业代码长度应小于8,请使用代码");
+				c.setHecIndustryCode(str[22]);
+
+				if (str[23].length() > 32)
+					throw new LengthException("厂休日长度应小于32,请使用代码");
+				c.setHoliday(str[23]);
+
+				try {
+					c.setBuildDate(ParseString.str2Date(str[24]));
+				} catch (Exception e) {
+					throw new TypeMatchException("建档日期转换错误");
+				}
+
+				try {
+					c.setPsDate(ParseString.str2Date(str[25]));
+				} catch (Exception e) {
+					throw new TypeMatchException("送电日期转换错误");
+				}
+
+				try {
+					c.setCancelDate(ParseString.str2Date(str[26]));
+				} catch (Exception e) {
+					throw new TypeMatchException("销户日期转换错误");
+				}
+
+				try {
+					c.setDueDate(ParseString.str2Date(str[27]));
+				} catch (Exception e) {
+					throw new TypeMatchException("临时用电到期时间转换错误");
+				}
+
+				if (str[28].length() > 8)
+					throw new LengthException("通知方式长度应小于8,请使用代码");
+				c.setNotifyMode(str[28]);
+
+				if (str[29].length() > 8)
+					throw new LengthException("通知方式长度应小于8,请使用代码01 分期结算 02 抄表结算");
+				c.setSettleMode(str[29]);
+
+				if (str[30].length() > 8)
+					throw new LengthException("用户状态长度应小于8,请使用代码");
+				c.setStatusCode(str[30]);
+
+				if (str[31].length() > 8)
+					throw new LengthException(
+							"用户重要等级长度应小于8,请使用代码0 特级 1  一级  2  二级");
+				c.setRrioCode(str[31]);
+				try {
+					c.setChkCycle(ParseString.str2int(str[32]));
+
+				} catch (Exception e) {
+					throw new TypeMatchException("检查周期转换错误");
+				}
+
+				try {
+					c.setLastChkDate(ParseString.str2Date(str[33]));
+				} catch (Exception e) {
+					throw new TypeMatchException("最后检查日期转换错误");
+				}
+
+				if (str[34].length() > 16)
+					throw new LengthException("检查员编号长度应小于16");
+				c.setCheckerNo(str[34]);
+
+				try {
+					c.setPoweroffCode(ParseString.str2cut(str[35]));
+				} catch (Exception e) {
+					throw new TypeMatchException("停电标志转换错误");
+				}
+
+				try {
+					c.setTransferCode(ParseString.str2cut(str[36]));
+				} catch (Exception e) {
+					throw new TypeMatchException(
+							"是否转供标志转换错误，可使用标志 0 无转供 1 转供 2 被转供");
+				}
+
+				if (str[37].length() > 16)
+					throw new LengthException("抄表段编号长度应小于16");
+				c.setMrSectNo(str[37]);
+
+				if (str[38].length() > 8)
+					throw new LengthException(
+							"抄表段编号长度应小于8，请使用代码  01 普通发票 02 增值发票 03 收据 04 无");
+				c.setNoteTypeCode(str[38]);
+
+				try {
+					if (null == str[39] || "".equals(str[39]))
+						c.setTmpFlag("03");
+					else
+						c.setTmpFlag(ParseString.str2cut(str[39]));
+				} catch (Exception e) {
+					throw new TypeMatchException(
+							"是否临时供电标志转换错误，可使用标志 01 装表临时用电 02 无表临时用电  03 非临时");
+				}
+				try {
+					c.setTmpDate(ParseString.str2Date(str[40]));
+				} catch (Exception e) {
+					throw new TypeMatchException("临时用电结束转换错误");
+				}
+
+				if (str[41].length() > 8)
+					throw new LengthException("业务员编号长度应小于8");
+				c.setApplyNo(str[41]);
+
+				try {
+					c.setApplyDate(ParseString.str2Date(str[42]));
+				} catch (Exception e) {
+					throw new TypeMatchException("业务日期转换错误");
+				}
+
+				this.cconsList.add(c);
+
+			} catch (LengthException l) {
+				return "用户表第" + (i + 1) + "行转换错误!\n" + l.getMessage();
+			} catch (TypeMatchException t) {
+				return "用户表第" + (i + 1) + "行转换错误!" + t.getMessage();
+			} catch (Exception e) {
+				return "用户表第" + i + "行转换错误!";
+			}
+
+		}
+		return null;
+	}
+
+	/**
+	 * 从终端sheet解析出采集点、采集点参数、运行终端、采集点用户关系和终端用户关系
+	 * 
+	 * @param s
+	 * @throws Exception
+	 */
+	private String parseTmnlSheet(Sheet s) throws Exception {
+		for (int i = 1; i < s.getRows(); i++) {
+			String[] str = new String[s.getColumns()];
+			for (int j = 0; j < s.getColumns(); j++) {
+				try {
+					str[j] = s.getCell(j, i).getContents().trim();
+					if ("缺省".equals(str[j]))
+						str[j] = "";
+				} catch (Exception e) {
+					return "终端表第" + (i + 1) + "行,第" + (j + 1) + "列读取错误!";
+				}
+			}
+
+			if (str[0] == null || "".equals(str[0]))
+				break; // 用户编号
+			// if(str[1] == null || "".equals(str[1])) break; //采集点编号
+			// if(str[2] == null || "".equals(str[2])) break; //采集点名称
+			// if(str[3] == null || "".equals(str[3])) break; //采集点类型
+			// if(str[8] == null || "".equals(str[8])) break; //通信参数标识
+			if (str[1] == null || "".equals(str[1]))
+				break; // 终端地址码
+			if (str[2] == null || "".equals(str[2]))
+				break; // 通信规约类型
+			if (str[21] == null || "".equals(str[21]))
+				break; // 算法编号
+			if (str[22] == null || "".equals(str[22]))
+				break; // 算法密钥
+			if (str[23] == null || "".equals(str[23]))
+				break; // 终端编号
+			if (str[24] == null || "".equals(str[24]))
+				break; // 终端资产编号
+			// if(str[33] == null || "".equals(str[33])) break; //终端地址码
+			if (str[29] == null || "".equals(str[29]))
+				break; // 生产厂家
+			if (str[31] == null || "".equals(str[31]))
+				break; // 终端类型
+			if (str[32] == null || "".equals(str[32]))
+				break; // 采集方式
+			if (str[35] == null || "".equals(str[35]))
+				break; // 终端运行状态
+			if (str[44] == null || "".equals(str[43]))
+				break; // 任务上送方式
+
+			try {
+				RcpRunJdbc rcp = new RcpRunJdbc();
+
+				if (str[23].length() > 16)
+					throw new LengthException("终端ID长度应小于16");
+				rcp.setCpNo(str[23]);
+
+				rcp.setName("用户采集点:" + str[0]);
+				rcp.setCpTypeCode("2");
+				rcp.setStatusCode("04");
+				rcp.setCpAddr("待更新为用户用电地址");
+				rcp.setGpsLongitude("");
+				rcp.setGpsLatitude("");
+				rcpList.add(rcp);
+
+				RCpConsRela rcpcons = new RCpConsRela();
+				rcpcons.setCpNo(str[23]);
+				if (str[0].length() > 16)
+					throw new LengthException("用户ID长度应小于16");
+				try {
+					rcpcons.setConsId(ParseString.str2long(str[0]));
+				} catch (Exception e) {
+					throw new TypeMatchException("用户ID转换错误");
+				}
+				rcpcons.setCpConsId(ParseString.str2long(str[0]));
+				this.rCpConsRelaList.add(rcpcons);
+
+				RConsTmnlRela rconstmnl = new RConsTmnlRela();
+				rconstmnl.setConsNo(str[0]);
+				if (str[24].length() > 16)
+					throw new LengthException("终端资产号长度应小于16");
+				rconstmnl.setTmnlAssetNo(str[24]);
+				this.rConsTmnlRelaList.add(rconstmnl);
+
+				RcpParaJdbc rcpPara = new RcpParaJdbc();
+				rcpPara.setCommParaId(ParseString.str2long(str[23]));
+				rcpPara.setCpNo(str[23]);
+
+				if (str[1].length() > 16)
+					throw new LengthException("终端地址长度应小于32");
+				rcpPara.setTerminalAddr(str[1]);
+
+				try {
+					rcpPara.setProtocolCode(ParseString.str2cut(str[2]));
+				} catch (Exception e) {
+					throw new TypeMatchException("规约类型转换错误，请使用代码 A 645规约 ");
+				}
+
+				if (str[3].length() > 16)
+					throw new LengthException("通道编号长度应小于32");
+				rcpPara.setChannelNo(str[3]);
+
+				try {
+					rcpPara.setRtsOn(ParseString.str2int(str[4]));
+				} catch (Exception e) {
+					throw new TypeMatchException("RTSON转换错误,请使用整型数字 ");
+				}
+
+				try {
+					rcpPara.setRtsOff(ParseString.str2int(str[5]));
+				} catch (Exception e) {
+					throw new TypeMatchException("RTSOFF转换错误，请使用整型数字 ");
+				}
+				try {
+					rcpPara.setTransmitDelay(ParseString.str2int(str[6]));
+				} catch (Exception e) {
+					throw new TypeMatchException("传输延时转换错误，请使用整型数字");
+				}
+				try {
+					rcpPara.setRespTimeout(ParseString.str2int(str[7]));
+				} catch (Exception e) {
+					throw new TypeMatchException("传输超时转换错误，请使用整型数字");
+				}
+
+				if (str[8].length() > 32)
+					throw new LengthException("IP地址请使用 000.000.000.000的格式");
+				rcpPara.setMasterIp(str[8]);
+
+				try {
+					rcpPara.setMasterPort(ParseString.str2int(str[9]));
+				} catch (Exception e) {
+					throw new TypeMatchException("主通讯端口转换错误，请使用整型数字");
+				}
+
+				if (str[10].length() > 32)
+					throw new LengthException("IP地址请使用 000.000.000.000的格式");
+				rcpPara.setSpareIpAddr(str[10]);
+
+				try {
+					rcpPara.setSparePort(ParseString.str2int(str[11]));
+				} catch (Exception e) {
+					throw new TypeMatchException("备通讯端口转换错误，请使用整型数字");
+				}
+
+				if (str[12].length() > 32)
+					throw new LengthException("IP地址请使用 000.000.000.000的格式");
+				rcpPara.setGatewayIp(str[12]);
+				try {
+					rcpPara.setGatewayPort(ParseString.str2int(str[13]));
+				} catch (Exception e) {
+					throw new TypeMatchException("网关通讯端口转换错误，请使用整型数字");
+				}
+
+				if (str[14].length() > 32)
+					throw new LengthException("IP地址请使用 000.000.000.000的格式");
+				rcpPara.setProxyIpAddr(str[14]);
+				try {
+					rcpPara.setProxyPort(ParseString.str2int(str[15]));
+				} catch (Exception e) {
+					throw new TypeMatchException("代理通讯端口转换错误，请使用整型数字");
+				}
+				if (str[16].length() > 32)
+					throw new LengthException("GPRS号码不能超过32位");
+				rcpPara.setGprsCode(str[16]);
+
+				if (str[17].length() > 32)
+					throw new LengthException("SMS号码不能超过32位");
+				rcpPara.setSmsNo(str[17]);
+				if (str[18].length() > 32)
+					throw new LengthException("APN不能超过32位");
+				rcpPara.setApn(str[18]);
+
+				try {
+					rcpPara.setHeartbeatCycle(ParseString.str2int(str[19]));
+				} catch (Exception e) {
+					throw new TypeMatchException("心跳周期转换错误，请使用整型数字");
+				}
+
+				try {
+					rcpPara.setStartDate(ParseString.str2Date(str[20]));
+				} catch (Exception e) {
+					throw new TypeMatchException("开始日期转换错误，请使用yyyy-mm-dd格式");
+				}
+
+				if (str[21].length() > 16)
+					throw new LengthException("算法编号不能超过32位");
+				rcpPara.setAlgNo(null == str[21] || "".equals(str[21]) ? "0"
+						: str[21]);
+
+				if (str[22].length() > 32)
+					throw new LengthException("算法密钥不能超过32位");
+				rcpPara.setAlgKey(null == str[22] || "".equals(str[22]) ? "99"
+						: str[22]);
+
+				this.rcpparaList.add(rcpPara);
+
+				RtmnlRunJdbc tmnl = new RtmnlRunJdbc();
+				tmnl.setTerminalId(str[23]);
+				tmnl.setCpNo(str[23]);
+				tmnl.setTmnlAssetNo(str[24]);
+
+				if (str[1].length() > 32)
+					throw new LengthException("终端地址不能超过32位");
+				tmnl.setTerminalAddr(str[1]);
+
+				if (str[25].length() > 32)
+					throw new LengthException("营销资产号码不能超过32位");
+				tmnl.setCisAssetNo(str[25]);
+				if (str[26].length() > 32)
+					throw new LengthException("SIM卡号不能超过32位");
+				tmnl.setSimNo(str[26]);
+
+				if (str[27].length() > 8)
+					throw new LengthException("终端标识不能超过8位");
+				tmnl.setId(str[27]);
+
+				try {
+					tmnl.setFactoryCode(ParseString.str2cut(str[28]));
+				} catch (Exception e) {
+					throw new TypeMatchException("生产厂商转换错误，请使用厂商代码");
+				}
+				try {
+					tmnl.setAttachMeterFlag(ParseString.str2cut(str[29]));
+				} catch (Exception e) {
+					throw new TypeMatchException("是否附属于电表转换错误，请使用代码0 不附属 1 附属");
+				}
+
+				try {
+					if (null == str[30] || "".equals(str[30]))
+						tmnl.setTerminalTypeCode("05");
+					else
+						tmnl.setTerminalTypeCode(ParseString.str2cut(str[30]));
+				} catch (Exception e) {
+					throw new TypeMatchException("终端类型转换错误，请使用代码");
+				}
+
+				try {
+					if (null == str[31] || "".equals(str[31]))
+						tmnl.setCollMode("02");
+					else
+						tmnl.setCollMode(ParseString.str2cut(str[31]));
+				} catch (Exception e) {
+					throw new TypeMatchException("采集方式转换错误，请使用代码");
+				}
+
+				try {
+					tmnl.setProtocolCode(ParseString.str2cut(str[2]));
+				} catch (Exception e) {
+					throw new TypeMatchException("规约转换错误，请使用代码");
+				}
+
+				if (str[32].length() > 16)
+					throw new LengthException("通讯密码不能超过32位");
+				tmnl.setCommPassword(str[32]);
+
+				try {
+					//if (null == str[33] || "".equals(str[33]))
+					//	tmnl.setRunDate(new Date());
+					//tmnl.setRunDate(ParseString.str2Date(str[33]));
+					tmnl.setRunDate(new Date());
+				} catch (Exception e) {
+					//throw new TypeMatchException("运行日期转换错误，请使用yyyy-mm-dd格式");
+				}
+
+				try {
+					if (null == str[34] || "".equals(str[34]))
+						tmnl.setStatusCode("01");
+					else
+						tmnl.setStatusCode(ParseString.str2cut(str[34]));
+				} catch (Exception e) {
+					throw new TypeMatchException("终端状态转换错误，请使用代码");
+				}
+
+				try {
+					if (null == str[35] || "".equals(str[35]))
+						tmnl.setHarmonicDevFlag("0");
+					else
+						tmnl.setHarmonicDevFlag(ParseString.str2cut(str[35]));
+				} catch (Exception e) {
+					throw new TypeMatchException("是否接谐波装置转换错误，请使用代码");
+				}
+
+				try {
+					if (null == str[36] || "".equals(str[36]))
+						tmnl.setPsEnsureFlag("0");
+					else
+						tmnl.setPsEnsureFlag(ParseString.str2cut(str[36]));
+				} catch (Exception e) {
+					throw new TypeMatchException("是否保电转换错误，请使用代码");
+				}
+				try {
+					if (null == str[37] || "".equals(str[37]))
+						tmnl.setAcSamplingFlag("1");
+					else
+						tmnl.setAcSamplingFlag(ParseString.str2cut(str[37]));
+				} catch (Exception e) {
+					throw new TypeMatchException("是否交流采样转换错误，请使用代码");
+				}
+
+				try {
+					if (null == str[38] || "".equals(str[38]))
+						tmnl.setEliminateFlag("0");
+					else
+						tmnl.setEliminateFlag(ParseString.str2cut(str[38]));
+				} catch (Exception e) {
+					throw new TypeMatchException("是否剔除转换错误，请使用代码");
+				}
+				// tmnl.setGateAttrFlag(ParseString.str2cut(str[40]));
+				try {
+					if (null == str[39] || "".equals(str[39]))
+						tmnl.setPrioPsMode("11");
+					else
+						tmnl.setPrioPsMode(ParseString.str2cut(str[39]));
+				} catch (Exception e) {
+					throw new TypeMatchException("优先供电方式转换错误，请使用代码");
+				}
+				try {
+					if (null == str[40] || "".equals(str[40]))
+						tmnl.setFreezeMode("01");
+					else
+						tmnl.setFreezeMode(ParseString.str2cut(str[40]));
+				} catch (Exception e) {
+					throw new TypeMatchException("冻结方式转换错误，请使用代码");
+				}
+				try {
+					if (null == str[41] || "".equals(str[41]))
+						tmnl.setFreezeCycleNum(96);
+					else
+						tmnl.setFreezeCycleNum(ParseString.str2int(str[41]));
+				} catch (Exception e) {
+					throw new TypeMatchException("冻结周期转换错误，请使用整型数字");
+				}
+
+				try {
+					if (null == str[42] || "".equals(str[42]))
+						tmnl.setMaxLoadCurveDays(180);
+					else
+						tmnl.setMaxLoadCurveDays(ParseString.str2int(str[42]));
+				} catch (Exception e) {
+					throw new TypeMatchException("负荷曲线最大天数转换错误，请使用yyyy-mm-dd格式");
+				}
+
+				tmnl.setPsLineLen(null);
+				tmnl.setWorkPs(null);
+				tmnl.setSpeakerFlag(null);
+				tmnl.setSpeakerDist(null);
+				try {
+					if (null == str[43] || "".equals(str[43]))
+						tmnl.setSendUpMode(ParseString.str2byte("0"));
+					else
+						tmnl.setSendUpMode(ParseString.str2byte(ParseString
+								.str2cut(str[43])));
+				} catch (Exception e) {
+					throw new TypeMatchException("上送方式转换错误，请使用代码");
+				}
+				try {
+					if (null == str[44] || "".equals(str[44]))
+						tmnl.setCommMode("02");
+					else
+						tmnl.setCommMode(str[44]);
+				} catch (Exception e) {
+					throw new TypeMatchException("实际通讯方式转换错误，请使用代码");
+				}
+				tmnl.setFrameNumber(null);
+				tmnl.setPowerCutDate(null);
+				// 数据库有而pojo没有，待添加
+				// TODO:tmnl.setWiringMode(str[61]);
+				this.tmnlList.add(tmnl);
+			} catch (LengthException l) {
+				return "终端表第" + (i + 1) + "行转换错误!\n" + l.getMessage();
+			} catch (TypeMatchException t) {
+				return "终端表第" + (i + 1) + "行转换错误!\n" + t.getMessage();
+			} catch (Exception e) {
+				return "终端表第" + (i + 1) + "行转换错误!";
+			}
+		}
+		return null;
+
+	}
+
+	private String parseCmp(Sheet s) throws Exception {
+		// 从第二行开始循环
+		for (int i = 1; i < s.getRows(); i++) {
+			String[] str = new String[s.getColumns()];
+			for (int j = 0; j < s.getColumns(); j++) {
+				try {
+					str[j] = s.getCell(j, i).getContents().trim();
+					if ("缺省".equals(str[j]))
+						str[j] = "";
+				} catch (Exception e) {
+					return "计量点表第" + (i + 1) + "行,第" + (j + 1) + "列读取错误!";
+				}
+			}
+
+			if (str[2] == null || "".equals(str[2]))
+				break; // 计量点编号
+			// if(str[4] == null || "".equals(str[4])) break; //计量点名称
+			// if(str[15] == null || "".equals(str[15])) break; //电能表流水号
+			// if(str[22] == null || "".equals(str[22])) break; //综合倍率
+			// if(str[43] == null || "".equals(str[43])) break; //抄表系数
+
+			try {
+				CmpJdbc cmp = new CmpJdbc();
+				if (str[2].length() > 16)
+					throw new LengthException("计量点编号长度不能超过16");
+				try {
+					cmp.setMpId(ParseString.str2long(str[2]));
+					cmp.setMpSectId(ParseString.str2long(str[2]));
+					cmp.setSpId(ParseString.str2long(str[2]));
+				} catch (Exception e) {
+					throw new TypeMatchException("计量点编号转换错误，请使用数字");
+				}
+				cmp.setMpNo(str[2]);
+
+				cmp.setMpName(str[3]);
+
+				if (str[2].length() > 16)
+					throw new LengthException("单位编码长度不能超过16");
+				cmp.setOrgNo(str[4]);
+
+				if (str[0].length() > 16)
+					throw new LengthException("用户编号长度不能超过16");
+				try {
+					cmp.setConsId(ParseString.str2long(str[0]));
+				} catch (Exception e) {
+					throw new TypeMatchException("用户编号转换错误，请使用数字");
+				}
+
+				cmp.setConsNo(str[0]);
+
+				if (str[1].length() > 16)
+					throw new LengthException("台区ID长度不能超过16");
+				try {
+					cmp.setTgId(ParseString.str2long(str[1]));
+				} catch (Exception e) {
+					throw new TypeMatchException("台区ID转换错误，请使用数字");
+				}
+
+				if (str[5].length() > 16)
+					throw new LengthException("线路ID长度不能超过16");
+				try {
+					cmp.setLineId(ParseString.str2long(str[5]));
+				} catch (Exception e) {
+					throw new TypeMatchException("线路ID转换错误，请使用数字");
+				}
+				if (str[6].length() > 16)
+					throw new LengthException("抄表段编号长度不能超过16");
+				cmp.setMrSectNo(str[6]);
+
+				cmp.setMpAddr(str[7]);
+
+				try {
+					cmp.setTypeCode(ParseString.str2cut(str[8]));
+				} catch (Exception e) {
+					throw new TypeMatchException("计量点分类转换错误，请使用代码");
+				}
+				try {
+					cmp.setMpAttrCode(ParseString.str2cut(str[9]));
+				} catch (Exception e) {
+					throw new TypeMatchException("计量点性质转换错误，请使用代码");
+				}
+				try {
+					cmp.setUsageTypeCode(ParseString.str2cut(str[10]));
+				} catch (Exception e) {
+					throw new TypeMatchException("计量点用途转换错误，请使用代码");
+				}
+				try {
+					cmp.setSideCode(ParseString.str2cut(str[11]));
+				} catch (Exception e) {
+					throw new TypeMatchException("计量点位置转换错误，请使用代码");
+				}
+				try {
+					cmp.setVoltCode(ParseString.str2cut(str[12]));
+				} catch (Exception e) {
+					throw new TypeMatchException("计量点电压等级转换错误，请使用代码");
+				}
+				try {
+					cmp.setAppDate(ParseString.str2Date(str[13]));
+				} catch (Exception e) {
+					throw new TypeMatchException("申请日期转换错误，请使用yyyy-mm-dd格式");
+				}
+				try {
+					cmp.setRunDate(ParseString.str2Date(str[14]));
+				} catch (Exception e) {
+					throw new TypeMatchException("投运转换错误，请使用yyyy-mm-dd格式");
+				}
+				try {
+					cmp.setWiringMode(ParseString.str2cut(str[15]));
+				} catch (Exception e) {
+					throw new TypeMatchException("接线方式转换错误，请使用代码");
+				}
+				try {
+					cmp.setMeasMode(ParseString.str2cut(str[16]));
+				} catch (Exception e) {
+					throw new TypeMatchException("计量方式转换错误，请使用代码");
+				}
+				try {
+					cmp.setSwitchNo(ParseString.str2cut(str[17]));
+				} catch (Exception e) {
+					throw new TypeMatchException("开关编号转换错误，请使用代码");
+				}
+				try {
+					cmp.setExchgTypeCode(ParseString.str2cut(str[18]));
+				} catch (Exception e) {
+					throw new TypeMatchException("电量交换对象转换错误，请使用代码");
+				}
+				try {
+					cmp.setMdTypeCode(ParseString.str2cut(str[19]));
+				} catch (Exception e) {
+					throw new TypeMatchException("计量装置分类转换错误，请使用代码");
+				}
+				try {
+					cmp.setMrSn(ParseString.str2int(str[20]));
+				} catch (Exception e) {
+					throw new TypeMatchException("抄表顺序转换错误，请使用整数");
+				}
+				try {
+					cmp.setMpSn(ParseString.str2int(str[21]));
+				} catch (Exception e) {
+					throw new TypeMatchException("管理顺序转换错误，请使用整数");
+				}
+				try {
+					cmp.setMeterFlag(ParseString.str2cut(str[22]));
+				} catch (Exception e) {
+					throw new TypeMatchException("是否安装计量装置转换错误，请使用代码");
+				}
+				try {
+					cmp.setStatusCode(ParseString.str2cut(str[23]));
+				} catch (Exception e) {
+					throw new TypeMatchException("计量点状态转换错误，请使用代码");
+				}
+				try {
+					cmp.setLcFlag(ParseString.str2cut(str[24]));
+				} catch (Exception e) {
+					throw new TypeMatchException("是否安装负控设备转换错误，请使用代码");
+				}
+				try {
+					cmp.setEarthMode(ParseString.str2cut(str[25]));
+				} catch (Exception e) {
+					throw new TypeMatchException("中性点接地方式转换错误，请使用代码");
+				}
+
+				this.cmpList.add(cmp);
+			} catch (LengthException l) {
+				return "计量点表第" + (i + 1) + "行转换错误!\n" + l.getMessage();
+			} catch (TypeMatchException t) {
+				return "计量点表第" + (i + 1) + "行转换错误!\n" + t.getMessage();
+			} catch (Exception e) {
+				return "计量点表第" + (i + 1) + "行转换错误!";
+			}
+
+		}
+		return null;
+	}
+
+	/**
+	 * 从电表sheet里解析c_meter
+	 */
+	private String parseMeterSheet(Sheet s) throws Exception {
+		// 从第二行开始循环
+		for (int i = 1; i < s.getRows(); i++) {
+			String[] str = new String[s.getColumns()];
+			for (int j = 0; j < s.getColumns(); j++) {
+				try {
+					str[j] = s.getCell(j, i).getContents().trim();
+					if ("缺省".equals(str[j]))
+						str[j] = "";
+				} catch (Exception e) {
+					return "电能表表第" + (i + 1) + "行,第" + (j + 1) + "列读取错误!";
+				}
+			}
+
+			if (str[0] == null || "".equals(str[0]))
+				break; // 计量点编号
+			// if(str[4] == null || "".equals(str[4])) break; //计量点名称
+			if (str[15] == null || "".equals(str[1]))
+				break; // 电能表流水号
+			if (str[22] == null || "".equals(str[10]))
+				break; // 综合倍率
+			// if(str[43] == null || "".equals(str[43])) break; //抄表系数
+			try {
+				CmeterJdbc cmeter = new CmeterJdbc();
+				if (str[1].length() > 16)
+					throw new LengthException("电能表ID长度不能超过16");
+				try {
+					cmeter.setMeterId(ParseString.str2long(str[1]));
+				} catch (Exception e) {
+					throw new TypeMatchException("电能表ID转换错误，请使用数字");
+				}
+
+				if (str[0].length() > 32)
+					throw new LengthException("电能表资产号长度不能超过16");
+				cmeter.setAssetNo(str[2]);
+
+				if (str[1].length() > 16)
+					throw new LengthException("计量点ID长度不能超过16");
+				try {
+					cmeter.setMpId(ParseString.str2long(str[0]));
+				} catch (Exception e) {
+					throw new TypeMatchException("计量点ID转换错误，请使用数字");
+				}
+
+				cmeter.setOrgNo("1");
+				// if(str[2]!=null && str[2].length()>3)
+				cmeter.setAreaNo("1");
+				cmeter.setConsNo("1");
+
+				if (str[1].length() > 16)
+					throw new LengthException("波特率长度不能超过16");
+				cmeter.setBaudrate(str[3]);
+				try {
+					cmeter.setCommNo(ParseString.str2cut(str[4]));
+				} catch (Exception e) {
+					throw new TypeMatchException("电能表通讯规约转换错误，请使用代码");
+				}
+
+				if (str[5].length() > 16)
+					throw new LengthException("通讯地址1长度不能超过16");
+				cmeter.setCommAddr1(str[5]);
+
+				if (str[6].length() > 16)
+					throw new LengthException("通讯地址2长度不能超过16");
+				cmeter.setCommAddr2(str[6]);
+
+				try {
+					cmeter.setCommMode(ParseString.str2cut(str[7]));
+				} catch (Exception e) {
+					throw new TypeMatchException("电能表通讯方式转换错误，请使用代码");
+				}
+
+				cmeter.setInstLoc(str[8]);
+				try {
+					cmeter.setInstDate(ParseString.str2Date(str[9]));
+				} catch (Exception e) {
+					throw new TypeMatchException("安装日期转换错误，请使用yyyy-mm-dd格式");
+				}
+
+				try {
+					cmeter.settFactor(ParseString.str2double(str[10]));
+				} catch (Exception e) {
+					throw new TypeMatchException("综合倍率转换错误，请使用数字");
+				}
+
+				if (str[11].length() > 16)
+					throw new LengthException("是否引用表标志长度不能超过8，请使用代码");
+				cmeter.setRefMeterFlag(str[11]);
+				if (str[12].length() > 16)
+					throw new LengthException("引用表ID长度不能超过16");
+				try {
+					cmeter.setRefMeterId(ParseString.str2long(str[12]));
+				} catch (Exception e) {
+					throw new TypeMatchException("引用表ID转换错误，请使用数字");
+				}
+				if (str[13].length() > 16)
+					throw new LengthException("验证码长度不能超过8，请使用代码");
+				cmeter.setValidateCode(str[13]);
+
+				if (str[14].length() > 16)
+					throw new LengthException("模块编号长度不能超过8，请使用代码");
+				cmeter.setModuleNo(str[14]);
+
+				if (str[15].length() > 8)
+					throw new LengthException("抄表难度系数长度不能超过8，请使用代码");
+				cmeter.setMrFactor(str[15]);
+
+				try {
+					cmeter.setLastChkDate(ParseString.str2Date(str[16]));
+				} catch (Exception e) {
+					throw new TypeMatchException("最后检查日期转换错误，请使用yyyy-mm-dd格式");
+				}
+
+				try {
+					cmeter.setRotateCycle(ParseString.str2int(str[17]));
+				} catch (Exception e) {
+					throw new TypeMatchException("轮换周期转换错误，请使用数字");
+				}
+
+				try {
+					cmeter.setRotateValidDate(ParseString.str2Date(str[18]));
+				} catch (Exception e) {
+					throw new TypeMatchException("轮换最后有效日期转换错误，请使用yyyy-mm-dd格式");
+				}
+				try {
+					cmeter.setChkCycle(ParseString.str2int(str[19]));
+				} catch (Exception e) {
+					throw new TypeMatchException("检查周期转换错误，请使用数字");
+				}
+
+				if (str[20].length() > 16)
+					throw new LengthException("终端资产编号长度不能超过16");
+				cmeter.setTmnlAssetNo(str[20]);
+				// cmeter.setFmrAssetNo(str[50]);
+				
+				// 下边两个字段用于 e_data_mp 的 测量点类型和测量点号
+				try {
+					cmeter.setRegStatus(ParseString.str2byte(str[21]));
+				} catch (Exception e) {
+					throw new TypeMatchException("测量点类型转换错误，请使用代码");
+				}
+				
+				
+				try {
+					cmeter.setRegSn(ParseString.str2int(str[22]));
+				} catch (Exception e) {
+					throw new TypeMatchException("测量点号转换错误，请使用数字");
+				}
+				this.cmeterList.add(cmeter);
+
+				CMeterMpRela cmetermp = new CMeterMpRela();
+				cmetermp.setMeterId(ParseString.str2long(str[1]));
+				cmetermp.setMpId(ParseString.str2long(str[0]));
+
+				this.cMeterMpRelaList.add(cmetermp);
+			} catch (LengthException l) {
+				return "电能表表第" + (i + 1) + "行转换错误!\n" + l.getMessage();
+			} catch (TypeMatchException t) {
+				return "电能表表第" + (i + 1) + "行转换错误!\n" + t.getMessage();
+			} catch (Exception e) {
+				return "电能表表第" + (i + 1) + "行,转换错误!";
+			}
+
+		}
+		return null;
+	}
+
+	// getters and setters
+
+	public boolean isSuccess() {
+		return success;
+	}
+
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
+
+	public Errors getErrors() {
+		return errors;
+	}
+
+	public void setErrors(Errors errors) {
+		this.errors = errors;
+	}
+
+	public String getUploadFileName() {
+		return uploadFileName;
+	}
+
+	public void setUploadFileName(String uploadFileName) {
+		this.uploadFileName = uploadFileName;
+	}
+
+	public File getUpload() {
+		return upload;
+	}
+
+	public void setUpload(File upload) {
+		this.upload = upload;
+	}
+
+	public String getUploadContentType() {
+		return uploadContentType;
+	}
+
+	public void setUploadContentType(String uploadContentType) {
+		this.uploadContentType = uploadContentType;
+	}
+
+	public String getSavePath() {
+		return savePath;
+	}
+
+	public void setSavePath(String savePath) {
+		this.savePath = savePath;
+	}
+
+	public List<CCons> getCconsList() {
+		return cconsList;
+	}
+
+	public void setCconsList(List<CCons> cconsList) {
+		this.cconsList = cconsList;
+	}
+
+	public List<RcpRunJdbc> getRcpList() {
+		return rcpList;
+	}
+
+	public void setRcpList(List<RcpRunJdbc> rcpList) {
+		this.rcpList = rcpList;
+	}
+
+	public List<RcpParaJdbc> getRcpparaList() {
+		return rcpparaList;
+	}
+
+	public void setRcpparaList(List<RcpParaJdbc> rcpparaList) {
+		this.rcpparaList = rcpparaList;
+	}
+
+	public List<RtmnlRunJdbc> getTmnlList() {
+		return tmnlList;
+	}
+
+	public void setTmnlList(List<RtmnlRunJdbc> tmnlList) {
+		this.tmnlList = tmnlList;
+	}
+
+	public List<CmpJdbc> getCmpList() {
+		return cmpList;
+	}
+
+	public void setCmpList(List<CmpJdbc> cmpList) {
+		this.cmpList = cmpList;
+	}
+
+	public List<CmeterJdbc> getCmeterList() {
+		return cmeterList;
+	}
+
+	public void setCmeterList(List<CmeterJdbc> cmeterList) {
+		this.cmeterList = cmeterList;
+	}
+
+	public List<RCpConsRela> getrCpConsRelaList() {
+		return rCpConsRelaList;
+	}
+
+	public void setrCpConsRelaList(List<RCpConsRela> rCpConsRelaList) {
+		this.rCpConsRelaList = rCpConsRelaList;
+	}
+
+	public List<RConsTmnlRela> getrConsTmnlRelaList() {
+		return rConsTmnlRelaList;
+	}
+
+	public void setrConsTmnlRelaList(List<RConsTmnlRela> rConsTmnlRelaList) {
+		this.rConsTmnlRelaList = rConsTmnlRelaList;
+	}
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+
+	public List<GTg> getGtgList() {
+		return gtgList;
+	}
+
+	public void setGtgList(List<GTg> gtgList) {
+		this.gtgList = gtgList;
+	}
+
+	public void setiImportExcelManager(IImportExcelManager iImportExcelManager) {
+		this.iImportExcelManager = iImportExcelManager;
+	}
+
+}

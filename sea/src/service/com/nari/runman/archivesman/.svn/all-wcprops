@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/app/!svn/ver/7048/trunk/sea/src/service/com/nari/runman/archivesman
+END
+IArchiveCmpManManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/app/!svn/ver/4864/trunk/sea/src/service/com/nari/runman/archivesman/IArchiveCmpManManager.java
+END
+IArchivesmanManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/app/!svn/ver/3950/trunk/sea/src/service/com/nari/runman/archivesman/IArchivesmanManager.java
+END
+IArchiveManManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/4356/trunk/sea/src/service/com/nari/runman/archivesman/IArchiveManManager.java
+END
+运行管理-档案管理
+K 25
+svn:wc:ra_dav:version-url
+V 146
+/svn/app/!svn/ver/2464/trunk/sea/src/service/com/nari/runman/archivesman/%E8%BF%90%E8%A1%8C%E7%AE%A1%E7%90%86-%E6%A1%A3%E6%A1%88%E7%AE%A1%E7%90%86
+END
+IArchiveRcpManManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/app/!svn/ver/7047/trunk/sea/src/service/com/nari/runman/archivesman/IArchiveRcpManManager.java
+END
+IRemoteDebugManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/app/!svn/ver/6791/trunk/sea/src/service/com/nari/runman/archivesman/IRemoteDebugManager.java
+END
+ICollectionChannelService.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/app/!svn/ver/5644/trunk/sea/src/service/com/nari/runman/archivesman/ICollectionChannelService.java
+END
+IImportExcelManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/app/!svn/ver/6564/trunk/sea/src/service/com/nari/runman/archivesman/IImportExcelManager.java
+END
+IArchiveTmnlManManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/app/!svn/ver/6583/trunk/sea/src/service/com/nari/runman/archivesman/IArchiveTmnlManManager.java
+END
+IArchiveCmeterManManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/app/!svn/ver/4864/trunk/sea/src/service/com/nari/runman/archivesman/IArchiveCmeterManManager.java
+END
+IOrganizeManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/app/!svn/ver/5554/trunk/sea/src/service/com/nari/runman/archivesman/IOrganizeManager.java
+END

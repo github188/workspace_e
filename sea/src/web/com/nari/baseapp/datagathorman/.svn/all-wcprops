@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/app/!svn/ver/5424/trunk/sea/src/web/com/nari/baseapp/datagathorman
+END
+GatherTaskQueryAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/app/!svn/ver/5413/trunk/sea/src/web/com/nari/baseapp/datagathorman/GatherTaskQueryAction.java
+END
+AutoSendAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/5028/trunk/sea/src/web/com/nari/baseapp/datagathorman/AutoSendAction.java
+END
+DataPublishAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/app/!svn/ver/2464/trunk/sea/src/web/com/nari/baseapp/datagathorman/DataPublishAction.java
+END
+LowQualityEvaluateAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/app/!svn/ver/5140/trunk/sea/src/web/com/nari/baseapp/datagathorman/LowQualityEvaluateAction.java
+END
+DeviceMonitorAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/2534/trunk/sea/src/web/com/nari/baseapp/datagathorman/DeviceMonitorAction.java
+END
+GatherTaskCompileAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/app/!svn/ver/4017/trunk/sea/src/web/com/nari/baseapp/datagathorman/GatherTaskCompileAction.java
+END
+IllegalFrameQryAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/app/!svn/ver/3645/trunk/sea/src/web/com/nari/baseapp/datagathorman/IllegalFrameQryAction.java
+END
+基本应用-数据采集管理
+K 25
+svn:wc:ra_dav:version-url
+V 163
+/svn/app/!svn/ver/2464/trunk/sea/src/web/com/nari/baseapp/datagathorman/%E5%9F%BA%E6%9C%AC%E5%BA%94%E7%94%A8-%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86%E7%AE%A1%E7%90%86
+END
+DataFetchAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/app/!svn/ver/5424/trunk/sea/src/web/com/nari/baseapp/datagathorman/DataFetchAction.java
+END
+BatchFetchAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/app/!svn/ver/5279/trunk/sea/src/web/com/nari/baseapp/datagathorman/BatchFetchAction.java
+END
+GatherQualityEvaluateAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/app/!svn/ver/5263/trunk/sea/src/web/com/nari/baseapp/datagathorman/GatherQualityEvaluateAction.java
+END
+OrigFrameQryAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/app/!svn/ver/4711/trunk/sea/src/web/com/nari/baseapp/datagathorman/OrigFrameQryAction.java
+END

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.nari.baseapp.datagatherman.DataFetchTerminal" table="R_TMNL_RUN">
+		<id name="terminalId" column="TERMINAL_ID"><generator class="assigned" /></id>
+		<many-to-one name="oOrg" column="ORG_NO" class="com.nari.orgnization.OOrg" insert="false" update="false" lazy="false" />
+		<many-to-one name="cCons" column="CONS_NO" class="com.nari.customer.CCons" property-ref="consNo" insert="false" update="false" lazy="false" />
+		<property name="terminalAddr" column="TERMINAL_ADDR" />
+		<many-to-one name="bCommProtocol" column="PROTOCOL_CODE" class="com.nari.basicdata.BCommProtocol" insert="false" update="false" lazy="false" />
+		<many-to-one name="bTmnlFactory" column="FACTORY_CODE" class="com.nari.basicdata.BTmnlFactory" insert="false" update="false" lazy="false" />
+	</class>
+</hibernate-mapping>

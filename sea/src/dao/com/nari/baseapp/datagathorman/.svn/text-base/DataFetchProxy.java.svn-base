@@ -1,0 +1,127 @@
+package com.nari.baseapp.datagathorman;
+
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+
+import com.nari.coherence.IFuture;
+import com.nari.coherence.TaskDeal;
+import com.nari.fe.commdefine.task.Response;
+import com.opensymphony.xwork2.ActionContext;
+
+/***
+ * 代理TaskDeal，实现特定的功能
+ * 
+ * @author huangxuan *
+ **/
+public class DataFetchProxy {
+	private TaskDeal td;
+	private IFuture ifuture;
+	private String key;
+	private String queryType;
+	private List<String> fatherCodes;
+	private String prefix = "dataFetch";
+	private List resultMap;
+	private Map errorMap;
+	private DataFetchAction dataFetchAction;
+
+	@SuppressWarnings("unused")
+	private DataFetchProxy() {
+	}
+
+	public DataFetchProxy(TaskDeal td, String key) {
+		this.td = td;
+		ifuture = td.getiFuture();
+		this.key = key;
+	}
+
+	public DataFetchProxy(TaskDeal td, String key, String prefix,
+			DataFetchAction dataFetchAction) {
+		this.td = td;
+		ifuture = td.getiFuture();
+		this.key = key;
+		this.dataFetchAction = dataFetchAction;
+		this.prefix = prefix;
+	}
+
+	/**
+	 * @desc 此方法的如原始的getAllResponse类似， 但是忽略了从在一定的时间类没有在缓存得到结果<br>
+	 *       这个错误。他会直接将得到的结果放在session里面
+	 * @param iFuture
+	 * @param second
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public void getAllResponse(int second) {
+		second = second - 3;
+		addResponseList(dataFetchAction.parseDataFetch(td.getOfflineResponse()));
+		List ls = ifuture.getTaskIDs();
+		for (int i = 0; i < ls.size(); i++) {
+			int waitTime = second / ls.size();
+			Response r = ifuture.getResponse(waitTime * 1000);
+			if(null!=r){
+				List<Response> rs=new ArrayList<Response>();
+				rs.add(r);
+				addResponseList(dataFetchAction.parseDataFetch(rs));
+			}
+		}
+	}
+
+	/**
+	 * 填充原始的response对象到session
+	 * 
+	 * @param resp
+	 */
+	@SuppressWarnings("unchecked")
+	public void addResponseData(Response resp) {
+		if (key.startsWith(prefix)) {
+			return;
+		}
+		if (null == resp) {
+			return;
+		}
+		Map session = ActionContext.getContext().getSession();
+		Map m = (Map) session.get("responseData");
+		if (null == m) {
+			m = new Hashtable();
+			session.put("responseData", m);
+		}
+		Object obj = m.get(key);
+		if (null == obj) {
+			m.put(key, new ArrayList(30));
+		}
+		List get = (List) m.get(key);
+		get.add(resp);
+	}
+
+	/**
+	 * 填充原始的response列表对象到session
+	 * 
+	 * @param resp
+	 */
+	@SuppressWarnings("unchecked")
+	public void addResponseList(List rs) {
+		if (key.startsWith(prefix)) {
+			return;
+		}
+		if (null == rs || rs.isEmpty()) {
+			return;
+		}
+		Map session = ActionContext.getContext().getSession();
+		Map m = (Map) session.get("responseData");
+		if (null == m) {
+			m = new Hashtable();
+			session.put("responseData", m);
+		}
+		Object obj = m.get(key);
+		if (null == obj) {
+			m.put(key, new ArrayList(30));
+		}
+		List get = (List) m.get(key);
+		get.addAll(rs);
+	}
+
+	
+
+}

@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/app/!svn/ver/5482/trunk/sea/WebContent/WEB-INF/resources
+END
+schedule.xml
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/app/!svn/ver/5482/trunk/sea/WebContent/WEB-INF/resources/schedule.xml
+END
+functions.xml
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/app/!svn/ver/5482/trunk/sea/WebContent/WEB-INF/resources/functions.xml
+END
+FineReport.lic
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/app/!svn/ver/5482/trunk/sea/WebContent/WEB-INF/resources/FineReport.lic
+END
+face.xml
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/app/!svn/ver/5482/trunk/sea/WebContent/WEB-INF/resources/face.xml
+END
+widgets.xml
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/app/!svn/ver/5482/trunk/sea/WebContent/WEB-INF/resources/widgets.xml
+END
+privilege.xml
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/app/!svn/ver/5482/trunk/sea/WebContent/WEB-INF/resources/privilege.xml
+END
+cache.xml
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/app/!svn/ver/5482/trunk/sea/WebContent/WEB-INF/resources/cache.xml
+END
+config.xml
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/app/!svn/ver/5482/trunk/sea/WebContent/WEB-INF/resources/config.xml
+END
+datasource.xml
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/app/!svn/ver/5482/trunk/sea/WebContent/WEB-INF/resources/datasource.xml
+END

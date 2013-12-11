@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/measurepoint
+END
+CItRun.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/measurepoint/CItRun.java
+END
+CMeter.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/measurepoint/CMeter.hbm.xml
+END
+CMp.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/measurepoint/CMp.hbm.xml
+END
+CMpItRela.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/measurepoint/CMpItRela.java
+END
+CMpSect.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/measurepoint/CMpSect.hbm.xml
+END
+CMpItRela.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/measurepoint/CMpItRela.hbm.xml
+END
+CMpSect.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/measurepoint/CMpSect.java
+END
+CMeter.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/measurepoint/CMeter.java
+END
+CMp.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/measurepoint/CMp.java
+END
+CItRun.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/measurepoint/CItRun.hbm.xml
+END
+CMeterMpRela.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/measurepoint/CMeterMpRela.java
+END
+CMpUse.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/measurepoint/CMpUse.hbm.xml
+END
+CMeterMpRela.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/measurepoint/CMeterMpRela.hbm.xml
+END
+CMpUse.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/measurepoint/CMpUse.java
+END

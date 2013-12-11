@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/app/!svn/ver/6561/trunk/sea/src/service/com/nari/baseapp/prepaidman
+END
+PrePaidManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/app/!svn/ver/6561/trunk/sea/src/service/com/nari/baseapp/prepaidman/PrePaidManager.java
+END
+基本应用-预付费管理
+K 25
+svn:wc:ra_dav:version-url
+V 155
+/svn/app/!svn/ver/2464/trunk/sea/src/service/com/nari/baseapp/prepaidman/%E5%9F%BA%E6%9C%AC%E5%BA%94%E7%94%A8-%E9%A2%84%E4%BB%98%E8%B4%B9%E7%AE%A1%E7%90%86
+END
+PrePaidDebugManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/app/!svn/ver/5973/trunk/sea/src/service/com/nari/baseapp/prepaidman/PrePaidDebugManager.java
+END
+IUseValueQueryManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/app/!svn/ver/5820/trunk/sea/src/service/com/nari/baseapp/prepaidman/IUseValueQueryManager.java
+END
+IPrePaidStatusManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/app/!svn/ver/5773/trunk/sea/src/service/com/nari/baseapp/prepaidman/IPrePaidStatusManager.java
+END
+IPrePaidStatManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/app/!svn/ver/5703/trunk/sea/src/service/com/nari/baseapp/prepaidman/IPrePaidStatManager.java
+END
+DunningControlManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/app/!svn/ver/6336/trunk/sea/src/service/com/nari/baseapp/prepaidman/DunningControlManager.java
+END

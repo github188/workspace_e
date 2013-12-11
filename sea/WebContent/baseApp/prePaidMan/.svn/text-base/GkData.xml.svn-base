@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<chart baseFont='宋体' baseFontSize='12' caption='预付费终端工况统计' showPercentageValues='0'>
+	<set label='执行成功购电笔数' value='5' />
+	<set label='执行失败购电笔数' value='3' />
+	<set label='未完成执行购电笔数' value='2'/>
+</chart> 

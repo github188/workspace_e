@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<chart caption="" shownames="1" showvalues="0" decimals="0" numberPrefix="">
+<categories>
+  <category label="西宁供电公司" /> 
+  <category label="海南供电公司" /> 
+  <category label="海北供电公司" /> 
+  <category label="海东供电公司" /> 
+  <category label="海西供电公司" /> 
+  <category label="黄化供电公司" /> 
+  <category label="果洛供电公司" /> 
+  </categories>
+<dataset seriesName="全部流量(M)" color="AFD8F8" showValues="0">
+  <set value="1401" /> 
+  <set value="501" /> 
+  <set value="901" /> 
+  <set value="453" /> 
+  <set value="368" /> 
+  <set value="401" /> 
+  <set value="206" /> 
+  </dataset>
+<dataset seriesName="超流量(M)" color="F6BD0F" showValues="0">
+  <set value="0" /> 
+  <set value="0" /> 
+  <set value="0" /> 
+  <set value="0" /> 
+  <set value="0" /> 
+  <set value="0" /> 
+  <set value="0" /> 
+  </dataset>
+  </chart>

@@ -1,0 +1,124 @@
+package com.nari.runman.archivesman.impl;
+
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.springframework.dao.DataAccessException;
+
+import com.nari.customer.CCons;
+import com.nari.grid.GTg;
+import com.nari.runcontrol.CmeterJdbc;
+import com.nari.runcontrol.CmpJdbc;
+import com.nari.runcontrol.RConsTmnlRela;
+import com.nari.runcontrol.RCpConsRela;
+import com.nari.runcontrol.RcpParaJdbc;
+import com.nari.runcontrol.RcpRunJdbc;
+import com.nari.runcontrol.RtmnlRunJdbc;
+import com.nari.runman.archivesman.IImportExcelDao;
+import com.nari.runman.archivesman.IImportExcelManager;
+import com.nari.util.exception.BaseException;
+import com.nari.util.exception.DBAccessException;
+import com.nari.util.exception.ServiceException;
+
+public class ImportExcelManagerImpl implements IImportExcelManager {
+	protected Logger logger = Logger.getLogger(this.getClass());
+
+	// DAO接口
+	IImportExcelDao iImportExcelDao;
+
+	public void setiImportExcelDao(IImportExcelDao iImportExcelDao) {
+		this.iImportExcelDao = iImportExcelDao;
+	}
+
+	/**
+	 * 保存专变用户的档案信息
+	 * 
+	 * @param cconsList
+	 *            用户
+	 * @param rcpList
+	 *            采集点
+	 * @param rcpparaList
+	 *            采集点参数
+	 * @param tmnlList
+	 *            终端
+	 * @param cmpList
+	 *            计量点
+	 * @param cmeterList
+	 *            电表
+	 * @param rCpConsRelaList
+	 *            采集点和用户关联
+	 * @param rConsTmnlRelaList
+	 *            用户和终端关联
+	 */
+	public String savePrivacyExcel(List<CCons> cconsList,
+			List<RcpRunJdbc> rcpList, List<RcpParaJdbc> rcpparaList,
+			List<RtmnlRunJdbc> tmnlList, List<CmpJdbc> cmpList,
+			List<CmeterJdbc> cmeterList, List<RCpConsRela> rCpConsRelaList,
+			List<RConsTmnlRela> rConsTmnlRelaList) throws Exception {
+		try {
+			this.iImportExcelDao.savePrivacyExcel(cconsList, rcpList,
+					rcpparaList, tmnlList, cmpList, cmeterList,
+					rCpConsRelaList, rConsTmnlRelaList);
+			String msg = "用户数据导入" + cconsList.size() + "条<br>";
+			msg += "采集点数据导入" + rcpList.size() + "条<br>";
+			msg += "采集点参数数据导入" + rcpparaList.size() + "条<br>";
+			msg += "终端数据导入" + tmnlList.size() + "条<br>";
+			msg += "计量点数据导入" + cmpList.size() + "条<br>";
+			msg += "电表数据导入" + cmeterList.size() + "条";
+			return msg;
+		} catch (DataAccessException de) {
+			throw new DBAccessException(BaseException.processDBException(de));
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ServiceException("新增档案信息出错");
+		}
+	}
+
+	/**
+	 * 保存专变用户的档案信息
+	 * 
+	 * @param gtgList
+	 *            台区
+	 * @param cconsList
+	 *            用户
+	 * @param rcpList
+	 *            采集点
+	 * @param rcpparaList
+	 *            采集点参数
+	 * @param tmnlList
+	 *            终端
+	 * @param cmpList
+	 *            计量点
+	 * @param cmeterList
+	 *            电表
+	 * @param rCpConsRelaList
+	 *            采集点和用户关联
+	 * @param rConsTmnlRelaList
+	 *            用户和终端关联
+	 */
+	public String savePrivacyExcel(List<GTg> gtgList, List<CCons> cconsList,
+			List<RcpRunJdbc> rcpList, List<RcpParaJdbc> rcpparaList,
+			List<RtmnlRunJdbc> tmnlList, List<CmpJdbc> cmpList,
+			List<CmeterJdbc> cmeterList, List<RCpConsRela> rCpConsRelaList,
+			List<RConsTmnlRela> rConsTmnlRelaList) throws Exception {
+		try {
+			this.iImportExcelDao.savePrivacyExcel(gtgList,cconsList, rcpList,
+					rcpparaList, tmnlList, cmpList, cmeterList,
+					rCpConsRelaList, rConsTmnlRelaList);
+			String msg = "台区导入"  + gtgList.size() +"条<br>";
+				msg += "用户数据导入" + cconsList.size() + "条<br>";
+			msg += "采集点数据导入" + rcpList.size() + "条<br>";
+			msg += "采集点参数数据导入" + rcpparaList.size() + "条<br>";
+			msg += "终端数据导入" + tmnlList.size() + "条<br>";
+			msg += "计量点数据导入" + cmpList.size() + "条<br>";
+			msg += "电表数据导入" + cmeterList.size() + "条";
+			return msg;
+		} catch (DataAccessException de) {
+			throw new DBAccessException(BaseException.processDBException(de));
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ServiceException("新增档案信息出错");
+		}
+	}
+
+}

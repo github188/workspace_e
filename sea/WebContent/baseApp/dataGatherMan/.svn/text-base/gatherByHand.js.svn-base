@@ -1,0 +1,447 @@
+	var orgType = '';
+	var handRadioForm =new Ext.form.RadioGroup({
+			width : 255,
+			items : [new Ext.form.Radio({
+						boxLabel : '抄表类',
+						name : 'queryType',
+						readOnly:true,
+						checked : true,
+						inputValue : '02'
+					}),
+					new Ext.form.Radio({
+						boxLabel : '负荷类',
+						name : 'queryType',
+						readOnly:true,
+						inputValue : '01'
+					}),
+					new Ext.form.Radio({
+						boxLabel : '电能质量类',
+						name : 'queryType',
+						readOnly:true,
+						inputValue : '20'
+					})]
+		});
+	
+	var handText = new Ext.form.TextField({
+			fieldLabel:'节点名',
+			allowBlank : false,
+			labelSeparator:'',
+			name:'nodeName',
+			emptyText:'请选择左边节点或输入户号',
+			anchor:'100%',
+			border:false
+		});
+	var hideValueText = new Ext.form.TextField({
+			labelSeparator:'',
+			hidden:true,
+			name:'nodeValue',
+			anchor:'50%'
+		});
+	var hideTypeText = new Ext.form.TextField({
+			labelSeparator:'',
+			hidden:true,
+			name:'nodeType',
+			anchor:'50%'
+		});
+	handText.on('change',function(tf,nValue,oValue){
+		if(isNaN(nValue)){
+			Ext.Msg.alert('提示','用户编号必须是数字');
+			handText.setValue(oValue);
+		}else{
+			hideTypeText.setValue('usr');
+			hideValueText.setValue(nValue);
+			orgType = '';
+		}
+	});
+	var handQueryTop = new Ext.Panel({
+		labelAlign : 'right',
+		height: 33,
+		region:'north',
+		bodyStyle:'padding:5px 0px 5px 0px',
+		layout : 'column',
+		border : false,
+		items : [{
+					columnWidth : .26,
+					border : false,
+					layout:'form',
+					labelWidth:50,
+					items : [handText]
+				},{
+	                columnWidth:.1,
+	                border:false,
+	                layout: 'form',
+	                hidden:true,
+	                items: [{
+						xtype:"label"
+						}]
+                },{
+					columnWidth : .2,
+					border : false,
+					layout:'form',
+					labelWidth:1,
+					items : [hideValueText]
+				},{
+					columnWidth : .2,
+					border : false,
+					layout:'form',
+					labelWidth:1,
+					items : [hideTypeText]
+				}]
+	});
+	
+	var handDate1 = new Ext.form.DateField({
+			fieldLabel : '从',
+			allowBlank : false,
+			editable:false,
+			format: 'Y-m-d',
+			width : 100,
+			value: new Date().add(Date.DAY,-6),
+			name : 'handStartDate'
+		});
+	var handDate2 = new Ext.form.DateField({
+			fieldLabel : '到',
+			allowBlank : false,
+			editable:false,
+			format: 'Y-m-d',
+			width : 100,
+			value: new Date(),
+			name : 'handEndDate'
+		});
+	handDate2.on('change',function(df,newValue,oldValue){
+		if(newValue < handDate1.getValue()){
+			handDate2.setValue(oldValue);
+			Ext.Msg.alert('提示','结束日期不能小于开始日期');	
+		}
+	});
+	var gbhQualityDateField = {
+		layout : 'column',
+		border : false,
+		width:320,
+		style : {
+			marginTop : '0px',
+			marginBottom : '10px',
+			marginLeft : '2px',
+			marginRight : '10px'
+		},
+		items : [{
+					columnWidth:.42,
+					layout : 'form',
+					border : false,
+					labelWidth : 20,
+					width : '160',
+					items : [handDate1]
+				}, {
+					columnWidth:.5,
+					layout : 'form',
+					border : false,
+					labelWidth : 20,
+					width : '160',
+					items : [handDate2]
+				}]
+	};
+	var handQueryBott = new Ext.Panel({
+		region:'center',
+		border : false,
+		layout:'column',
+		items:[{
+			columnWidth:.38,
+			border:false,
+			layout:'form',
+			labelWidth:1,
+			items:[handRadioForm]
+		},{
+			columnWidth:0.35,
+			border:false,
+			labelWidth : 20,
+			layout:'form',
+			items : [gbhQualityDateField]
+		},{
+			columnWidth : .08,
+			border : false,
+			layout:'form',
+			items : [{
+						xtype : 'button',
+						text : '查询',
+						width : 50,
+						handler : handFormSubmit
+					}]
+		},{
+			columnWidth : .08,
+			border : false,
+			layout:'form',
+			items : [{
+				xtype : 'button',
+				text : '补召',
+//				hidden:true,
+				handler : function () {
+					var selectModel = handRecordGrid.getSelectionModel();
+					var rec = selectModel.getSelections();
+					var jsonData = [];
+					if (rec.length == 0) {
+						Ext.Msg.alert('提示', '请选择补召终端');
+						return;
+					}
+					for (var i = 0; i < rec.length; i ++) {
+						jsonData[i] = rec[i].json
+					}
+					Ext.Ajax.request({
+					url : './baseapp/gatherQualityEvaluate!callUnGatherInfo.action',
+					params : {
+						jsonData : Ext.encode(jsonData)
+					},
+					success : function(response) {
+						Ext.Msg.alert('提示', '补召任务下发成功');
+					}
+					})
+				},
+						width : 50
+					}]
+		}]
+	});
+	var repairStartDate;
+	var repairEndDate;
+	var valueNo;
+	var taskProp;
+	var valueText;
+	function setElValue(){
+		if(repairStartDate){
+			handDate1.setValue(repairStartDate);
+		}
+		if(repairEndDate){
+			handDate2.setValue(repairEndDate);
+		}
+		if(valueNo){
+			hideValueText.setValue(valueNo);
+			hideTypeText.setValue('org');
+		}
+		if(taskProp){
+			handRadioForm.setValue(taskProp);
+		}else{
+			handRadioForm.setValue("01");
+		}
+		if(valueText){
+			handText.setValue(valueText);
+		}
+	}
+	
+	var handQueryPanel = new Ext.form.FormPanel({
+				labelAlign : 'right',
+				frame : false,
+				height : 66,
+				region:'north',
+				bodyStyle : 'padding:5px 0px 0px 0px',
+				layout : 'border',
+				border : false,
+				items : [handQueryTop,handQueryBott]
+			});
+			
+/**grid----------------------------------------------------------------------------------**/			
+	var handRowNumberer=new Ext.grid.RowNumberer({
+	renderer:function(v, p, record, rowIndex){
+	if(this.rowspan){
+            p.cellAttr = 'rowspan="'+this.rowspan+'"';
+        }
+       
+        handStore.lastOptions.params=handStore.lastOptions.params||{start:0};
+        return handStore.lastOptions.params.start+rowIndex+1;
+	}
+	
+	});
+	var handSm = new Ext.grid.CheckboxSelectionModel();		
+	var handCm = new Ext.grid.ColumnModel([handRowNumberer,handSm,
+		{header:'供电单位',dataIndex:'orgName',align:'center',sortable:true,
+    		renderer : function(val) {
+			var html = '<div align = "left" ext:qtitle="供电单位" ext:qtip="'
+				+ val + '">' + val + '</div>';
+			return html;
+    	}},
+		{header:'用户编号',dataIndex:'consNo',align:'center',sortable:true,width:70,
+		renderer : function(s, m, rec) {
+			return "<a href='javascript:'onclick='consumerInfoShow(\""
+					+ rec.get('consNo') + "\");" + "'>" + s + "</a>";
+					}},
+		{header:'用户名称',dataIndex:'consName',align:'center',sortable:true,
+    		renderer : function(val) {
+			var html = '<div align = "left" ext:qtitle="用户名称" ext:qtip="'
+				+ val + '">' + val + '</div>';
+			return html;}},
+		{header:'终端地址',dataIndex:'terminalAddr',align:'center',sortable:true,width:70},
+		{header:'漏点数',dataIndex:'missingCnt',align:'center',sortable:true,width:50},
+		{header:'漏点时间',dataIndex:'statDate',align:'center',sortable:true, width:70,
+		renderer : function(val) {
+			return Date.parseDate(val,'Y-m-dTH:i:s').format('Y-m-d');
+		}},
+		{header:'测量点号',dataIndex:'mpSn',align:'center',sortable:true,width:50},
+		{header:'数据项名称',dataIndex:'protocolName',align:'center',sortable:true,
+    		renderer : function(val) {
+			var html = '<div align = "left" ext:qtitle="数据项名称" ext:qtip="'
+				+ val + '">' + val + '</div>';
+			return html;}},
+		{header:'终端状态',dataIndex:'online',align:'center',sortable:true, width:70,
+		renderer : function(val) {
+			if (val) {
+				return "<font color='green';font-weight:bold>" + '终端在线'
+							+ "</font>";
+			} else {
+				return "<font color='red';font-weight:bold>" + '终端不在线'
+							+ "</font>";
+			}
+		}}
+	]);
+	
+	function consumerInfoShow(consNo) {
+		 window.archivesData = {
+			cno : consNo
+		};
+		openTab("客户综合查询", "./qryStat/queryCollPoint/consumerInfo.jsp");
+	}
+
+	
+	var handStore = new Ext.data.Store({
+				proxy : new Ext.data.HttpProxy({
+							url:'./baseapp/gatherQualityEvaluate!findUnGatherInfo.action'
+						}),
+				reader : new Ext.data.JsonReader({
+							root : 'gatherByHandList',
+							totalProperty : 'totalCount'
+						}, [{
+									name : 'orgName'
+								}, {
+									name : 'consNo'
+								}, {
+									name : 'consName'
+								}, {
+									name : 'terminalAddr'
+								}, {
+									name : 'missingCnt'
+								}, {
+									name : 'statDate'
+								}, {
+									name : 'mpSn'
+								}, {
+									name : 'protNoList'
+								}, {
+									name : 'dataId'
+								}, {
+									name : 'dataSrc'
+								}, {
+									name : 'isDenizen'
+								}, {
+									name : 'templateId'
+								}, {
+									name : 'applyCnt'
+								}, {
+									name : 'firstCollCnt'
+								}, {
+									name : 'powerCutCnt'
+								}, {
+									name : 'online'
+								}, {
+									name : 'protocolName'
+								}])
+			});
+			
+	var handRecordGrid = new Ext.grid.GridPanel({
+		title:'漏点记录',
+		cm : handCm,
+		sm : handSm,
+		ds : handStore,
+		stripeRows : true,
+		autoWidth : true,	
+		autoScroll : true,
+		bbar : new Ext.ux.MyToolbar({
+					store : handStore,
+					pageSize : 15
+				})
+	});
+	var recordGridPanel = new Ext.Panel({
+			region:'center',
+			monitorResize : true,
+			layout:'fit',
+			items : [handRecordGrid],
+			border : false
+		});
+	function handFormSubmit(){
+		if(!handQueryPanel.getForm().isValid()){
+			Ext.Msg.alert('提示','请完整填写查询条件');
+			return true;
+		}
+		handStore.proxy.conn.url= 'baseapp/gatherQualityEvaluate!findUnGatherInfo.action'; 
+		handStore.baseParams = {
+			nodeValue : hideValueText.getValue(),
+			nodeType : hideTypeText.getValue(),
+			handStartDate : handDate1.getValue().format('Y-m-d'),
+			handEndDate : handDate2.getValue().format('Y-m-d'),
+			orgType : orgType,
+			queryType : handRadioForm.getValue().inputValue,
+			limit : 15
+//			queryType : '01'
+		};
+		handStore.load();
+	}
+	
+//监听左边树点击事件
+var treeListener = new LeftTreeListener({
+	 modelName : '手工补召',
+	 processClick : function(p, node, e) {
+		var obj = node.attributes.attributes;
+		var type = node.attributes.type;
+		if(type == 'org'){
+			if(obj.orgType == '02'){
+				return true;
+			}
+			handText.setValue(node.text);
+			hideTypeText.setValue(type);
+			hideValueText.setValue(obj.orgNo);
+			orgType = obj.orgType;
+		}else if(type == 'usr'){
+			handText.setValue(obj.consName);
+			hideTypeText.setValue(type);
+			hideValueText.setValue(obj.tmnlAssetNo);
+		}else if(type == 'line'){
+			handText.setValue(node.text);
+			hideTypeText.setValue(type);
+			hideValueText.setValue(obj.lineId);
+		}else if(type == 'cgp' || type=='ugp'){
+			handText.setValue(node.text);
+			hideTypeText.setValue(type);
+			hideValueText.setValue(obj.groupNo);
+		}else if(type == 'sub'){
+			handText.setValue(node.text);
+			hideTypeText.setValue(type);
+			hideValueText.setValue(obj.subsId);
+		}else {
+			return true;
+		}
+   	},
+   	processUserGridSelect:function(cm,row,record){
+   		handText.setValue(record.get('consName'));
+   		hideTypeText.setValue('usr');
+   		hideValueText.setValue(record.get('consNo'));
+    }
+});
+
+Ext.onReady(function(){	
+	var handViewPanel = new Ext.Panel({
+		bodyStyle:'padding:5px 5px 5px 5px',
+		layout: 'border' ,
+		items: [handQueryPanel,recordGridPanel],
+		border : false
+	});
+	renderModel(handViewPanel,'手工补召');
+	if(repairStartDate){
+		setElValue();
+		handFormSubmit();
+		repairStartDate = null;
+	}
+	Ext.getCmp('手工补召').on('activate', function() {
+		if (typeof(repairStartDate) != 'undefined' && !Ext.isEmpty(repairStartDate)) {
+			setElValue();
+			handFormSubmit();
+			repairStartDate = null;
+		}else{
+			handText.setValue('');
+			handStore.removeAll();
+		}
+	});
+});

@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/app/!svn/ver/7615/trunk/sea/src/dao/com/nari/baseapp/prepaidman/impl
+END
+PrePaidDebugJdbcDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/app/!svn/ver/7649/trunk/sea/src/dao/com/nari/baseapp/prepaidman/impl/PrePaidDebugJdbcDaoImpl.java
+END
+UseValueQueryDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/app/!svn/ver/7663/trunk/sea/src/dao/com/nari/baseapp/prepaidman/impl/UseValueQueryDaoImpl.java
+END
+PrePaidStatDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/app/!svn/ver/6421/trunk/sea/src/dao/com/nari/baseapp/prepaidman/impl/PrePaidStatDaoImpl.java
+END
+DunningControlDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/app/!svn/ver/6336/trunk/sea/src/dao/com/nari/baseapp/prepaidman/impl/DunningControlDaoImpl.java
+END
+PrePaidDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/app/!svn/ver/7652/trunk/sea/src/dao/com/nari/baseapp/prepaidman/impl/PrePaidDaoImpl.java
+END
+PrePaidStatusDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/app/!svn/ver/6421/trunk/sea/src/dao/com/nari/baseapp/prepaidman/impl/PrePaidStatusDaoImpl.java
+END

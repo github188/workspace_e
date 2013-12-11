@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.nari.terminalparam.TDataCombi" table="T_DATA_COMBI" >
+		<id name="combiId" type="java.lang.Long">
+			<column name="COMBI_ID" precision="10" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">S_T_DATA_COMBI</param>
+			</generator>
+		</id>
+
+		<property name="combiName" type="java.lang.String"><column name="COMBI_NAME" length="120" /></property>
+		<property name="clearProtNo" type="java.lang.String"><column name="CLEAR_PROT_NO" length="10" /></property>
+		<property name="staffNo" type="java.lang.String"><column name="STAFF_NO" length="16" /></property>
+		<property name="createDate" type="java.util.Date"><column name="CREATE_DATE" length="7" /></property>
+		<property name="validDays" type="java.lang.Integer"><column name="VALID_DAYS" precision="6" scale="0" /></property>
+		<property name="isShare" type="java.lang.Boolean"><column name="IS_SHARE" precision="1" scale="0" /></property>
+		<many-to-one name="bClearProtocol" column="CLEAR_PROT_NO" class="com.nari.basicdata.BClearProtocol" insert="false" update="false" lazy="false"/>
+	</class>
+</hibernate-mapping>

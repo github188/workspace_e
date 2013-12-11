@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/app/!svn/ver/6629/trunk/sea/src/service/com/nari/advapp/vipconsman/impl
+END
+DataPubManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/app/!svn/ver/6481/trunk/sea/src/service/com/nari/advapp/vipconsman/impl/DataPubManagerImpl.java
+END
+LogReleaseQueryManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/app/!svn/ver/6629/trunk/sea/src/service/com/nari/advapp/vipconsman/impl/LogReleaseQueryManagerImpl.java
+END
+VipConsMonitorDataManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/app/!svn/ver/5168/trunk/sea/src/service/com/nari/advapp/vipconsman/impl/VipConsMonitorDataManagerImpl.java
+END
+VipConsSortAnalyseManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/app/!svn/ver/5051/trunk/sea/src/service/com/nari/advapp/vipconsman/impl/VipConsSortAnalyseManagerImpl.java
+END
+VipConsDefineManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/app/!svn/ver/5116/trunk/sea/src/service/com/nari/advapp/vipconsman/impl/VipConsDefineManagerImpl.java
+END
+VipConsUserManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/app/!svn/ver/5116/trunk/sea/src/service/com/nari/advapp/vipconsman/impl/VipConsUserManagerImpl.java
+END
+VipConsMonitorManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/app/!svn/ver/5229/trunk/sea/src/service/com/nari/advapp/vipconsman/impl/VipConsMonitorManagerImpl.java
+END

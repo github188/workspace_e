@@ -1,0 +1,111 @@
+package com.nari.mydesk.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.jdbc.core.RowMapper;
+
+import com.nari.basedao.impl.JdbcBaseDAOImpl;
+import com.nari.mydesk.LosePowerStatAnalyseDao;
+import com.nari.mydesk.LosePowerStatAnalyseDto;
+import com.nari.privilige.PSysUser;
+
+/**
+ * 
+ * 线损统计DAO
+ * @author ChunMingLi
+ * @since 2010-8-18
+ *
+ */
+public class LosePowerStatAnalyseDaoImpl extends JdbcBaseDAOImpl implements
+		LosePowerStatAnalyseDao {
+
+	/* (non-Javadoc)
+	 * @see com.nari.mydesk.LosePowerStatAnalyseDao#queryLosePowerStatA(java.util.Date, java.lang.String, java.lang.String, com.nari.privilige.PSysUser)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<LosePowerStatAnalyseDto> queryTGLosePowerStatA(String queryDate,
+			String orgNo, String orgType, PSysUser pSysUser) throws Exception {
+		StringBuffer sql = new StringBuffer();
+		List<Object> parms = new ArrayList<Object>();
+		sql.append("   SELECT ( CASE WHEN (A.PPQ - A.TG_SPQ) / A.PPQ >= 0.2 THEN  (A.PPQ - A.TG_SPQ) / A.PPQ  ELSE 0 END) LOSE_POWER,  \n");
+		sql.append("   G.TG_NAME LP_NAME,  \n");
+		sql.append("   A.READ_SUCC_RATE,   \n");
+		sql.append("   A.READ_CNT,--抄表数    \n");
+		sql.append("   A.READ_SUCC_CNT,--抄表成功数    \n");
+		sql.append("   O.ORG_SHORT_NAME,  \n");
+		sql.append("   A.TG_ID LP_ID \n");
+		sql.append("   FROM A_TG_PQ A, G_TG G,O_ORG O  \n");
+		sql.append("   WHERE A.TG_ID = G.TG_ID  \n");
+		sql.append("   AND A.ORG_NO = O.ORG_NO  \n");
+		if(!pSysUser.getAccessLevel().equals("02")){
+			sql.append("    AND O.P_ORG_NO = ? \n");
+			parms.add(pSysUser.getOrgNo());
+		}
+		sql.append("    AND A.STAT_DATE = ? \n");
+		parms.add(queryDate);
+		logger.debug(sql.toString());
+		
+		
+		return super.getJdbcTemplate().query(sql.toString(), parms.toArray(), new LosePowerStatAnalyseRowMapper());
+	}
+
+	/**
+	 * 
+	 * 线损统计DAO映射类
+	 * 
+	 * @author ChunMingLi
+	 * @since  2010-7-29
+	 *
+	 */
+	class LosePowerStatAnalyseRowMapper implements RowMapper {
+		@Override
+		public Object mapRow(ResultSet rs, int paramInt) throws SQLException {
+			LosePowerStatAnalyseDto lpsDto = new LosePowerStatAnalyseDto();
+			try {
+				lpsDto.setName(rs.getString("LP_NAME"));
+				lpsDto.setOrgName(rs.getString("ORG_SHORT_NAME"));
+				lpsDto.setReadSuccRate(rs.getDouble("READ_SUCC_RATE"));
+				lpsDto.setReadCnt(rs.getDouble("READ_CNT"));
+				lpsDto.setLosePower(rs.getDouble("LOSE_POWER"));
+				lpsDto.setReadSuccCnt(rs.getDouble("READ_SUCC_CNT"));
+				lpsDto.setLosePId(rs.getInt("LP_ID"));
+				return lpsDto;
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+
+}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<LosePowerStatAnalyseDto> queryLineLosePowerStatA(
+			String queryDate, String orgNo, String orgType, PSysUser pSysUser)
+			throws Exception {
+		StringBuffer sql = new StringBuffer();
+		List<Object> parms = new ArrayList<Object>();
+		sql.append("   SELECT (CASE  WHEN (A.LINE_SUPPLY_PQ - A.LINE_SPQ ) / A.LINE_SUPPLY_PQ >= 0.2 THEN (A.LINE_SUPPLY_PQ - A.LINE_SPQ ) / A.LINE_SUPPLY_PQ ELSE  0 END) LOSE_POWER,  \n");
+		sql.append("   G.LINE_NAME  LP_NAME,  \n");
+		sql.append("   A.READ_SUCC_RATE,   \n");
+		sql.append("   A.READ_CNT,--抄表数     \n");
+		sql.append("   A.READ_SUCC_CNT,--抄表成功数   \n");
+		sql.append("   O.ORG_SHORT_NAME,  \n");
+		sql.append("   A.LINE_ID LP_ID \n");
+		sql.append("   FROM A_LINE_PQ A, G_LINE G, O_ORG O  \n");
+		sql.append("   WHERE A.LINE_ID = G.LINE_ID  \n");
+		sql.append("   AND A.ORG_NO = O.ORG_NO  \n");
+		sql.append("    AND O.P_ORG_NO = ? \n");
+		parms.add(pSysUser.getOrgNo());
+		sql.append("    AND A.STAT_DATE = ? \n");
+		parms.add(queryDate);
+		logger.debug(sql.toString());
+	
+		return super.getJdbcTemplate().query(sql.toString(), parms.toArray(), new LosePowerStatAnalyseRowMapper());
+	}
+}

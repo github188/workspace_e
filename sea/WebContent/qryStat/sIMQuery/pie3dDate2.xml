@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<chart palette="4" decimals="0" enableSmartLabels="1" enableRotation="0" bgColor="99CCFF,FFFFFF" bgAlpha="40,100" bgRatio="0,100" bgAngle="360" showBorder="1" startingAngle="70">
+	<set label="西宁供电公司" value="309" /> 
+	<set label="海南供电公司" value="230" /> 
+	<set label="海北供电公司" value="104" /> 
+	<set label="海东供电公司" value="113" /> 
+	<set label="海西供电公司" value="108" /> 
+	<set label="黄化供电公司" value="59" /> 
+	<set label="果洛供电公司" value="87" />  
+</chart>

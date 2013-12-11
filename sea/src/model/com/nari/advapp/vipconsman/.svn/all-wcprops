@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/app/!svn/ver/6630/trunk/sea/src/model/com/nari/advapp/vipconsman
+END
+VipConsManagerDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/app/!svn/ver/5117/trunk/sea/src/model/com/nari/advapp/vipconsman/VipConsManagerDto.java
+END
+VipConsManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/app/!svn/ver/5117/trunk/sea/src/model/com/nari/advapp/vipconsman/VipConsManager.java
+END
+VipConsStatDataBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/app/!svn/ver/5169/trunk/sea/src/model/com/nari/advapp/vipconsman/VipConsStatDataBean.java
+END
+VipConsManagerId.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/5117/trunk/sea/src/model/com/nari/advapp/vipconsman/VipConsManagerId.java
+END
+VipConsSortAnalyseBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/app/!svn/ver/5052/trunk/sea/src/model/com/nari/advapp/vipconsman/VipConsSortAnalyseBean.java
+END
+VipConsMonitorDataBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/app/!svn/ver/5067/trunk/sea/src/model/com/nari/advapp/vipconsman/VipConsMonitorDataBean.java
+END
+VipConsEnergyCurveDataBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/app/!svn/ver/5169/trunk/sea/src/model/com/nari/advapp/vipconsman/VipConsEnergyCurveDataBean.java
+END
+VipConsManager.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/app/!svn/ver/5112/trunk/sea/src/model/com/nari/advapp/vipconsman/VipConsManager.hbm.xml
+END
+VipConsMonitorDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/app/!svn/ver/5108/trunk/sea/src/model/com/nari/advapp/vipconsman/VipConsMonitorDto.java
+END
+LogRelease.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/6630/trunk/sea/src/model/com/nari/advapp/vipconsman/LogRelease.java
+END
+VipConsRealPowerDataBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/app/!svn/ver/5169/trunk/sea/src/model/com/nari/advapp/vipconsman/VipConsRealPowerDataBean.java
+END
+VipConsPowerCurveDataBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/app/!svn/ver/5169/trunk/sea/src/model/com/nari/advapp/vipconsman/VipConsPowerCurveDataBean.java
+END

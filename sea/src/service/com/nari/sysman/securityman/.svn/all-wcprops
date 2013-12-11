@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/app/!svn/ver/7016/trunk/sea/src/service/com/nari/sysman/securityman
+END
+IOperatorManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/app/!svn/ver/2464/trunk/sea/src/service/com/nari/sysman/securityman/IOperatorManager.java
+END
+IGeneralTreeManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/app/!svn/ver/5407/trunk/sea/src/service/com/nari/sysman/securityman/IGeneralTreeManager.java
+END
+IPRoleManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/3059/trunk/sea/src/service/com/nari/sysman/securityman/IPRoleManager.java
+END
+IDictionaryManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/4530/trunk/sea/src/service/com/nari/sysman/securityman/IDictionaryManager.java
+END
+权限管理
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/app/!svn/ver/2464/trunk/sea/src/service/com/nari/sysman/securityman/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86
+END
+IODeptManManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/app/!svn/ver/2464/trunk/sea/src/service/com/nari/sysman/securityman/IODeptManManager.java
+END
+IAuthorizeManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/app/!svn/ver/4430/trunk/sea/src/service/com/nari/sysman/securityman/IAuthorizeManager.java
+END
+IPSysUserManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/app/!svn/ver/2464/trunk/sea/src/service/com/nari/sysman/securityman/IPSysUserManager.java
+END
+IOperatorsManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/app/!svn/ver/4541/trunk/sea/src/service/com/nari/sysman/securityman/IOperatorsManager.java
+END
+IPMenuManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/3183/trunk/sea/src/service/com/nari/sysman/securityman/IPMenuManager.java
+END
+IAlertEventManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/5913/trunk/sea/src/service/com/nari/sysman/securityman/IAlertEventManager.java
+END
+权限密码管理接口
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/svn/app/!svn/ver/2464/trunk/sea/src/service/com/nari/sysman/securityman/%E6%9D%83%E9%99%90%E5%AF%86%E7%A0%81%E7%AE%A1%E7%90%86%E6%8E%A5%E5%8F%A3
+END
+IUserAdvanceQueryManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/app/!svn/ver/3180/trunk/sea/src/service/com/nari/sysman/securityman/IUserAdvanceQueryManager.java
+END

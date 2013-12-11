@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/6959/trunk/sea/src/service/com/nari/qrystat/colldataanalyse/impl
+END
+TradeTrendlineManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/app/!svn/ver/5210/trunk/sea/src/service/com/nari/qrystat/colldataanalyse/impl/TradeTrendlineManagerImpl.java
+END
+AreaPowerDistManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/app/!svn/ver/5224/trunk/sea/src/service/com/nari/qrystat/colldataanalyse/impl/AreaPowerDistManagerImpl.java
+END
+LineLosePowerStatManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/app/!svn/ver/6120/trunk/sea/src/service/com/nari/qrystat/colldataanalyse/impl/LineLosePowerStatManagerImpl.java
+END
+PowerSortAnalyseManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/app/!svn/ver/3710/trunk/sea/src/service/com/nari/qrystat/colldataanalyse/impl/PowerSortAnalyseManagerImpl.java
+END
+TGLosePowerStatManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/app/!svn/ver/6125/trunk/sea/src/service/com/nari/qrystat/colldataanalyse/impl/TGLosePowerStatManagerImpl.java
+END
+CurrLoadMonitorManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/app/!svn/ver/4436/trunk/sea/src/service/com/nari/qrystat/colldataanalyse/impl/CurrLoadMonitorManagerImpl.java
+END
+LosePowerStatManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/app/!svn/ver/6959/trunk/sea/src/service/com/nari/qrystat/colldataanalyse/impl/LosePowerStatManagerImpl.java
+END
+LosePowerManManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/app/!svn/ver/6232/trunk/sea/src/service/com/nari/qrystat/colldataanalyse/impl/LosePowerManManagerImpl.java
+END
+GeneralAnalyseManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/app/!svn/ver/5168/trunk/sea/src/service/com/nari/qrystat/colldataanalyse/impl/GeneralAnalyseManagerImpl.java
+END
+LineLosePowerQryManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/app/!svn/ver/6735/trunk/sea/src/service/com/nari/qrystat/colldataanalyse/impl/LineLosePowerQryManagerImpl.java
+END
+LineEceltricQuantityManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/app/!svn/ver/5448/trunk/sea/src/service/com/nari/qrystat/colldataanalyse/impl/LineEceltricQuantityManagerImpl.java
+END

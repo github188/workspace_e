@@ -1,0 +1,1409 @@
+<svg width="1280" xmlns="http://www.w3.org/2000/svg" height="1024" xmlns:xlink="http://www.w3.org/1999/xlink" name="qishanB.svg" id="mainSVG">
+ <!--<rect width="1280" x="0" y="0" fill="#f0f0f0" height="1024" fill-opacity="1" />-->
+ <script language="JavaScript" ><![CDATA[
+function useVoltageColor(powerMetaDefsElem, grdClr1, grdClr2, grdClr3, grdClr4, vltAlpha1, vltAlpha2, vltAlpha3, vltAlpha4)
+{
+     if (grdClr1 == "" && grdClr2 == "" && grdClr3 == "" && grdClr4 == "")
+         return;
+
+     var basicItemLst = powerMetaDefsElem.getElementsByTagName("g");
+     
+     var idx = 0;
+     var nLen = basicItemLst.length;
+     for (idx=0; idx < nLen; idx++)
+     {
+		var childCount = basicItemLst.item(idx).childNodes.length;
+		var jj=0;
+		for (jj=0; jj<childCount; jj++)
+		{
+			var basicAtom = basicItemLst.item(idx).childNodes.item(jj);
+			if (basicAtom.nodeType == 3/*TEXT_NODE*/)
+				continue;
+
+			/* stroke color */
+			if (basicAtom.hasAttribute("clrType"))
+			{
+				var str = basicAtom.getAttribute("clrType");
+				var clrType = parseInt(str);
+				var strokeClr = "";
+				var strokeAlpha = "1.00";
+
+				if (clrType != 0)
+				{
+					switch (clrType)
+					{
+						case 1:
+						   strokeClr = grdClr1;  strokeAlpha = vltAlpha1; break; 
+						case 2:
+						   strokeClr = grdClr2;  strokeAlpha = vltAlpha2; break;
+						case 3:
+						   strokeClr = grdClr3;  strokeAlpha = vltAlpha3; break;
+						case 4:
+						   strokeClr = grdClr4;  strokeAlpha = vltAlpha4; break;
+						default:
+						   break;
+					}
+
+					if (strokeClr != "")
+					{
+						basicAtom.setAttribute("stroke", strokeClr);
+						if (strokeAlpha != "1.00")
+							basicAtom.setAttribute("stroke-opacity", strokeAlpha);
+
+					}
+				}// clrType != 0
+			}// basicAtom.hasAttribute("clrType")
+
+			/* fill color */
+			if (basicAtom.hasAttribute("bgclrType"))
+			{
+				var str = basicAtom.getAttribute("bgclrType");
+				var bgclrType = parseInt(str);
+				var fillClr = "";
+				var fillAlpha = "1.00";
+
+				if (bgclrType != 0)
+				{
+					switch (bgclrType)
+					{
+						case 1:
+						   fillClr = grdClr1; fillAlpha = vltAlpha1; break; 
+						case 2:
+						   fillClr = grdClr2; fillAlpha = vltAlpha2; break;
+						case 3:
+						   fillClr = grdClr3; fillAlpha = vltAlpha3; break;
+						case 4:
+						   fillClr = grdClr4; fillAlpha = vltAlpha4; break;
+						default:
+						   break;
+					}
+
+					if (fillClr != "")
+					{
+						basicAtom.setAttribute("fill", fillClr);
+						if (fillAlpha != "1.00")
+							basicAtom.setAttribute("fill-opacity", fillAlpha);
+
+					}
+				}// bgclrType != 0
+			}// basicAtom.hasAttribute("bgclrType")
+		}// for (jj=0; jj<childCount; jj++)
+
+     }// for (idx=0; idx < nLen; idx++)
+}
+
+var metaCounter = 0;
+function parseCloneNode(clonedElem)
+{
+	/* modify the powerMeta's Id */
+	var srcId = clonedElem.getAttribute("id");
+	var desId = metaCounter + "_" + srcId;
+	clonedElem.setAttribute("id", desId);
+
+	var scriptElemLst = clonedElem.getElementsByTagName("script");
+	var scriptElem;
+	if (scriptElemLst.length != 0) // so there are some animation
+	{
+	    scriptElem = scriptElemLst.item(0);  
+		var imgDefLst = clonedElem.getElementsByTagName("image");
+		if (imgDefLst.length != 0) // so there are image animation
+		{
+		    var kk;
+			for (kk=0; kk<imgDefLst.length; kk++)
+			{
+			    var imageElem = imgDefLst.item(kk);
+				var oldId = imageElem.getAttribute("id");
+				imageElem.setAttribute("id", metaCounter + "_" + oldId);
+			}
+
+			var useElement = clonedElem.getElementsByTagName("use").item(0);
+			var oldId = useElement.getAttribute("id");
+			useElement.setAttribute("id", metaCounter + "_" + oldId);
+
+			// modify link id
+			var oldLinkId = useElement.getAttribute("xlink:href");
+			oldLinkId = oldLinkId.substring(1, oldLinkId.length);
+			useElement.setAttribute("xlink:href", "#" + metaCounter + "_" + oldLinkId);
+
+			// modify script
+			var strLst = srcId.split("_");
+			var idPre = strLst[0];
+			var srcData = scriptElem.firstChild.nodeValue;
+			var srcDataList = srcData.split("\n");
+
+			// first Line
+			var line1Lst = srcDataList[0].split("=");
+			var line1Section1 = line1Lst[0].replace("imgAn_", "imgAn_" + metaCounter + "_");
+			var tmpLst = line1Lst[1].split(",");
+			var line1Section2 = tmpLst[0].replace(idPre, metaCounter + "_" + idPre);
+			var line1Section3 = tmpLst[1].replace(idPre, metaCounter + "_" + idPre);
+			var desLine1 = line1Section1 + " = " + line1Section2 + "," + line1Section3 + "," + tmpLst[2] + "," + tmpLst[3];
+			
+			// secnod Line
+			var desLine2 = srcDataList[1].replace("imgAn_", "imgAn_" + metaCounter + "_");
+			var desData = desLine1 + "\n" + desLine2 + "\n";
+			
+			scriptElem.firstChild.data = desData;
+		}
+		else  // there are line animation
+		{
+		    var pathElemLst = clonedElem.getElementsByTagName("path");
+			var jj;
+			for (jj=0; jj<pathElemLst.length; jj++)
+			{
+				var pathElem = pathElemLst.item(jj);
+				if (pathElem.hasAttribute("id"))
+				{
+					var oldId = pathElem.getAttribute("id");
+					pathElem.setAttribute("id", metaCounter + "_" + oldId);
+				}
+			}
+			var strLst = srcId.split("_");
+			var idPre = strLst[0];
+
+			var srcData = scriptElem.firstChild.nodeValue;
+			var srcDataLst = srcData.split("\n");
+
+			var tmpData = srcDataLst[0].replace("lnAn_", "lnAn_" + metaCounter + "_");
+			
+			var desLine1 = tmpData.replace(idPre, metaCounter + "_" + idPre);
+			
+
+			var desLine2 = srcDataLst[1].replace("lnAn_", "lnAn_" + metaCounter + "_");
+			var desData = desLine1 + "\n" + desLine2 + "\n";;
+			scriptElem.firstChild.data = desData;
+			//alert(desData);
+		}
+	}
+}
+
+function drawPowerAtom(atomId, metaId, nStatusCount, curStatus, vltClr1, vltClr2, vltClr3, vltClr4, vltAlpha1, vltAlpha2, vltAlpha3, vltAlpha4)
+{
+     /* the atom element */
+     var atom = document.getElementById(atomId);
+
+     /* the transform element of atom */
+     var atomTrans = atom.firstChild.nextSibling;
+    
+    var i=0
+    for (i=0; i<nStatusCount; i++)
+    {
+		 /* get the powerMeta element */
+		 var statusMetaId = metaId + "_" + i;
+		 var powerMeta = document.getElementById(statusMetaId);
+		 var importPowerMeta = powerMeta.cloneNode(true);
+
+		 /* parse the importPowerMeta to deal with animation */
+		 parseCloneNode(importPowerMeta);
+
+		 /* modify the poerMeta to use voltage grade color */
+		 useVoltageColor(importPowerMeta, vltClr1, vltClr2, vltClr3, vltClr4, vltAlpha1, vltAlpha2, vltAlpha3, vltAlpha4);
+
+         /* create powerMeta defs element */
+		 var metaDefsElem = document.createElement("defs");
+		 metaDefsElem.appendChild(importPowerMeta);
+
+		 /* append the defs element to the document */
+		 atomTrans.appendChild(metaDefsElem);
+    }
+	
+	metaCounter++;
+}
+/*
+移入ae9001_common.js
+function scaleSvg(num)
+{
+   // 运用VIEWER实现的放大缩小
+   var root;
+   root=svg.getSVGDocument().documentElement;
+   svg.style.width=root.attributes.getNamedItem("width").nodeValue*num;
+   svg.style.height=root.attributes.getNamedItem("height").nodeValue*num;
+   root.currentScale =  num;
+}
+*/
+var scaleFactor = 1.0;
+
+// 放大
+function SEA_ZoomIn()
+{
+	scaleFactor += 0.2;
+	scaleSvg(scaleFactor);
+}
+
+//  缩小
+function SEA_ZoomOut()
+{
+	scaleFactor -= 0.2;
+	if (scaleFactor <= 0)
+	{
+		scaleFactor = 0.2;
+	}
+
+	scaleSvg(scaleFactor);
+}
+
+// 原始大小
+function SEA_original_Scale()
+{
+	scaleFactor = 1.0;
+	scaleSvg(scaleFactor);
+}
+
+function lineAnimate(animateItemId, animateDir, isLong)
+{
+	this.animateElemId = animateItemId;
+	this.direction = animateDir;
+	this.bLong = isLong;
+	this.counter = 1;
+
+	this.doAn = function()
+	{
+		var targt = document.getElementById(this.animateElemId);
+		if (this.direction)
+		{
+			if (this.bLong)
+			{
+				switch(this.counter)
+				{
+				case 8:
+					targt.setAttribute("stroke-dasharray", "12 9 3 0"); break;
+				case 7:
+					targt.setAttribute("stroke-dasharray", "9 9 6 0"); break;
+				case 6:
+					targt.setAttribute("stroke-dasharray", "6 9 9 0"); break;
+				case 5:
+					targt.setAttribute("stroke-dasharray", "3 9 12 0"); break;
+				case 4:
+					targt.setAttribute("stroke-dasharray", "0 9 15 0"); break;
+				case 3:
+					targt.setAttribute("stroke-dasharray", "0 6 15 3"); break;
+				case 2:
+					targt.setAttribute("stroke-dasharray", "0 3 15 6"); break;
+				case 1:
+					targt.setAttribute("stroke-dasharray", "15 9"); break;
+				}
+				if (this.counter == 8) this.counter = 0;
+				this.counter++;
+			}// if(this.bLong)
+			else
+			{
+				switch(this.counter)
+				{
+				case 8:
+					targt.setAttribute("stroke-dasharray", "6 4.5 1.5 0"); break;
+				case 7:
+					targt.setAttribute("stroke-dasharray", "4.5 4.5 3 0"); break;
+				case 6:
+					targt.setAttribute("stroke-dasharray", "3 4.5 4.5 0"); break;
+				case 5:
+					targt.setAttribute("stroke-dasharray", "1.5 4.5 6 0"); break;
+				case 4:
+					targt.setAttribute("stroke-dasharray", "0 4.5 7.5 0"); break;
+				case 3:
+					targt.setAttribute("stroke-dasharray", "0 3 7.5 1.5"); break;
+				case 2:
+					targt.setAttribute("stroke-dasharray", "0 1.5 7.5 3"); break;
+				case 1:
+					targt.setAttribute("stroke-dasharray", "7.5 4.5"); break;
+				}
+				if (this.counter == 8) this.counter = 0;
+				this.counter++;
+			}
+		}// if (this.direction)
+		else
+		{
+		    if (this.bLong)
+		    {
+				switch(this.counter)
+				{
+				case 1:
+					targt.setAttribute("stroke-dasharray", "12 9 3 0"); break;
+				case 2:
+					targt.setAttribute("stroke-dasharray", "9 9 6 0"); break;
+				case 3:
+					targt.setAttribute("stroke-dasharray", "6 9 9 0"); break;
+				case 4:
+					targt.setAttribute("stroke-dasharray", "3 9 12 0"); break;
+				case 5:
+					targt.setAttribute("stroke-dasharray", "0 9 15 0"); break;
+				case 6:
+					targt.setAttribute("stroke-dasharray", "0 6 15 3"); break;
+				case 7:
+					targt.setAttribute("stroke-dasharray", "0 3 15 6"); break;
+				case 8:
+					targt.setAttribute("stroke-dasharray", "15 9"); break;
+				}
+				if (this.counter == 8) this.counter = 0;
+				this.counter++;
+		    }
+			else
+			{
+				switch(this.counter)
+				{
+				case 1:
+					targt.setAttribute("stroke-dasharray", "6 4.5 1.5 0"); break;
+				case 2:
+					targt.setAttribute("stroke-dasharray", "4.5 4.5 3 0"); break;
+				case 3:
+					targt.setAttribute("stroke-dasharray", "3 4.5 4.5 0"); break;
+				case 4:
+					targt.setAttribute("stroke-dasharray", "1.5 4.5 6 0"); break;
+				case 5:
+					targt.setAttribute("stroke-dasharray", "0 4.5 7.5 0"); break;
+				case 6:
+					targt.setAttribute("stroke-dasharray", "0 3 7.5 1.5"); break;
+				case 7:
+					targt.setAttribute("stroke-dasharray", "0 1.5 7.5 3"); break;
+				case 8:
+					targt.setAttribute("stroke-dasharray", "7.5 4.5"); break;
+				}
+				if (this.counter == 8) this.counter = 0;
+				this.counter++;
+			}
+		}// else
+	}// end of function()
+}
+
+function imageAnimate(useImageId, imageDefId, imageCount, direction)
+{
+    this.useId = useImageId;
+    this.picDefId = imageDefId;
+    this.imageNum = imageCount;
+    this.anDir = direction;
+    if (this.anDir)
+        this.counter = 0;
+    else
+        this.counter = imageCount;
+
+    this.doImageAnimate = function()
+    {
+        var useTarget = document.getElementById(this.useId);
+        if (this.anDir)
+        {
+            this.counter++;
+            if (this.counter == this.imageNum) this.counter = 0;
+        }
+        else 
+        {
+            this.counter--;
+            if (this.counter == -1) this.counter = this.imageNum - 1;
+        }
+        var curPicId = "#" + this.picDefId + "_" + this.counter;
+        useTarget.setAttribute("xlink:href", curPicId);
+    }
+}]]></script>
+ <defs>
+  <g m_rect="1.564292,-6.886450,28.371308,55.783650" lastUpdate="2008-09-09T13:59:26" type="yx" id="{555d8f60-dfd7-48ff-aa81-195ef0390488}_0" >
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -14.581700 -1.745480)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M34.497800,37.568600 L34.497800,40.394800 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -15.113900 -12.258600)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M31.750200,20.904000 L20.679600,44.024700 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -14.859400 -19.726600)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M34.713600,22.453800 L34.713600,25.432800 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 0.525062 -3.207640)" >
+    <ellipse stroke-opacity="1" fill="#000000" cx="19.3624" cy="12.2301" rx="3" ry="3" stroke="#ff0000" fill-opacity="0" stroke-linecap="square" stroke-width="1" clrType="1" bgclrType="0" />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 0.000000 4.000000)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M17.484500,31.188500 L22.315000,31.188500 " />
+   </g>
+  </g>
+  <g m_rect="1.564292,-6.886450,28.371308,55.783650" lastUpdate="2008-09-09T13:59:26" type="yx" id="{555d8f60-dfd7-48ff-aa81-195ef0390488}_1" >
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -14.859400 -14.525600)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M34.713600,15.890800 L34.713600,20.075900 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -15.113900 -7.057650)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M31.785700,15.563600 L31.785700,42.289200 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -14.581700 3.455470)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M34.497800,32.367700 L34.497800,34.986100 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 0.577568 -3.207640)" >
+    <ellipse stroke-opacity="1" fill="#000000" cx="19.3624" cy="12.23012" rx="3" ry="3" stroke="#ff0000" fill-opacity="0" stroke-linecap="square" stroke-width="1" clrType="1" bgclrType="0" />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 0.000000 14.501200)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M17.537000,20.792400 L22.367500,20.792400 " />
+   </g>
+  </g>
+  <g m_rect="12.026200,-4.568030,18.052500,51.892730" lastUpdate="2008-09-09T16:04:43" type="yx" id="{702a719c-740f-486b-a83a-b2f1b4514dcb}_0" >
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -7.898080 1.192400)" >
+    <rect width="12" x="21.8706" y="5.27261" stroke-opacity="1" fill="none" rx="1.2" height="28" ry="2.8" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -3.343190 -11.089800)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M23.369300,14.727300 L23.369300,16.887700 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -11.193100 2.893400)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M31.219300,32.400000 L31.219300,34.510300 " />
+   </g>
+  </g>
+  <g m_rect="12.026200,-4.568030,18.052500,51.892730" lastUpdate="2008-09-09T16:04:43" type="yx" id="{702a719c-740f-486b-a83a-b2f1b4514dcb}_1" >
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -5.454280 -4.885060)" >
+    <defs>
+     <linearGradient id="{702a719c-740f-486b-a83a-b2f1b4514dcb}_1G_3" >
+      <stop offset="0%" stop-color="#ff557f" />
+      <stop offset="50%" stop-color="#aa0000" />
+      <stop offset="100%" stop-color="#ff557f" />
+     </linearGradient>
+    </defs>
+    <rect width="12" x="19.4243" y="11.4051" stroke-opacity="1" fill="url(#{702a719c-740f-486b-a83a-b2f1b4514dcb}_1G_3)" rx="1.2" height="28" ry="2.8" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -0.893640 -3.393430)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M20.922100,6.926460 L20.922100,8.983000 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -13.431900 10.589800)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M33.510600,24.858300 L33.510600,26.760900 " />
+   </g>
+  </g>
+  <g m_rect="21.686400,-3.334760,18.000000,90.374760" lastUpdate="2008-01-09T18:40:25" type="xx" id="{d34a3966-00e1-4668-ad22-cc466fce195a}_0" >
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 0.467532 26.781500)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M29.222500,-21.781500 L29.222500,57.258500 " />
+    <path stroke-opacity="1" fill="#ff0000" stroke="#ff0000" fill-opacity="1" stroke-linecap="square" stroke-width="1" clrType="1" d="M32.222500,51.258500 L29.222500,57.258500 L26.222500,51.258500 z" bgclrType="1" />
+   </g>
+  </g>
+  <g m_rect="11.479950,-5.194810,37.110080,59.324780" lastUpdate="2008-01-10T16:12:07" type="xx" id="{141f39a4-b0bc-4aff-aa75-b82673e71049}_0" >
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 0.000000 0.000000)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M29.922100,3.038960 L29.922100,20.337700 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -1.046030 -7.948050)" >
+    <ellipse stroke-opacity="1" fill="#0000ff" cx="30.846" cy="36.9281" rx="8.51" ry="8.51" stroke="#ff0000" fill-opacity="0" stroke-linecap="square" stroke-width="1" clrType="1" bgclrType="0" />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -6.857150 4.587920)" >
+    <ellipse stroke-opacity="1" fill="#0000ff" cx="30.8471" cy="36.9321" rx="8.51" ry="8.51" stroke="#ff0000" fill-opacity="0" stroke-linecap="square" stroke-width="1" clrType="1" bgclrType="0" />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 5.233730 4.685070)" >
+    <ellipse stroke-opacity="1" fill="#0000ff" cx="30.8463" cy="36.9349" rx="8.51" ry="8.51" stroke="#ff0000" fill-opacity="0" stroke-linecap="square" stroke-width="1" clrType="1" bgclrType="0" />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -0.054120 -9.506110)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M30.000000,38.458900 L30.000000,31.948100 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -0.907625 -8.138960)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M30.853500,37.480500 L25.792200,39.715600 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -0.054120 -8.138960)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M30.000000,37.480500 L35.155000,39.812700 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 0.357500 -6.325600)" >
+    <polygon stroke-opacity="1" fill="#0000ff" points="35.586900,44.818500 32.029300,51.207400 39.144600,51.207400 " stroke="#ff0000" fill-opacity="0" stroke-linecap="square" stroke-width="1" clrType="1" bgclrType="0" />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -1.681410 1.428110)" >
+    <polygon stroke-opacity="1" fill="#0000ff" points="25.535000,36.870500 21.977400,43.259200 29.092700,43.259200 " stroke="#ff0000" fill-opacity="0" stroke-linecap="square" stroke-width="1" clrType="1" bgclrType="0" />
+   </g>
+  </g>
+  <g m_rect="21.890200,2.126500,25.948759,57.746100" lastUpdate="2008-09-09T16:09:07" type="yx" id="{6626a12e-9833-4c10-9b55-0479a96aff31}_0" >
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -0.243631 -6.617210)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M30.128800,16.775400 L30.128800,21.968000 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -0.679584 -0.943794)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M33.908800,19.893400 L44.548300,43.394900 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 0.141345 8.785000)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M29.894600,36.487100 L29.894600,41.158000 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 7.088310 1.890220)" >
+    <ellipse stroke-opacity="1" fill="#0000ff" cx="22.7829" cy="17.1885" rx="3" ry="3" stroke="#ff0000" fill-opacity="0" stroke-linecap="square" stroke-width="1" clrType="1" bgclrType="0" />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 0.000000 0.000000)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M27.014300,44.892600 L32.921200,44.892600 " />
+   </g>
+  </g>
+  <g m_rect="21.890200,2.126500,25.948759,57.746100" lastUpdate="2008-09-09T16:09:07" type="yx" id="{6626a12e-9833-4c10-9b55-0479a96aff31}_1" >
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 0.141345 8.809600)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M29.898700,36.567100 L29.898700,40.977500 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -0.243631 -6.592620)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M30.092900,16.672900 L30.092900,21.583800 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -0.909840 10.769100)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M34.220900,7.975530 L34.220900,34.123500 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 7.088300 1.890220)" >
+    <ellipse stroke-opacity="1" fill="#0000ff" cx="22.7853" cy="17.1848" rx="3" ry="3" stroke="#ff0000" fill-opacity="0" stroke-linecap="square" stroke-width="1" clrType="1" bgclrType="0" />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 0.000000 15.751800)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M27.014300,29.140800 L32.921200,29.140800 " />
+   </g>
+  </g>
+  <g m_rect="18.538400,-3.355100,53.329100,98.079400" lastUpdate="2008-01-10T16:14:01" type="xx" id="{7c2687f3-fbd2-42eb-ac8f-177c213bd2f5}_0" >
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 18.726100 9.307920)" >
+    <ellipse stroke-opacity="1" fill="#0000ff" cx="26.3123" cy="18.39809" rx="22.5" ry="22.5" stroke="#ff0000" fill-opacity="0" stroke-linecap="square" stroke-width="2" clrType="1" bgclrType="0" />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 19.051200 43.225600)" >
+    <ellipse stroke-opacity="1" fill="#0000ff" cx="26.3163" cy="18.4" rx="22.5" ry="22.5" stroke="#00ff00" fill-opacity="0" stroke-linecap="square" stroke-width="2" clrType="2" bgclrType="0" />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 0.000000 0.000000)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="2" clrType="1" d="M44.820000,9.950000 L44.820000,25.330000 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 0.000000 0.000000)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="2" clrType="1" d="M44.072600,26.821300 L30.659600,36.042600 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 0.000000 0.000000)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="2" clrType="1" d="M45.373800,26.821300 L60.734000,35.574500 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 0.000000 0.000000)" >
+    <polygon stroke-opacity="1" fill="#0000ff" points="45.006200,55.472200 34.585400,70.504800 55.427100,70.504800 " stroke="#00ff00" fill-opacity="0" stroke-linecap="square" stroke-width="2" clrType="2" bgclrType="0" />
+   </g>
+  </g>
+  <g m_rect="11.581605,5.324700,36.685147,42.318652" lastUpdate="2008-09-09T16:14:22" type="xx" id="{02f09fe4-0511-4bab-9542-94bb38d48799}_0" >
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 0.000000 0.000000)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M29.922100,13.480500 L29.922100,19.636400 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 0.155844 -4.831170)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M24.935100,25.013000 L34.597400,25.013000 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 0.155844 2.961040)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M25.013000,21.818200 L34.675300,21.818200 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 -0.000000 1.000000 27.050700 13.394000)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M5.754480,23.930700 L11.442800,18.242300 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 -0.000000 1.000000 30.468000 16.334200)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M5.376120,24.341200 L10.986500,18.497000 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 24.389600 19.558400)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M-2.415580,12.077900 L2.883120,17.844200 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 24.389600 27.350600)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M-5.844160,7.324680 L-0.233766,13.558400 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 0.000000 0.000000)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M29.922100,24.779200 L29.922100,29.610400 " />
+   </g>
+   <g transform="matrix(0.766044 -0.642788 0.642788 0.766044 -5.512950 28.162000)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M25.964700,24.313700 L26.510800,30.442600 " />
+   </g>
+   <g transform="matrix(0.766044 0.642788 -0.642788 0.766044 25.732700 -11.817500)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M30.109000,29.858800 L29.520300,35.209600 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 0.000000 0.000000)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M21.194800,38.337700 L15.818200,43.168800 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 0.000000 0.000000)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M38.649400,38.337700 L44.026000,43.402600 " />
+   </g>
+  </g>
+  <g m_rect="8.451108,-5.497050,19.115092,47.827450" lastUpdate="2008-01-10T16:41:41" type="xx" id="{f573ee68-ba3b-49f3-9b5c-cc5b24e9fe96}_0" >
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -9.875290 -8.692080)" >
+    <rect width="12.4042" x="21.2394" y="16.8511" stroke-opacity="1" fill="none" rx="0" height="18.7233" ry="0" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -4.960400 -5.825060)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M22.585100,13.223400 L22.526600,8.659570 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -4.960400 -5.825060)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M22.468100,33.643600 L22.468100,37.914900 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -4.960400 -5.825060)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M16.734000,22.468100 L27.909600,22.526600 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -4.960400 -5.825060)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M16.441500,18.021300 L28.085100,18.138300 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -4.960400 -5.825060)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M16.558500,27.558500 L27.968100,27.675500 " />
+   </g>
+  </g>
+  <g m_rect="8.069293,-5.880290,23.908713,39.970090" lastUpdate="2008-01-10T16:40:42" type="xx" id="{e3a2b795-ca93-43b6-86eb-8dfbed42ee0f}_0" >
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -13.649200 -13.573000)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M24.727200,38.537500 L42.618500,38.589500 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -8.279560 -14.451400)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M23.362300,42.472700 L33.244100,42.420700 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -10.862300 -18.816600)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M30.782300,21.576600 L30.782300,42.936600 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -2.814330 -17.219400)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M20.861600,48.309200 L25.074400,48.309200 " />
+   </g>
+  </g>
+  <g m_rect="20.925007,-2.142880,18.958093,53.167880" lastUpdate="2008-09-09T16:05:53" type="yx" id="{63cb9595-3ea5-49c0-9670-ee4f2c4d93c2}_0" >
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 2.871810 0.964386)" >
+    <rect width="12" x="21.0357" y="8.490650000000001" stroke-opacity="1" fill="#000000" rx="1.2" height="28" ry="2.8" stroke="#ff0000" fill-opacity="0" stroke-linecap="square" stroke-width="1" clrType="1" bgclrType="0" />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -0.116864 -10.883100)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M30.000000,16.675300 L30.000000,19.792300 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -0.194764 5.792200)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M30.077900,31.937200 L30.077900,35.131900 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -0.233764 4.000000)" >
+    <path stroke-opacity="1" fill="none" stroke="#ff0000" stroke-linecap="square" stroke-width="1" clrType="1" d="M25.023900,5.842480 L34.966500,32.229100 " />
+   </g>
+  </g>
+  <g m_rect="20.925007,-2.142880,18.958093,53.167880" lastUpdate="2008-09-09T16:05:53" type="yx" id="{63cb9595-3ea5-49c0-9670-ee4f2c4d93c2}_1" >
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 2.738160 -0.032266)" >
+    <rect width="12" x="21.0357" y="9.50234" stroke-opacity="1" fill="#ff0000" rx="1.2" height="28" ry="2.8" stroke="#00ff00" fill-opacity="1" stroke-linecap="square" stroke-width="1" clrType="2" bgclrType="0" />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -0.116864 11.792200)" >
+    <path stroke-opacity="1" fill="none" stroke="#00ff00" stroke-linecap="square" stroke-width="1" clrType="2" d="M30.078800,25.870300 L30.078800,28.831200 " />
+   </g>
+   <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -0.116864 -10.883100)" >
+    <path stroke-opacity="1" fill="none" stroke="#00ff00" stroke-linecap="square" stroke-width="1" clrType="2" d="M30.000000,16.753200 L30.000000,19.792300 " />
+   </g>
+  </g>
+ </defs>
+ <defs>
+  <menu id="SEAMenu" >
+   <header>Adobe SVG Viewer</header>
+   <item action="Open" id="Open" >Op&amp;en</item>
+   <item action="OpenNew" id="OpenNew" >Open in &amp;New Window</item>
+   <separator/>
+   <item onactivate="SEA_ZoomIn()" >放 &amp;大</item>
+   <item onactivate="SEA_ZoomOut()" >缩 &amp;小</item>
+   <item onactivate="SEA_original_Scale()" >原始尺寸</item>
+   <separator/>
+   <item action="Quality" id="Quality" >Higher &amp;Quality</item>
+   <item action="Pause" id="Pause" >&amp;Pause</item>
+   <item action="Mute" id="Mute" >&amp;Mute</item>
+   <separator/>
+   <item action="Find" id="Find" >&amp;Find...</item>
+   <item action="FindAgain" id="FindAgain" >Find &amp;Again</item>
+   <separator/>
+   <item action="Copy" id="Copy" >&amp;Copy Selected Text</item>
+   <item action="CopySVG" id="CopySVG" >&amp;Copy SVG</item>
+   <item action="ViewSVG" id="ViewSVG" >View S&amp;VG</item>
+   <item action="ViewSource" id="ViewSource" >&amp;View Source</item>
+   <item action="SaveAs" id="SaveAs" >&amp;Save SVG As...</item>
+   <separator/>
+   <item action="Help" id="Help" >&amp;Help</item>
+   <item action="About" id="About" >A&amp;bout Adobe SVG Viewer...</item>
+  </menu>
+ </defs>
+ <script language="JavaScript" ><![CDATA[var newMenuRoot=parseXML(printNode(document.getElementById('SEAMenu')),contextMenu);
+contextMenu.replaceChild(newMenuRoot,contextMenu.firstChild);
+]]></script>
+ <script language="JavaScript" />
+ <g type="xx" id="{0a72f210-3581-4dc3-a6d4-7ab0f7b84dfc}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 141.765000 362.989000)" >
+   <path stroke-opacity="1" fill="none" stroke="#7f7f00" stroke-linecap="square" stroke-width="6" clrType="1" d="M50.000000,200.000000 L850.000000,200.000000 " />
+  </g>
+ </g>
+ <g type="xx" id="{da0cca8d-2480-4862-8777-73daefa57fbb}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 212.222000 558.313000)" >
+   <text x="39.8571" y="64.53999999999999" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="0.5882352941176471" font-weight="bold" font-size="18" bgclrType="0" >53</text>
+  </g>
+ </g>
+ <g type="yx" id="{78bff0a8-8f73-46a2-92da-2a37def534fc}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 209.752000 560.313000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{78bff0a8-8f73-46a2-92da-2a37def534fc}","{555d8f60-dfd7-48ff-aa81-195ef0390488}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#0_{555d8f60-dfd7-48ff-aa81-195ef0390488}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{934bdf31-a1ec-4fd9-a76a-d0b9e9d7db54}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 209.597000 631.893000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{934bdf31-a1ec-4fd9-a76a-d0b9e9d7db54}","{555d8f60-dfd7-48ff-aa81-195ef0390488}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#1_{555d8f60-dfd7-48ff-aa81-195ef0390488}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{4231feae-aa54-40a7-85b9-87cf28d9553c}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 209.699000 596.089000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{4231feae-aa54-40a7-85b9-87cf28d9553c}","{702a719c-740f-486b-a83a-b2f1b4514dcb}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#2_{702a719c-740f-486b-a83a-b2f1b4514dcb}_0" />
+  </g>
+ </g>
+ <g type="xx" id="{47331288-4bec-4e82-bda5-51884ac1607f}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 199.897000 665.551000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{47331288-4bec-4e82-bda5-51884ac1607f}","{d34a3966-00e1-4668-ad22-cc466fce195a}", 1, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#3_{d34a3966-00e1-4668-ad22-cc466fce195a}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{d8bbcb68-f001-44c1-abb9-e8fc7b46c595}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 449.754000 560.313000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{d8bbcb68-f001-44c1-abb9-e8fc7b46c595}","{555d8f60-dfd7-48ff-aa81-195ef0390488}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#4_{555d8f60-dfd7-48ff-aa81-195ef0390488}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{23aaa2df-45b5-4551-b415-c2d01971f253}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 449.599000 631.893000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{23aaa2df-45b5-4551-b415-c2d01971f253}","{555d8f60-dfd7-48ff-aa81-195ef0390488}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#5_{555d8f60-dfd7-48ff-aa81-195ef0390488}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{f775a6fc-6c09-4fcc-8136-108845298342}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 449.701000 596.089000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{f775a6fc-6c09-4fcc-8136-108845298342}","{702a719c-740f-486b-a83a-b2f1b4514dcb}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#6_{702a719c-740f-486b-a83a-b2f1b4514dcb}_0" />
+  </g>
+ </g>
+ <g type="xx" id="{192c34a1-4c5f-479b-bf57-6fa15e95a63a}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 439.899000 665.551000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{192c34a1-4c5f-479b-bf57-6fa15e95a63a}","{d34a3966-00e1-4668-ad22-cc466fce195a}", 1, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#7_{d34a3966-00e1-4668-ad22-cc466fce195a}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{c28e5a12-9f89-46a8-b97e-e727bf510edc}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 570.752000 560.313000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{c28e5a12-9f89-46a8-b97e-e727bf510edc}","{555d8f60-dfd7-48ff-aa81-195ef0390488}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#8_{555d8f60-dfd7-48ff-aa81-195ef0390488}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{56396182-c796-4a11-bf95-6d406bfe7f29}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 689.752000 560.313000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{56396182-c796-4a11-bf95-6d406bfe7f29}","{555d8f60-dfd7-48ff-aa81-195ef0390488}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#9_{555d8f60-dfd7-48ff-aa81-195ef0390488}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{35d0f0bf-3ed5-41fe-8b26-7a569951322b}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 689.597000 631.893000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{35d0f0bf-3ed5-41fe-8b26-7a569951322b}","{555d8f60-dfd7-48ff-aa81-195ef0390488}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#10_{555d8f60-dfd7-48ff-aa81-195ef0390488}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{62104022-6e4b-4f01-ba2e-2282e7c8d85a}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 689.699000 596.089000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{62104022-6e4b-4f01-ba2e-2282e7c8d85a}","{702a719c-740f-486b-a83a-b2f1b4514dcb}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#11_{702a719c-740f-486b-a83a-b2f1b4514dcb}_0" />
+  </g>
+ </g>
+ <g type="xx" id="{bea08013-7aee-4de2-aee9-cbfd346738a5}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 679.898000 665.551000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{bea08013-7aee-4de2-aee9-cbfd346738a5}","{d34a3966-00e1-4668-ad22-cc466fce195a}", 1, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#12_{d34a3966-00e1-4668-ad22-cc466fce195a}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{125782c2-13a5-4950-9f5e-80bfc56cae1b}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 929.758000 560.313000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{125782c2-13a5-4950-9f5e-80bfc56cae1b}","{555d8f60-dfd7-48ff-aa81-195ef0390488}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#13_{555d8f60-dfd7-48ff-aa81-195ef0390488}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{460c0992-0eb1-4ed2-9b6c-f98251de42cc}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 929.603000 631.893000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{460c0992-0eb1-4ed2-9b6c-f98251de42cc}","{555d8f60-dfd7-48ff-aa81-195ef0390488}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#14_{555d8f60-dfd7-48ff-aa81-195ef0390488}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{4ee30de4-64fe-4c15-9bd7-653a84b07256}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 929.705000 596.089000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{4ee30de4-64fe-4c15-9bd7-653a84b07256}","{702a719c-740f-486b-a83a-b2f1b4514dcb}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#15_{702a719c-740f-486b-a83a-b2f1b4514dcb}_0" />
+  </g>
+ </g>
+ <g type="xx" id="{e5df76f9-f3f2-49c8-b971-d3d0e4ba8b34}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 560.739000 638.792000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{e5df76f9-f3f2-49c8-b971-d3d0e4ba8b34}","{141f39a4-b0bc-4aff-aa75-b82673e71049}", 1, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#16_{141f39a4-b0bc-4aff-aa75-b82673e71049}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{2e508e65-9132-4549-bb5b-f6ad46fdc41f}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 409.808000 468.274000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{2e508e65-9132-4549-bb5b-f6ad46fdc41f}","{702a719c-740f-486b-a83a-b2f1b4514dcb}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#17_{702a719c-740f-486b-a83a-b2f1b4514dcb}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{8ceeb44a-fa4a-4b13-b9ce-491061c7be80}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 399.965000 412.529000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{8ceeb44a-fa4a-4b13-b9ce-491061c7be80}","{6626a12e-9833-4c10-9b55-0479a96aff31}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#18_{6626a12e-9833-4c10-9b55-0479a96aff31}_0" />
+  </g>
+ </g>
+ <g type="xx" id="{a339af9d-0884-4499-9614-42dd5d4760a0}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 384.759000 328.864000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{a339af9d-0884-4499-9614-42dd5d4760a0}","{7c2687f3-fbd2-42eb-ac8f-177c213bd2f5}", 1, 0, "#ff557f", "#7f7f00", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#19_{7c2687f3-fbd2-42eb-ac8f-177c213bd2f5}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{6ff83fab-3911-4d16-a45b-41f0b0dc4bd4}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 409.808000 219.954000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{6ff83fab-3911-4d16-a45b-41f0b0dc4bd4}","{702a719c-740f-486b-a83a-b2f1b4514dcb}", 2, 0, "#ff557f", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#20_{702a719c-740f-486b-a83a-b2f1b4514dcb}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{10ad782d-2d1c-417d-b92f-2e52b18de26b}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 399.970000 163.811000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{10ad782d-2d1c-417d-b92f-2e52b18de26b}","{6626a12e-9833-4c10-9b55-0479a96aff31}", 2, 0, "#ff557f", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#21_{6626a12e-9833-4c10-9b55-0479a96aff31}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{387ac2b6-0f43-46ef-9d5b-69916fd89b46}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 730.797000 468.274000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{387ac2b6-0f43-46ef-9d5b-69916fd89b46}","{702a719c-740f-486b-a83a-b2f1b4514dcb}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#22_{702a719c-740f-486b-a83a-b2f1b4514dcb}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{fc1f43bf-2c34-4eb2-a6a4-8166edc01bfc}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 720.955000 412.529000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{fc1f43bf-2c34-4eb2-a6a4-8166edc01bfc}","{6626a12e-9833-4c10-9b55-0479a96aff31}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#23_{6626a12e-9833-4c10-9b55-0479a96aff31}_0" />
+  </g>
+ </g>
+ <g type="xx" id="{c6b81408-98be-43f1-ab0a-9855836e7a93}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 705.748000 328.864000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{c6b81408-98be-43f1-ab0a-9855836e7a93}","{7c2687f3-fbd2-42eb-ac8f-177c213bd2f5}", 1, 0, "#ff557f", "#7f7f00", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#24_{7c2687f3-fbd2-42eb-ac8f-177c213bd2f5}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{8bec7b8e-f925-4f7b-be03-20197a7f7ca8}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 730.797000 218.250000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{8bec7b8e-f925-4f7b-be03-20197a7f7ca8}","{702a719c-740f-486b-a83a-b2f1b4514dcb}", 2, 0, "#ff557f", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#25_{702a719c-740f-486b-a83a-b2f1b4514dcb}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{53b956b5-f216-46e4-a788-5c78a79c8a86}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 720.954000 162.505000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{53b956b5-f216-46e4-a788-5c78a79c8a86}","{6626a12e-9833-4c10-9b55-0479a96aff31}", 2, 0, "#ff557f", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#26_{6626a12e-9833-4c10-9b55-0479a96aff31}_0" />
+  </g>
+ </g>
+ <g type="xx" id="{f6af8f88-4a87-4e42-a0a1-127fccef852c}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -50.529000 -98.121000)" >
+   <path stroke-opacity="1" fill="none" stroke="#ff557f" stroke-linecap="square" stroke-width="1" clrType="1" d="M480.247000,355.556000 L480.247000,433.333000 " />
+  </g>
+ </g>
+ <g type="xx" id="{2042e5d0-ac80-42ae-b2e0-7b5a0a075576}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -49.293000 5.113600)" >
+   <path stroke-opacity="1" fill="none" stroke="#ff557f" stroke-linecap="square" stroke-width="1" clrType="1" d="M800.000000,250.617000 L800.000000,328.395000 " />
+  </g>
+ </g>
+ <g type="xx" id="{1143b153-972d-440a-9996-a1ba3b61edad}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -50.308000 -101.797000)" >
+   <path stroke-opacity="1" fill="none" stroke="#ff557f" stroke-linecap="square" stroke-width="8" clrType="1" d="M280.247000,266.667000 L1002.470000,266.667000 " />
+  </g>
+ </g>
+ <g type="yx" id="{165cea54-3985-4772-a972-ae3505a52e4c}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 399.913000 504.696000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{165cea54-3985-4772-a972-ae3505a52e4c}","{6626a12e-9833-4c10-9b55-0479a96aff31}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#27_{6626a12e-9833-4c10-9b55-0479a96aff31}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{22afc631-4d74-42e8-8a3b-797033b7253b}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 720.903000 504.696000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{22afc631-4d74-42e8-8a3b-797033b7253b}","{6626a12e-9833-4c10-9b55-0479a96aff31}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#28_{6626a12e-9833-4c10-9b55-0479a96aff31}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{e502e382-79ec-42be-848b-d079a4de9c82}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 560.963000 68.306000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{e502e382-79ec-42be-848b-d079a4de9c82}","{6626a12e-9833-4c10-9b55-0479a96aff31}", 2, 0, "#ff557f", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#29_{6626a12e-9833-4c10-9b55-0479a96aff31}_0" />
+  </g>
+ </g>
+ <g type="xx" id="{74266352-8753-4133-b17e-6fa10c69368b}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -47.503000 -74.636100)" >
+   <path stroke-opacity="1" fill="none" stroke="#ff557f" stroke-linecap="square" stroke-width="1" clrType="1" d="M638.272000,116.049000 L638.272000,144.001000 " />
+  </g>
+ </g>
+ <g type="xx" id="{8a844d1f-e3e8-4343-b4bc-a6b012642597}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -47.503000 -74.636100)" >
+   <path stroke-opacity="1" fill="none" stroke="#ff557f" stroke-linecap="square" stroke-width="1" clrType="1" d="M638.272000,239.506000 L638.350000,201.235000 " />
+  </g>
+ </g>
+ <g type="xx" id="{0f69f1e3-9c93-4494-9160-36ffece2454e}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -47.387000 -74.549100)" >
+   <path stroke-opacity="1" fill="none" stroke="#ff557f" stroke-linecap="square" stroke-width="1" clrType="1" d="M638.234000,201.148000 L719.753000,201.148000 " />
+  </g>
+ </g>
+ <g type="xx" id="{d13156d4-6e64-4077-8c9e-72c1fe3bb35d}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -46.153000 -72.821100)" >
+   <path stroke-opacity="1" fill="none" stroke="#ff557f" stroke-linecap="square" stroke-width="1" clrType="1" d="M718.519000,158.679000 L718.519000,199.420000 " />
+  </g>
+ </g>
+ <g type="xx" id="{088f3fc0-9050-45d9-93a2-e68e866e7dc3}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 919.668000 669.515000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{088f3fc0-9050-45d9-93a2-e68e866e7dc3}","{02f09fe4-0511-4bab-9542-94bb38d48799}", 1, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#30_{02f09fe4-0511-4bab-9542-94bb38d48799}_0" />
+  </g>
+ </g>
+ <g type="xx" id="{c2f99d45-b4b5-4f60-af96-15b235a15927}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -97.617000 -174.272000)" >
+   <text x="691.4880000000001" y="407.34" font-family="KaiTi" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="1" font-weight="bold" font-size="40.8" bgclrType="0" >旗山变</text>
+  </g>
+ </g>
+ <g type="yc" id="{b092cf39-c507-408d-97a1-cfab526ce914}" >
+  <g transform="matrix(1.385350 0.000000 0.000000 1.385350 -988.120000 191.798000)" >
+   <text x="986.852" y="204.327" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >  0.00Mvar</text>
+  </g>
+ </g>
+ <g type="yc" id="{cb9c3d1d-ee62-429d-a55a-90b39bcbca1a}" >
+  <g transform="matrix(1.385350 0.000000 0.000000 1.385350 -1147.890000 163.991000)" >
+   <text x="1095.9" y="206.796" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >  0.00MW</text>
+  </g>
+ </g>
+ <g type="xx" id="{32d38a84-6727-4e52-988d-20309b8f4a72}" >
+  <g transform="matrix(1.367050 0.000000 0.000000 1.367050 -1211.590000 -35.290100)" >
+   <text x="1112.94" y="353.71" font-family="SimSun" fill="#55aaff" unit="" text-anchor="middle" fill-opacity="1" font-weight="bold" font-size="12" bgclrType="0" >P:</text>
+  </g>
+ </g>
+ <g type="xx" id="{e004c386-ee78-4c1d-87c1-ccde525d91a5}" >
+  <g transform="matrix(1.367050 0.000000 0.000000 1.367050 -1238.590000 -104.680000)" >
+   <text x="1132.69" y="422.846" font-family="SimSun" fill="#55aaff" unit="" text-anchor="middle" fill-opacity="1" font-weight="bold" font-size="12" bgclrType="0" >Q:</text>
+  </g>
+ </g>
+ <g type="xx" id="{4ab977fd-063f-4aba-9135-84f3869f2f82}" >
+  <g transform="matrix(1.367050 0.000000 0.000000 1.367050 -1235.210000 -196.010000)" >
+   <text x="1130.22" y="508.031" font-family="SimSun" fill="#55aaff" unit="" text-anchor="middle" fill-opacity="1" font-weight="bold" font-size="12" bgclrType="0" >I:</text>
+  </g>
+ </g>
+ <g type="yc" id="{429784f8-2820-4b59-a4c6-267939658732}" >
+  <g transform="matrix(1.385350 0.000000 0.000000 1.385350 -988.120000 216.184000)" >
+   <text x="976.352" y="204.327" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >  0.00A</text>
+  </g>
+ </g>
+ <g type="xx" id="{66e35026-0dd5-46c5-bf82-dd4e63bd7351}" >
+  <g transform="matrix(1.259710 0.000000 0.000000 1.259710 -916.536000 15.058000)" >
+   <text x="1116.94" y="353.71" font-family="SimSun" fill="#55aaff" unit="" text-anchor="middle" fill-opacity="1" font-weight="bold" font-size="12" bgclrType="0" >Ua:</text>
+  </g>
+ </g>
+ <g type="xx" id="{b518f80b-fa2b-4eda-9f5c-36e2617f3d50}" >
+  <g transform="matrix(1.259710 0.000000 0.000000 1.259710 -916.536000 41.297600)" >
+   <text x="1116.94" y="353.71" font-family="SimSun" fill="#55aaff" unit="" text-anchor="middle" fill-opacity="1" font-weight="bold" font-size="12" bgclrType="0" >Ub:</text>
+  </g>
+ </g>
+ <g type="xx" id="{13846551-f6bd-4ec4-8734-1560557d01a0}" >
+  <g transform="matrix(1.259710 0.000000 0.000000 1.259710 -916.536000 67.537000)" >
+   <text x="1116.94" y="353.71" font-family="SimSun" fill="#55aaff" unit="" text-anchor="middle" fill-opacity="1" font-weight="bold" font-size="12" bgclrType="0" >Uc:</text>
+  </g>
+ </g>
+ <g type="yc" id="{007aeea5-1fdd-4cd3-8563-ed40a8fe605d}" >
+  <g transform="matrix(1.276570 0.000000 0.000000 1.276570 -709.753000 253.483000)" >
+   <text x="979.852" y="204.327" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >  0.00KV</text>
+  </g>
+ </g>
+ <g type="yc" id="{9ee44eb3-3768-486f-8c72-12026df9ba23}" >
+  <g transform="matrix(1.276570 0.000000 0.000000 1.276570 -709.753000 227.581000)" >
+   <text x="979.852" y="204.327" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >  0.00KV</text>
+  </g>
+ </g>
+ <g type="yc" id="{d346d420-35f2-42b6-9aef-63aabd6f0429}" >
+  <g transform="matrix(1.276570 0.000000 0.000000 1.276570 -709.753000 200.919000)" >
+   <text x="979.852" y="204.327" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >  0.00KV</text>
+  </g>
+ </g>
+ <g type="xx" id="{577adc0c-5457-4be3-89ee-672a59843780}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 451.483000 558.313000)" >
+   <text x="39.8571" y="64.53999999999999" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="0.5882352941176471" font-weight="bold" font-size="18" bgclrType="0" >55</text>
+  </g>
+ </g>
+ <g type="xx" id="{905635a9-69c3-43b8-b42b-ac91784b6175}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 690.468000 558.313000)" >
+   <text x="39.8571" y="64.53999999999999" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="0.5882352941176471" font-weight="bold" font-size="18" bgclrType="0" >56</text>
+  </g>
+ </g>
+ <g type="xx" id="{5c43468b-0b9e-4820-a0f8-1d597de122db}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 930.734000 556.844000)" >
+   <text x="39.8571" y="64.53999999999999" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="0.5882352941176471" font-weight="bold" font-size="18" bgclrType="0" >58</text>
+  </g>
+ </g>
+ <g type="xx" id="{bea36784-c916-43c1-b885-3977332f8c9e}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 411.246000 430.152000)" >
+   <text x="39.8571" y="64.53999999999999" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="0.5882352941176471" font-weight="bold" font-size="18" bgclrType="0" >51</text>
+  </g>
+ </g>
+ <g type="xx" id="{d9adcfcb-76f7-41b9-bf76-a3d7a9987df9}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 732.765000 429.918000)" >
+   <text x="39.8571" y="64.53999999999999" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="0.5882352941176471" font-weight="bold" font-size="18" bgclrType="0" >52</text>
+  </g>
+ </g>
+ <g type="xx" id="{6b6ec27e-5856-4ae1-9111-2f45de70ec1a}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 411.185000 181.770000)" >
+   <text x="39.8571" y="64.53999999999999" font-family="SimSun" fill="#550000" unit="" text-anchor="middle" fill-opacity="1" font-weight="bold" font-size="18" bgclrType="0" >31</text>
+  </g>
+ </g>
+ <g type="xx" id="{fe013c0a-eee6-4585-9102-bcb2c9d4c692}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 732.234000 179.831000)" >
+   <text x="39.8571" y="64.53999999999999" font-family="SimSun" fill="#550000" unit="" text-anchor="middle" fill-opacity="1" font-weight="bold" font-size="18" bgclrType="0" >32</text>
+  </g>
+ </g>
+ <g type="xx" id="{d2bdca81-bbcc-475c-8c9f-209ffc1f707a}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -179.062000 -38.407400)" >
+   <text x="408.747" y="818.704" font-family="SimSun" fill="#0055ff" unit="" text-anchor="middle" fill-opacity="1" text-decoration="underline" font-size="16.8" bgclrType="0" >莲花线</text>
+  </g>
+ </g>
+ <g type="xx" id="{9d3ddc2f-a6e4-4e3d-9d09-a5b90eeb7b13}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -56.803000 -37.703700)" >
+   <text x="405.747" y="817.204" font-family="SimSun" fill="#0055ff" unit="" text-anchor="middle" fill-opacity="1" text-decoration="underline" font-size="15.6" bgclrType="0" >宋冲线</text>
+  </g>
+ </g>
+ <g type="xx" id="{24a71680-5009-423e-90c4-d95b2b634969}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 305.185000 -35.938300)" >
+   <text x="404.247" y="816.454" font-family="SimSun" fill="#0055ff" unit="" text-anchor="middle" fill-opacity="1" text-decoration="underline" font-size="14.4" bgclrType="0" >三皮线</text>
+  </g>
+ </g>
+ <g type="xx" id="{81a38af9-4eb2-4aea-80f5-a9b0f23a6a67}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 544.914000 -37.703700)" >
+   <text x="404.247" y="816.454" font-family="SimSun" fill="#0055ff" unit="" text-anchor="middle" fill-opacity="1" font-size="14.4" bgclrType="0" >电容室</text>
+  </g>
+ </g>
+ <g type="xx" id="{3a3538da-948b-4f39-9348-0c66dcd8d0b5}" >
+  <g transform="matrix(1.394150 0.000000 0.000000 1.394150 -1082.200000 -117.326000)" >
+   <text x="1112.94" y="353.71" font-family="SimSun" fill="#aa55ff" unit="" text-anchor="middle" fill-opacity="1" font-weight="bold" font-size="12" bgclrType="0" >1#</text>
+  </g>
+ </g>
+ <g type="xx" id="{147bb563-6cc1-45dd-b0d1-f74a14169ddd}" >
+  <g transform="matrix(1.413390 0.000000 0.000000 1.413390 -867.307000 -124.775000)" >
+   <text x="1112.94" y="353.71" font-family="SimSun" fill="#aa55ff" unit="" text-anchor="middle" fill-opacity="1" font-weight="bold" font-size="12" bgclrType="0" >2#</text>
+  </g>
+ </g>
+ <g type="xx" id="{a3bb5cc3-560c-4c30-ac4c-8a2aefb278ce}" >
+  <g transform="matrix(1.367050 0.000000 0.000000 1.367050 -733.212000 -190.360000)" >
+   <text x="1130.22" y="508.031" font-family="SimSun" fill="#55aaff" unit="" text-anchor="middle" fill-opacity="1" font-weight="bold" font-size="12" bgclrType="0" >I:</text>
+  </g>
+ </g>
+ <g type="xx" id="{0eea0cbe-4672-4a47-92c0-b424a670e71f}" >
+  <g transform="matrix(1.367050 0.000000 0.000000 1.367050 -736.588000 -98.355100)" >
+   <text x="1132.69" y="422.846" font-family="SimSun" fill="#55aaff" unit="" text-anchor="middle" fill-opacity="1" font-weight="bold" font-size="12" bgclrType="0" >Q:</text>
+  </g>
+ </g>
+ <g type="xx" id="{458ad108-f3ab-4fbf-ae64-a18bfa948235}" >
+  <g transform="matrix(1.367050 0.000000 0.000000 1.367050 -709.589000 -28.290100)" >
+   <text x="1112.94" y="353.71" font-family="SimSun" fill="#55aaff" unit="" text-anchor="middle" fill-opacity="1" font-weight="bold" font-size="12" bgclrType="0" >P:</text>
+  </g>
+ </g>
+ <g type="yc" id="{0b4bbee7-9d6f-407c-b4ef-47632cc83b1f}" >
+  <g transform="matrix(1.385350 0.000000 0.000000 1.385350 -486.123000 197.048000)" >
+   <text x="986.852" y="204.327" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >  0.00Mvar</text>
+  </g>
+ </g>
+ <g type="yc" id="{b2621a49-a9c1-4d10-84a5-31915689b286}" >
+  <g transform="matrix(1.385350 0.000000 0.000000 1.385350 -646.890000 169.991000)" >
+   <text x="1095.9" y="206.796" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >  0.00MW</text>
+  </g>
+ </g>
+ <g type="yc" id="{ff795023-3c15-4a80-b8ed-7e7bc5fe4f6d}" >
+  <g transform="matrix(1.385350 0.000000 0.000000 1.385350 -486.123000 220.684000)" >
+   <text x="976.352" y="204.327" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >  0.00A</text>
+  </g>
+ </g>
+ <g type="xx" id="{28f6c5af-26bb-427f-b06c-62a8c09c1376}" >
+  <g transform="matrix(1.259710 0.000000 0.000000 1.259710 -751.536000 16.058000)" >
+   <text x="1116.94" y="353.71" font-family="SimSun" fill="#55aaff" unit="" text-anchor="middle" fill-opacity="1" font-weight="bold" font-size="12" bgclrType="0" >Ua:</text>
+  </g>
+ </g>
+ <g type="xx" id="{67186681-3c9d-46e3-858e-a1cf68660311}" >
+  <g transform="matrix(1.259710 0.000000 0.000000 1.259710 -751.536000 42.297600)" >
+   <text x="1116.94" y="353.71" font-family="SimSun" fill="#55aaff" unit="" text-anchor="middle" fill-opacity="1" font-weight="bold" font-size="12" bgclrType="0" >Ub:</text>
+  </g>
+ </g>
+ <g type="xx" id="{cc7602ee-870a-464e-9a26-155fe8246dd6}" >
+  <g transform="matrix(1.259710 0.000000 0.000000 1.259710 -751.536000 68.537000)" >
+   <text x="1116.94" y="353.71" font-family="SimSun" fill="#55aaff" unit="" text-anchor="middle" fill-opacity="1" font-weight="bold" font-size="12" bgclrType="0" >Uc:</text>
+  </g>
+ </g>
+ <g type="yc" id="{406590a9-3fd6-4b32-9d5e-b2b1a1cb48d0}" >
+  <g transform="matrix(1.276570 0.000000 0.000000 1.276570 -544.753000 254.483000)" >
+   <text x="979.852" y="204.327" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >  0.00KV</text>
+  </g>
+ </g>
+ <g type="yc" id="{111e5ae0-a463-4d00-b9e7-ed69813d2e36}" >
+  <g transform="matrix(1.276570 0.000000 0.000000 1.276570 -544.753000 228.581000)" >
+   <text x="979.852" y="204.327" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >  0.00KV</text>
+  </g>
+ </g>
+ <g type="yc" id="{4523f148-9ee7-4570-b6c2-b57b86af6742}" >
+  <g transform="matrix(1.276570 0.000000 0.000000 1.276570 -544.753000 201.919000)" >
+   <text x="979.852" y="204.327" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >  0.00KV</text>
+  </g>
+ </g>
+ <g type="yx" id="{a17f6702-c525-4243-89fe-c6875714b7a4}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 809.756000 560.313000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{a17f6702-c525-4243-89fe-c6875714b7a4}","{555d8f60-dfd7-48ff-aa81-195ef0390488}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#31_{555d8f60-dfd7-48ff-aa81-195ef0390488}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{dcb1e617-cd1d-4c74-acd0-8882215dbe4a}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 809.601000 631.893000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{dcb1e617-cd1d-4c74-acd0-8882215dbe4a}","{555d8f60-dfd7-48ff-aa81-195ef0390488}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#32_{555d8f60-dfd7-48ff-aa81-195ef0390488}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{c45cc3b0-968e-498d-86f9-f8e5adf6be88}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 809.703000 596.089000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{c45cc3b0-968e-498d-86f9-f8e5adf6be88}","{702a719c-740f-486b-a83a-b2f1b4514dcb}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#33_{702a719c-740f-486b-a83a-b2f1b4514dcb}_0" />
+  </g>
+ </g>
+ <g type="xx" id="{676f61c8-909c-48a6-b5fe-fd31d02d2441}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 799.901000 665.551000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{676f61c8-909c-48a6-b5fe-fd31d02d2441}","{d34a3966-00e1-4668-ad22-cc466fce195a}", 1, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#34_{d34a3966-00e1-4668-ad22-cc466fce195a}_0" />
+  </g>
+ </g>
+ <g type="xx" id="{3d3156d2-0a87-4e90-958d-ed25560d191c}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 810.472000 558.313000)" >
+   <text x="39.8571" y="64.53999999999999" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="0.5882352941176471" font-weight="bold" font-size="18" bgclrType="0" >57</text>
+  </g>
+ </g>
+ <g type="xx" id="{943aa50f-d53d-4095-8046-bcc11b4a0ef8}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 425.185000 -35.938300)" >
+   <text x="404.247" y="816.454" font-family="SimSun" fill="#0055ff" unit="" text-anchor="middle" fill-opacity="1" text-decoration="underline" font-size="14.4" bgclrType="0" >七里线</text>
+  </g>
+ </g>
+ <g type="xx" id="{f2887122-7752-423d-8d90-460545447a9d}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 332.235000 558.313000)" >
+   <text x="39.8571" y="64.53999999999999" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="0.5882352941176471" font-weight="bold" font-size="18" bgclrType="0" >54</text>
+  </g>
+ </g>
+ <g type="yx" id="{c841d6eb-f933-4db4-996f-b2a9a917f1d6}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 329.765000 560.313000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{c841d6eb-f933-4db4-996f-b2a9a917f1d6}","{555d8f60-dfd7-48ff-aa81-195ef0390488}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#35_{555d8f60-dfd7-48ff-aa81-195ef0390488}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{6ada2e5c-e5f3-446a-8b1c-f93c978d6583}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 329.610000 631.893000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{6ada2e5c-e5f3-446a-8b1c-f93c978d6583}","{555d8f60-dfd7-48ff-aa81-195ef0390488}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#36_{555d8f60-dfd7-48ff-aa81-195ef0390488}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{71f6fed9-e1a1-493f-8e48-c6514f63944e}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 329.712000 596.089000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{71f6fed9-e1a1-493f-8e48-c6514f63944e}","{702a719c-740f-486b-a83a-b2f1b4514dcb}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#37_{702a719c-740f-486b-a83a-b2f1b4514dcb}_0" />
+  </g>
+ </g>
+ <g type="xx" id="{257c0bc2-3e48-4101-87ce-2d09212dac92}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 319.910000 665.551000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{257c0bc2-3e48-4101-87ce-2d09212dac92}","{d34a3966-00e1-4668-ad22-cc466fce195a}", 1, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#38_{d34a3966-00e1-4668-ad22-cc466fce195a}_0" />
+  </g>
+ </g>
+ <g type="xx" id="{d8584e39-a9bd-49ad-97b7-f51a771e3cdc}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 65.197500 -38.703700)" >
+   <text x="414.247" y="817.204" font-family="SimSun" fill="#0055ff" unit="" text-anchor="middle" fill-opacity="1" text-decoration="underline" font-size="15.6" bgclrType="0" >开发区线</text>
+  </g>
+ </g>
+ <g type="xx" id="{58556366-7c15-4613-88a6-77739aca08cd}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 70.366000 -38.142100)" >
+   <path stroke-opacity="1" fill="none" stroke="#ff557f" stroke-linecap="square" stroke-width="1" clrType="1" d="M602.000000,124.000000 L627.000000,124.000000 " />
+  </g>
+ </g>
+ <g type="xx" id="{80c7ffe4-d173-40ca-8933-e17ad1250ed8}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 679.800000 83.355000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{80c7ffe4-d173-40ca-8933-e17ad1250ed8}","{f573ee68-ba3b-49f3-9b5c-cc5b24e9fe96}", 1, 0, "#ff557f", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#39_{f573ee68-ba3b-49f3-9b5c-cc5b24e9fe96}_0" />
+  </g>
+ </g>
+ <g type="xx" id="{c52808c6-5b46-46cd-89fd-f50c72cd4681}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 677.412000 113.566000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{c52808c6-5b46-46cd-89fd-f50c72cd4681}","{e3a2b795-ca93-43b6-86eb-8dfbed42ee0f}", 1, 0, "#ff557f", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#40_{e3a2b795-ca93-43b6-86eb-8dfbed42ee0f}_0" />
+  </g>
+ </g>
+ <g type="yx" id="{40fbd4b9-4944-44a2-9886-b42389bd48c4}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 560.661000 590.844000)" >
+   <script language="JavaScript" ><![CDATA[
+drawPowerAtom("{40fbd4b9-4944-44a2-9886-b42389bd48c4}","{63cb9595-3ea5-49c0-9670-ee4f2c4d93c2}", 2, 0, "#7f7f00", "", "", "","1.00","1.00","1.00","1.00");]]></script>
+   <use xlink:href="#41_{63cb9595-3ea5-49c0-9670-ee4f2c4d93c2}_0" />
+  </g>
+ </g>
+ <g type="xx" id="{cbcc523c-3a7b-455b-97c4-5b06406fdfc0}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 43.000000 -45.000000)" >
+   <text x="207.5" y="632.5" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="0.5882352941176471" font-size="12" bgclrType="0" >531</text>
+  </g>
+ </g>
+ <g type="xx" id="{00d7f617-7269-4020-b628-bb416c9eabc8}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 55.000000 -39.000000)" >
+   <text x="194.5" y="697.5" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="0.5882352941176471" font-size="12" bgclrType="0" >536</text>
+  </g>
+ </g>
+ <g type="xx" id="{f6e19925-6211-483e-8877-6e9fc5643d58}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 34.000000 -47.000000)" >
+   <text x="335.5" y="635.5" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="0.5882352941176471" font-size="12" bgclrType="0" >541</text>
+  </g>
+ </g>
+ <g type="xx" id="{0c80e329-08a3-45d5-9e11-00e539643080}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 59.000000 -52.000000)" >
+   <text x="310.5" y="713.5" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="0.5882352941176471" font-size="12" bgclrType="0" >546</text>
+  </g>
+ </g>
+ <g type="xx" id="{a40029e5-5653-4075-b9c1-52b48214fc09}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 24.000000 -36.000000)" >
+   <text x="465.5" y="625.5" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="0.5882352941176471" font-size="12" bgclrType="0" >551</text>
+  </g>
+ </g>
+ <g type="xx" id="{b75efe53-58f5-407e-8a27-b975fa08f770}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 34.000000 -36.000000)" >
+   <text x="454.5" y="696.5" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="0.5882352941176471" font-size="12" bgclrType="0" >556</text>
+  </g>
+ </g>
+ <g type="xx" id="{8aec5f36-a7c3-46e7-904e-52d7b34d03f5}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 44.000000 -45.000000)" >
+   <text x="569.5" y="634.5" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="0.5882352941176471" font-size="12" bgclrType="0" >互01</text>
+  </g>
+ </g>
+ <g type="xx" id="{52cee735-c81c-43f5-baed-3e9c18584822}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 44.000000 -42.000000)" >
+   <text x="684.5" y="633.5" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="0.5882352941176471" font-size="12" bgclrType="0" >561</text>
+  </g>
+ </g>
+ <g type="xx" id="{b2ef8482-7e02-4434-9bf6-815d766b68d3}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 40.000000 -40.000000)" >
+   <text x="689.5" y="701.5" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="0.5882352941176471" font-size="12" bgclrType="0" >566</text>
+  </g>
+ </g>
+ <g type="xx" id="{f9c7150d-8f24-486c-b476-6683fe2fa858}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 61.000000 -41.000000)" >
+   <text x="788.5" y="627.5" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="0.5882352941176471" font-size="12" bgclrType="0" >571</text>
+  </g>
+ </g>
+ <g type="xx" id="{84c3d9f7-384f-43cb-81cc-eb8ac7761e0f}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 45.000000 -64.000000)" >
+   <text x="804.5" y="724.5" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="0.5882352941176471" font-size="12" bgclrType="0" >576</text>
+  </g>
+ </g>
+ <g type="xx" id="{6fbcb0b7-96de-4ac6-8d39-9ffecb240008}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 39.000000 -45.000000)" >
+   <text x="930.5" y="634.5" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="0.5882352941176471" font-size="12" bgclrType="0" >581</text>
+  </g>
+ </g>
+ <g type="xx" id="{bbc54e30-ba3a-4c0c-99df-8abc283cdbc0}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 38.000000 -34.000000)" >
+   <text x="930.5" y="695.5" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="0.5882352941176471" font-size="12" bgclrType="0" >586</text>
+  </g>
+ </g>
+ <g type="xx" id="{f4a35cee-c4a8-4fa4-89dd-41d095f99c8a}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 64.000000 -29.000000)" >
+   <text x="386.5" y="480.5" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="0.5882352941176471" font-size="12" bgclrType="0" >512</text>
+  </g>
+ </g>
+ <g type="xx" id="{169e2dff-802b-49a9-9e64-345affe84d26}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 53.000000 -47.000000)" >
+   <text x="396.5" y="591.5" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="0.5882352941176471" font-size="12" bgclrType="0" >511</text>
+  </g>
+ </g>
+ <g type="xx" id="{6cbc2799-bc86-494b-a31a-c758f6df979e}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 60.000000 67.000000)" >
+   <text x="711.5" y="476.5" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="0.5882352941176471" font-size="12" bgclrType="0" >521</text>
+  </g>
+ </g>
+ <g type="xx" id="{d8522a16-4037-4e0e-b7a5-bd5da6557021}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 60.000000 -26.000000)" >
+   <text x="711.5" y="476.5" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="0.5882352941176471" font-size="12" bgclrType="0" >522</text>
+  </g>
+ </g>
+ <g type="xx" id="{4e1341c5-5db4-4f3f-a123-726cc44a65bb}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 32.000000 -45.000000)" >
+   <text x="417.5" y="246.5" font-family="SimSun" fill="#550000" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >311</text>
+  </g>
+ </g>
+ <g type="xx" id="{27bf5eec-141c-40be-a61c-c5c4d180fb61}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 15.000000 -54.000000)" >
+   <text x="756.5" y="253.5" font-family="SimSun" fill="#550000" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >321</text>
+  </g>
+ </g>
+ <g type="xx" id="{4863a20b-ea52-4525-9304-9a125fac6ee4}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 194.000000 -141.000000)" >
+   <text x="417.5" y="246.5" font-family="SimSun" fill="#550000" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >316</text>
+  </g>
+ </g>
+ <g type="xx" id="{497cb581-2c0d-4cc4-b176-a1ac2377dd77}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 31.000000 1.000000)" >
+   <text x="942" y="552.75" font-family="SimSun" fill="#7f7f00" unit="" text-anchor="middle" fill-opacity="1" font-size="14.4" bgclrType="0" >10kV</text>
+  </g>
+ </g>
+ <g type="xx" id="{59ce8ffb-dab7-4a41-b819-6f31dfde23c7}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -327.000000 -503.500000)" >
+   <text x="962" y="552.75" font-family="SimSun" fill="#ff557f" unit="" text-anchor="middle" fill-opacity="1" font-size="14.4" bgclrType="0" >220kV进线</text>
+  </g>
+ </g>
+ <g type="xx" id="{9f2c728c-6d46-4493-bd43-5800f7cd0a8a}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -11.000000 -16.000000)" >
+   <text x="68.5" y="66.5" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >安徽省</text>
+  </g>
+ </g>
+ <g type="xx" id="{89f3c833-cc1e-4818-8a1d-185023cd4296}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 52.500000 -16.000000)" >
+   <text x="68.5" y="66.5" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >巢湖市</text>
+  </g>
+ </g>
+ <g type="xx" id="{e2e7e425-c748-4ede-994e-9c4cb157eefe}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 117.500000 -16.000000)" >
+   <text x="81.5" y="66.5" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >电网一次图</text>
+  </g>
+ </g>
+ <g type="xx" id="{6e593e1e-9e6d-4e06-9d25-d829ac75c426}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -13.000000 -74.000000)" >
+   <text x="105" y="124.5" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >>></text>
+  </g>
+ </g>
+ <g type="xx" id="{a183bb90-34bf-457f-94d9-dac2b201331f}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 49.000000 -74.000000)" >
+   <text x="105" y="124.5" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >>></text>
+  </g>
+ </g>
+ <g type="xx" id="{dfbcbd3e-e6dd-4d9e-93f9-b6dd75375446}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 138.750000 -74.000000)" >
+   <text x="105" y="124.5" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >>></text>
+  </g>
+ </g>
+ <g type="xx" id="{f972a79c-c8b2-4b3f-a940-40f2dabfc4fb}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 207.250000 -16.000000)" >
+   <text x="68.5" y="66.5" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >旗山变</text>
+  </g>
+ </g>
+ <g id="{fd4ea75b-46a1-4fe6-962f-54a6dc80c5db}" transform="matrix(0.514475 0.000000 0.000000 0.514475 199.866000 759.305000)" >
+  <rect width="125" x="-0.5" y="-0.5" fill="#ffffff" height="65" fill-opacity="0" stroke-width="0" />
+   <rect onclick="onLinkClick(evt)" linkURL="10line.svg" width="121" x="1.5" y="1.5" fill="#000000" height="61" stroke="#000000" fill-opacity="0" stroke-width="0" />
+ </g>
+ <g id="{6fd18dc6-214f-42ca-b720-353db24f9a6d}" transform="matrix(0.514475 0.000000 0.000000 0.514475 317.231000 760.665000)" >
+  <rect width="125" x="-0.5" y="-0.5" fill="#ffffff" height="65" fill-opacity="0" stroke-width="0" />
+   <rect onclick="onLinkClick(evt)" linkURL="10line.svg" width="121" x="1.5" y="1.5" fill="#000000" height="61" stroke="#000000" fill-opacity="0" stroke-width="0" />
+ </g>
+ <g id="{2d5df3ad-d23a-4313-b8ca-d012954f9fce}" transform="matrix(0.514475 0.000000 0.000000 0.514475 445.231000 757.665000)" >
+  <rect width="125" x="-0.5" y="-0.5" fill="#ffffff" height="65" fill-opacity="0" stroke-width="0" />
+   <rect onclick="onLinkClick(evt)" linkURL="10line.svg" width="121" x="1.5" y="1.5" fill="#000000" height="61" stroke="#000000" fill-opacity="0" stroke-width="0" />
+ </g>
+ <g id="{3414cd86-498f-491a-974e-6908edb392e0}" transform="matrix(0.514475 0.000000 0.000000 0.514475 678.231000 758.665000)" >
+  <rect width="125" x="-0.5" y="-0.5" fill="#ffffff" height="65" fill-opacity="0" stroke-width="0" />
+   <rect onclick="onLinkClick(evt)" linkURL="10line.svg" width="121" x="1.5" y="1.5" fill="#000000" height="61" stroke="#000000" fill-opacity="0" stroke-width="0" />
+ </g>
+ <g id="{bfeea417-d778-4b59-beb9-e90f97ea8378}" transform="matrix(0.514475 0.000000 0.000000 0.514475 798.231000 759.665000)" >
+  <rect width="125" x="-0.5" y="-0.5" fill="#ffffff" height="65" fill-opacity="0" stroke-width="0" />
+   <rect onclick="onLinkClick(evt)" linkURL="10line.svg" width="121" x="1.5" y="1.5" fill="#000000" height="61" stroke="#000000" fill-opacity="0" stroke-width="0" />
+ </g>
+ <g id="{b739c90a-43f6-403d-abb1-7742f9aced9e}" transform="matrix(0.309918 0.000000 0.000000 0.309918 40.915200 36.510300)" >
+  <rect width="125" x="-0.5" y="-0.5" fill="#ffffff" height="65" fill-opacity="0" stroke-width="0" />
+   <rect onclick="onLinkClick(evt)" linkURL="anhui.svg" width="121" x="1.5" y="1.5" fill="#000000" height="61" stroke="#ff0000" fill-opacity="0" stroke-width="0" />
+ </g>
+ <g id="{c7846a7a-0bd7-4168-a439-68c05b0c74b2}" transform="matrix(0.309918 0.000000 0.000000 0.309918 101.863000 36.160100)" >
+  <rect width="125" x="-0.5" y="-0.5" fill="#ffffff" height="65" fill-opacity="0" stroke-width="0" />
+   <rect onclick="onLinkClick(evt)" linkURL="chaohu.svg" width="121" x="1.5" y="1.5" fill="#000000" height="61" stroke="#ff0000" fill-opacity="0" stroke-width="0" />
+ </g>
+ <g id="{a3539b31-c55f-4994-a3a4-766bb1351820}" transform="matrix(0.518469 0.000000 0.000000 0.518469 169.349000 28.264400)" >
+  <rect width="125" x="-0.5" y="-0.5" fill="#ffffff" height="65" fill-opacity="0" stroke-width="0" />
+   <rect onclick="onLinkClick(evt)" linkURL="Sys-ZJX.svg" width="121" x="1.5" y="1.5" fill="#000000" height="61" stroke="#ff0000" fill-opacity="0" stroke-width="0" />
+ </g>
+ <associate/>
+</svg>

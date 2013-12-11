@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+	<package name="jsonbaseapp" namespace="/baseapp" extends="baseJson">		
+		<!-- 终端保电 -->
+		<action name="terminalprotect" class="com.nari.baseapp.planpowerconsume.TerminalProtectAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!-- 终端剔除 -->
+		<action name="terminaleliminate" class="com.nari.baseapp.planpowerconsume.TerminalEliminateAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+         <!--展开左边树 -->
+		<action name="generalGridByTree" class="com.nari.baseapp.planpowerconsume.GeneralGridByTreeAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>  
+		<!-- 数据召测 -->
+		<action name="dataFetch" class="com.nari.baseapp.datagathorman.DataFetchAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!-- 单户召测 -->
+		<action name="dataFetchLone" class="com.nari.baseapp.datagathorman.DataFetchLoneAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!--批量巡测-->
+		<action name="batchFetch" class="com.nari.baseapp.datagathorman.BatchFetchAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!-- 采集任务编制 -->
+		<action name="gatherTaskCompile" class="com.nari.baseapp.datagathorman.GatherTaskCompileAction">
+			<result type="json">
+				<param name="excludeProperties">gatherTaskCompileManager</param>
+			</result>
+		</action>
+		
+		<!-- 采集任务执行统计 -->
+		<action name="gatherTaskQuery" class="com.nari.baseapp.datagathorman.GatherTaskQueryAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		
+		<!-- 采集质量检查 -->
+		<action name="gatherQualityEvaluate" class="com.nari.baseapp.datagathorman.GatherQualityEvaluateAction">
+			<result type="json">
+				<param name="excludeProperties">gatherQualityEvaluateManager</param>
+			</result>
+		</action>
+		
+		<!-- 设备监测 -->
+		<action name="deviceMonitor" class="com.nari.baseapp.datagathorman.DeviceMonitorAction">
+			<result type="json">
+				<param name="excludeProperties">deviceMonitorManager</param>
+			</result>
+		</action>
+		
+		<!-- 数据发布管理 -->
+		<action name="dataPublish" class="com.nari.baseapp.datagathorman.DataPublishAction">
+			<result type="json">
+				<param name="excludeProperties">dataPublishManager</param>
+			</result>
+		</action>
+		
+		<!-- 低压远程抄表-->
+		<action name="autoSend" class="com.nari.baseapp.datagathorman.AutoSendAction">
+			<result type="json" name="success">
+				<param name="excludeProperties">autoSendManager</param>
+			</result>
+		</action>
+		
+		<!-- 低压采集质量-->
+		<action name="lowQualityEvaluate" class="com.nari.baseapp.datagathorman.LowQualityEvaluateAction">
+			<result type="json" name="success">
+				<param name="excludeProperties">lowQualityEvaluateManager</param>
+			</result>
+		</action>
+		
+		<!-- 营业报停控 -->
+		<action name="suspensionControl" class="com.nari.baseapp.planpowerconsume.SuspensionControlAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		
+		<!-- 月电量定值控 -->
+		<action name="energyControl" class="com.nari.baseapp.planpowerconsume.EnergyControlAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		
+		<!-- 遥控-->
+		<action name="remoteControl" class="com.nari.baseapp.planpowerconsume.RemoteControlAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		
+		<!-- 群组管理-->
+		<action name="groupSet" class="com.nari.baseapp.planpowerconsume.GroupSetAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!--有序用电任务编制-->
+		<action name="planCompile" class="com.nari.baseapp.planpowerconsume.PlanCompileAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		
+		<!--有序用电任务执行-->
+		<action name="PlanExcute" class="com.nari.baseapp.planpowerconsume.PlanExcuteAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		
+		<!-- 功率控制-保存时段控模板 -->
+		<action name="saveWPwrctrlTemplate" class="com.nari.baseapp.planpowerconsume.WPwrctrlTemplateAction">
+			<result type="json">
+				<param name="includeProperties">success</param>
+			</result>
+		</action>
+		<!-- 功率控制-修改时段控模板 -->
+		<action name="updateWPwrctrlTemplate" class="com.nari.baseapp.planpowerconsume.WPwrctrlTemplateAction">
+			<result type="json">
+				<param name="includeProperties">success</param>
+			</result>
+		</action>	
+		<!-- 功率控制-检查模板名重复性 -->	
+		<action name="isExist" class="com.nari.baseapp.planpowerconsume.WPwrctrlTemplateAction">
+			<result type="json">
+				<param name="includeProperties">success,exist</param>
+			</result>
+		</action>
+		
+		<!-- 功率控制-查询模板列表 -->	
+		<action name="templateList" class="com.nari.baseapp.planpowerconsume.WPwrctrlTemplateAction">
+			<result type="json">
+				<param name="includeProperties">success,templateList.*</param>
+			</result>
+		</action>
+		<!-- 功率控制-查询模板明细列表 -->	
+		<action name="templateDetails" class="com.nari.baseapp.planpowerconsume.WPwrctrlTemplateAction">
+			<result type="json">
+				<param name="includeProperties">success,detailList.*</param>
+			</result>
+		</action>
+				
+		<!-- 功率控制-保存厂休控模板 -->	
+		<action name="saveWFactctrlTemplate" class="com.nari.baseapp.planpowerconsume.WFactctrlTemplateAction">
+			<result type="json">
+				<param name="includeProperties">success</param>
+			</result>
+		</action>
+		<!-- 功率控制-查询模板列表 -->	
+		<action name="cxkTemplateList" class="com.nari.baseapp.planpowerconsume.WFactctrlTemplateAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>	
+		<!-- 功率控制-修改厂休控模板 -->	
+		<action name="updateWFactctrlTemplate" class="com.nari.baseapp.planpowerconsume.WFactctrlTemplateAction">
+			<result type="json">
+				<param name="includeProperties">success</param>
+			</result>
+		</action>
+		
+		<!-- 功率控制-保存时段控方案 -->	
+		<action name="addPwrCtrlScheme" class="com.nari.baseapp.planpowerconsume.PwrCtrlSchemeAction">
+			<result type="json">
+				<param name="includeProperties">success</param>
+			</result>
+		</action>
+		<!-- 功率控制-功率控制下方列表查询 -->	
+		<action name="pwrctrlSchemeExec" class="com.nari.baseapp.planpowerconsume.PwrCtrlSchemeAction">
+			<result type="json">
+				<param name="includeProperties">success,pwrctrlSchemeExecList.*,totalCount,validSectionNo,schemeCurveNo,templateName</param>
+			</result>
+		</action>	
+		<!-- 功率控制-功率控制方案加载 -->	
+		<action name="pwrctrlLoadScheme" class="com.nari.baseapp.planpowerconsume.PwrCtrlSchemeAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,validSectionNo,schemeCurveNo,templateName,secLength,templateId</param>
+			</result>
+		</action>
+		<!-- 功率控制-功率控制下方列表查询 -->	
+		<action name="pwrctrlScheme" class="com.nari.baseapp.planpowerconsume.PwrCtrlSchemeAction">
+			<result type="json">
+				<param name="includeProperties">success,schemeList.*,totalCount</param>
+			</result>
+		</action>
+		<!-- 功率控制-厂休控模板填充 -->	
+		<action name="factctrlLoadScheme" class="com.nari.baseapp.planpowerconsume.PwrCtrlSchemeAction">
+			<result type="json">
+				<param name="includeProperties">success,templateId</param>
+			</result>
+		</action>	
+		<!-- 功率控制-下浮控FORM填充 -->	
+		<action name="floatLoadScheme" class="com.nari.baseapp.planpowerconsume.PwrCtrlSchemeAction">
+			<result type="json">
+				<param name="includeProperties">success,floatDownCtrl.*</param>
+			</result>
+		</action>
+		<!-- 功率控制-参数下发 -->	
+		<action name="paramSend" class="com.nari.baseapp.planpowerconsume.PwrCtrlSchemeAction">
+			<result type="json">
+				<param name="includeProperties">success, execResultList.*,cacheAndTmnlStatus</param>
+			</result>
+		</action>
+		<!-- 功率控制-时段控参数召测-->	
+		<action name="sdkParamFecth" class="com.nari.baseapp.planpowerconsume.PwrCtrlSchemeAction">
+			<result type="json">
+				<param name="includeProperties">success,pwrctrlResultList.*,cacheAndTmnlStatus</param>
+			</result>
+		</action>
+		<!-- 功率控制-厂休控参数召测-->	
+		<action name="cxkParamFecth" class="com.nari.baseapp.planpowerconsume.PwrCtrlSchemeAction">
+			<result type="json">
+				<param name="includeProperties">success,factctrlResultList.*,cacheAndTmnlStatus</param>
+			</result>
+		</action>
+		<!-- 功率控制-方案执行-->	
+		<action name="powerControl" class="com.nari.baseapp.planpowerconsume.PwrCtrlSchemeAction">
+			<result type="json">
+				<param name="includeProperties">success,execResultList.*,cacheAndTmnlStatus</param>
+			</result>
+		</action>
+		<!-- 功率控制-校验方案名是否存在-->	
+		<action name="ckeckCtrlSchemeName" class="com.nari.baseapp.planpowerconsume.PwrCtrlSchemeAction">
+			<result type="json">
+				<param name="includeProperties">success,checkResult</param>
+			</result>
+		</action>
+		<!-- 数据采集管理-原始报文-->	
+		<action name="origFrameQry" class="com.nari.baseapp.datagathorman.OrigFrameQryAction">
+			<result type="json">
+				<param name="excludeProperties">origFrameQryManager</param>
+			</result>
+		</action>
+		<!-- 有序用电-身份确认-->	
+		<action name="checkStaff" class="com.nari.baseapp.planpowerconsume.CheckStaffPwdAction">
+			<result type="json">
+				<param name="includeProperties">success,checkStaffRes</param>
+			</result>
+		</action>
+		<!-- 数据采集管理-非法报文-->
+		<action name="illegalFrameQry" class="com.nari.baseapp.datagathorman.IllegalFrameQryAction">
+			<result type="json">
+				<param name="excludeProperties">illegalFrameQryManager</param>
+			</result>
+		</action>
+		
+		<!-- 预付费管理-预付费投入调试-->
+		<action name="prePaidDebug" class="com.nari.baseapp.prepaidman.PrePaidDebugAction">
+			<result type="json">
+				<param name="excludeProperties">prePaidDebugManager</param>
+			</result>
+		</action>
+		
+		<!-- 预付费管理-催费控制-->
+		<action name="dunningControl" class="com.nari.baseapp.prepaidman.DunningControlAction">
+			<result type="json"></result>
+		</action>
+		
+		<!-- 预付费管理-用户余额查询-->
+		<action name="useValueQuery" class="com.nari.baseapp.prepaidman.UseValueQueryAction">
+			<result type="json"></result>
+		</action>
+		
+		<!-- 接口管理-接口执行监测 -->
+		<action name="interfaceMonitor" class="com.nari.baseapp.interfacemanage.InterfaceMonitotAction">
+			<result type="json">
+				<param name="excludeProperties">interfaceMonitorManager</param>
+			</result>
+		</action>
+
+		<!-- 预付费管理-预付费情况统计-->
+		<action name="prePaidStat" class="com.nari.baseapp.prepaidman.PrePaidStatAction">
+			<result type="json"></result>
+		</action>	
+		<!-- 预付费管理-预付费工况信息-->
+		<action name="prePaidStatus" class="com.nari.baseapp.prepaidman.PrePaidStatusAction">
+			<result type="json"></result>
+		</action>
+		<!-- 预付费控制参数下发-->
+		<action name="prePaidParaSet" class="com.nari.baseapp.prepaidman.PrePaidParaSetAction">
+			<result type="json"></result>
+		</action>
+		<!-- 预付费控制 -->
+		<action name="prePaidControl" class="com.nari.baseapp.prepaidman.PrePaidControlAction">
+			<result type="json"></result>
+		</action>
+		<!-- 催费控制 -->
+		<action name="dunningControl" class="com.nari.baseapp.prepaidman.DunningControlAction">
+			<result type="json"></result>
+		</action>
+		<!-- 电能表控制 -->
+		<action name="meterControl" class="com.nari.baseapp.prepaidman.MeterControlAction">
+			<result type="json"></result>
+		</action>
+	</package>
+</struts>

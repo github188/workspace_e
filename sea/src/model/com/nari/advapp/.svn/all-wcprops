@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/app/!svn/ver/6988/trunk/sea/src/model/com/nari/advapp
+END
+BItemCodeMappingBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/6442/trunk/sea/src/model/com/nari/advapp/BItemCodeMappingBean.java
+END
+VipConsPowerOverBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/5082/trunk/sea/src/model/com/nari/advapp/VipConsPowerOverBean.java
+END
+VipConsPowerCurveBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/5229/trunk/sea/src/model/com/nari/advapp/VipConsPowerCurveBean.java
+END
+IPubSchemaBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/app/!svn/ver/6442/trunk/sea/src/model/com/nari/advapp/IPubSchemaBean.java
+END
+IPubDetailBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/app/!svn/ver/6442/trunk/sea/src/model/com/nari/advapp/IPubDetailBean.java
+END
+VipConsPowerVstatBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/5229/trunk/sea/src/model/com/nari/advapp/VipConsPowerVstatBean.java
+END

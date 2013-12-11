@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/app/!svn/ver/7034/trunk/sea/src/web/com/nari/qrystat/reportMan
+END
+SaveReport2DB.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/app/!svn/ver/7034/trunk/sea/src/web/com/nari/qrystat/reportMan/SaveReport2DB.java
+END
+ReportFactory.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/app/!svn/ver/5605/trunk/sea/src/web/com/nari/qrystat/reportMan/ReportFactory.java
+END
+SeaReportServlet.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/app/!svn/ver/5466/trunk/sea/src/web/com/nari/qrystat/reportMan/SeaReportServlet.java
+END

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog>
+<dataPub>
+<dataType>1</dataType>
+<pubCycle>1</pubCycle>
+<!--pubTime>2008/08/08 08:08:08</pubTime-->
+<pubUnit>1</pubUnit>
+<onFlag>1</onFlag>
+</dataPub>
+<dataPub>
+<dataType>2</dataType>
+<pubCycle>1</pubCycle>
+<!--pubTime>2008/08/08 08:08:08</pubTime-->
+<pubUnit>1</pubUnit>
+<onFlag>1</onFlag>
+</dataPub>
+<dataPub>
+<dataType>3</dataType>
+<pubCycle>1</pubCycle>
+<!--pubTime>2008/08/08 08:08:08</pubTime-->
+<pubUnit>1</pubUnit>
+<onFlag>1</onFlag>
+</dataPub>
+<dataPub>
+<dataType>4</dataType>
+<pubCycle>1</pubCycle>
+<!--pubTime>2008/08/08 08:08:08</pubTime-->
+<pubUnit>1</pubUnit>
+<onFlag>1</onFlag>
+</dataPub>
+</catalog>

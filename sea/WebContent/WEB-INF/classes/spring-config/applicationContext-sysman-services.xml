@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <!--系统管理service-->
+    <bean id="iAuthorizeManager" class="com.nari.sysman.securityman.impl.AuthorizeManagerImpl">
+        <property name="iPSysUserDao" ref="iPSysUserDao" />
+        <property name="vwTmnlFactoryJdbcDao" ref="vwTmnlFactoryJdbcDao" />
+        <property name="iPAccessTmnlFactoryDao" ref="iPAccessTmnlFactoryDao" />
+        <property name="iPAccessTmnlFactoryJdbcDao" ref="iPAccessTmnlFactoryJdbcDao" />
+        <property name="iPUserRoleRelaDao" ref="iPUserRoleRelaDao" />
+        <property name="iPUserRoleRelaJdbcDao" ref="iPUserRoleRelaJdbcDao" />
+        <property name="vwConsTypeJdbcDao" ref="vwConsTypeJdbcDao" />
+        <property name="iPAccessConsTypeJdbcDao" ref="iPAccessConsTypeJdbcDao" />
+        <property name="oOrgDao" ref="oOrgDao" />
+        <property name="iODeptDao" ref="iODeptDao" />
+        <property name="iPAccessOrgJdbcDao" ref="iPAccessOrgJdbcDao" />
+    </bean>
+
+    <bean id="iPMenuManager" class="com.nari.sysman.securityman.impl.PMenuMangerImpl">
+        <property name="iPMenuDao" ref="iPMenuDao" />
+        <property name="iPRolePrivRelaDao" ref="iPRolePrivRelaDao" />
+    </bean>
+
+    <!--系统用户列表测试及演示-->
+    <bean id="iPSysUserManager" class="com.nari.sysman.securityman.impl.PSysUserManagerImpl">
+        <property name="iPSysUserDao" ref="iPSysUserDao" />
+    </bean>
+
+    <!--角色管理service-->
+    <bean id="iPRoleManager" class="com.nari.sysman.securityman.impl.PRoleManagerImpl">
+        <property name="iPRoleDao" ref="iPRoleDao" />
+        <property name="iPRolePrivRelaDao" ref="iPRolePrivRelaDao" />
+        <property name="iPRolePrivRelaJdbcDao" ref="iPRolePrivRelaJdbcDao" />
+        <property name="iPUserRoleRelaDao" ref="iPUserRoleRelaDao" />
+        <property name="iPUserRoleRelaJdbcDao" ref="iPUserRoleRelaJdbcDao" />
+    </bean>
+    
+    <!-- 操作员管理-->
+    <bean id="iOperatorsManager" class="com.nari.sysman.securityman.impl.OperatorsManagerImpl">
+        <property name="iOperatorsDao" ref="iOperatorsDao"/>
+        <property name="oOrgDao" ref="oOrgDao" />
+    </bean>
+    
+    <!-- 终端任务配置-->
+    <bean id="tmnlTaskConfigManager" class="com.nari.sysman.templateman.impl.TmnlTaskConfigManagerImpl">
+        <property name="tmnlTaskConfigDao" ref="tmnlTaskConfigDao"/>
+    </bean>
+        
+
+    <!-- 任务模板管理 -->
+    <bean id="taskModelManager" class="com.nari.sysman.templateman.impl.TaskModelManagerImpl">
+        <property name="vwProtocolCodeDao" ref="vwProtocolCodeDao" />
+        <property name="vwTaskPropertyDao" ref="vwTaskPropertyDao" />
+        <property name="tTaskTemplateDao" ref="tTaskTemplateDao" />
+        <property name="bClearProtocolDao" ref="bClearProtocolDao" />
+        <property name="bClearProtocolJdbcDao" ref="bClearProtocolJdbcDao" />
+        <property name="tTaskTemplateDataJdbcDao" ref="tTaskTemplateDataJdbcDao" />
+        <property name="vwClearDataTypeDao" ref="vwClearDataTypeDao"></property>
+    </bean>
+
+    <!--通用左边树service -->
+    <bean id="iGeneralTreeManager" class="com.nari.sysman.securityman.impl.GeneralTreeManagerImpl">
+        <property name="iGenralTreeDao" ref="iGenralTreeDao" />
+    </bean>
+    
+    
+    <!--字典表服务-->
+    <bean id="dictionaryManager" class="com.nari.sysman.securityman.impl.DictionaryManagerImpl">
+        <property name="iDictionaryDao" ref="iDictionaryDao"></property>
+    </bean>
+    
+    
+    <!--用户列表高级查询-->
+    <bean id="iUserAdvanceQueryManager" class="com.nari.sysman.securityman.impl.UserAdvanceQueryManagerImpl">
+        <property name="iUserAdvanceQueryDao" ref="iUserAdvanceQueryDao" />
+        
+    </bean>
+    
+    <bean id="alertEventManagerImpl" class="com.nari.sysman.securityman.impl.AlertEventManagerImpl">
+        <property name="alertEventDao" ref="alertEventDao"></property>
+        <property name="eventNoCreateDao" ref="eventNoCreateDao"></property>
+    </bean>
+    
+<!--编码管理-->
+	<bean id="iCodeManManager" class="com.nari.sysman.codeman.Impl.CodeManManagerImpl">
+		<property name="codeManDao" ref="codeManDao" />
+	</bean>
+</beans>

@@ -1,0 +1,155 @@
+package com.nari.qrystat.reportQuery;
+
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
+import org.apache.struts2.json.annotations.JSON;
+
+import com.nari.action.baseaction.BaseAction;
+import com.nari.qrystat.queryReport.IReportTypeQueryManager;
+
+/**
+ * 报表查询web类
+ * 
+ * @author chengzh
+ * 
+ */
+
+public class ReportTypeQueryAction extends BaseAction {
+	private Logger logger = Logger.getLogger(this.getClass());
+	// 注入报表查询服务类
+	IReportTypeQueryManager iReportTypeQueryManager;
+	// 返回确认
+	public boolean success = true;
+
+	// 报表ID
+	private String reportId;
+	// 报表类型
+	private String reportType;
+	// 报表类型
+	private String reportName;
+	// 报表长度
+	private long reportLen;
+	// 报表内容
+	private byte[] reportContent;
+	// 报表参数
+	private String reportParam;
+	// 是否有效
+	private boolean isValid;
+
+	public List<ReportJdbc> reportList;
+
+	/**
+	 * 根据传入的报表类型查询报表名称
+	 * 
+	 * @param reportType
+	 * @return
+	 */
+	public String queryReportByType() {
+		try {
+			reportList = iReportTypeQueryManager.queryReportByType(reportType);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return SUCCESS;
+
+	}
+
+	/**
+	 * 查询报表类型
+	 * 
+	 * @param reportType
+	 * @return
+	 */
+	public String queryReportTypeList() throws Exception {
+		logger.debug("queryReportTypeList start");
+		this.setReportList(iReportTypeQueryManager.queryReportTypeList());
+		logger.debug("queryReportTypeList end");
+		return SUCCESS;
+	}
+
+	public String getReportId() {
+		return reportId;
+	}
+
+	public void setReportId(String reportId) {
+		this.reportId = reportId;
+	}
+
+	public String getReportType() {
+		return reportType;
+	}
+
+	public void setReportType(String reportType) {
+		this.reportType = reportType;
+	}
+
+	public String getReportName() {
+		return reportName;
+	}
+
+	public void setReportName(String reportName) {
+		this.reportName = reportName;
+	}
+
+	public long getReportLen() {
+		return reportLen;
+	}
+
+	public void setReportLen(long reportLen) {
+		this.reportLen = reportLen;
+	}
+
+	public byte[] getReportContent() {
+		return reportContent;
+	}
+
+	public void setReportContent(byte[] reportContent) {
+		this.reportContent = reportContent;
+	}
+
+	public String getReportParam() {
+		return reportParam;
+	}
+
+	public void setReportParam(String reportParam) {
+		this.reportParam = reportParam;
+	}
+
+	public boolean isValid() {
+		return isValid;
+	}
+
+	public void setValid(boolean isValid) {
+		this.isValid = isValid;
+	}
+
+	@JSON(serialize = false)
+	public IReportTypeQueryManager getiReportTypeQueryManager() {
+		return iReportTypeQueryManager;
+	}
+
+	public void setiReportTypeQueryManager(
+			IReportTypeQueryManager iReportTypeQueryManager) {
+		this.iReportTypeQueryManager = iReportTypeQueryManager;
+	}
+
+	public boolean isSuccess() {
+		return success;
+	}
+
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
+
+	public List<ReportJdbc> getReportList() {
+		return reportList;
+	}
+
+	public void setReportList(List<ReportJdbc> reportList) {
+		this.reportList = reportList;
+	}
+
+}

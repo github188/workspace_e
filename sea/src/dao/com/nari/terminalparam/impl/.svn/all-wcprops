@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/app/!svn/ver/5099/trunk/sea/src/dao/com/nari/terminalparam/impl
+END
+TTaskTemplateDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/terminalparam/impl/TTaskTemplateDaoImpl.java
+END
+TTaskTemplateDataJdbcDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/app/!svn/ver/2721/trunk/sea/src/dao/com/nari/terminalparam/impl/TTaskTemplateDataJdbcDaoImpl.java
+END
+TDataCombiDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/5099/trunk/sea/src/dao/com/nari/terminalparam/impl/TDataCombiDaoImpl.java
+END
+TTaskTemplateDataDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/terminalparam/impl/TTaskTemplateDataDaoImpl.java
+END
+TTmnlTaskDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/terminalparam/impl/TTmnlTaskDaoImpl.java
+END

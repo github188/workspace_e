@@ -1,0 +1,680 @@
+/*
+ * log edit by sgm
+ */
+/*******************************************************************************
+ * **生成一个操作人员的的选择窗口
+ * 
+ * @fn 当按确定时候的回调 *
+ */
+Ext.ux.staffTextfield = Ext.extend(Ext.form.TriggerField, {
+			triggerClass : 'x-form-date-trigger',
+			onTriggerClick : function() {
+				var me = this;
+				showStaffWin(function(r) {
+							r && me.setValue(r.get("staffNo"));
+						}, this.id);
+			}
+		});
+			// 公共方法去
+	function itemFromId(panel, itemId) {
+		return panel.find("itemId", itemId)[0];
+	}
+Ext.reg('stafftextfield', Ext.ux.staffTextfield);
+function showStaffWin(fn, id) {
+
+	var storeR = new Ext.data.JsonStore({
+				fields : ["staffNo", "orgNo", "staffName", "orgName", "deptNo",
+						"deptName"],
+				root : "resultList",
+				totalProperty : "totalCount",
+				url : "runman/dutyLog!findStaff.action"
+			});
+	var sm = new Ext.grid.CheckboxSelectionModel({
+				header : "",
+				singleSelect : true
+			});
+	var grid = new Ext.grid.GridPanel({
+				tiltle : "操作人员列表",
+				store : storeR,
+				stripeRows : true,
+				viewConfig : {
+					forceFit : true
+				},
+				sm : sm,
+				height : 300,
+				width : 680,
+				bbar : new Ext.ux.MyToolbar({
+							store : storeR
+						}),
+				columns : [sm, {
+							header : "操作人员编号",
+							width : 50,
+							dataIndex : "staffNo"
+						}, {
+							header : "操作人员名称",
+							width : 50,
+							dataIndex : "staffName"
+						}, {
+							header : "所在部门",
+							width : 50,
+							dataIndex : "deptName"
+						}, {
+							header : "所属供电公司",
+							width : 50,
+							dataIndex : "orgName"
+						}],
+				listeners : {
+					rowdblclick : function(g, index) {
+						var r = g.getSelectionModel().getSelected();
+						if (!r) {
+							return;
+						}
+						selectStaffWin.close();
+						Ext.getCmp(id).setValue(r.get("staffNo"));
+					}
+				}
+			});
+	storeR.load({
+				params : {
+					start : 0,
+					limit : 20
+				}
+			});
+	// 上面的选择条件面板
+	var topSelectPanel = new Ext.form.FieldSet({
+				title : "请选择查询条件",
+				titleCollapse : true,
+				autoHeight : true,
+				width : 680,
+				layout : "table",
+				layoutConfig : {
+					columns : 4
+				},
+				defaults : {
+					padding : "0 0 0 20px"
+				},
+				items : [{
+							border : false,
+							layout : "form",
+							border : false,
+							labelWidth : 60,
+							labelAlign : "right",
+							items : [{
+										xtype : "textfield",
+										allowBlank : true,
+										border : false,
+										labelStyle : "width:60;",
+										width : 80,
+										itemId : "log_staffNo",
+										fieldLabel : "用户登陆名"
+									}]
+						}, {
+							border : false,
+							layout : "form",
+							labelAlign : "right",
+							border : false,
+							items : [{
+										xtype : "textfield",
+										allowBlank : true,
+										border : false,
+										width : 80,
+										labelStyle : "width:60;",
+										itemId : "log_staffName",
+										fieldLabel : "用户名"
+									}]
+						}, {
+							border : false,
+							layout : "form",
+							border : false,
+							labelAlign : "right",
+							items : [{
+										xtype : "textfield",
+										allowBlank : true,
+										border : false,
+										labelStyle : "width:60;",
+										width : 80,
+										itemId : "log_deptName",
+										fieldLabel : "用户的部门"
+									}]
+						}, {
+							border : false,
+							xtype : "button",
+							itemId : "find",
+							style : "padding:0 0 0 30px",
+							text : "查询",
+							handler : function() {
+								storeR.baseParams = {
+									"staffFindBean.staffName" : itemFromId(topSelectPanel,"log_staffName").getValue(),
+									"staffFindBean.deptName" :itemFromId(topSelectPanel,"log_deptName").getValue(),
+									"staffFindBean.staffNo" :
+									itemFromId(topSelectPanel,"log_staffNo").getValue()
+								};
+								storeR.load();
+							}
+						}]
+			});
+	var selectStaffWin = new Ext.Window({
+				title : "请选择操作人员",
+				modal : true,
+				height : 450,
+				width : 700,
+				layout : "border",
+				keys : {
+					key : Ext.EventObject.ENTER,
+					fn : function() {
+						var b = topSelectPanel.items.item("find");
+						b.handler(b);
+					}
+				},
+				layout : "fit",
+				border : false,
+				buttonAlign : "right",
+				buttons : [{
+							text : "清除",
+							handler : function() {
+								Ext.getCmp(id).setValue("");
+								selectStaffWin.close();
+							}
+						}, {
+							text : "确定",
+							handler : function() {
+								var r = grid.getSelectionModel().getSelected();
+								fn = fn.createInterceptor(function() {
+											selectStaffWin.close();
+										});
+								fn
+										&& fn.createDelegate(showStaffWin, [r,
+														grid])();
+							}
+						}, {
+							text : "关闭",
+							handler : function() {
+								this.ownerCt.ownerCt.close();
+							}
+						}],
+				items : [{
+							xtype : "panel",
+							border : false,
+							layout : "vbox",
+							bodyStyle : "padding:20px 5px 0 5px",
+							items : [topSelectPanel, grid]
+						}]
+			});
+
+	selectStaffWin.show();
+	return selectStaffWin;
+}
+var comboUserOpTypeStore = new Ext.data.JsonStore({
+			url : "runman/dutyLog!findUserOptype.action",
+			root : "resultList",
+			fields : ["opType", "opTypeName"]
+		});
+var comboTmnlOpTypeStore = new Ext.data.JsonStore({
+			url : "runman/dutyLog!findTmnlOptype.action",
+			root : "resultList",
+			fields : ["opType", "opTypeName"]
+		});
+
+var ComboOpType = Ext.extend(Ext.form.ComboBox, {
+			triggerAction : "all",
+			typeAhead : true,
+			selectOnFocus : true
+		});
+
+var userOpTypeCombo = new ComboOpType({
+			displayField : "opTypeName",
+			valueField : "opType",
+			width : 100,
+			fieldLabel : "操作类型",
+			store : comboUserOpTypeStore,
+			mode : "remote"
+		});
+
+var tmnlOpTypeCombo = new ComboOpType({
+			displayField : "opTypeName",
+			valueField : "opType",
+			fieldLabel : "操作类型",
+			width : 100,
+			store : comboTmnlOpTypeStore,
+			mode : "remote"
+		});
+
+/**
+ * 通过此方法来改变url
+ * 
+ * @param {}
+ *            combo
+ * @param {}
+ *            url
+ * @param {}
+ *            fields
+ */
+function changeComboUrl(combo, url, fields) {
+	combo.proxy = new Ext.data.HttpProxy({
+				url : url
+			});
+	combo.reader.recordType = Ext.data.Record.create(fields);
+}
+
+/*
+ * query panel runman/dutyLog!.action
+ */
+var dateField = new Ext.Panel({
+			layout : 'table',
+			border : false,
+			width : 310,
+			autoWidth : true,
+			labelAlign : 'right',
+			layoutConfig : {
+				columns : 5
+			},
+			style : {
+				marginTop : '1px',
+				marginBottom : '10px',
+				marginLeft : '0px',
+				marginRight : '10px'
+			},
+			items : [{
+						layout : 'form',
+						border : false,
+						labelWidth : 20,
+						width : 150,
+						items : [{
+									xtype : "datefield",
+									id : "logQuery_startDate",
+									format : 'Y-m-d',
+									editable:false,
+									emptyText : '请选择日期 ...',
+									fieldLabel : "从",
+									width : 100,
+									value : new Date()
+								}]
+					}, {
+						layout : 'form',
+						border : false,
+						width : 150,
+						labelWidth : 20,
+						width : 130,
+						items : [{
+									xtype : "datefield",
+									id : "logQuery_endDate",
+									format : 'Y-m-d',
+									emptyText : '请选择日期 ...',
+									fieldLabel : "到",
+									editable:false,
+									width : 100,
+									value : new Date().add(Date.DAY, 1)
+								}]
+					},
+					// {
+					// border:false,
+					// style:"font-size:12px;padding:0 0 0 10px",
+					// html : "操作类型&nbsp;&nbsp;"
+					// },
+					{
+						border : false,
+						layout : "form",
+						id : "userOpTypeCombo",
+						labelWidth : 50,
+						items : [userOpTypeCombo]
+					}, {
+						border : false,
+						layout : "form",
+						labelWidth : 50,
+						id : "tmnlOpTypeCombo",
+						items : [tmnlOpTypeCombo]
+					}]
+		});
+var staffPanel = new Ext.Panel({
+			header : false,
+			width : 200,
+			border : false,
+			height : 90,
+			items : [{
+						layout : 'form',
+						border : false,
+						labelWidth : 100,
+						labelAlign : "right",
+						items : [{
+									xtype : "stafftextfield",
+									id : "logQuery_staffNo",
+									fieldLabel : "选择操作人员",
+									border : false,
+									width : 80
+
+								}]
+					}]
+		});
+var queryPanel = new Ext.Panel({
+	layout : 'column',
+	border : false,
+	items : [staffPanel, dateField,
+			// {
+			// border : false,
+			// width : 70,
+			// columnWidth:.05,
+			// xtype : 'button',
+			// style : {
+			// marginTop : '0px',
+			// marginBottom : '10px',
+			// marginLeft : '50px',
+			// marginRight : '10px'
+			// },
+			// text : "清空条件",
+			// width : 0.05,
+			// handler : function() {
+			// Ext.getCmp("logQuery_staffNo").setValue("")
+			// Ext.getCmp("logQuery_startDate").setValue("")
+			// Ext.getCmp("logQuery_endDate").setValue("")
+			// }
+			// },
+			{
+		border : false,
+		xtype : 'button',
+		style : {
+			marginTop : '0px',
+			marginBottom : '10px',
+			marginLeft : '10px',
+			marginRight : '10px'
+		},
+		text : "查询",
+		columnWidth : .15,
+		id : "logQuery_find",
+		handler : function() {
+			var selePanel = centerTab.getActiveTab()
+			if (selePanel == tabTmnlPanel) {
+				logQueryStore.baseParams = {
+					"query.empNO" : Ext.getCmp("logQuery_staffNo").getValue(),
+					"query.startDate" : Ext.getCmp("logQuery_startDate")
+							.getValue(),
+					"query.endDate" : Ext.getCmp("logQuery_endDate").getValue(),
+					"query.opType" : tmnlOpTypeCombo.getValue(),
+					queryType : "0"
+				}
+				logQueryStore.load();
+			} else if (selePanel == tabUserPanel) {
+				userOpStore.baseParams = {
+					"query.empNO" : Ext.getCmp("logQuery_staffNo").getValue(),
+					"query.startDate" : Ext.getCmp("logQuery_startDate")
+							.getValue(),
+					"query.endDate" : Ext.getCmp("logQuery_endDate").getValue(),
+					"query.opType" : userOpTypeCombo.getValue(),
+					queryType : "1"
+				}
+				userOpStore.load();
+			}
+
+		}
+	}]
+});
+var northPanel = new Ext.Panel({
+			border : false,
+			bodyStyle : "padding:10px 0 0 0",
+			region : 'north',
+			height : 40,
+			layout : "fit",
+			items : [queryPanel]
+		});
+/*
+ * records panel for important operation
+ */
+var cm = new Ext.grid.ColumnModel([{
+	header : "供电单位",
+	dataIndex : "orgName",
+	align : 'left',
+	renderer : function(v) {
+		var html = '<span ext:qtitle="供电单位" ext:qtip="' + v + '">' + v
+				+ '</span>';
+		return html;
+	}
+}, {
+	header : "用户编号",
+	dataIndex : "consNo"
+}, {
+	header : "用户名称",
+	dataIndex : "consName",
+	renderer : function(v) {
+		var html = '<span ext:qtitle="用户名称" ext:qtip="' + v + '">' + v
+				+ '</span>';
+		return html;
+	}
+}, {
+	header : "操作人员",
+	dataIndex : "staffNo"
+}, {
+	header : "操作时间",
+	dataIndex : "opTime",
+	align : 'center',
+	renderer : function(v) {
+		v = v + "";
+		v = v.replace(/-/g, "/").replace("T", " ");
+		v = new Date(v).format("Y年m月d日 H:i:s");
+		var html = '<span ext:qtitle="用户名称" ext:qtip="' + v + '">' + v
+				+ '</span>';
+		return html;
+	}
+}, {
+	header : "操作类型",
+	dataIndex : "opTypeName"
+}, {
+	header : "操作对象",
+	dataIndex : "opObjName"
+}, {
+	header : "规约项编码",
+	dataIndex : "protocolNo",
+	renderer : function(v, m, r) {
+		return v || r.get("protItemNo") || "";
+	}
+}, {
+	header : "规约项名称",
+	dataIndex : "smallName",
+	renderer : function(v, m, r) {
+		var str = v;
+		if (!v || v.trim() == "") {
+			str = r.get("bigName");
+		}
+		var html = '<span ext:qtitle="规约项名称" ext:qtip="' + str + '">' + str
+				+ '</span>';
+		if (!str)
+			return "";
+		return html;
+	}
+}, {
+	header : "当前值",
+	dataIndex : "curValue"
+}, {
+	header : "操作模块",
+	dataIndex : "opModule"
+}, {
+	header : "操作模块按钮",
+	dataIndex : "opButton"
+}, {
+	header : "ip地址",
+	dataIndex : "ipAddr"
+}]);
+var logQueryStore = new Ext.data.JsonStore({
+	fields : ["orgName", "staffNo", "staffName", "opTime", "protItemNo",
+			"opTypeName", "opObjName", "protocolNo", "curValue", "opModule",
+			"opButton", "ipAddr", "consNo", "consName", "bigName", "smallName"],
+	root : "resultList",
+	totalProperty : "totalCount",
+	url : "runman/dutyLog!findTmnlOpLog.action"
+});
+
+var bottomGridPanel = new Ext.grid.GridPanel({
+			store : logQueryStore,
+			cm : cm,
+			stripeRows : true,
+			height : 200,
+			autoScroll : true,
+			border : false,
+			viewConfig : {
+				deferEmptyText : '请等待...',
+				emptyText : '没有数据',
+				forceFit : true
+			},
+			bbar : new Ext.ux.MyToolbar({
+						store : logQueryStore,
+						enableExpAll : true
+					})
+		});
+// logQueryStore.load();
+
+var userOpStore = new Ext.data.JsonStore({
+			fields : ["empNo", "orgNo", "orgName", "opType", "opTypeName",
+					"opTime", "opModule", "opButton", "name", "opContent",
+					"ipAddr"],
+			root : "resultList",
+			totalProperty : "totalCount",
+			url : "runman/dutyLog!findTmnlOpLog.action"
+		});
+var userOpGrid = new Ext.grid.GridPanel({
+			border : false,
+			store : userOpStore,
+			viewConfig : {
+				deferEmptyText : '请等待...',
+				emptyText : '没有数据',
+				forceFit : true
+			},
+			bbar : new Ext.ux.MyToolbar({
+						store : userOpStore,
+						enableExpAll : true
+					}),
+			columns : [{
+						header : "供电单位",
+						dataIndex : "orgName",
+						align : "center"
+					}, {
+						header : "操作人员编号",
+						dataIndex : "empNo",
+						align : "center"
+					}, {
+						header : "操作人员名称",
+						dataIndex : "name",
+						align : "center"
+					}, {
+						header : "操作类型",
+						dataIndex : "opTypeName",
+						align : ""
+					}, {
+						header : "操作时间",
+						dataIndex : "opTime",
+						align : "center",
+						renderer : function(v) {
+							v = v.replace(/-/g, "/").replace("T", " ");
+							return new Date(v).format("Y年m月d日 H:i:s");
+						}
+					}, {
+						header : "操作模块",
+						dataIndex : "opModule",
+						align : "center"
+					}, {
+						header : "操作模块按钮",
+						dataIndex : "opButton",
+						align : "center"
+					}, {
+						header : "操作内容",
+						dataIndex : "opContent",
+						align : "center"
+					}, {
+						header : "IP地址 ",
+						dataIndex : "ipAddr",
+						align : "center"
+					}]
+		});
+var tabTmnlPanel = new Ext.Panel({
+			border : false,
+			title : "终端操作日志",
+			layout : "fit",
+			items : [bottomGridPanel]
+		});
+var tabUserPanel = new Ext.Panel({
+			border : false,
+			title : "用户操作日志",
+			layout : "fit",
+			items : [userOpGrid]
+		})
+
+// 下部分的tab
+var centerTab = new Ext.TabPanel({
+			region : "center",
+			border : false,
+			activeItem : 0,
+			items : [tabTmnlPanel, tabUserPanel],
+			listeners : {
+				tabchange : function(tab, p) {
+					if (p == tabTmnlPanel) {
+						Ext.getCmp("userOpTypeCombo").setVisible(false);
+						Ext.getCmp("tmnlOpTypeCombo").setVisible(true);
+						// userOpTypeCombo.setVisible(false);
+						// tmnlOpTypeCombo.setVisible(true);
+					} else {
+						Ext.getCmp("userOpTypeCombo").setVisible(true);
+						Ext.getCmp("tmnlOpTypeCombo").setVisible(false);
+						// userOpTypeCombo.setVisible(true);
+						// tmnlOpTypeCombo.setVisible(false);
+					}
+				}
+			}
+		});
+var centerPanel = new Ext.Panel({
+			region : "center",
+			layout : "fit",
+			border : false,
+			items : [centerTab]
+		});
+
+Ext.onReady(function() {
+	Ext.QuickTips.init();
+
+	/*
+	 * panel
+	 */
+	var panel = new Ext.form.FormPanel({
+				layout : 'border',
+				border : false,
+				keys : {
+					key : Ext.EventObject.ENTER,
+					fn : function() {
+						var b = Ext.getCmp("logQuery_find");
+						b.handler(b);
+					}
+				},
+				defaults : {
+					keys : {
+						key : Ext.EventObject.ENTER,
+						fn : function() {
+							var b = Ext.getCmp("logQuery_find");
+							b.handler(b);
+						}
+					}
+				},
+				autoScroll : true,
+				bodyStyle : 'padding : 10px',
+				items : [northPanel, centerPanel]
+			});
+	renderModel(panel, '日志查询');
+	Ext.getCmp('日志查询').on('activate', function() {
+		if (!window.dataType) {
+			return;
+		}
+		tmnlOpTypeCombo.setValue(window.dataType);
+		logQueryStore.baseParams = {
+			"query.empNO" : null,
+			"query.startDate" : new Date().clearTime(),
+			"query.endDate" : new Date().clearTime().add(Date.DAY, 1),
+			queryType : "0",
+			"query.opType" : window.dataType
+		};
+		Ext.getCmp("logQuery_startDate").setValue(new Date().clearTime());
+		Ext.getCmp("logQuery_endDate").setValue(new Date().clearTime().add(
+				Date.DAY, 1))
+
+		logQueryStore.load();
+		centerTab.setActiveTab(tabTmnlPanel);
+		window.dataType = undefined;
+			// window.dataType
+	})
+	window.dataType && Ext.getCmp('日志查询').fireEvent("activate",Ext.getCmp('日志查询'));
+		// if(){}
+	});

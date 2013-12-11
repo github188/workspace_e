@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/app/!svn/ver/4353/trunk/sea/src/service/com/nari/qrystat/taskQuery
+END
+TaskDetailsManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/app/!svn/ver/4353/trunk/sea/src/service/com/nari/qrystat/taskQuery/TaskDetailsManager.java
+END
+TaskStateManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/app/!svn/ver/4290/trunk/sea/src/service/com/nari/qrystat/taskQuery/TaskStateManager.java
+END

@@ -1,0 +1,112 @@
+<svg width="1024" height="788">
+
+<script type="text/ecmascript">
+<![CDATA[
+function createHttpRequest(){
+	var xmlHttpRequest = null; 
+
+	try
+	{
+		if( window.ActiveXObject )
+		{
+			for( var i = 5; i; i-- )
+			{
+				try
+				{
+					if( i == 2 )
+					{
+						xmlHttpRequest = new ActiveXObject( "Microsoft.XMLHTTP" ); 
+					}
+					else
+					{
+						xmlHttpRequest = new ActiveXObject( "Msxml2.XMLHTTP." + i + ".0" ); 
+						xmlHttpRequest.setRequestHeader("Content-Type","text/xml"); 
+						xmlHttpRequest.setRequestHeader("Content-Type","gb2312"); 
+					}
+					break;
+				}
+
+				catch(e)
+				{
+					xmlHttpRequest = null; 
+				}
+			}
+		}
+		else if( window.XMLHttpRequest )
+		{
+			xmlHttpRequest = new XMLHttpRequest();
+
+			if (xmlHttpRequest.overrideMimeType)
+			{
+				xmlHttpRequest.overrideMimeType('text/xml');
+			}
+		}
+	}
+	catch(e)
+	{
+		xmlHttpRequest = null;
+	} 
+
+	return xmlHttpRequest ;
+}
+
+var httpRequest = createHttpRequest();
+
+function loadSvg(){
+	
+	if (httpRequest.readyState == 4)
+	{
+		if (httpRequest.status == 200)
+		{
+			svgFileData = httpRequest.responseText;
+			if (svgFileData != null)
+			{
+			
+				root = svgDocument.documentElement;			
+				var mainSvg = svgDocument.getElementById("mainSVG");
+				if(null != mainSvg){
+					root.removeChild(mainSvg);					
+				}
+					
+				var child = parseXML(svgFileData,document);
+				
+				//========================
+				//设置缩放比例
+				//width = child.attributes.getNamedItem("width").nodeValue;
+				//height = child.attributes.getNamedItem("height").nodeValue;
+				root.currentScale = 0.6//min(1024/width,788/height);
+				
+				if(null != child)			
+					root.appendChild(child);  
+				else
+					alert("SVG文件格式错误");
+									
+			}else{
+				alert("打开SVG文件错误");
+			}
+		}
+	}
+}
+
+function load(name){
+		
+		var url = "http://localhost:8080/IEIG/svgview/graphics/" + name;		
+		httpRequest.open("GET", url, true);		
+		httpRequest.setRequestHeader("Content-Type","text/xml");		
+		httpRequest.onreadystatechange = loadSvg;		
+		httpRequest.send(null);
+}
+
+function onLinkClick(evt){
+		var t = evt.target;
+		name = t.attributes.getNamedItem("linkURL").nodeValue;
+		load(name);		
+}
+
+
+load("anhui.svg");
+	
+  ]]>
+</script>
+
+</svg>

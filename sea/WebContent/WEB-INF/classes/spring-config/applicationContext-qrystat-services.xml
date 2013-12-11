@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<!--SIM卡运行状况service-->
+	<bean id="sIMStatManager" class="com.nari.qrystat.simquery.impl.SIMStatManagerImpl">
+		<property name="sIMStatDao" ref="sIMStatDao" />
+	</bean>
+	
+	<!--采集数据综合分析service-->
+	<bean id="generalAnalyseManager" class="com.nari.qrystat.colldataanalyse.impl.GeneralAnalyseManagerImpl">
+		<property name="generalAnalyseDao" ref="generalAnalyseDao" />
+	</bean>
+	<!--行业用电趋势分析service-->
+	<bean id="tradeTrendlineManager" class="com.nari.qrystat.colldataanalyse.impl.TradeTrendlineManagerImpl">
+		<property name="tradeTrendlineDao" ref="tradeTrendlineDao" />
+	</bean>
+		
+	<!--客户综合查询service-->
+	<bean id="consumerInfoManager" class="com.nari.qrystat.querycollpoint.impl.ConsumerInfoManagerImpl">
+		<property name="consumerInfoDao" ref="consumerInfoDao" />
+	</bean>
+    
+	<!--公变采集点查询-->
+	<bean id="publicTerminalManager" class="com.nari.qrystat.querycollpoint.impl.PublicTerminalManagerImpl">
+		<property name="publicTerminalDao">
+			<ref bean="publicTerminalDao" />
+		</property>
+	</bean>
+	<!--居名集抄户查询service-->
+	<bean id="autoSendQueryManager" class="com.nari.qrystat.querycollpoint.impl.AutoSendQueryManagerImpl">
+		<property name="autoSendQueryDao" ref="autoSendQueryDao" />
+	</bean>
+	<!--抄表数据查询service-->
+	<bean id="sendDataQueryManager" class="com.nari.qrystat.querycollpoint.impl.SendDataQueryManagerImpl">
+		<property name="sendDataQueryDao" ref="sendDataQueryDao" />
+	</bean>
+	<!--客户编号查询service-->
+	<bean id="ccustManager" class="com.nari.qrystat.querycollpoint.impl.CCustManagerImpl">
+		<property name="ccustDao" ref="ccustDao" />
+	</bean>
+	<!--运行终端查询service-->
+	<bean id="rcpManager" class="com.nari.qrystat.querycollpoint.impl.RCPManager">
+		<property name="rcpDao" ref="rcpDao" />
+	</bean>
+	<!--台区用电损耗查询service-->
+	<bean id="losePowerStatManager" class="com.nari.qrystat.colldataanalyse.impl.LosePowerStatManagerImpl">
+		<property name="losePowerStatJdbcDao" ref="losePowerStatJdbcDao" />
+	</bean>
+	<!--台区用电损耗统计service-->
+	<bean id="tgLosePowerStatManager" class="com.nari.qrystat.colldataanalyse.impl.TGLosePowerStatManagerImpl">
+		<property name="tgLosePowerStatJdbcDao" ref="tgLosePowerStatJdbcDao" />
+	</bean>
+	<!--台区线损管理-->
+	<bean id="losePowerManManager" class="com.nari.qrystat.colldataanalyse.impl.LosePowerManManagerImpl">
+		<property name="losePowerManJdbcDao" ref="losePowerManJdbcDao" />
+	</bean>
+	<!--线路用电损耗查询service-->
+	<bean id="lineLosePowerQryManager" class="com.nari.qrystat.colldataanalyse.impl.LineLosePowerQryManagerImpl">
+		<property name="lineLosePowerQryJdbcDao" ref="lineLosePowerQryJdbcDao" />
+	</bean>
+	<!--线路用电损耗统计service-->
+	<bean id="lineLosePowerStatManager" class="com.nari.qrystat.colldataanalyse.impl.LineLosePowerStatManagerImpl">
+		<property name="lineLosePowerStatJdbcDao" ref="lineLosePowerStatJdbcDao" />
+	</bean>
+	<!--地区电量分布查询service-->
+	<bean id="areaPowerDistManager" class="com.nari.qrystat.colldataanalyse.impl.AreaPowerDistManagerImpl">
+		<property name="areaPowerDistJdbcDao" ref="areaPowerDistJdbcDao" />
+	</bean>
+	<!--用电客户排名分析service-->
+	<bean id="powerSortAnalyseManager" class="com.nari.qrystat.colldataanalyse.impl.PowerSortAnalyseManagerImpl">
+		<property name="powerSortAnalyseJdbcDao" ref="powerSortAnalyseJdbcDao" />
+	</bean>
+	<!--当日用电负荷监测service-->
+	<bean id="currLoadMonitorManager" class="com.nari.qrystat.colldataanalyse.impl.CurrLoadMonitorManagerImpl">
+		<property name="currLoadMonitorJdbcDao" ref="currLoadMonitorJdbcDao" />
+	</bean>
+	<!--昨日电量分布service-->
+	<bean id="aOrgStatDManager" class="com.nari.mydesk.impl.AOrgStatDManagerImpl">
+		<property name="aOrgStatDDaoImpl" ref="aOrgStatDDaoImpl" />
+	</bean>
+	<!--统计查询，采集点综合查询，采集点覆盖情况service-->
+	<bean id="terminalCoverageManager" class="com.nari.qrystat.querycollpoint.impl.TerminalCoverageManagerImpl">
+	</bean>
+     
+	<!--工单统计查询service-->
+	<bean id="taskStateManager" class="com.nari.qrystat.taskQuery.impl.TaskStateManagerImpl">
+		<property name="taskStateDao">
+			<ref bean="taskStateDao"/>
+		</property>
+	</bean>
+	
+	<!--工单明细service-->
+	<bean id="detailsManager" class="com.nari.qrystat.taskQuery.impl.TaskDetailsManagerImpl">
+		<property name="taskDetailsDao">
+			<ref bean="taskDetailsDao"/>
+		</property>
+	</bean>
+	
+	<!--采集点统计service-->
+	<bean id="collectionCountManager" class="com.nari.qrystat.querycollpoint.impl.CollectionCountManagerImpl">
+		<property name="collectionCountDao">
+			<ref bean="collectionCountDao"/>
+		</property>
+	</bean>
+	<!--采集点统计service-->
+	<bean id="iReportTypeQueryManager" class="com.nari.qrystat.queryReport.impl.ReportTypeQueryManagerImpl">
+		<property name="iReportTypeQueryManDao">
+			<ref bean="iReportTypeQueryManDao"/>
+		</property>
+	</bean>
+	
+	<!--线路电量查询service-->
+	<bean id="lineEceltricQuantityManager" class="com.nari.qrystat.colldataanalyse.impl.LineEceltricQuantityManagerImpl">
+		<property name="lineEceltricQuantityDao">
+			<ref bean="lineEceltricQuantityDao"/>
+		</property>
+	</bean>
+	<!--异常告警统计service-->
+	<bean id="excptionReportManager" class="com.nari.qrystat.querycollpoint.impl.ExcptionReportManagerImpl">
+		<property name="excptionReportDao">
+			<ref bean="excptionReportDao"/>
+		</property>
+	</bean>
+
+</beans>

@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/app/!svn/ver/7016/trunk/sea/src/service/com/nari/sysman/securityman/impl
+END
+AlertEventManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/app/!svn/ver/5913/trunk/sea/src/service/com/nari/sysman/securityman/impl/AlertEventManagerImpl.java
+END
+OperatorsManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/app/!svn/ver/4541/trunk/sea/src/service/com/nari/sysman/securityman/impl/OperatorsManagerImpl.java
+END
+UserAdvanceQueryManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/app/!svn/ver/3180/trunk/sea/src/service/com/nari/sysman/securityman/impl/UserAdvanceQueryManagerImpl.java
+END
+PMenuMangerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/app/!svn/ver/5371/trunk/sea/src/service/com/nari/sysman/securityman/impl/PMenuMangerImpl.java
+END
+OperatorManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/app/!svn/ver/2464/trunk/sea/src/service/com/nari/sysman/securityman/impl/OperatorManagerImpl.java
+END
+DictionaryManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/app/!svn/ver/4530/trunk/sea/src/service/com/nari/sysman/securityman/impl/DictionaryManagerImpl.java
+END
+GeneralTreeManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/app/!svn/ver/7016/trunk/sea/src/service/com/nari/sysman/securityman/impl/GeneralTreeManagerImpl.java
+END
+PRoleManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/app/!svn/ver/7013/trunk/sea/src/service/com/nari/sysman/securityman/impl/PRoleManagerImpl.java
+END
+PSysUserManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/app/!svn/ver/2464/trunk/sea/src/service/com/nari/sysman/securityman/impl/PSysUserManagerImpl.java
+END
+权限密码管理实现类
+K 25
+svn:wc:ra_dav:version-url
+V 159
+/svn/app/!svn/ver/2464/trunk/sea/src/service/com/nari/sysman/securityman/impl/%E6%9D%83%E9%99%90%E5%AF%86%E7%A0%81%E7%AE%A1%E7%90%86%E5%AE%9E%E7%8E%B0%E7%B1%BB
+END
+AuthorizeManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/app/!svn/ver/4530/trunk/sea/src/service/com/nari/sysman/securityman/impl/AuthorizeManagerImpl.java
+END

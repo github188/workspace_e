@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/app/!svn/ver/7033/trunk/sea/src/dao/com/nari/runman/runstatusman/impl
+END
+TmnlRunStatusDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/app/!svn/ver/7033/trunk/sea/src/dao/com/nari/runman/runstatusman/impl/TmnlRunStatusDaoImpl.java
+END
+ChannelMonitorDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/app/!svn/ver/7019/trunk/sea/src/dao/com/nari/runman/runstatusman/impl/ChannelMonitorDaoImpl.java
+END
+ATmnlFlowMBeanDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/app/!svn/ver/3180/trunk/sea/src/dao/com/nari/runman/runstatusman/impl/ATmnlFlowMBeanDaoImpl.java
+END
+AEventStatDBeanDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/app/!svn/ver/6021/trunk/sea/src/dao/com/nari/runman/runstatusman/impl/AEventStatDBeanDaoImpl.java
+END
+LMasterStationResDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/app/!svn/ver/3058/trunk/sea/src/dao/com/nari/runman/runstatusman/impl/LMasterStationResDaoImpl.java
+END
+MainExcepAnalyDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/app/!svn/ver/6965/trunk/sea/src/dao/com/nari/runman/runstatusman/impl/MainExcepAnalyDaoImpl.java
+END

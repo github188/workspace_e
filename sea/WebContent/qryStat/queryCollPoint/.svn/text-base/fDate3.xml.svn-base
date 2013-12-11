@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<chart caption='' showValues='0' PYAxisName='Sales' SYAxisName='Total Downloads'> 
+    <categories>
+        <category label='Jan'/>
+        <category label='Feb'/>
+        <category label='Mar'/>
+        <category label='Apr'/>
+        <category label='May'/>
+        <category label='Jun'/>
+        <category label='Jul'/>
+        <category label='Aug'/>
+        <category label='Sep'/>
+        <category label='Oct'/>
+        <category label='Nov'/>
+        <category label='Dec'/>
+    </categories>
+
+    <dataset seriesName='Product A Sales'>
+        <set value='230' />
+        <set value='245' />
+        <set value='250' />
+        <set value='245' />
+        <set value='350' />
+        <set value='330' />
+        <set value='360' />
+        <set value='340' />
+        <set value='230' />
+        <set value='220' />
+        <set value='200' />
+        <set value='190' />
+    </dataset>
+    <dataset seriesName='Product B Sales'>
+        <set value='130' />
+        <set value='145' />
+        <set value='50' />
+        <set value='115' />
+        <set value='190' />
+        <set value='130' />
+        <set value='160' />
+        <set value='140' />
+        <set value='130' />
+        <set value='120' />
+        <set value='140' />
+        <set value='80' />
+    </dataset>
+    <dataset seriesName='Total Downloads' parentYAxis='S'>
+        <set value='13000' />
+        <set value='14500' />
+        <set value='5000' />
+        <set value='11500' />
+        <set value='10000' />
+        <set value='13000' />
+        <set value='16000' />
+        <set value='14000' />
+        <set value='13000' />
+        <set value='12000' />
+        <set value='9000' />
+        <set value='10000' />
+    </dataset>
+
+    <trendlines>
+        <line startValue='300' color='91C728' displayValue='Target' showOnTop='1'/>
+    </trendlines>
+
+</chart>

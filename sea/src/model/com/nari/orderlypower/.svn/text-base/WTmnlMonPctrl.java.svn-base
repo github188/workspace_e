@@ -1,0 +1,204 @@
+package com.nari.orderlypower;
+
+import java.util.Date;
+
+/**
+ * WTmnlMonPctrl entity. @author MyEclipse Persistence Tools
+ */
+
+public class WTmnlMonPctrl implements java.io.Serializable {
+
+	// Fields
+
+	private Long monPctrlId;
+	private String orgNo;
+	private String consNo;
+	private String tmnlAssetNo;
+	private Short totalNo;
+	private Long ctrlSchemeId;
+	private Boolean isExec;
+	private Short floatValue;
+	private Long powerConst;
+	private Boolean ctrlFlag;
+	private Boolean isSendSms;
+	private String statusCode;
+	private String staffNo;
+	private Date saveTime;
+	private Date sendTime;
+	private Date successTime;
+	private String failureCode;
+
+	// Constructors
+
+	/** default constructor */
+	public WTmnlMonPctrl() {
+	}
+
+	/** minimal constructor */
+	public WTmnlMonPctrl(Long ctrlSchemeId) {
+		this.ctrlSchemeId = ctrlSchemeId;
+	}
+
+	/** full constructor */
+	public WTmnlMonPctrl(String orgNo, String consNo, String tmnlAssetNo,
+			Short totalNo, Long ctrlSchemeId, Boolean isExec, Short floatValue,
+			Long powerConst, Boolean ctrlFlag, Boolean isSendSms,
+			String statusCode, String staffNo, Date saveTime, Date sendTime,
+			Date successTime, String failureCode) {
+		this.orgNo = orgNo;
+		this.consNo = consNo;
+		this.tmnlAssetNo = tmnlAssetNo;
+		this.totalNo = totalNo;
+		this.ctrlSchemeId = ctrlSchemeId;
+		this.isExec = isExec;
+		this.floatValue = floatValue;
+		this.powerConst = powerConst;
+		this.ctrlFlag = ctrlFlag;
+		this.isSendSms = isSendSms;
+		this.statusCode = statusCode;
+		this.staffNo = staffNo;
+		this.saveTime = saveTime;
+		this.sendTime = sendTime;
+		this.successTime = successTime;
+		this.failureCode = failureCode;
+	}
+
+	// Property accessors
+
+	public Long getMonPctrlId() {
+		return this.monPctrlId;
+	}
+
+	public void setMonPctrlId(Long monPctrlId) {
+		this.monPctrlId = monPctrlId;
+	}
+
+	public String getOrgNo() {
+		return this.orgNo;
+	}
+
+	public void setOrgNo(String orgNo) {
+		this.orgNo = orgNo;
+	}
+
+	public String getConsNo() {
+		return this.consNo;
+	}
+
+	public void setConsNo(String consNo) {
+		this.consNo = consNo;
+	}
+
+	public String getTmnlAssetNo() {
+		return this.tmnlAssetNo;
+	}
+
+	public void setTmnlAssetNo(String tmnlAssetNo) {
+		this.tmnlAssetNo = tmnlAssetNo;
+	}
+
+	public Short getTotalNo() {
+		return this.totalNo;
+	}
+
+	public void setTotalNo(Short totalNo) {
+		this.totalNo = totalNo;
+	}
+
+	public Long getCtrlSchemeId() {
+		return this.ctrlSchemeId;
+	}
+
+	public void setCtrlSchemeId(Long ctrlSchemeId) {
+		this.ctrlSchemeId = ctrlSchemeId;
+	}
+
+	public Boolean getIsExec() {
+		return this.isExec;
+	}
+
+	public void setIsExec(Boolean isExec) {
+		this.isExec = isExec;
+	}
+    
+	public Short getFloatValue() {
+		return floatValue;
+	}
+
+	public void setFloatValue(Short floatValue) {
+		this.floatValue = floatValue;
+	}
+
+	public Long getPowerConst() {
+		return this.powerConst;
+	}
+
+	public void setPowerConst(Long powerConst) {
+		this.powerConst = powerConst;
+	}
+
+	public Boolean getCtrlFlag() {
+		return this.ctrlFlag;
+	}
+
+	public void setCtrlFlag(Boolean ctrlFlag) {
+		this.ctrlFlag = ctrlFlag;
+	}
+
+	public Boolean getIsSendSms() {
+		return this.isSendSms;
+	}
+
+	public void setIsSendSms(Boolean isSendSms) {
+		this.isSendSms = isSendSms;
+	}
+
+	public String getStatusCode() {
+		return this.statusCode;
+	}
+
+	public void setStatusCode(String statusCode) {
+		this.statusCode = statusCode;
+	}
+
+	public String getStaffNo() {
+		return this.staffNo;
+	}
+
+	public void setStaffNo(String staffNo) {
+		this.staffNo = staffNo;
+	}
+
+	public Date getSaveTime() {
+		return this.saveTime;
+	}
+
+	public void setSaveTime(Date saveTime) {
+		this.saveTime = saveTime;
+	}
+
+	public Date getSendTime() {
+		return this.sendTime;
+	}
+
+	public void setSendTime(Date sendTime) {
+		this.sendTime = sendTime;
+	}
+
+	public Date getSuccessTime() {
+		return this.successTime;
+	}
+
+	public void setSuccessTime(Date successTime) {
+		this.successTime = successTime;
+	}
+
+	public String getFailureCode() {
+		return this.failureCode;
+	}
+
+	public void setFailureCode(String failureCode) {
+		this.failureCode = failureCode;
+	}
+
+}

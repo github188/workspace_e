@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+    <package name="jsonsysman" namespace="/sysman" extends="baseJson">
+        <!--系统应用 JSON Action-->       
+        
+        <!-- Ajax 登录管理 -->
+        <action name="ajaxlogin" class="com.nari.sysman.securityman.AjaxLoginAction">
+            <result type="json">
+                <param name="excludeProperties">iPSysUserDao</param>
+            </result>
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+        </action>
+        
+         <!-- 退出登录  -->
+        <action name="logoutAction" class="com.nari.sysman.securityman.LogoutAction">
+            <result type="json">
+            </result>
+        </action>
+        
+        <!--公用树-->
+        <action name="basetree" class="com.nari.sysman.securityman.BaseTreeAction">
+            <result type="json">
+            </result>
+        </action>
+
+        <!--操作员管理-->
+        <action name="operatorman" class="com.nari.sysman.securityman.AuthorizeAction">
+            <result type="json">
+            </result>
+        </action>
+        
+        <!--密码管理-->
+        <action name="passman" class="com.nari.sysman.securityman.PassManAction">
+            <result type="json">
+                <param name="excludeProperties">iPSysUserDao</param>
+            </result>
+        </action>
+
+        <!--角色管理-->
+        <action name="roleman" class="com.nari.sysman.securityman.RoleManAction">
+            <result type="json">
+                <param name="excludeProperties">iPRoleDao</param>
+            </result>
+        </action>
+
+        <!--部门管理-->
+        <action name="depman" class="com.nari.sysman.securityman.DepManAction">
+            <result type="json">
+                <param name="excludeProperties"></param>
+            </result>
+        </action>
+        
+        <!--字典表查询-->
+        <action name="dictionary" class="com.nari.sysman.securityman.DictionaryAction">
+            <result type="json">
+                <param name="excludeProperties"></param>
+            </result>
+        </action>
+
+        <!--主页面二级三级菜单处理  -->
+        <action name="listmenu" class="com.nari.sysman.securityman.ListMenuAction">
+            <result type="json">
+                <param name="excludeProperties"></param>
+            </result>
+        </action>
+
+        <!--主页面测试树-->
+        <action name="gettree" class="com.nari.sysman.securityman.GetTreeAction">
+            <result type="json">
+                <param name="excludeProperties"></param>
+            </result>
+        </action>
+
+        <!-- 主页面树-->
+        <action name="generaltree" class="com.nari.sysman.securityman.GeneralTreeAction">
+            <result type="json">
+                <param name="excludeProperties"></param>
+            </result>
+        </action>
+
+        <!--系统用户列表 演示 -->
+        <action name="psysuser" class="com.nari.sysman.securityman.PSysUserAction">
+            <result type="json">
+                <param name="excludeProperties">iPSysUserDao</param>
+            </result>
+        </action>
+        
+        <!--左边树用户列表高级查询  -->
+        <action name="lefttreeuserlist" class="com.nari.sysman.securityman.LeftTreeUserListAction">
+            <result type="json">
+                <param name="excludeProperties"></param>
+            </result>
+        </action>
+        
+        <!--报警事件ACTION -->
+        <action name="alertevent" class="com.nari.sysman.securityman.AlertEventAction">
+            <result type="json">
+                <param name="excludeProperties"></param>
+            </result>
+            
+        </action>
+		
+        <!--任务模板管理 -->
+        <action name="taskModelMan" class="com.nari.sysman.templateman.TaskModelAction">
+            <result type="json">
+                <param name="excludeProperties">taskModelManager</param>
+            </result>
+        </action>
+        
+        <!--终端任务配置 -->
+        <action name="tmnlTaskConfigAction" class="com.nari.sysman.templateman.TmnlTaskConfigAction">
+            <result type="json">
+                <param name="excludeProperties">tmnlTaskConfigManager</param>
+            </result>
+        </action>
+		
+        <!-- 任务模板管理-查询终端规约类型列表 -->
+        <action name="queryProtocolCodeJson" class="com.nari.sysman.templateman.TaskModelAction" method="queryProtocolCodeJson">
+            <result type="json">
+                <param name="includeProperties">success,vwProtocolCodeList.*</param>
+            </result>
+        </action>
+
+        <!-- 任务模板管理-查询终端任务属性列表 -->
+        <action name="queryTaskPropertyJson" class="com.nari.sysman.templateman.TaskModelAction" method="queryTaskPropertyJson">
+            <result type="json">
+                <param name="includeProperties">success,vwTaskPropertyList.*</param>
+            </result>
+        </action>
+        
+       <!-- 编码管理 -->
+        <action name="codeManAction" class="com.nari.sysman.codeman.CodeManAction">
+            <result type="json">
+                <param name="excludeProperties">iCodeManManager</param>
+            </result>
+        </action>
+    </package>
+</struts>

@@ -1,0 +1,47 @@
+package com.nari.qrystat.colldataanalyse;
+
+import java.util.List;
+
+import com.nari.privilige.PSysUser;
+import com.nari.support.Page;
+
+/**
+ * 台区用电损耗统计查询Jdbc之Dao接口
+ * @author 姜炜超
+ */
+public interface LosePowerStatJdbcDao {
+	/**
+	 * 根据条件查询时间段内台区用电损耗统计信息，主页面
+	 * @param nodeId
+	 * @param nodeType
+	 * @param orgType
+	 * @param llr
+	 * @param queryDate
+	 * @param endDate
+	 * @param start
+	 * @param limit
+	 * @param pSysuser
+	 * @return Page<LosePowerStatDto>
+	 */
+	public Page<LosePowerStatDto> findLPSInfoByCond(String nodeId, String nodeType, String orgType,  double llr, String startDate, String endDate,long start, int limit, PSysUser pSysUser);
+	
+	/**
+	 * 根据日期查询台区用电损耗统计详细信息，弹出页面
+	 * @param tgNo
+	 * @param llr 
+	 * @param queryDate
+	 * @param endDate
+	 * @return List<LosePowerStatDto> 
+	 */
+	public List<LosePowerStatDto> findLPSDetDayInfoByCond(String tgNo, double llr, String startDate, String endDate);
+	
+	/**
+	 * 根据月份查询台区用电损耗统计详细信息，弹出页面
+	 * @param tgNo
+	 * @param llr 
+	 * @param queryDate
+	 * @param endDate
+	 * @return List<LosePowerStatDto> 
+	 */
+	public List<LosePowerStatDto> findLPSDetMonthInfoByCond(String tgNo, double llr, String startDate, String endDate);
+}

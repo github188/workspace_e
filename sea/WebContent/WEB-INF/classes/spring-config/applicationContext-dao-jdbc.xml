@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	
+		<!--  控制方案的jdbc dao-->
+	<bean id="iWCtrlSchemeJdbcDao"
+		class="com.nari.baseapp.planpowerconsume.impl.WCtrlSchemeJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!--控制方案 对七种功控类型统一操作的jdbcdao-->
+	<bean id="iWTmnlSchemePublicDao"
+		class="com.nari.baseapp.planpowerconsume.impl.WTmnlSchemePublicDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="iWCtrlSchemeJdbcDao">
+			<ref bean="iWCtrlSchemeJdbcDao" />
+		</property>
+		<property name="noToTable">
+			<!-- 定义关联 -->
+			<map>
+				<entry key="01" value="W_TMNL_PWRCTRL"></entry>
+				<entry key="02" value="w_tmnl_factctrl"></entry>
+				<entry key="03" value="W_TMNL_BUSINESS"></entry>
+				<entry key="04" value="W_FLOAT_DOWN_CTRL"></entry>
+				<entry key="05" value="W_TMNL_TURN"></entry>
+				<entry key="06" value="w_tmnl_mon_pctrl"></entry>
+				<entry key="07" value="W_FEECTRL"></entry>
+			</map>
+		</property>
+
+	</bean>
+	<!-- 机构的jdbc dao-->
+	<bean id="iOrgJdbcDao" class="com.nari.oranization.impl.OrgJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+
+	<!--厂休控的jdbc到 -->
+	<bean id="iWTmnlFactCtrlJdbcDao"
+		class="com.nari.baseapp.planpowerconsume.impl.WTmnlFactCtrlJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+
+	<!--有序用电用户编制  限电类型jdbc dao -->
+	<bean id="vwLimitTypeJdbcDao" class="com.nari.basicdata.impl.VwLimitTypeJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<bean id="idataFetchJdbcDao" class="com.nari.baseapp.datagathorman.impl.DataFetchJdbcDaoImpl">
+	<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 批量巡测-->
+	<bean id="ibatchFetchJdbcDao" class="com.nari.baseapp.datagathorman.impl.BatchFetchJdbcDaoImpl">
+	<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 单户召测-->
+	<bean id="dataFetchLoneDao" class="com.nari.baseapp.datagathorman.impl.DataFetchLoneDaoImpl">
+	<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+		<!--左边树的  --> 
+</beans>

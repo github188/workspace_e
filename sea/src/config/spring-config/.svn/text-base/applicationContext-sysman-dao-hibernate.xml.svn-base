@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+
+    <!--系统管理dao-->
+    <bean id="iPSysUserDao" class="com.nari.sysman.securityman.impl.PSysUserDaoImpl">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory" />
+        </property>
+    </bean>
+
+    <!-- 操作员管理-->
+    <bean id="iOperatorsDao" class="com.nari.sysman.securityman.impl.OperatorsDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+        <property name="transactionTemplate">
+            <ref bean="transactionTemplate" />
+        </property>
+        
+    
+    </bean>
+
+
+    <!--菜单管理 -->
+    <bean id="iPMenuDao" class="com.nari.sysman.securityman.impl.PMenuDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+
+    <!--角色管理dao-->
+    <bean id="iPRoleDao" class="com.nari.sysman.securityman.impl.PRoleDaoImpl">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory" />
+        </property>
+    </bean>
+	
+    <!--角色权限管理dao-->
+    <bean id="iPRolePrivRelaDao" class="com.nari.sysman.securityman.impl.PRolePrivRelaDaoImpl">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory" />
+        </property>
+    </bean>
+    <bean id="iPRolePrivRelaJdbcDao" class="com.nari.sysman.securityman.impl.PRolePrivRelaJdbcDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+        <property name="transactionTemplate">
+            <ref bean="transactionTemplate" />
+        </property>
+        
+        
+    </bean>
+	
+    <!--用户角色管理dao-->
+    <bean id="iPUserRoleRelaDao" class="com.nari.sysman.securityman.impl.PUserRoleRelaDaoImpl">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory" />
+        </property>
+    </bean>
+    <bean id="iPUserRoleRelaJdbcDao" class="com.nari.sysman.securityman.impl.PUserRoleRelaJdbcDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+	
+    <!--终端厂家-->
+    <bean id="vwTmnlFactoryJdbcDao" class="com.nari.basicdata.impl.VwTmnlFactoryJdbcDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+	
+    <!--用户用电类型-->
+    <bean id="vwConsTypeJdbcDao" class="com.nari.basicdata.impl.VwConsTypeJdbcDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+	
+    <!--单位权限-->
+    <bean id="iPAccessOrgJdbcDao" class="com.nari.sysman.securityman.impl.PAccessOrgJdbcDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+    
+    <!--部门管理-->
+    <bean id="iODeptDao" class="com.nari.sysman.securityman.impl.ODeptDaoImpl">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory" />
+        </property>
+    </bean>
+	
+    <!--用户终端权限-->
+    <bean id="iPAccessTmnlFactoryDao" class="com.nari.sysman.securityman.impl.PAccessTmnlFactoryDaoImpl">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory" />
+        </property>
+    </bean>
+    <bean id="iPAccessTmnlFactoryJdbcDao" class="com.nari.sysman.securityman.impl.PAccessTmnlFactoryJdbcDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+	
+    <!--操作员用电用户类型权限-->
+    <bean id="iPAccessConsTypeJdbcDao" class="com.nari.sysman.securityman.impl.PAccessConsTypeJdbcDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+
+    <!--左边树访问dao-->
+    <bean id="iGenralTreeDao" class="com.nari.sysman.securityman.impl.GenralTreeDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+    
+    <!--字典表访问服务-->
+    <bean id="iDictionaryDao" class="com.nari.sysman.securityman.impl.DictionaryDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+    
+    <!--左边树用户列表高级查询-->
+    <bean id="iUserAdvanceQueryDao" class="com.nari.sysman.securityman.impl.UserAdvanceQueryDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+        
+    </bean>
+    
+    <!--报警事件查询 -->
+    <bean id="alertEventDao" class="com.nari.sysman.securityman.impl.AlertEventDao">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+    
+    <!--终端任务配置 -->
+    <bean id="tmnlTaskConfigDao" class="com.nari.sysman.templateman.impl.TmnlTaskConfigDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+    
+    <!-- 终端规约类型 -->
+    <bean id="vwProtocolCodeDao" class="com.nari.sysman.templateman.impl.VwProtocolCodeDaoImpl">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory" />
+        </property>
+    </bean>
+
+    <!-- 终端任务属性 -->
+    <bean id="vwTaskPropertyDao" class="com.nari.sysman.templateman.impl.VwTaskPropertyDaoImpl">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory" />
+        </property>
+    </bean>
+
+    <!-- 任务模板 -->
+    <bean id="tTaskTemplateDao" class="com.nari.terminalparam.impl.TTaskTemplateDaoImpl">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory" />
+        </property>
+    </bean>
+	
+    <!-- 任务模板数据 -->
+    <bean id="tTaskTemplateDataDao" class="com.nari.terminalparam.impl.TTaskTemplateDataDaoImpl">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory" />
+        </property>
+    </bean>
+    <bean id="tTaskTemplateDataJdbcDao" class="com.nari.terminalparam.impl.TTaskTemplateDataJdbcDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+	
+    <!-- 透明规约编码-->
+    <bean id="bClearProtocolDao" class="com.nari.basicdata.impl.BClearProtocolDaoImpl">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory" />
+        </property>
+    </bean>
+    <bean id="bClearProtocolJdbcDao" class="com.nari.basicdata.impl.BClearProtocolJdbcDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+    
+	<!--编码管理DAO-->
+	<bean id="codeManDao" class="com.nari.sysman.codeman.Impl.CodeManDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource"/>
+		</property>
+	</bean>
+</beans>

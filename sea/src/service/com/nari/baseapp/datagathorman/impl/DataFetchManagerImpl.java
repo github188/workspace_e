@@ -1,0 +1,838 @@
+package com.nari.baseapp.datagathorman.impl;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
+
+import com.nari.baseapp.datagatherman.DataFetchTerminal;
+import com.nari.baseapp.datagatherman.EDataFinder;
+import com.nari.baseapp.datagatherman.ProtocolGroupDTO;
+import com.nari.baseapp.datagathorman.DataFetchManager;
+import com.nari.baseapp.datagathorman.DataFetchTerminalDao;
+import com.nari.baseapp.datagathorman.IDataFetchJdbcDao;
+import com.nari.baseapp.datagathorman.SqlData;
+import com.nari.baseapp.planpowerconsume.impl.MapResultMapper;
+import com.nari.basicdata.BClearProtocol;
+import com.nari.basicdata.BClearProtocolDao;
+import com.nari.basicdata.VwClearDataType;
+import com.nari.basicdata.VwClearDataTypeDao;
+import com.nari.privilige.PSysUser;
+import com.nari.runman.dutylog.SaveLUserOpLog;
+import com.nari.support.Page;
+import com.nari.sysman.securityman.impl.SysPrivilige;
+import com.nari.terminalparam.TDataCombi;
+import com.nari.terminalparam.TDataCombiDao;
+import com.nari.util.CreateInsert;
+import com.nari.util.RealIP;
+import com.nari.util.ResultParse;
+import com.nari.util.SelectSqlCreator;
+import com.nari.util.TreeNode;
+import com.nari.util.exception.DBAccessException;
+import com.nari.util.exception.ExceptionConstants;
+import com.nari.util.exception.ServiceException;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
+
+/**
+ * 数据召唤业务层实现
+ * 
+ * @author 鲁兆淞
+ */
+public class DataFetchManagerImpl implements DataFetchManager {
+	protected Logger logger = Logger.getLogger(this.getClass());
+	private IDataFetchJdbcDao idataFetchJdbcDao;
+
+	public void setIdataFetchJdbcDao(IDataFetchJdbcDao idataFetchJdbcDao) {
+		this.idataFetchJdbcDao = idataFetchJdbcDao;
+	}
+
+	private VwClearDataTypeDao vwClearDataTypeDao;
+
+	public void setVwClearDataTypeDao(VwClearDataTypeDao vwClearDataTypeDao) {
+		this.vwClearDataTypeDao = vwClearDataTypeDao;
+	}
+
+	private BClearProtocolDao bClearProtocolDao;
+
+	public void setbClearProtocolDao(BClearProtocolDao bClearProtocolDao) {
+		this.bClearProtocolDao = bClearProtocolDao;
+	}
+
+	private TDataCombiDao tDataCombiDao;
+
+	public void settDataCombiDao(TDataCombiDao tDataCombiDao) {
+		this.tDataCombiDao = tDataCombiDao;
+	}
+
+	private DataFetchTerminalDao dataFetchTerminalDao;
+
+	public void setDataFetchTerminalDao(
+			DataFetchTerminalDao dataFetchTerminalDao) {
+		this.dataFetchTerminalDao = dataFetchTerminalDao;
+	}
+
+	/**
+	 * 查询透明规约树节点列表
+	 * 
+	 * @return 透明规约树节点列表
+	 * @throws DBAccessException
+	 *             数据库异常
+	 */
+	public List<TreeNode> queryTreeNode(Integer queryType)
+			throws DBAccessException {
+		if (queryType == null) {
+			throw new DBAccessException("查询的类型不能为空");
+		}
+
+		List<BClearProtocol> bClearProtocolList = this.bClearProtocolDao
+				.findByQueryType(queryType);
+
+		// .findAll("protocolNo", "asc"); // 查询所有透明规约编码列表
+		Iterator<BClearProtocol> bClearProtocolListIterator = bClearProtocolList
+				.iterator(); // 透明规约编码列表迭代器
+
+		LinkedList<TreeNode> treeNodeTrailingF = new LinkedList<TreeNode>(); // 以【F】结尾的透明规约树节点列表
+		while (bClearProtocolListIterator.hasNext()) { // 遍历透明规约编码列表构造以【F】结尾的透明规约树节点列表
+			BClearProtocol bClearProtocol = bClearProtocolListIterator.next();
+			String protocolNo = bClearProtocol.getProtocolNo();
+			String protocolName = bClearProtocol.getProtocolName();
+			String dataType = bClearProtocol.getDataType().toString();
+			if (protocolNo.substring(protocolNo.length() - 1).equals("F")
+					&& !protocolNo.substring(protocolNo.length() - 2).equals(
+							"FF")) { // 以【F】结尾的透明规约编码
+				TreeNode treeNode = new TreeNode();
+				treeNode.setId(protocolNo);
+				treeNode.setText(protocolName);
+				treeNode.setDataType(dataType);
+				treeNodeTrailingF.addLast(treeNode);
+				bClearProtocolListIterator.remove(); // 从透明规约编码列表中删除此编码
+			}
+		}
+
+		Iterator<TreeNode> treeNodeTrailingFIterator = treeNodeTrailingF
+				.iterator(); // 以【F】结尾的透明规约树节点列表迭代器
+		while (treeNodeTrailingFIterator.hasNext()) {
+			TreeNode treeNode = treeNodeTrailingFIterator.next();
+			List<TreeNode> treeNodeChildList = new ArrayList<TreeNode>(); // 透明规约编码子节点列表
+			bClearProtocolListIterator = bClearProtocolList.iterator(); // 透明规约编码列表迭代器
+			while (bClearProtocolListIterator.hasNext()) { // 遍历透明规约编码列表构造以【F】结尾的透明规约树节点的子节点
+				BClearProtocol bClearProtocol = bClearProtocolListIterator
+						.next();
+				String protocolNo = bClearProtocol.getProtocolNo();
+				String protocolName = bClearProtocol.getProtocolName();
+				if (protocolNo.substring(0,
+						bClearProtocol.getProtocolNo().length() - 1).equals(
+						treeNode.getId().substring(0,
+								treeNode.getId().length() - 1))) {
+					TreeNode treeNodeChild = new TreeNode();
+					treeNodeChild.setId(protocolNo);
+					treeNodeChild.setText(protocolName);
+					treeNodeChild.setLeaf(true);
+					treeNodeChildList.add(treeNodeChild);
+					bClearProtocolListIterator.remove(); // 从透明规约编码列表中删除此编码
+				}
+			}
+			treeNode.setChildren(treeNodeChildList);
+			if (treeNode.getChildren().size() == 0)
+				treeNode.setLeaf(true);
+		}
+
+		bClearProtocolListIterator = bClearProtocolList.iterator(); // 透明规约编码列表迭代器
+		LinkedList<TreeNode> treeNodeTrailingFF = new LinkedList<TreeNode>(); // 以【FF】结尾的透明规约树节点列表
+		while (bClearProtocolListIterator.hasNext()) { // 遍历透明规约编码列表构造以【FF】结尾的透明规约树节点列表
+			BClearProtocol bClearProtocol = bClearProtocolListIterator.next();
+			String protocolNo = bClearProtocol.getProtocolNo();
+			String protocolName = bClearProtocol.getProtocolName();
+			String dataType = bClearProtocol.getDataType().toString();
+			if (protocolNo.substring(protocolNo.length() - 2).equals("FF")) { // 以【FF】结尾的透明规约编码
+				TreeNode treeNode = new TreeNode();
+				treeNode.setId(protocolNo);
+				treeNode.setText(protocolName);
+				treeNode.setDataType(dataType);
+				treeNodeTrailingFF.addLast(treeNode);
+				bClearProtocolListIterator.remove(); // 从透明规约编码列表中删除此编码
+			}
+		}
+
+		Iterator<TreeNode> treeNodeTrailingFFIterator = treeNodeTrailingFF
+				.iterator(); // 以【FF】结尾的透明规约树节点列表迭代器
+		while (treeNodeTrailingFFIterator.hasNext()) {
+			TreeNode treeNode = treeNodeTrailingFFIterator.next();
+			List<TreeNode> treeNodeChildList = new ArrayList<TreeNode>(); // 透明规约编码子节点列表
+			bClearProtocolListIterator = bClearProtocolList.iterator(); // 透明规约编码列表迭代器
+			while (bClearProtocolListIterator.hasNext()) { // 遍历透明规约编码列表构造以【FF】结尾的透明规约树节点的子节点
+				BClearProtocol bClearProtocol = bClearProtocolListIterator
+						.next();
+				String protocolNo = bClearProtocol.getProtocolNo();
+				String protocolName = bClearProtocol.getProtocolName();
+				if (protocolNo.substring(0,
+						bClearProtocol.getProtocolNo().length() - 2).equals(
+						treeNode.getId().substring(0,
+								treeNode.getId().length() - 2))) {
+					TreeNode treeNodeChild = new TreeNode();
+					treeNodeChild.setId(protocolNo);
+					treeNodeChild.setText(protocolName);
+					treeNodeChild.setLeaf(true);
+					treeNodeChildList.add(treeNodeChild);
+					bClearProtocolListIterator.remove(); // 从透明规约编码列表中删除此编码
+				}
+			}
+			treeNodeTrailingFIterator = treeNodeTrailingF.iterator(); // 以【F】结尾的透明规约树节点列表迭代器
+			while (treeNodeTrailingFIterator.hasNext()) {
+				TreeNode treeNodeChild = treeNodeTrailingFIterator.next();
+				if (treeNodeChild.getId().substring(0,
+						treeNodeChild.getId().length() - 2).equals(
+						treeNode.getId().substring(0,
+								treeNode.getId().length() - 2))) {
+					treeNodeChildList.add(treeNodeChild);
+					treeNodeTrailingFIterator.remove(); // 从以【F】结尾的树节点列表中删除此节点
+				}
+			}
+
+			Collections.sort(treeNodeChildList); // 按TreeNode类中的自定义排序规则排序
+			treeNode.setChildren(treeNodeChildList);
+			if (treeNode.getChildren().size() == 0)
+				treeNode.setLeaf(true);
+		}
+
+		LinkedList<TreeNode> treeNodeLiv1List = new LinkedList<TreeNode>(); // 1级子节点列表
+		List<VwClearDataType> vwClearDataTypeList = this.vwClearDataTypeDao
+				.findAll(); // 查询透明规约分类列表
+		for (VwClearDataType vwClearDataType : vwClearDataTypeList) { // 构造1级子节点列表
+			TreeNode treeNodeLiv1 = new TreeNode();
+			treeNodeLiv1.setId(vwClearDataType.getDataType());
+			treeNodeLiv1.setText(vwClearDataType.getDataName());
+			treeNodeLiv1.setLeaf(false);
+			treeNodeLiv1List.add(treeNodeLiv1);
+		}
+
+		Iterator<TreeNode> treeNodeLiv1Iterator = treeNodeLiv1List.iterator(); // 1级子节点列表迭代器
+		while (treeNodeLiv1Iterator.hasNext()) {
+			TreeNode treeNodeLiv1 = (TreeNode) treeNodeLiv1Iterator.next();
+			LinkedList<TreeNode> treeNodeLiv2List = new LinkedList<TreeNode>(); // 2级子节点列表
+
+			treeNodeTrailingFIterator = treeNodeTrailingF.iterator(); // 以【F】结尾的透明规约树节点列表迭代器
+			while (treeNodeTrailingFIterator.hasNext()) {
+				TreeNode treeNodeLiv2 = (TreeNode) treeNodeTrailingFIterator
+						.next();
+				if (treeNodeLiv2.getDataType().equals(treeNodeLiv1.getId())) {
+					treeNodeLiv2List.add(treeNodeLiv2);
+				}
+			}
+			treeNodeTrailingFFIterator = treeNodeTrailingFF.iterator(); // 以【FF】结尾的透明规约树节点列表迭代器
+			while (treeNodeTrailingFFIterator.hasNext()) {
+				TreeNode treeNodeLiv2 = (TreeNode) treeNodeTrailingFFIterator
+						.next();
+				if (treeNodeLiv2.getDataType().equals(treeNodeLiv1.getId())) {
+					treeNodeLiv2List.add(treeNodeLiv2);
+				}
+			}
+
+			Collections.sort(treeNodeLiv2List); // 按TreeNode类中的自定义排序规则排序
+			treeNodeLiv1.setChildren(treeNodeLiv2List);
+			if (treeNodeLiv1.getChildren().size() == 0)
+				treeNodeLiv1.setLeaf(true);
+		}
+
+		if (bClearProtocolList.size() > 0) {
+			this.logger.error("BClearProtocol表中存在" + bClearProtocolList.size()
+					+ "条脏数据：");
+			for (BClearProtocol bClearProtocol : bClearProtocolList) {
+				this.logger.error(bClearProtocol.getProtocolNo() + " | "
+						+ bClearProtocol.getProtocolName());
+			}
+		}
+
+		return treeNodeLiv1List;
+	}
+
+	/**
+	 * 查询召测组合
+	 * 
+	 * @return 召测组合列表
+	 * @throws DBAccessException
+	 *             数据库异常
+	 */
+	public List<ProtocolGroupDTO> queryProtocolGroup(String staffNo)
+			throws DBAccessException {
+		List<ProtocolGroupDTO> protocolGroupDTOList = new ArrayList<ProtocolGroupDTO>();
+
+		List<TDataCombi> tDataCombiList = this.tDataCombiDao
+				.findByStaffNo(staffNo);
+		for (TDataCombi tDataCombi : tDataCombiList) {
+			Boolean flag = true;
+			for (ProtocolGroupDTO protocolGroupDTO : protocolGroupDTOList) {
+				if (protocolGroupDTO.getCombiName().equals(
+						tDataCombi.getCombiName())) {
+					flag = false;
+					protocolGroupDTO.getCombiMap().put(
+							tDataCombi.getClearProtNo(),
+							tDataCombi.getbClearProtocol().getProtocolName()
+									+ "@@"
+									+ tDataCombi.getbClearProtocol()
+											.getDataGroup());
+				}
+			}
+
+			if (flag) {
+				ProtocolGroupDTO protocolGroupDTO = new ProtocolGroupDTO();
+				protocolGroupDTO.setCombiId(tDataCombi.getCombiId());
+				protocolGroupDTO.setCombiName(tDataCombi.getCombiName());
+				protocolGroupDTO.setCreateDate(tDataCombi.getCreateDate());
+				protocolGroupDTO.setIsShare(tDataCombi.getIsShare());
+				protocolGroupDTO.setStaffNo(tDataCombi.getStaffNo());
+				protocolGroupDTO.setValidDays(tDataCombi.getValidDays());
+				protocolGroupDTO.getCombiMap()
+						.put(
+								tDataCombi.getClearProtNo(),
+								tDataCombi.getbClearProtocol()
+										.getProtocolName()
+										+ "@@"
+										+ tDataCombi.getbClearProtocol()
+												.getDataGroup());
+				protocolGroupDTOList.add(protocolGroupDTO);
+			}
+		}
+
+		return protocolGroupDTOList;
+	}
+
+	/****
+	 * 将组合和召测数据 转化为树节点的形式 说明：通过TreeNode的attributes来标示 attributes 1 data
+	 * 标示从数据库中得到的(不处理)<br>
+	 * 2 del 标示会被删除<br>
+	 * 3 edit 标示已经被标记过<br>
+	 * 4 add 标示添加进来的树<br>
+	 * 
+	 * @return *
+	 ******/
+	@SuppressWarnings("unchecked")
+	public List<TreeNode> findGroupForTree(String staffNo)
+			throws DBAccessException {
+		int i = 1;
+		// 得到已经格式化的数据
+		List<ProtocolGroupDTO> list = queryProtocolGroup(staffNo);
+		List<TreeNode> result = new ArrayList<TreeNode>();
+		// 对数据进行格式化处理
+		for (ProtocolGroupDTO p : list) {
+			TreeNode tn = new TreeNode();
+			tn.setId("clear_" + i);
+			tn.setDataType(null);
+			List<TreeNode> children = tn.getChildren();
+			children = new ArrayList<TreeNode>();
+			tn.setLeaf(false);
+			tn.setText(p.getCombiName());
+			Map m = p.getCombiMap();
+			Iterator<String> it = m.keySet().iterator();
+			while (it.hasNext()) {
+				String key = it.next();
+				String value = (String) m.get(key);
+				TreeNode child = new TreeNode();
+				child.setId(key);
+				child.setLeaf(true);
+				child.setText(value);
+				children.add(child);
+			}
+			result.add(tn);
+		}
+		return result;
+	}
+
+	/**
+	 * 新增召测组合
+	 * 
+	 * @param protocolGroupDTO
+	 *            透明规约组合DTO
+	 * @throws DBAccessException
+	 *             数据库异常
+	 * @throws ServiceException
+	 *             服务层异常
+	 */
+	public void insertProtocolGroup(ProtocolGroupDTO protocolGroupDTO)
+			throws DBAccessException, ServiceException {
+		List<TDataCombi> tDataCombiList = this.tDataCombiDao.findBy(
+				"combiName", protocolGroupDTO.getCombiName());
+		if (tDataCombiList.size() > 0) {
+			this.logger.error("组合名称【" + protocolGroupDTO.getCombiName()
+					+ "】已经存在。");
+			throw new ServiceException(
+					ExceptionConstants.BAE_COMBINAMEUNIQUEERROR);
+		}
+
+		tDataCombiList = new ArrayList<TDataCombi>();
+		Iterator<String> iterator = protocolGroupDTO.getCombiMap().keySet()
+				.iterator();
+		while (iterator.hasNext()) {
+			TDataCombi tDataCombi = new TDataCombi();
+			tDataCombi.setClearProtNo(iterator.next());
+			tDataCombi.setCombiName(protocolGroupDTO.getCombiName());
+			tDataCombi.setCreateDate(protocolGroupDTO.getCreateDate());
+			tDataCombi.setIsShare(protocolGroupDTO.getIsShare());
+			tDataCombi.setStaffNo(protocolGroupDTO.getStaffNo());
+			tDataCombi.setValidDays(protocolGroupDTO.getValidDays());
+			tDataCombiList.add(tDataCombi);
+		}
+
+		this.tDataCombiDao.save(tDataCombiList);
+	}
+
+	/***
+	 * 
+	 * 通过插入的字符串来编辑召测的组合
+	 * 
+	 * @throws DBAccessException
+	 * **/
+	public void editProtocolGroup(List<String> list, String staffNo)
+			throws DBAccessException {
+		List<String> parseList = new ArrayList<String>();
+		for (String str : list) {
+			parseList.add(str + "##" + staffNo);
+		}
+		this.tDataCombiDao.parseEdit(parseList);
+	}
+
+	/****
+	 * 
+	 * *
+	 **/
+	/**
+	 * 按终端ID查询终端
+	 * 
+	 * @param terminalId
+	 *            终端ID
+	 * @return 终端
+	 * @throws DBAccessException
+	 *             数据库异常
+	 */
+	public DataFetchTerminal queryTerminalById(String terminalId)
+			throws DBAccessException {
+		return this.dataFetchTerminalDao.findById(terminalId);
+	}
+
+	/***
+	 * 得到一个透明规约编码的父项是多少
+	 * 
+	 * @return 如果没有父项 返回null
+	 * @throws DBAccessException
+	 * **/
+	public String getFather(String clearNo) throws DBAccessException {
+		return idataFetchJdbcDao.getFather(clearNo);
+	}
+
+	/***
+	 * 相应左边树的点击事件返回数据
+	 * 
+	 * @param staffNo
+	 *            操作人员的工号
+	 * @param postData
+	 *            点击后都通post传到后台的数据 格式 org_值_...
+	 * @param start
+	 *            分页的开始
+	 * @param 分页的结束
+	 * 
+	 *            return {@link RETURN} page对象 结果集里面放置的map *
+	 ***/
+	public Page findClick(PSysUser user, String postData, long start, int limit) {
+		if (null == postData) {
+			throw new RuntimeException("传入数据不能为空");
+		}
+		String arr[] = postData.split("_");
+		if (arr.length < 2) {
+			throw new RuntimeException("传入的数据格式不正确");
+		}
+		// 左边树的默认实现类
+		LeftTreeDaoImpl tree = new LeftTreeDaoImpl();
+		String type = arr[0];
+		String value = arr[1];
+		String level = arr[2];
+		SqlData sd = SqlData.getOne();
+		// 使用[*,c]可以转化为骆驼命名法
+		MapResultMapper mrp = new MapResultMapper("[*,l]");
+		if (type.equals("org")) {
+			if (level.equals("06")) {
+				return tree.pagingFind(sd.dataFetch_org
+						+ SysPrivilige.addPri(user, "c", "r", 7), 0, 501, mrp,
+						new Object[] { value, user.getStaffNo(),
+								user.getStaffNo(), user.getStaffNo() });
+			}
+
+			return tree.pagingFind(sd.dataFetch_org
+					+ SysPrivilige.addPri(user, "c", "r", 7), start, limit,
+					mrp, new Object[] { value + "_%", user.getStaffNo(),
+							user.getStaffNo(), user.getStaffNo()
+
+					});
+		} else if (type.equals("sub")) {
+			return tree.pagingFind(sd.dataFetch_sub
+					+ SysPrivilige.addPri(user, "c", "r", 7), start, limit,
+					mrp, new Object[] { value, user.getStaffNo(),
+							user.getStaffNo(), user.getStaffNo() });
+		} else if (type.equals("line")) {
+			return tree.pagingFind(sd.dataFecth_line
+					+ SysPrivilige.addPri(user, "c", "r", 7), start, limit,
+					mrp, new Object[] { value, user.getStaffNo(),
+							user.getStaffNo(), user.getStaffNo() });
+		} else if (type.equals("trade")) {
+			return tree.pagingFind(sd.dataFetch_org, start, limit, mrp,
+					new Object[] {});
+		} else if (type.equals("tmnl")) {
+			return tree.pagingFind(sd.dataFetch_tmnl
+					+ SysPrivilige.addPri(user, "c", "r", 7), start, limit,
+					mrp, new Object[] { value, user.getStaffNo(),
+							user.getStaffNo(), user.getStaffNo() });
+		} else if (type.equals("ugp")) {
+			// group_click
+			return tree.pagingFind(sd.group_click
+					+ SysPrivilige.addTmnlFactory("r")
+					+ SysPrivilige.addConsType("c"), start, limit, mrp,
+					new Object[] { value, user.getStaffNo(), value,
+							user.getStaffNo(), user.getStaffNo() });
+			// throw new RuntimeException("不支持此节点");
+		} else {
+			logger.warn("不支持的节点类型");
+			throw new RuntimeException("不支持此节点");
+		}
+	}
+
+	@Override
+	public Map<Map, List> findAllCombi(String staffNo) throws DBAccessException {
+		return idataFetchJdbcDao.findAllCombi(staffNo);
+	}
+
+	/*** 不带分页版本点击事件处理 ****/
+	/***
+	 * 相应左边树的点击事件返回数据
+	 * 
+	 * @param staffNo
+	 *            操作人员的工号
+	 * @param postData
+	 *            点击后都通post传到后台的数据 格式 org_值_...
+	 * 
+	 *            return {@link RETURN} List对象 结果集里面放置的map *
+	 ***/
+	@SuppressWarnings("unchecked")
+	public List<Map> findClickDirect(PSysUser user, String postData) {
+		if (null == postData) {
+			throw new RuntimeException("传入数据不能为空");
+		}
+		String arr[] = postData.split("_");
+		if (arr.length < 2) {
+			throw new RuntimeException("传入的数据格式不正确");
+		}
+		// 左边树的默认实现类
+		LeftTreeDaoImpl tree = new LeftTreeDaoImpl();
+		String type = arr[0];
+		String value = arr[1];
+		String level = arr[2];
+		SqlData sd = SqlData.getOne();
+		// 使用[*,c]可以转化为骆驼命名法
+		MapResultMapper mrp = new MapResultMapper("[*,l]");
+		if (type.equals("org")) {
+			if (level.equals("06")) {
+				return tree.getJdbcTemplate().query(
+						sd.dataFetch_org
+								+ SysPrivilige.addPri(user, "c", "r", 7),
+						new Object[] { value, user.getStaffNo(),
+								user.getStaffNo(), user.getStaffNo() }, mrp);
+			}
+			return tree.getJdbcTemplate().query(
+					sd.dataFetch_org + SysPrivilige.addPri(user, "c", "r", 7),
+					new Object[] { value + "_%", user.getStaffNo(),
+							user.getStaffNo(), user.getStaffNo() }, mrp);
+		} else if (type.equals("sub")) {
+			return tree.getJdbcTemplate().query(
+					sd.dataFetch_sub + SysPrivilige.addPri(user, "c", "r", 7),
+					new Object[] { value, user.getStaffNo(), user.getStaffNo(),
+							user.getStaffNo() }, mrp);
+		} else if (type.equals("line")) {
+			return tree.getJdbcTemplate().query(
+					sd.dataFecth_line + SysPrivilige.addPri(user, "c", "r", 7),
+					new Object[] { value, user.getStaffNo(), user.getStaffNo(),
+							user.getStaffNo() }, mrp);
+		} else if (type.equals("trade")) {
+			return tree.getJdbcTemplate().query(sd.dataFetch_org,
+					new Object[] {}, mrp);
+		} else if (type.equals("tmnl")) {
+			return tree.getJdbcTemplate().query(
+					sd.dataFetch_tmnl + SysPrivilige.addPri(user, "c", "r", 7),
+					new Object[] { value, user.getStaffNo(), user.getStaffNo(),
+							user.getStaffNo() }, mrp);
+		} else if (type.equals("ugp")) {
+			// group_click
+			return tree.getJdbcTemplate().query(
+					sd.group_click + SysPrivilige.addTmnlFactory("r")
+							+ SysPrivilige.addConsType("c"),
+					new Object[] { value, user.getStaffNo(), value,
+							user.getStaffNo(), user.getStaffNo() }, mrp);
+			// throw new RuntimeException("不支持此节点");
+		} else {
+			logger.warn("不支持的节点类型");
+			throw new RuntimeException("不支持此节点");
+		}
+	}
+
+	public void updateMain(List<String> list, PSysUser user)
+			throws DBAccessException {
+		idataFetchJdbcDao.updateMain(list, user.getStaffNo());
+		SaveLUserOpLog log = new SaveLUserOpLog();
+		log.setEmpNo(user.getStaffNo());
+		log.setOrgNo(user.getOrgNo());
+		log.setOpButton("保存");
+		log.setOpModule("数据召测");
+		log.setOpContent("管理组合");
+		log.setOpType("04");
+		log.setIpAddr(getIpAdr());
+
+		saveUserOpLog(log);
+	}
+
+	@Override
+	public Map<String, String> findCodeName(List<String> list)
+			throws DBAccessException {
+		return idataFetchJdbcDao.findCodeName(list);
+	}
+
+	/***
+	 * 通过combiId查找所有的某一个名字组合下的透明公约编码，内部进行去重名
+	 * 
+	 * @param combiId
+	 *            *
+	 ***/
+	public List<String> findCodesByName(String combiId)
+			throws DBAccessException {
+		return idataFetchJdbcDao.findCodesByName(combiId);
+	}
+
+	@Override
+	public Map<String, String> findDataIdPn(List dataIds)
+			throws DBAccessException {
+		return idataFetchJdbcDao.findDataIdPn(dataIds);
+	}
+
+	@Override
+	public Map<String, String> mapTypeName() throws DBAccessException {
+		return idataFetchJdbcDao.mapTypeName();
+	}
+
+	@Override
+	public Map<String, String> mapEventName(List nos) throws DBAccessException {
+		return idataFetchJdbcDao.mapEventName(nos);
+	}
+
+	@Override
+	public Map<String, String> findCodeDataType(List<String> list)
+			throws DBAccessException {
+		return idataFetchJdbcDao.findCodeDataType(list);
+	}
+
+	/***
+	 * 通过大项的列表来找到大项和大项所对应的名称 请确保codes中的项都为大项
+	 * 
+	 * @return 一个map key为大项的code，名称为大项的名称
+	 * @throws ServiceException
+	 *             *
+	 **/
+	public Map<String, String> findBigCodeToName(List<String> codes)
+			throws ServiceException {
+		try {
+			return idataFetchJdbcDao.findBigCodeToName(codes);
+		} catch (Exception e) {
+			throw new ServiceException(e.getMessage());
+		}
+	}
+
+	/*******
+	 * 通过终端资产号和pns来找到对应的表下面的用户名和用户编号
+	 * 
+	 * @param tmnlNo
+	 *            终端资产号
+	 * @param pns
+	 *            所对应的pn的列表
+	 * @return 返回一个key格式为终端资产号_pn 值为一个map 其中的key为consNo 和consName *
+	 * @throws ServiceException
+	 ****/
+	public Map<String, Map<String, String>> findMeterCons(String tmnlNo,
+			List<String> pns) throws ServiceException {
+		try {
+			return idataFetchJdbcDao.findMeterCons(tmnlNo, pns);
+		} catch (Exception e) {
+			throw new ServiceException(e.getMessage());
+		}
+
+	}
+
+	/****
+	 * @param log
+	 *            填入必要的数据.
+	 * 
+	 *            对操作进行日志的保存 *
+	 **/
+	public void saveUserOpLog(SaveLUserOpLog log) throws DBAccessException {
+		log.setOpTime(new Date());
+		CreateInsert c = new CreateInsert();
+		// System.out.println(c.getSql());
+		// System.out.println(c.getArgs());
+		c.save(log);
+	}
+
+	// private 得到当前用户的ip地址
+	private String getIpAdr() {
+		return RealIP.getIPAddr(ServletActionContext.getRequest());
+	}
+
+	/*****
+	 * 通过tmnl_asset_no来显示对应的表计的信息
+	 * 
+	 * @param tmnlAssetNo
+	 *            要查询的终端资产号内码
+	 *@param start
+	 *            开始
+	 *@param limit
+	 *            限制
+	 *@return 分页后的结果 *
+	 * @throws ServiceException
+	 ****/
+	@SuppressWarnings("unchecked")
+	public Page<Map> findCmpInto(String tmnlAssetNo, int start, long limit)
+			throws ServiceException {
+		try {
+			LeftTreeDaoImpl tree = new LeftTreeDaoImpl();
+			SqlData sd = SqlData.getOne();
+			// 使用[*,c]可以转化为骆驼命名法
+			MapResultMapper mrp = new MapResultMapper("[*,c]");
+			return tree.pagingFind(sd.dataFecth_findCmp, start, limit, mrp,
+					new Object[] { tmnlAssetNo });
+		} catch (Exception e) {
+			throw new ServiceException(e.getMessage());
+		}
+	}
+
+	/****
+	 * 查找一个终端下面所有的测量点
+	 * 
+	 * @param tmnlAssetNo
+	 *            终端资产号的内码
+	 * @return pn的列表
+	 * @throws ServiceException
+	 ****/
+	@SuppressWarnings("unchecked")
+	public List findAllPns(String tmnlAssetNo) throws ServiceException {
+		try {
+			LeftTreeDaoImpl tree = new LeftTreeDaoImpl();
+			SqlData sd = SqlData.getOne();
+			// 使用[*,c]可以转化为骆驼命名法
+			MapResultMapper mrp = new MapResultMapper("[*,c]");
+			return tree.getJdbcTemplate().queryForList(sd.dataFetch_findAllPns,
+					new Object[] { tmnlAssetNo }, Short.class);
+		} catch (Exception e) {
+			throw new ServiceException(e.getMessage());
+		}
+	}
+
+	/****
+	 * 找到一个终端对应的采集器
+	 * 
+	 * @param tmnlNo
+	 *            终端资产号的内码
+	 * @throws ServiceException
+	 *****/
+	@SuppressWarnings("unchecked")
+	public List findFrmAsset(String tmnlNo) throws ServiceException {
+		try {
+			LeftTreeDaoImpl tree = new LeftTreeDaoImpl();
+			SqlData sd = SqlData.getOne();
+			// 使用[*,c]可以转化为骆驼命名法
+			MapResultMapper mrp = new MapResultMapper("[*,c]");
+			return tree.getJdbcTemplate().query(sd.dataFetch_findCollect,
+					new Object[] { tmnlNo }, mrp);
+		} catch (Exception e) {
+			logger.error(e);
+			throw new ServiceException(e.getMessage());
+		}
+	}
+
+	/**
+	 * 通过一个采集器的资产号<br />
+	 * 来找对应的表计资产号
+	 * 
+	 * @param frmAssetNo
+	 * @return
+	 * @throws ServiceException
+	 */
+	@SuppressWarnings("unchecked")
+	public List findPns(String frmAssetNo) throws ServiceException {
+		try {
+			LeftTreeDaoImpl tree = new LeftTreeDaoImpl();
+			SqlData sd = SqlData.getOne();
+			// 使用[*,c]可以转化为骆驼命名法
+			MapResultMapper mrp = new MapResultMapper("[*,c]");
+			return tree.getJdbcTemplate().query(sd.dataFetch_findPns,
+					new Object[] { frmAssetNo }, mrp);
+		} catch (Exception e) {
+			logger.error(e);
+			throw new ServiceException(e.getMessage());
+		}
+
+	}
+
+	/**
+	 * 请保证终端资产号不为空
+	 * 
+	 * @param finder
+	 * @param start
+	 * @param limit
+	 * @return
+	 * @throws ServiceException
+	 */
+	@SuppressWarnings("unchecked")
+	public Page<Map> findCmpByFinder(EDataFinder finder, int start, long limit)
+			throws ServiceException {
+		try {
+			LeftTreeDaoImpl tree = new LeftTreeDaoImpl();
+			SqlData sd = SqlData.getOne();
+			// 使用[*,c]可以转化为骆驼命名法
+			MapResultMapper mrp = new MapResultMapper("[*,c]");
+			ResultParse re = SelectSqlCreator.getSelectSql(finder);
+			String append = "";
+			// 如果finder选择了终端
+			if (finder.getIsTmnl() == 1)
+				append = "\n and c.fmr_asset_no is null\n";
+			String sql = String.format(sd.dataFecth_edatamp, re.getSql()
+					+ append);
+			return tree.pagingFind(sql, start, limit, mrp, re.getArgs()
+					.toArray());
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ServiceException(e.getMessage());
+		}
+	}
+
+	/**
+	 * 通过资产号得到其下的采集器，以及采集器下面对应的表
+	 * 
+	 * @param tmnlAssetNo
+	 * @throws ServiceException
+	 */
+	@SuppressWarnings("unchecked")
+	public Map<String, List> findFrmToAsset(String tmnlAssetNo)
+			throws ServiceException {
+		try {
+			return idataFetchJdbcDao.findFrmToAsset(tmnlAssetNo);
+		} catch (Exception e) {
+			throw new ServiceException(e.getMessage());
+		}
+	}
+
+	@Override
+	public boolean updateOnOffStatus(String meterID, String dueStatus,String switchStatus)
+			throws DBAccessException {
+	
+		return idataFetchJdbcDao.updateOnOffStatus(meterID, dueStatus, switchStatus);
+	}
+}

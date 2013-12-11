@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ItemSearchResponse>
+    <Items>
+        <Item>
+                <UsArUserNo>0446355453</UsArUserNo>
+                <UsArUserName>用户名称1</UsArUserName>
+                <TransformerArchives>查看</TransformerArchives>
+                <TerminalArchives>查看</TerminalArchives>
+                <AmmeterArchives>查看</AmmeterArchives>
+                <CollectorArchives>查看</CollectorArchives>
+                <SwitchArchives>查看</SwitchArchives>
+                <Others>查看</Others>
+        </Item>
+        <Item>
+                <UsArUserNo>0446613657</UsArUserNo>
+                <UsArUserName>用户名称2</UsArUserName>
+                <TransformerArchives>查看</TransformerArchives>
+                <TerminalArchives>查看</TerminalArchives>
+                <AmmeterArchives>查看</AmmeterArchives>
+                <CollectorArchives>查看</CollectorArchives>
+                <SwitchArchives>查看</SwitchArchives>
+                <Others>查看</Others>
+        </Item>
+    </Items>
+</ItemSearchResponse>

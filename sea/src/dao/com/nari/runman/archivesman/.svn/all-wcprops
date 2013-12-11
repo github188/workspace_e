@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/app/!svn/ver/7050/trunk/sea/src/dao/com/nari/runman/archivesman
+END
+IArchiveRcpManDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/7049/trunk/sea/src/dao/com/nari/runman/archivesman/IArchiveRcpManDao.java
+END
+IRemoteDebugDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/app/!svn/ver/6794/trunk/sea/src/dao/com/nari/runman/archivesman/IRemoteDebugDao.java
+END
+运行管理-档案管理
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/runman/archivesman/%E8%BF%90%E8%A1%8C%E7%AE%A1%E7%90%86-%E6%A1%A3%E6%A1%88%E7%AE%A1%E7%90%86
+END
+IImportExcelDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/app/!svn/ver/6564/trunk/sea/src/dao/com/nari/runman/archivesman/IImportExcelDao.java
+END
+IArchiveTmnlManDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/app/!svn/ver/6585/trunk/sea/src/dao/com/nari/runman/archivesman/IArchiveTmnlManDao.java
+END
+IArchiveCmeterManDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/app/!svn/ver/4864/trunk/sea/src/dao/com/nari/runman/archivesman/IArchiveCmeterManDao.java
+END
+ICollectionChannelDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/app/!svn/ver/5644/trunk/sea/src/dao/com/nari/runman/archivesman/ICollectionChannelDao.java
+END
+IArchiveCmpManDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/4864/trunk/sea/src/dao/com/nari/runman/archivesman/IArchiveCmpManDao.java
+END
+IOrganizeManDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/app/!svn/ver/5554/trunk/sea/src/dao/com/nari/runman/archivesman/IOrganizeManDao.java
+END
+IArchieveManDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/app/!svn/ver/6506/trunk/sea/src/dao/com/nari/runman/archivesman/IArchieveManDao.java
+END
+IArchiveCmeterHangDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/app/!svn/ver/6645/trunk/sea/src/dao/com/nari/runman/archivesman/IArchiveCmeterHangDao.java
+END

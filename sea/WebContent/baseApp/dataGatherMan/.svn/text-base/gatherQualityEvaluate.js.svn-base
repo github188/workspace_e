@@ -1,0 +1,394 @@
+// 构建图形的数据
+var gqe_keys = new Array("orgName","succRate1","succRate2","succRate3");
+var gqe_nameKeys = new Array("抄表类","负荷类","电能质量类");
+var gqe_colors = new Array('AFD8F8','F6BD0F','8BBA00');
+var gqe_arrayData=[];
+
+//左边导航区事件监听
+	var treeListener = new LeftTreeListener({
+		modelName : '采集质量检查',
+		processClick : function(p, node, e) {
+			var obj = node.attributes.attributes;
+			var type = node.attributes.type;
+			if(type == 'org'){
+				var orgType = obj.orgType;
+//				if(orgNo.length == )
+				if(orgType == '02' || orgType == '03' || orgType == '04'){
+					nodeTextField.setValue(node.text);
+					hideNodeTextField.setValue(obj.orgNo);
+					hideOrgTypeTextField.setValue(obj.orgType);
+				}else{
+					Ext.MessageBox.alert('提示','请选择县以上的供电公司!');
+				}
+			}else {
+				Ext.MessageBox.alert('提示','请从区域或电网选择供电公司!');
+				return true;
+			}
+		}
+	});
+
+//节点
+var nodeTextField  = new Ext.form.TextField({
+	name : 'nodeTextField',
+	allowBlank : false,
+	anchor : '95%',
+	emptyText : '请选择供电公司',
+	readOnly : true,
+	fieldLabel : '节点名'
+});
+//节点隐藏域
+var hideNodeTextField = new Ext.form.TextField({
+	name : 'hideNodeTextField',
+	hidden:true
+});
+//orgType
+var hideOrgTypeTextField = new Ext.form.TextField({
+	name : 'hideOrgTypeTextField',
+	hidden:true
+});
+
+
+//用户类型 store
+var consTypeStore = new Ext.data.JsonStore({
+		url : "baseapp/gatherQualityEvaluate!queryConsType.action",
+		fields : [ 'consType', 'consTypeName' ],
+		root : "consTypeList"
+	});
+//用户类型
+var consTypeCombox = new Ext.form.ComboBox({
+	store : consTypeStore,
+	displayField : 'consTypeName',
+	valueField : 'consType',
+	name : 'consTypeCombox',
+	mode : 'remote',
+	editable : false,
+	triggerAction : 'all',
+	anchor : '95%',
+	
+	fieldLabel : '用户类型'
+});
+
+consTypeStore.load();
+
+//终端型号store
+var tmnlModeCodeStore = new Ext.data.JsonStore({
+		url : "baseapp/gatherQualityEvaluate!queryTmnlModeCode.action",
+		fields : [ 'modeCode', 'modeName' ],
+		root : "tmnlModeCodeList"
+	});
+	
+//终端型号
+var tmnlTypeCombox = new Ext.form.ComboBox({
+	store : tmnlModeCodeStore,
+	displayField : 'modeName',
+	valueField : 'modeCode',
+	name : 'tmnlTypeCombox',
+	anchor : '95%',
+	editable : false,
+	mode : 'remote',
+	triggerAction : 'all',
+	fieldLabel : '终端型号'
+});
+
+tmnlModeCodeStore.load();
+
+//通信方式store
+var commModeStore = new Ext.data.JsonStore({
+		url : "baseapp/gatherQualityEvaluate!queryCommMode.action",
+		fields : [ 'commModeCode', 'commMode' ],
+		root : "commModeList"
+	});
+
+//通信方式
+var channelCombox = new Ext.form.ComboBox({
+	store : commModeStore,
+	displayField : 'commMode',
+	valueField : 'commModeCode',
+	name : 'channelCombox',
+	anchor : '95%',
+	editable : false,
+	mode : 'remote',
+	triggerAction : 'all',
+	fieldLabel : '通信方式'
+});
+
+commModeStore.load();
+
+var startDateField = new Ext.form.DateField({
+		name : "qualityStartDate",
+		format : 'Y-m-d',
+		allowBlank : false,
+		editable:false,
+		emptyText : '请选择日期 ...',
+		fieldLabel : "从",
+		width : "100",
+		value : new Date().add(Date.DAY, -6)
+	});
+var endDateField = new Ext.form.DateField({
+		name : "qualityEndDate",
+		format : 'Y-m-d',
+		allowBlank : false,
+		editable:false,
+		emptyText : '请选择日期 ...',
+		fieldLabel : "到",
+		width : "100",
+		value : new Date()
+	});
+endDateField.on('change',function(df,newValue,oldValue){
+	if(newValue < startDateField.getValue()){
+		endDateField.setValue(oldValue);
+		Ext.Msg.alert('提示','结束日期不能小于开始日期');	
+	}
+});
+
+var qualityQueryPanel = new Ext.Panel({
+	labelAlign : 'right',
+	region : 'north',
+	height : 40,
+	layout : 'table',
+	border : false,
+	padding : '10px 0px 0px 30px',
+	items : [{
+				layout : 'form',
+				border : false,
+				labelWidth : 50,
+				width : 180,
+				items : [nodeTextField]
+			}, {
+				layout : 'form',
+				border : false,
+				labelWidth : 50,
+				width : 140,
+				items : [consTypeCombox]
+			}, {
+				layout : 'form',
+				border : false,
+				labelWidth : 50,
+				width : 180,
+				items : [tmnlTypeCombox]
+			}, {
+				layout : 'form',
+				border : false,
+				labelWidth : 50,
+				width : 140,
+				items : [channelCombox]
+			},{
+				layout : 'form',
+				border : false,
+				labelWidth : 30,
+				width : 140,
+				items : [startDateField]
+			}, {
+				layout : 'form',
+				border : false,
+				labelWidth : 20,
+				width : 140,
+				items : [endDateField]
+			}, {
+				width :160,
+				border : false,
+				items : [{
+							xtype : 'button',
+							text : '查询',
+							width : 80,
+							handler:function(){
+							
+								if(endDateField.getValue() < startDateField.getValue()){
+									Ext.Msg.alert('提示','结束日期不能小于开始日期');	
+									return true;
+								}else if(nodeTextField.getValue() == null || nodeTextField.getValue() == ""){
+									nodeTextField.focus();
+									Ext.MessageBox.alert('提示','请选择供电公司');
+									return true;
+								}
+								Ext.Ajax.request({
+									url:'baseapp/gatherQualityEvaluate!findGatherQualityInfo.action',
+									params : {
+												orgType : hideOrgTypeTextField.getValue(),
+												orgNo : hideNodeTextField.getValue(),
+												consType : consTypeCombox.getValue(),
+												tmnlModeCode : tmnlTypeCombox.getValue(),
+												commMode : channelCombox.getValue(),
+												startDate : startDateField.getValue().format('Y-m-d'),
+												endDate : endDateField.getValue().format('Y-m-d')
+											},
+									success:function(response) {
+										var result = Ext.decode(response.responseText);
+										if(result==null) return true;
+										rateStore.loadData(result,false);
+										gqe_arrayData = result.aTmnlQualityList;
+							//			var xmlData = "<graph baseFont='宋体' baseFontSize='14' rotateYAxisName='0' xaxisname='' yaxisname='' " +
+							//			"hovercapbg='DEDEBE' hovercapborder='889E6D' rotateNames='0' numdivlines='9' divLineColor='CCCCCC' "+
+							//			"divLineAlpha='80' decimalPrecision='0' showAlternateHGridColor='1' AlternateHGridAlpha='30' " +
+							//			"AlternateHGridColor='CCCCCC' caption='' subcaption='' ><categories font='Arial' " +
+							//			"fontSize='12' fontColor='000000'></categories><dataset seriesname='抄表类' color='AFD8F8'> " +
+							//			"</dataset><dataset seriesname='负荷类' color='F6BD0F'> </dataset><dataset seriesname='电能质量类'" +
+							//			" color='8BBA00'> </dataset></graph>";
+							//			if(gqe_arrayData.length != 0){
+							//				xmlData = getMultiXMLData(gqe_arrayData,gqe_keys,'','','',gqe_colors,gqe_nameKeys,5,0,100);
+							//			}
+							//			chartPanel.changeDataXML(xmlData);
+										ChangeCobo();
+									}
+								});
+								
+							}
+						}]
+			}]
+});
+//function genQualityData (){
+//}
+ //定义图形渲染的panel
+var chartPanel = new Ext.fc.FusionChart({
+				border : false,
+                title:'采集质量监控',
+				wmode : 'transparent',
+				backgroundColor : '000000',
+				url : 'fusionCharts/MSColumn3D.swf',
+				DataXML : ""
+			});
+
+/**grid-----------------------------------------------------------------------------------------**/
+var structure = {
+		'':[''],
+        抄表类:['成功率', '失败率'],
+        负荷类:['成功率', '失败率'],
+        电能质量类:['成功率', '失败率']
+    },
+	columns = [{
+    			header:'供电单位',
+    			align : 'center',
+    			dataIndex : 'orgName',
+    			renderer: function(val){
+    				return "<div align = 'left'>" + val + "</div>";
+    			}
+    		},{
+	    		header : '成功(%)',
+				dataIndex : 'succRate1',
+				align : 'center'
+			},{
+				header : '失败(%)',
+				dataIndex : 'failRate1',
+				align : 'center',
+				renderer : function(s, m, rec) {
+					if(s==null || s=='') return "";
+					return "<a href='javascript:' onclick='repairGatherWindowShow(\"01\")'>"+s+"</a>";
+				}
+			},{
+	    		header : '成功(%)',
+				dataIndex : 'succRate2',
+				align : 'center'
+			},{
+				header : '失败(%)',
+				dataIndex : 'failRate2',
+				align : 'center'
+//				,
+//				renderer : function(s, m, rec) {
+//					if(s==null || s=='') return "";
+//					return "<a href='javascript:' onclick='repairGatherWindowShow(\"02\")'>"+s+"</a>";
+//				}
+			},{
+	    		header : '成功(%)',
+				dataIndex : 'succRate3',
+				align : 'center'
+			},{
+				header : '失败(%)',
+				dataIndex : 'failRate3',
+				align : 'center'
+//				,
+//				renderer : function(s, m, rec) {
+//					if(s==null || s=='') return "";
+//					return "<a href='javascript:' onclick='repairGatherWindowShow(\"03\")'>"+s+"</a>";
+//				}
+			},{
+    			header:'单位编码',
+    			dataIndex : 'orgNo',
+    			hidden:true
+    		}],
+    continentGroupRow = [];
+
+Ext.iterate(structure, function(continent, rates){
+	continentGroupRow.push({
+            header: continent,
+            align: 'center',
+            colspan: rates.length
+        });
+});
+
+var group = new Ext.ux.grid.ColumnHeaderGroup({
+        rows: [continentGroupRow]
+    });
+    
+var rateStore = new Ext.data.JsonStore({
+		totalProperty : 'totalCount',
+		proxy : new Ext.data.MemoryProxy(),
+		fields : [ 'orgNo','orgName', 'succRate1','failRate1','succRate2', 'failRate2','succRate3','failRate3'],
+		root : "aTmnlQualityList"
+	});
+var rateGrid = new Ext.grid.GridPanel({
+			title : '单位采集情况',
+			store : rateStore,
+			region:'center',
+			autoWidth : true,
+			columns : columns,
+			stripeRows : true,
+			border : false,
+			autoScroll : true,
+			plugins: group
+		});
+var qualityTopPanel = new Ext.form.FormPanel({
+						border : false,
+						region:'north',
+						height:340,
+						layout : 'border',
+						items : [qualityQueryPanel, new Ext.Panel({
+									title : '采集成功率【单位：%】',
+									labelAlign : 'right',
+									region:'center',
+									border : false,
+									items : [chartPanel]
+								})]
+					});
+					
+/* 弹出手工补召窗口*/
+function repairGatherWindowShow(value) {
+    var record =  rateGrid.getSelectionModel().getSelected();
+    valueText = '';
+    vauelNo = '';
+    if(record!=null){
+    	valueText = record.get('orgName');
+    	valueNo = record.get('orgNo');
+    }
+    repairStartDate = startDateField.getValue();
+    repairEndDate = endDateField.getValue();
+    taskProp = value;
+
+    openTab("手工补召", "./baseApp/dataGatherMan/gatherByHand.jsp");
+}	
+// 生成fusionchart图形
+//var myChart;
+function ChangeCobo() {
+	var xmlData = "<graph baseFont='宋体' baseFontSize='14' rotateYAxisName='0' showValues='0' xaxisname='' yaxisname='' " +
+			"hovercapbg='DEDEBE' hovercapborder='889E6D' rotateNames='0' numdivlines='9' divLineColor='CCCCCC' "+
+			"divLineAlpha='80' decimalPrecision='0' showAlternateHGridColor='1' AlternateHGridAlpha='30' " +
+			"AlternateHGridColor='CCCCCC' caption='' subcaption='' ><categories font='Arial' " +
+			"fontSize='12' fontColor='000000'></categories><dataset seriesname='抄表类' color='AFD8F8'> " +
+			"</dataset><dataset seriesname='负荷类' color='F6BD0F'> </dataset><dataset seriesname='电能质量类' " +
+			"color='8BBA00'> </dataset></graph>";
+	if(gqe_arrayData.length != 0){
+		xmlData = getMultiXMLData(gqe_arrayData,gqe_keys,'','','',gqe_colors,gqe_nameKeys,5,0,100);
+	}
+	chartPanel.changeDataXML(xmlData);
+}
+
+Ext.onReady(function(){
+			Ext.QuickTips.init();
+			var qualityViewPanel = new Ext.Panel({
+				border:false,
+				frame:false,
+				layout:'border',
+				items:[qualityTopPanel,rateGrid]
+			});
+			renderModel(qualityViewPanel, '采集质量检查');
+		});
+

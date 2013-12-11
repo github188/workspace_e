@@ -1,0 +1,113 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/app/!svn/ver/6984/trunk/sea/src/config/spring-config
+END
+applicationContext-resources.xml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/app/!svn/ver/6441/trunk/sea/src/config/spring-config/applicationContext-resources.xml
+END
+applicationContext-mydesk-services.xml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/6841/trunk/sea/src/config/spring-config/applicationContext-mydesk-services.xml
+END
+applicationContext-hibernate.xml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/app/!svn/ver/5111/trunk/sea/src/config/spring-config/applicationContext-hibernate.xml
+END
+applicationContext-dao-jdbc.xml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/app/!svn/ver/6477/trunk/sea/src/config/spring-config/applicationContext-dao-jdbc.xml
+END
+applicationContext-sysman-dao-hibernate.xml
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/app/!svn/ver/5598/trunk/sea/src/config/spring-config/applicationContext-sysman-dao-hibernate.xml
+END
+applicationContext-qrystat-dao-jdbc.xml
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/app/!svn/ver/6122/trunk/sea/src/config/spring-config/applicationContext-qrystat-dao-jdbc.xml
+END
+applicationContext-runman-dao-jdbc.xml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/6817/trunk/sea/src/config/spring-config/applicationContext-runman-dao-jdbc.xml
+END
+applicationContext-advapp-dao-jdbc.xml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/6983/trunk/sea/src/config/spring-config/applicationContext-advapp-dao-jdbc.xml
+END
+applicationContext-runman-dao-hibernate.xml
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/app/!svn/ver/4308/trunk/sea/src/config/spring-config/applicationContext-runman-dao-hibernate.xml
+END
+applicationContext-baseapp-services.xml
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/app/!svn/ver/6476/trunk/sea/src/config/spring-config/applicationContext-baseapp-services.xml
+END
+applicationContext-dao-hibernate.xml
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/app/!svn/ver/2464/trunk/sea/src/config/spring-config/applicationContext-dao-hibernate.xml
+END
+applicationContext-baseapp-dao-hibernate.xml
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/app/!svn/ver/6335/trunk/sea/src/config/spring-config/applicationContext-baseapp-dao-hibernate.xml
+END
+applicationContext-services.xml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/app/!svn/ver/2464/trunk/sea/src/config/spring-config/applicationContext-services.xml
+END
+applicationContext-qrystat-services.xml
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/app/!svn/ver/6122/trunk/sea/src/config/spring-config/applicationContext-qrystat-services.xml
+END
+applicationContext-runman-services.xml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/6817/trunk/sea/src/config/spring-config/applicationContext-runman-services.xml
+END
+applicationContext-advapp-services.xml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/6984/trunk/sea/src/config/spring-config/applicationContext-advapp-services.xml
+END
+applicationContext-sysman-services.xml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/5598/trunk/sea/src/config/spring-config/applicationContext-sysman-services.xml
+END
+applicationContext-mydesk-dao-jdbc.xml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/6841/trunk/sea/src/config/spring-config/applicationContext-mydesk-dao-jdbc.xml
+END

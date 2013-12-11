@@ -1,0 +1,170 @@
+package com.nari.runman.feildman;
+
+import java.util.Date;
+
+public class FetchInfoBean {
+
+	private String tmnlAssetNo;
+	private String mpSn;
+	private Long dataId;
+	private String protItemNo;
+	private String currentValue;
+	private String historyValue;
+	private String blockSn;
+	private Integer innerBlockSn;
+	private String statusCode;
+	private String staffNo;
+	private Date saveTime;
+	private Byte resendCount;
+	private Date sendTime;
+	private Date successTime;
+	private Date lastSendTime;
+	private Date nextSendTime;
+	private String failureCode;
+	private String callValue;
+	
+	
+	public String getCallValue() {
+		return callValue;
+	}
+
+	public void setCallValue(String callValue) {
+		this.callValue = callValue;
+	}
+
+	public String getMpSn() {
+		return mpSn;
+	}
+
+	public void setMpSn(String mpSn) {
+		this.mpSn = mpSn;
+	}
+
+	public String getStatusCode() {
+		return statusCode;
+	}
+
+	public void setStatusCode(String statusCode) {
+		this.statusCode = statusCode;
+	}
+
+	public String getTmnlAssetNo() {
+		return tmnlAssetNo;
+	}
+
+	public void setTmnlAssetNo(String tmnlAssetNo) {
+		this.tmnlAssetNo = tmnlAssetNo;
+	}
+
+	public String getProtItemNo() {
+		return protItemNo;
+	}
+
+	public void setProtItemNo(String protItemNo) {
+		this.protItemNo = protItemNo;
+	}
+
+	public String getCurrentValue() {
+		return currentValue;
+	}
+
+	public void setCurrentValue(String currentValue) {
+		this.currentValue = currentValue;
+	}
+
+	public String getBlockSn() {
+		return blockSn;
+	}
+
+	public void setBlockSn(String blockSn) {
+		this.blockSn = blockSn;
+	}
+
+	public Integer getInnerBlockSn() {
+		return innerBlockSn;
+	}
+
+	public void setInnerBlockSn(Integer innerBlockSn) {
+		this.innerBlockSn = innerBlockSn;
+	}
+
+	public String getStaffNo() {
+		return staffNo;
+	}
+
+	public void setStaffNo(String staffNo) {
+		this.staffNo = staffNo;
+	}
+
+	public Date getSaveTime() {
+		return saveTime;
+	}
+
+	public void setSaveTime(Date saveTime) {
+		this.saveTime = saveTime;
+	}
+
+	public Date getSendTime() {
+		return sendTime;
+	}
+
+	public void setSendTime(Date sendTime) {
+		this.sendTime = sendTime;
+	}
+
+	public Date getSuccessTime() {
+		return successTime;
+	}
+
+	public void setSuccessTime(Date successTime) {
+		this.successTime = successTime;
+	}
+
+	public Date getLastSendTime() {
+		return lastSendTime;
+	}
+
+	public void setLastSendTime(Date lastSendTime) {
+		this.lastSendTime = lastSendTime;
+	}
+
+	public Long getDataId() {
+		return dataId;
+	}
+
+	public void setDataId(Long dataId) {
+		this.dataId = dataId;
+	}
+
+	public String getHistoryValue() {
+		return historyValue;
+	}
+
+	public void setHistoryValue(String historyValue) {
+		this.historyValue = historyValue;
+	}
+
+	public Byte getResendCount() {
+		return resendCount;
+	}
+
+	public void setResendCount(Byte resendCount) {
+		this.resendCount = resendCount;
+	}
+
+	public Date getNextSendTime() {
+		return nextSendTime;
+	}
+
+	public void setNextSendTime(Date nextSendTime) {
+		this.nextSendTime = nextSendTime;
+	}
+
+	public String getFailureCode() {
+		return failureCode;
+	}
+
+	public void setFailureCode(String failureCode) {
+		this.failureCode = failureCode;
+	}
+}

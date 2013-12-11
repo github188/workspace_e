@@ -1,0 +1,41 @@
+package com.nari.qrystat.colldataanalyse;
+
+import java.util.Date;
+import java.util.List;
+
+import com.nari.privilige.PSysUser;
+import com.nari.support.Page;
+
+/**
+ * 台区用电损耗统计查询接口
+ * @author 姜炜超
+ */
+public interface LosePowerStatManager {
+	/**
+	 * 根据条件查询时间段内台区用电损耗统计信息，主页面grid显示内容
+	 * @param nodeId 节点id
+	 * @param nodeType 节点类型
+	 * @param orgType 如果节点是供电单位，显示供电单位类型
+	 * @param llr 线损率
+	 * @param queryDate
+	 * @param endDate
+	 * @param flag 分日或分月标识
+	 * @param start
+	 * @param limit
+	 * @param pSysUser 
+	 * @return Page<LosePowerStatDto>
+	 */
+	public Page<LosePowerStatDto> findLPSInfoByCond(String nodeId, String nodeType,String orgType, double llr, 
+			Date startDate, Date endDate, int flag, long start, int limit, PSysUser pSysUser )throws Exception;
+	
+	/**
+	 * 根据条件查询台区用电损耗统计详细信息，弹出页面
+	 * @param tgNo 台区号
+	 * @param llr 线损率
+	 * @param queryDate
+	 * @param endDate
+	 * @param flag 分日或分月标识
+	 * @return List<LosePowerStatDto> 
+	 */
+	public List<LosePowerStatDto> findLPSDetDayInfoByCond(String tgNo, double llr, Date startDate, Date endDate, int flag) throws Exception;
+}

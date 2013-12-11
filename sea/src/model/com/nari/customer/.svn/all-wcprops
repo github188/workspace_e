@@ -1,0 +1,131 @@
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/app/!svn/ver/6467/trunk/sea/src/model/com/nari/customer
+END
+CConsContactRelaId.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/customer/CConsContactRelaId.java
+END
+CConsContactRela.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/customer/CConsContactRela.hbm.xml
+END
+CCons.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/app/!svn/ver/4250/trunk/sea/src/model/com/nari/customer/CCons.hbm.xml
+END
+CCust.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/customer/CCust.hbm.xml
+END
+CElecAddr.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/customer/CElecAddr.hbm.xml
+END
+CCustAddr.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/customer/CCustAddr.java
+END
+CPs.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/customer/CPs.java
+END
+CContact.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/customer/CContact.hbm.xml
+END
+CCustRela.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/customer/CCustRela.hbm.xml
+END
+CSp.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/customer/CSp.hbm.xml
+END
+CSp.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/customer/CSp.java
+END
+CCustRela.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/customer/CCustRela.java
+END
+CContact.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/customer/CContact.java
+END
+CPs.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/customer/CPs.hbm.xml
+END
+CCustAddr.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/customer/CCustAddr.hbm.xml
+END
+AdvConsTmnl.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/customer/AdvConsTmnl.java
+END
+CElecAddr.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/customer/CElecAddr.java
+END
+CCust.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/customer/CCust.java
+END
+CConsRtmnl.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/app/!svn/ver/6450/trunk/sea/src/model/com/nari/customer/CConsRtmnl.java
+END
+CCons.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/app/!svn/ver/6467/trunk/sea/src/model/com/nari/customer/CCons.java
+END
+CConsContactRela.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/customer/CConsContactRela.java
+END

@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/app/!svn/ver/7000/trunk/sea/src/dao/com/nari/advapp/statanalyse/impl
+END
+ElecContrastAnalysisDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/app/!svn/ver/6979/trunk/sea/src/dao/com/nari/advapp/statanalyse/impl/ElecContrastAnalysisDaoImpl.java
+END
+LineStatAnalysisDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/app/!svn/ver/6985/trunk/sea/src/dao/com/nari/advapp/statanalyse/impl/LineStatAnalysisDaoImpl.java
+END
+CollectionPointDemandDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/app/!svn/ver/6910/trunk/sea/src/dao/com/nari/advapp/statanalyse/impl/CollectionPointDemandDaoImpl.java
+END
+ElecStatisAnalyseDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/app/!svn/ver/6910/trunk/sea/src/dao/com/nari/advapp/statanalyse/impl/ElecStatisAnalyseDaoImpl.java
+END
+PowerFactorAnalysisDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/app/!svn/ver/7000/trunk/sea/src/dao/com/nari/advapp/statanalyse/impl/PowerFactorAnalysisDaoImpl.java
+END
+ChargeStatisAnalyseDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/app/!svn/ver/6910/trunk/sea/src/dao/com/nari/advapp/statanalyse/impl/ChargeStatisAnalyseDaoImpl.java
+END

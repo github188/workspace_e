@@ -1,0 +1,71 @@
+package com.nari.baseapp.prepaidman;
+
+import java.util.List;
+
+import com.nari.basicdata.BCommProtocol;
+import com.nari.privilige.PSysUser;
+import com.nari.support.Page;
+import com.nari.util.exception.DBAccessException;
+
+/**
+ * 预付费Dao
+ * @author 杨传文
+ */
+public interface PrePaidDao {
+	/**
+	 * @return 预付费参数下发用户列表
+	 */
+	public List<PrePaidParamSetBean> queryPrePaidParamSetList(String orgNo,
+			String sendStatus, String appNo, String consNo);
+
+	/**
+	 * @return 预付费控制用户列表
+	 * @throws DBAccessException
+	 */
+	public List<PrePaidControlBean> queryPrePaidCtrlList(String orgNo,
+			String appNo, String consNo, String tmnlAddr);
+
+	/**
+	 * @return 预付费参数下发用户分页列表
+	 * @throws DBAccessException
+	 */
+	public Page<PrePaidParamSetBean> queryPrePaidParamSetPage(PSysUser user, String orgNo,
+			String sendStatus, String appNo, String consNo,String buyFlag, long start, long limit);
+
+	/**
+	 * @return 预付费控制用户分页列表
+	 * @throws DBAccessException
+	 */
+	public Page<PrePaidControlBean> queryPrePaidCtrlPage(PSysUser user,String orgNo,
+			String appNo, String consNo, String tmnlAddr, long start, long limit);
+
+	/**
+	 * 查询终端规约。
+	 * @param proCode 通信规约类型
+	 * @return 终端规约列表
+	 * @throws DBAccessException  数据库异常
+	 */
+	public List<BCommProtocol> findType(String proCode);
+
+	/**
+	 * 查询终端电能表信息列表
+	 * @param nodeType
+	 * @param nodeValue
+	 * @param userInfo
+	 * @param protocolCode
+	 * @return
+	 */
+	public List<MeterInfoBean> queryTermList(String nodeType, String nodeValue,
+			PSysUser userInfo, String protocolCode);
+
+	/**
+	 * 批量查询终端电能表信息列表
+	 * @param nodeType
+	 * @param nodeValue
+	 * @param userInfo
+	 * @param protocolCode
+	 * @return
+	 */
+	public List<MeterInfoBean> queryTmnlArrList(String nodeType,
+			String nodeValue, PSysUser userInfo, String protocolCode);
+}

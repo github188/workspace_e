@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/app/!svn/ver/6911/trunk/sea/src/dao/com/nari/mydesk
+END
+EnergyStatDDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/app/!svn/ver/6401/trunk/sea/src/dao/com/nari/mydesk/EnergyStatDDao.java
+END
+MonthPowerStatDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/6840/trunk/sea/src/dao/com/nari/mydesk/MonthPowerStatDao.java
+END
+AOrgStatDDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/app/!svn/ver/4937/trunk/sea/src/dao/com/nari/mydesk/AOrgStatDDao.java
+END
+IMyDeskDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/app/!svn/ver/4167/trunk/sea/src/dao/com/nari/mydesk/IMyDeskDao.java
+END
+LosePowerStatAnalyseDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/6744/trunk/sea/src/dao/com/nari/mydesk/LosePowerStatAnalyseDao.java
+END

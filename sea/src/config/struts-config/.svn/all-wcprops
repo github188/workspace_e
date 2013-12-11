@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/app/!svn/ver/7023/trunk/sea/src/config/struts-config
+END
+strutsMyDesk.xml
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/app/!svn/ver/6841/trunk/sea/src/config/struts-config/strutsMyDesk.xml
+END
+strutsQryStat.xml
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/app/!svn/ver/6497/trunk/sea/src/config/struts-config/strutsQryStat.xml
+END
+strutsBaseApp.xml
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/app/!svn/ver/6666/trunk/sea/src/config/struts-config/strutsBaseApp.xml
+END
+strutsSysMan.xml
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/app/!svn/ver/6296/trunk/sea/src/config/struts-config/strutsSysMan.xml
+END
+strutsAdvApp.xml
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/app/!svn/ver/6982/trunk/sea/src/config/struts-config/strutsAdvApp.xml
+END
+strutsRunMan.xml
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/app/!svn/ver/7023/trunk/sea/src/config/struts-config/strutsRunMan.xml
+END

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/app/!svn/ver/6838/trunk/sea/src/service/com/nari/mydesk/impl
+END
+AOrgStatDManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/4937/trunk/sea/src/service/com/nari/mydesk/impl/AOrgStatDManagerImpl.java
+END
+LosePowerStatAnalyseManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/app/!svn/ver/6772/trunk/sea/src/service/com/nari/mydesk/impl/LosePowerStatAnalyseManagerImpl.java
+END
+MyDeskManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/app/!svn/ver/4523/trunk/sea/src/service/com/nari/mydesk/impl/MyDeskManagerImpl.java
+END
+EnergyStatDManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/app/!svn/ver/6400/trunk/sea/src/service/com/nari/mydesk/impl/EnergyStatDManagerImpl.java
+END
+MonthPowerStatManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/6838/trunk/sea/src/service/com/nari/mydesk/impl/MonthPowerStatManagerImpl.java
+END

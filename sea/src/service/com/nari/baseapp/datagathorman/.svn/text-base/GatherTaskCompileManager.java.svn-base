@@ -1,0 +1,106 @@
+package com.nari.baseapp.datagathorman;
+
+import java.util.List;
+import java.util.Map;
+
+import com.nari.baseapp.datagatherman.GatherTaskCompileDto;
+import com.nari.baseapp.datagatherman.TaskInfoDto;
+import com.nari.baseapp.datagatherman.TbgTaskSend;
+import com.nari.privilige.PSysUser;
+import com.nari.util.exception.DBAccessException;
+import com.nari.util.exception.ServiceException;
+/**
+ * 采集任务编制 业务层接口
+ * @author 余涛
+ *
+ */
+public interface GatherTaskCompileManager {
+	/**
+	 * 根据用户查询相关的信息放入备选用户的Grid里
+	 * @param consNo 用户编号
+	 * @throws DBAccessException
+	 */
+	public List<GatherTaskCompileDto> queryGatherTaskCompileByTree(PSysUser pSysUser, String consNo,String orgNo,String lineId,String nodeType,String groupNo,String tmnlAssetNo) throws Exception;
+	
+	/**
+	 * 下发任务，然后查询下发后结果
+	 * @param taskNo 任务号
+	 * @param mpsn 测量点
+	 * @param taskModel 任务模板id
+	 * @param consNos 户号字符串
+	 * @param tmnlAssetNos 终端资产编号字符串
+	 * @param sendUpModes 上送方式字符串
+	 * @return
+	 * @throws Exception
+	 */
+	public List<GatherTaskCompileDto> sendOutAndQuery(String taskNo,String mpsn,String taskModel,
+			String consNos,String tmnlAssetNos,String sendUpModes,String protocolCodes,
+			String yTaskNos, String nTaskNos,int taskSecond,String staffNo) throws Exception;
+
+	/**
+	 * 启用、停用任务
+	 * @param consNos 户号字符串
+	 * @param tmnlAssetNos 终端资产编号字符串
+	 * @param sendUpModes 上送方式字符串
+	 * @param taskNos 任务号字符串
+	 * @param eventType 事件类型 0--停用 1--启用
+	 * @return
+	 * @throws Exception
+	 */
+	public List<GatherTaskCompileDto> ynTaskStatus(String consNos,String tmnlAssetNos,String sendUpModes,
+			String taskNos,String eventType,String protocolCodes,String yTaskNos, String nTaskNos,int taskSecond
+			) throws Exception;
+	
+	/**
+	 * 删除任务
+	 * @param consNos 户号字符串
+	 * @param tmnlAssetNos 终端资产编号字符串
+	 * @param sendUpModes 上送方式字符串
+	 * @param taskNos 任务号字符串
+	 * @return
+	 * @throws Exception
+	 */
+	public List<GatherTaskCompileDto> deleteTask (String consNos,String tmnlAssetNos,String sendUpModes,
+			String taskNos ,String protocolCodes,String yTaskNos, String nTaskNos,int taskSecond) throws Exception;
+	
+	/**
+	 * 根据终端资产编号和任务号查询任务信息
+	 * @param tmnlAssetNo 终端资产编号
+	 * @param taskNo 任务号
+	 * @return
+	 * @throws Exception
+	 */
+	public TaskInfoDto queryTaskInfo(String tmnlAssetNo,String taskNo) throws Exception;
+	
+	/**
+	 * 召测任务信息
+	 * @param tmnlAssetNo 终端资产号
+	 * @param taskNo 任务号
+	 * @param dataType 数据类型
+	 * @param taskSecond 任务执行时间
+	 * @return
+	 * @throws Exception
+	 */
+	public TaskInfoDto callTaskPara(String tmnlAssetNo,String taskNo,String dataType,int taskSecond) throws Exception;
+
+	/****
+	 * 批量下发
+	 * 
+	 * @param taskNo
+	 *            任务编号
+	 * @param templateId
+	 *            任务模板的编号
+	 * @param pns
+	 *            pn的列表
+	 * @param datas
+	 *            格式为<br>
+	 *            key 为终端资产号<br>
+	 *            value 为：（终端规约编码_数据采集方式) <br>
+	 *            （0--主站主动召测，1--终端自动上送）
+	 * @throws ServiceException
+	 *             *
+	 ***/
+	public void batchSendOut(PSysUser user, String taskNo,
+			String templateId, List<String> pns, Map datas)
+			throws ServiceException;
+}

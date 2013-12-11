@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/app/!svn/ver/7001/trunk/sea/WebContent/WEB-INF
+END
+dwr.xml
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/app/!svn/ver/3282/trunk/sea/WebContent/WEB-INF/dwr.xml
+END
+web.xml
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/app/!svn/ver/7001/trunk/sea/WebContent/WEB-INF/web.xml
+END

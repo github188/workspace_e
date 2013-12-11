@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/app/!svn/ver/6945/trunk/sea/src/dao/com/nari/runman/feildman
+END
+ProtocolNameDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/runman/feildman/ProtocolNameDao.java
+END
+VwDataTypeDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/runman/feildman/VwDataTypeDao.java
+END
+VwProtocolCodeDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/runman/feildman/VwProtocolCodeDao.java
+END
+TerminalSaveDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/runman/feildman/TerminalSaveDao.java
+END
+TerminalListDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/app/!svn/ver/6051/trunk/sea/src/dao/com/nari/runman/feildman/TerminalListDao.java
+END
+ProtocolItemDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/runman/feildman/ProtocolItemDao.java
+END
+运行管理-现场管理
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/runman/feildman/%E8%BF%90%E8%A1%8C%E7%AE%A1%E7%90%86-%E7%8E%B0%E5%9C%BA%E7%AE%A1%E7%90%86
+END
+MpInfoSaveDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/runman/feildman/MpInfoSaveDao.java
+END
+TerminalInstallDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/app/!svn/ver/6942/trunk/sea/src/dao/com/nari/runman/feildman/TerminalInstallDao.java
+END
+MpInfoDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/runman/feildman/MpInfoDao.java
+END
+ItemListDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/runman/feildman/ItemListDao.java
+END

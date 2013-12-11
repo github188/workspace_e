@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/app/!svn/ver/7000/trunk/sea/src/dao/com/nari/advapp/statanalyse
+END
+ElecContrastAnalysisDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/app/!svn/ver/6979/trunk/sea/src/dao/com/nari/advapp/statanalyse/ElecContrastAnalysisDao.java
+END
+LineStatAnalysisDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/app/!svn/ver/6986/trunk/sea/src/dao/com/nari/advapp/statanalyse/LineStatAnalysisDao.java
+END
+CollectionPointDemandDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/app/!svn/ver/6594/trunk/sea/src/dao/com/nari/advapp/statanalyse/CollectionPointDemandDao.java
+END
+ElecStatisAnalyseDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/app/!svn/ver/6602/trunk/sea/src/dao/com/nari/advapp/statanalyse/ElecStatisAnalyseDao.java
+END
+PowerFactorAnalysisDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/6999/trunk/sea/src/dao/com/nari/advapp/statanalyse/PowerFactorAnalysisDao.java
+END
+ChargeStatisAnalyseDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/6602/trunk/sea/src/dao/com/nari/advapp/statanalyse/ChargeStatisAnalyseDao.java
+END

@@ -1,0 +1,835 @@
+<svg width="1280" xmlns="http://www.w3.org/2000/svg" height="1024" xmlns:xlink="http://www.w3.org/1999/xlink" name="10line.svg" id="mainSVG">
+ <!--<rect width="1280" x="0" y="0" fill="#f3f3f3" height="1024" fill-opacity="1" />-->
+ <script language="JavaScript" ><![CDATA[
+function useVoltageColor(powerMetaDefsElem, grdClr1, grdClr2, grdClr3, grdClr4, vltAlpha1, vltAlpha2, vltAlpha3, vltAlpha4)
+{
+     if (grdClr1 == "" && grdClr2 == "" && grdClr3 == "" && grdClr4 == "")
+         return;
+
+     var basicItemLst = powerMetaDefsElem.getElementsByTagName("g");
+     
+     var idx = 0;
+     var nLen = basicItemLst.length;
+     for (idx=0; idx < nLen; idx++)
+     {
+		var childCount = basicItemLst.item(idx).childNodes.length;
+		var jj=0;
+		for (jj=0; jj<childCount; jj++)
+		{
+			var basicAtom = basicItemLst.item(idx).childNodes.item(jj);
+			if (basicAtom.nodeType == 3/*TEXT_NODE*/)
+				continue;
+
+			/* stroke color */
+			if (basicAtom.hasAttribute("clrType"))
+			{
+				var str = basicAtom.getAttribute("clrType");
+				var clrType = parseInt(str);
+				var strokeClr = "";
+				var strokeAlpha = "1.00";
+
+				if (clrType != 0)
+				{
+					switch (clrType)
+					{
+						case 1:
+						   strokeClr = grdClr1;  strokeAlpha = vltAlpha1; break; 
+						case 2:
+						   strokeClr = grdClr2;  strokeAlpha = vltAlpha2; break;
+						case 3:
+						   strokeClr = grdClr3;  strokeAlpha = vltAlpha3; break;
+						case 4:
+						   strokeClr = grdClr4;  strokeAlpha = vltAlpha4; break;
+						default:
+						   break;
+					}
+
+					if (strokeClr != "")
+					{
+						basicAtom.setAttribute("stroke", strokeClr);
+						if (strokeAlpha != "1.00")
+							basicAtom.setAttribute("stroke-opacity", strokeAlpha);
+
+					}
+				}// clrType != 0
+			}// basicAtom.hasAttribute("clrType")
+
+			/* fill color */
+			if (basicAtom.hasAttribute("bgclrType"))
+			{
+				var str = basicAtom.getAttribute("bgclrType");
+				var bgclrType = parseInt(str);
+				var fillClr = "";
+				var fillAlpha = "1.00";
+
+				if (bgclrType != 0)
+				{
+					switch (bgclrType)
+					{
+						case 1:
+						   fillClr = grdClr1; fillAlpha = vltAlpha1; break; 
+						case 2:
+						   fillClr = grdClr2; fillAlpha = vltAlpha2; break;
+						case 3:
+						   fillClr = grdClr3; fillAlpha = vltAlpha3; break;
+						case 4:
+						   fillClr = grdClr4; fillAlpha = vltAlpha4; break;
+						default:
+						   break;
+					}
+
+					if (fillClr != "")
+					{
+						basicAtom.setAttribute("fill", fillClr);
+						if (fillAlpha != "1.00")
+							basicAtom.setAttribute("fill-opacity", fillAlpha);
+
+					}
+				}// bgclrType != 0
+			}// basicAtom.hasAttribute("bgclrType")
+		}// for (jj=0; jj<childCount; jj++)
+
+     }// for (idx=0; idx < nLen; idx++)
+}
+
+var metaCounter = 0;
+function parseCloneNode(clonedElem)
+{
+	/* modify the powerMeta's Id */
+	var srcId = clonedElem.getAttribute("id");
+	var desId = metaCounter + "_" + srcId;
+	clonedElem.setAttribute("id", desId);
+
+	var scriptElemLst = clonedElem.getElementsByTagName("script");
+	var scriptElem;
+	if (scriptElemLst.length != 0) // so there are some animation
+	{
+	    scriptElem = scriptElemLst.item(0);  
+		var imgDefLst = clonedElem.getElementsByTagName("image");
+		if (imgDefLst.length != 0) // so there are image animation
+		{
+		    var kk;
+			for (kk=0; kk<imgDefLst.length; kk++)
+			{
+			    var imageElem = imgDefLst.item(kk);
+				var oldId = imageElem.getAttribute("id");
+				imageElem.setAttribute("id", metaCounter + "_" + oldId);
+			}
+
+			var useElement = clonedElem.getElementsByTagName("use").item(0);
+			var oldId = useElement.getAttribute("id");
+			useElement.setAttribute("id", metaCounter + "_" + oldId);
+
+			// modify link id
+			var oldLinkId = useElement.getAttribute("xlink:href");
+			oldLinkId = oldLinkId.substring(1, oldLinkId.length);
+			useElement.setAttribute("xlink:href", "#" + metaCounter + "_" + oldLinkId);
+
+			// modify script
+			var strLst = srcId.split("_");
+			var idPre = strLst[0];
+			var srcData = scriptElem.firstChild.nodeValue;
+			var srcDataList = srcData.split("\n");
+
+			// first Line
+			var line1Lst = srcDataList[0].split("=");
+			var line1Section1 = line1Lst[0].replace("imgAn_", "imgAn_" + metaCounter + "_");
+			var tmpLst = line1Lst[1].split(",");
+			var line1Section2 = tmpLst[0].replace(idPre, metaCounter + "_" + idPre);
+			var line1Section3 = tmpLst[1].replace(idPre, metaCounter + "_" + idPre);
+			var desLine1 = line1Section1 + " = " + line1Section2 + "," + line1Section3 + "," + tmpLst[2] + "," + tmpLst[3];
+			
+			// secnod Line
+			var desLine2 = srcDataList[1].replace("imgAn_", "imgAn_" + metaCounter + "_");
+			var desData = desLine1 + "\n" + desLine2 + "\n";
+			
+			scriptElem.firstChild.data = desData;
+		}
+		else  // there are line animation
+		{
+		    var pathElemLst = clonedElem.getElementsByTagName("path");
+			var jj;
+			for (jj=0; jj<pathElemLst.length; jj++)
+			{
+				var pathElem = pathElemLst.item(jj);
+				if (pathElem.hasAttribute("id"))
+				{
+					var oldId = pathElem.getAttribute("id");
+					pathElem.setAttribute("id", metaCounter + "_" + oldId);
+				}
+			}
+			var strLst = srcId.split("_");
+			var idPre = strLst[0];
+
+			var srcData = scriptElem.firstChild.nodeValue;
+			var srcDataLst = srcData.split("\n");
+
+			var tmpData = srcDataLst[0].replace("lnAn_", "lnAn_" + metaCounter + "_");
+			
+			var desLine1 = tmpData.replace(idPre, metaCounter + "_" + idPre);
+			
+
+			var desLine2 = srcDataLst[1].replace("lnAn_", "lnAn_" + metaCounter + "_");
+			var desData = desLine1 + "\n" + desLine2 + "\n";;
+			scriptElem.firstChild.data = desData;
+			//alert(desData);
+		}
+	}
+}
+
+function drawPowerAtom(atomId, metaId, nStatusCount, curStatus, vltClr1, vltClr2, vltClr3, vltClr4, vltAlpha1, vltAlpha2, vltAlpha3, vltAlpha4)
+{
+     /* the atom element */
+     var atom = document.getElementById(atomId);
+
+     /* the transform element of atom */
+     var atomTrans = atom.firstChild.nextSibling;
+    
+    var i=0
+    for (i=0; i<nStatusCount; i++)
+    {
+		 /* get the powerMeta element */
+		 var statusMetaId = metaId + "_" + i;
+		 var powerMeta = document.getElementById(statusMetaId);
+		 var importPowerMeta = powerMeta.cloneNode(true);
+
+		 /* parse the importPowerMeta to deal with animation */
+		 parseCloneNode(importPowerMeta);
+
+		 /* modify the poerMeta to use voltage grade color */
+		 useVoltageColor(importPowerMeta, vltClr1, vltClr2, vltClr3, vltClr4, vltAlpha1, vltAlpha2, vltAlpha3, vltAlpha4);
+
+         /* create powerMeta defs element */
+		 var metaDefsElem = document.createElement("defs");
+		 metaDefsElem.appendChild(importPowerMeta);
+
+		 /* append the defs element to the document */
+		 atomTrans.appendChild(metaDefsElem);
+    }
+	
+	metaCounter++;
+}
+/*
+移入ae9001_common.js
+function scaleSvg(num)
+{
+   // 运用VIEWER实现的放大缩小
+   var root;
+   root=svg.getSVGDocument().documentElement;
+   svg.style.width=root.attributes.getNamedItem("width").nodeValue*num;
+   svg.style.height=root.attributes.getNamedItem("height").nodeValue*num;
+   root.currentScale =  num;
+}
+*/
+var scaleFactor = 1.0;
+
+// 放大
+function SEA_ZoomIn()
+{
+	scaleFactor += 0.2;
+	scaleSvg(scaleFactor);
+}
+
+//  缩小
+function SEA_ZoomOut()
+{
+	scaleFactor -= 0.2;
+	if (scaleFactor <= 0)
+	{
+		scaleFactor = 0.2;
+	}
+
+	scaleSvg(scaleFactor);
+}
+
+// 原始大小
+function SEA_original_Scale()
+{
+	scaleFactor = 1.0;
+	scaleSvg(scaleFactor);
+}
+
+function lineAnimate(animateItemId, animateDir, isLong)
+{
+	this.animateElemId = animateItemId;
+	this.direction = animateDir;
+	this.bLong = isLong;
+	this.counter = 1;
+
+	this.doAn = function()
+	{
+		var targt = document.getElementById(this.animateElemId);
+		if (this.direction)
+		{
+			if (this.bLong)
+			{
+				switch(this.counter)
+				{
+				case 8:
+					targt.setAttribute("stroke-dasharray", "12 9 3 0"); break;
+				case 7:
+					targt.setAttribute("stroke-dasharray", "9 9 6 0"); break;
+				case 6:
+					targt.setAttribute("stroke-dasharray", "6 9 9 0"); break;
+				case 5:
+					targt.setAttribute("stroke-dasharray", "3 9 12 0"); break;
+				case 4:
+					targt.setAttribute("stroke-dasharray", "0 9 15 0"); break;
+				case 3:
+					targt.setAttribute("stroke-dasharray", "0 6 15 3"); break;
+				case 2:
+					targt.setAttribute("stroke-dasharray", "0 3 15 6"); break;
+				case 1:
+					targt.setAttribute("stroke-dasharray", "15 9"); break;
+				}
+				if (this.counter == 8) this.counter = 0;
+				this.counter++;
+			}// if(this.bLong)
+			else
+			{
+				switch(this.counter)
+				{
+				case 8:
+					targt.setAttribute("stroke-dasharray", "6 4.5 1.5 0"); break;
+				case 7:
+					targt.setAttribute("stroke-dasharray", "4.5 4.5 3 0"); break;
+				case 6:
+					targt.setAttribute("stroke-dasharray", "3 4.5 4.5 0"); break;
+				case 5:
+					targt.setAttribute("stroke-dasharray", "1.5 4.5 6 0"); break;
+				case 4:
+					targt.setAttribute("stroke-dasharray", "0 4.5 7.5 0"); break;
+				case 3:
+					targt.setAttribute("stroke-dasharray", "0 3 7.5 1.5"); break;
+				case 2:
+					targt.setAttribute("stroke-dasharray", "0 1.5 7.5 3"); break;
+				case 1:
+					targt.setAttribute("stroke-dasharray", "7.5 4.5"); break;
+				}
+				if (this.counter == 8) this.counter = 0;
+				this.counter++;
+			}
+		}// if (this.direction)
+		else
+		{
+		    if (this.bLong)
+		    {
+				switch(this.counter)
+				{
+				case 1:
+					targt.setAttribute("stroke-dasharray", "12 9 3 0"); break;
+				case 2:
+					targt.setAttribute("stroke-dasharray", "9 9 6 0"); break;
+				case 3:
+					targt.setAttribute("stroke-dasharray", "6 9 9 0"); break;
+				case 4:
+					targt.setAttribute("stroke-dasharray", "3 9 12 0"); break;
+				case 5:
+					targt.setAttribute("stroke-dasharray", "0 9 15 0"); break;
+				case 6:
+					targt.setAttribute("stroke-dasharray", "0 6 15 3"); break;
+				case 7:
+					targt.setAttribute("stroke-dasharray", "0 3 15 6"); break;
+				case 8:
+					targt.setAttribute("stroke-dasharray", "15 9"); break;
+				}
+				if (this.counter == 8) this.counter = 0;
+				this.counter++;
+		    }
+			else
+			{
+				switch(this.counter)
+				{
+				case 1:
+					targt.setAttribute("stroke-dasharray", "6 4.5 1.5 0"); break;
+				case 2:
+					targt.setAttribute("stroke-dasharray", "4.5 4.5 3 0"); break;
+				case 3:
+					targt.setAttribute("stroke-dasharray", "3 4.5 4.5 0"); break;
+				case 4:
+					targt.setAttribute("stroke-dasharray", "1.5 4.5 6 0"); break;
+				case 5:
+					targt.setAttribute("stroke-dasharray", "0 4.5 7.5 0"); break;
+				case 6:
+					targt.setAttribute("stroke-dasharray", "0 3 7.5 1.5"); break;
+				case 7:
+					targt.setAttribute("stroke-dasharray", "0 1.5 7.5 3"); break;
+				case 8:
+					targt.setAttribute("stroke-dasharray", "7.5 4.5"); break;
+				}
+				if (this.counter == 8) this.counter = 0;
+				this.counter++;
+			}
+		}// else
+	}// end of function()
+}
+
+function imageAnimate(useImageId, imageDefId, imageCount, direction)
+{
+    this.useId = useImageId;
+    this.picDefId = imageDefId;
+    this.imageNum = imageCount;
+    this.anDir = direction;
+    if (this.anDir)
+        this.counter = 0;
+    else
+        this.counter = imageCount;
+
+    this.doImageAnimate = function()
+    {
+        var useTarget = document.getElementById(this.useId);
+        if (this.anDir)
+        {
+            this.counter++;
+            if (this.counter == this.imageNum) this.counter = 0;
+        }
+        else 
+        {
+            this.counter--;
+            if (this.counter == -1) this.counter = this.imageNum - 1;
+        }
+        var curPicId = "#" + this.picDefId + "_" + this.counter;
+        useTarget.setAttribute("xlink:href", curPicId);
+    }
+}]]></script>
+ <defs/>
+ <defs>
+  <menu id="SEAMenu" >
+   <header>Adobe SVG Viewer</header>
+   <item action="Open" id="Open" >Op&amp;en</item>
+   <item action="OpenNew" id="OpenNew" >Open in &amp;New Window</item>
+   <separator/>
+   <item onactivate="SEA_ZoomIn()" >放 &amp;大</item>
+   <item onactivate="SEA_ZoomOut()" >缩 &amp;小</item>
+   <item onactivate="SEA_original_Scale()" >原始尺寸</item>
+   <separator/>
+   <item action="Quality" id="Quality" >Higher &amp;Quality</item>
+   <item action="Pause" id="Pause" >&amp;Pause</item>
+   <item action="Mute" id="Mute" >&amp;Mute</item>
+   <separator/>
+   <item action="Find" id="Find" >&amp;Find...</item>
+   <item action="FindAgain" id="FindAgain" >Find &amp;Again</item>
+   <separator/>
+   <item action="Copy" id="Copy" >&amp;Copy Selected Text</item>
+   <item action="CopySVG" id="CopySVG" >&amp;Copy SVG</item>
+   <item action="ViewSVG" id="ViewSVG" >View S&amp;VG</item>
+   <item action="ViewSource" id="ViewSource" >&amp;View Source</item>
+   <item action="SaveAs" id="SaveAs" >&amp;Save SVG As...</item>
+   <separator/>
+   <item action="Help" id="Help" >&amp;Help</item>
+   <item action="About" id="About" >A&amp;bout Adobe SVG Viewer...</item>
+  </menu>
+ </defs>
+ <script language="JavaScript" ><![CDATA[var newMenuRoot=parseXML(printNode(document.getElementById('SEAMenu')),contextMenu);
+contextMenu.replaceChild(newMenuRoot,contextMenu.firstChild);
+]]></script>
+ <script language="JavaScript" />
+ <g type="xx" id="{e180f06c-0ea2-4e3b-bece-0b1a5b2f7c13}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 121.000000 26.000000)" >
+   <path stroke-opacity="1" fill="none" stroke="#000000" stroke-linecap="square" stroke-width="2" clrType="0" d="M101.000000,155.000000 L868.000000,155.000000 " />
+  </g>
+ </g>
+ <g type="xx" id="{3224ef4b-362a-499e-969a-91f98f07ed27}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 121.000000 26.000000)" >
+   <path stroke-opacity="1" fill="none" stroke="#000000" stroke-linecap="square" stroke-width="2" clrType="0" d="M202.000000,155.000000 L202.000000,365.000000 " />
+  </g>
+ </g>
+ <g type="xx" id="{fd2a9b17-b0aa-40d7-b3dd-330608293221}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 121.001000 127.000000)" >
+   <path stroke-opacity="1" fill="none" stroke="#000000" stroke-linecap="square" stroke-width="2" clrType="0" d="M664.000000,54.000000 L664.000000,267.000000 " />
+  </g>
+ </g>
+ <g type="xx" id="{df3d2c85-73aa-4e1e-b590-5d7e993c0ac4}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 121.000000 26.000000)" >
+   <path stroke-opacity="1" fill="none" stroke="#000000" stroke-linecap="square" stroke-width="2" clrType="0" d="M96.000000,254.000000 L383.000000,254.000000 " />
+  </g>
+ </g>
+ <g type="xx" id="{c8e8ecb1-12fe-4fcf-9e86-f45a66d8cc20}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 121.000000 26.000000)" >
+   <path stroke-opacity="1" fill="none" stroke="#000000" stroke-linecap="square" stroke-width="2" clrType="0" d="M584.000000,252.000000 L870.000000,252.000000 " />
+  </g>
+ </g>
+ <g type="xx" id="{a96c9ece-c2ad-4f35-a722-728ac46bbc76}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 121.006000 23.000000)" >
+   <path stroke-opacity="1" fill="none" stroke="#000000" stroke-linecap="square" stroke-width="2" clrType="0" d="M480.000000,158.000000 L480.000000,231.000000 " />
+  </g>
+ </g>
+ <g type="xx" id="{6ab2541c-0818-48a7-973a-7982a55748fe}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 121.000000 26.000000)" >
+   <path stroke-opacity="1" fill="none" stroke="#000000" stroke-linecap="square" stroke-width="2" clrType="0" d="M285.000000,255.000000 L285.000000,350.000000 " />
+  </g>
+ </g>
+ <g type="xx" id="{c74e2682-8c4d-44fd-b249-399d9d8bab50}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 121.000000 26.000000)" >
+   <path stroke-opacity="1" fill="none" stroke="#000000" stroke-linecap="square" stroke-width="2" clrType="0" d="M285.000000,299.000000 L337.000000,299.000000 " />
+  </g>
+ </g>
+ <g type="xx" id="{2337368d-6188-4b37-b1e2-cb4231f92892}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 121.000000 26.000000)" >
+   <path stroke-opacity="1" fill="none" stroke="#000000" stroke-linecap="square" stroke-width="2" clrType="0" d="M766.000000,251.000000 L766.000000,311.000000 " />
+  </g>
+ </g>
+ <g type="xx" id="{ded5f065-9589-4bbc-b116-b7096bbb0b09}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 119.006000 26.049700)" >
+   <path stroke-opacity="1" fill="none" stroke="#000000" stroke-linecap="square" stroke-width="2" clrType="0" d="M482.000000,195.000000 L532.000000,195.000000 " />
+  </g>
+ </g>
+ <g type="xx" id="{401d5237-2468-4f57-ad7c-f918cc7ce4a7}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 121.000000 26.000000)" >
+   <path stroke-opacity="1" fill="none" stroke="#000000" stroke-linecap="square" stroke-width="2" clrType="0" d="M742.000000,155.000000 L742.000000,198.000000 " />
+  </g>
+ </g>
+ <g type="xx" id="{cc5e96b3-e6e1-486c-9d58-168a6803ed5d}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 121.002000 25.000000)" >
+   <path stroke-opacity="1" fill="none" stroke="#000000" stroke-linecap="square" stroke-width="2" clrType="0" d="M370.000000,156.000000 L370.000000,60.000000 " />
+  </g>
+ </g>
+ <g type="xx" id="{0c5f57c2-d2fd-482f-953c-70678df1a793}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 120.000000 26.000000)" >
+   <path stroke-opacity="1" fill="none" stroke="#000000" stroke-linecap="square" stroke-width="2" clrType="0" d="M309.000000,89.000000 L616.000000,89.000000 " />
+  </g>
+ </g>
+ <g type="xx" id="{98b12f31-0bb6-4526-986a-8aa196b013ba}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 121.000000 26.000000)" >
+   <path stroke-opacity="1" fill="none" stroke="#000000" stroke-linecap="square" stroke-width="2" clrType="0" d="M370.000000,120.000000 L418.000000,120.000000 " />
+  </g>
+ </g>
+ <g type="xx" id="{0924bdba-f76d-4e26-ae65-8dcb507ea075}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 81.000000 -235.000000)" >
+   <ellipse stroke-opacity="1" fill="#ff0000" cx="588.00035" cy="456.00035" rx="8.60235" ry="8.60235" stroke="#ff0000" fill-opacity="1" stroke-linecap="square" stroke-width="2" clrType="0" bgclrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{e57e316d-6ea7-4aa5-8553-3ffd7190e1ad}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 188.000000 -275.000000)" >
+   <rect width="26" x="468" y="483" stroke-opacity="1" fill="none" rx="0" height="26" ry="0" stroke="#ff0000" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{075124c3-eaaf-4ac4-9d30-d4050bac10d4}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 299.000000 -102.000000)" >
+   <ellipse stroke-opacity="1" fill="#ff0000" cx="588.00035" cy="456.00035" rx="8.60235" ry="8.60235" stroke="#ff0000" fill-opacity="1" stroke-linecap="square" stroke-width="2" clrType="0" bgclrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{9ed7760f-4dff-4e52-8124-7b3a0d3109da}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 406.000000 -142.000000)" >
+   <rect width="26" x="468" y="483" stroke-opacity="1" fill="none" rx="0" height="26" ry="0" stroke="#ff0000" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{30e0162c-4d97-4e41-a00f-ac5a568e166c}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -280.000000 -217.000000)" >
+   <rect width="26" x="468" y="483" stroke-opacity="1" fill="none" rx="0" height="26" ry="0" stroke="#55aa00" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{6525f286-c939-458f-80b3-e80be93c9385}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -430.000000 -339.000000)" >
+   <polygon stroke-opacity="1" fill="#55aa00" points="631.000000,607.515000 620.652000,624.243000 641.348000,624.243000 " stroke="#55aa00" fill-opacity="1" stroke-linecap="square" stroke-width="2" clrType="0" bgclrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{5a95e400-a79a-4358-985a-fcabd2a3ca39}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 107.000000 -171.000000)" >
+   <rect width="31" x="81" y="345" stroke-opacity="1" fill="none" rx="0" height="15" ry="0" stroke="#000000" stroke-linecap="square" stroke-width="3" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{dc4351c3-765d-455b-afab-b82b0f1a9813}" >
+  <g transform="matrix(0.000000 1.000000 -1.000000 0.000000 915.000000 -193.000000)" >
+   <ellipse stroke-opacity="1" fill="none" cx="308" cy="498.5" rx="11" ry="10.5" stroke="#9f9f9f" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{aa41fed4-b4e4-4fb5-a708-48a4bee684fc}" >
+  <g transform="matrix(0.000000 1.000000 -1.000000 0.000000 902.000000 -193.000000)" >
+   <ellipse stroke-opacity="1" fill="none" cx="308" cy="498.5" rx="11" ry="10.5" stroke="#9f9f9f" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{96b7d852-d475-4aff-be50-e1407a95e6d3}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -140.000000 -550.000000)" >
+   <polygon stroke-opacity="1" fill="#55aa00" points="631.000000,607.515000 620.652000,624.243000 641.348000,624.243000 " stroke="#55aa00" fill-opacity="1" stroke-linecap="square" stroke-width="2" clrType="0" bgclrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{f29a884d-8dee-4b6f-8b12-16f606538c37}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 10.000000 -428.000000)" >
+   <rect width="26" x="468" y="483" stroke-opacity="1" fill="none" rx="0" height="26" ry="0" stroke="#55aa00" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{e97b613d-902c-4d5d-8159-6fd3e918d18f}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 122.000000 -504.000000)" >
+   <polygon stroke-opacity="1" fill="#55aa00" points="631.000000,607.515000 620.652000,624.243000 641.348000,624.243000 " stroke="#55aa00" fill-opacity="1" stroke-linecap="square" stroke-width="2" clrType="0" bgclrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{f73270dd-7083-4008-81b1-0437764eebcc}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 272.000000 -382.000000)" >
+   <rect width="26" x="468" y="483" stroke-opacity="1" fill="none" rx="0" height="26" ry="0" stroke="#55aa00" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{97d62b8e-b67e-4591-a864-d34955682ef2}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -34.000000 -309.000000)" >
+   <ellipse stroke-opacity="1" fill="#ff0000" cx="588.00035" cy="456.00035" rx="8.60235" ry="8.60235" stroke="#ff0000" fill-opacity="1" stroke-linecap="square" stroke-width="2" clrType="0" bgclrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{eb307cdc-eb01-41c5-a601-9a0163048dc1}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 73.000000 -349.000000)" >
+   <rect width="26" x="468" y="483" stroke-opacity="1" fill="none" rx="0" height="26" ry="0" stroke="#ff0000" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{a235aeca-d5b6-48f7-9625-bf1e5b77a02c}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 121.000000 26.000000)" >
+   <path stroke-opacity="1" fill="none" stroke="#000000" stroke-linecap="square" stroke-width="2" clrType="0" d="M773.000000,153.000000 L773.000000,141.000000 " />
+  </g>
+ </g>
+ <g type="xx" id="{d20a8328-7983-4cc9-afc0-f500644a0b04}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 121.000000 26.000000)" >
+   <path stroke-opacity="1" fill="none" stroke="#000000" stroke-linecap="square" stroke-width="2" clrType="0" d="M830.000000,154.000000 L830.000000,62.000000 " />
+  </g>
+ </g>
+ <g type="xx" id="{f23e554e-3ee3-42fb-b64f-414387bd545e}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 643.000000 -434.000000)" >
+   <ellipse stroke-opacity="1" fill="none" cx="308" cy="498.5" rx="11" ry="10.5" stroke="#9f9f9f" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{e5dbdd15-db1b-4764-aa2a-44ec348afd37}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 643.000000 -421.000000)" >
+   <ellipse stroke-opacity="1" fill="none" cx="308" cy="498.5" rx="11" ry="10.5" stroke="#9f9f9f" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{43792f8b-bdad-4fd0-9f13-7f4c213d807d}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 306.000000 -304.000000)" >
+   <ellipse stroke-opacity="1" fill="#9f9f9f" cx="588.00035" cy="456.00035" rx="8.60235" ry="8.60235" stroke="#9f9f9f" fill-opacity="1" stroke-linecap="square" stroke-width="2" clrType="0" bgclrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{03463018-8660-4b4b-b69d-6f3c0763ec76}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 413.000000 -344.000000)" >
+   <rect width="26" x="468" y="483" stroke-opacity="1" fill="none" rx="0" height="26" ry="0" stroke="#9f9f9f" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{2361bb32-873c-42e8-994b-c750891a8844}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 232.000000 -380.000000)" >
+   <polygon stroke-opacity="1" fill="#55aa00" points="631.000000,607.515000 620.652000,624.243000 641.348000,624.243000 " stroke="#55aa00" fill-opacity="1" stroke-linecap="square" stroke-width="2" clrType="0" bgclrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{f75abc40-80ca-4b3f-8a43-2b633ab4beeb}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 382.000000 -258.000000)" >
+   <rect width="26" x="468" y="483" stroke-opacity="1" fill="none" rx="0" height="26" ry="0" stroke="#55aa00" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{f30048b8-5f01-4193-b2b0-19a2aeb775c2}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 477.000000 -80.000000)" >
+   <ellipse stroke-opacity="1" fill="none" cx="308" cy="498.5" rx="11" ry="10.5" stroke="#0000ff" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{19073732-eca6-4564-97e2-599f62fdd0da}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 477.000000 -93.000000)" >
+   <ellipse stroke-opacity="1" fill="none" cx="308" cy="498.5" rx="11" ry="10.5" stroke="#0000ff" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{4c66bc2c-bf7c-4b72-814b-cc2c3b0fe70d}" >
+  <g transform="matrix(0.000000 1.000000 -1.000000 0.000000 1191.000000 -29.000000)" >
+   <ellipse stroke-opacity="1" fill="none" cx="308" cy="498.5" rx="11" ry="10.5" stroke="#9f9f9f" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{3f0da2d1-5e32-403d-a566-727d19a95c10}" >
+  <g transform="matrix(0.000000 1.000000 -1.000000 0.000000 1178.000000 -29.000000)" >
+   <ellipse stroke-opacity="1" fill="none" cx="308" cy="498.5" rx="11" ry="10.5" stroke="#9f9f9f" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{f98fd603-5be9-4fdb-a765-dfefd55816f3}" >
+  <g transform="matrix(0.000000 1.000000 -1.000000 0.000000 1516.000000 -31.000000)" >
+   <ellipse stroke-opacity="1" fill="none" cx="308" cy="498.5" rx="11" ry="10.5" stroke="#9f9f9f" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{d20f049f-708f-4a04-a0db-aa331c20c4a9}" >
+  <g transform="matrix(0.000000 1.000000 -1.000000 0.000000 1503.000000 -31.000000)" >
+   <ellipse stroke-opacity="1" fill="none" cx="308" cy="498.5" rx="11" ry="10.5" stroke="#9f9f9f" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{88faa532-2a69-40c0-89ba-3e93f5270abc}" >
+  <g transform="matrix(0.000000 1.000000 -1.000000 0.000000 1500.000000 -127.000000)" >
+   <ellipse stroke-opacity="1" fill="none" cx="308" cy="498.5" rx="11" ry="10.5" stroke="#0000ff" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{ece55fee-1729-4b8d-9140-f9e800f61950}" >
+  <g transform="matrix(0.000000 1.000000 -1.000000 0.000000 1513.000000 -127.000000)" >
+   <ellipse stroke-opacity="1" fill="none" cx="308" cy="498.5" rx="11" ry="10.5" stroke="#0000ff" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{c499364b-f7b1-4f6a-939d-406f01cb5406}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -30.000000 -348.000000)" >
+   <polygon stroke-opacity="1" fill="#9f9f9f" points="631.000000,607.515000 620.652000,624.243000 641.348000,624.243000 " stroke="#9f9f9f" fill-opacity="1" stroke-linecap="square" stroke-width="2" clrType="0" bgclrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{f0f21343-cdd6-4c7c-b33b-312bc2805e6b}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 120.000000 -226.000000)" >
+   <rect width="26" x="468" y="483" stroke-opacity="1" fill="none" rx="0" height="26" ry="0" stroke="#9f9f9f" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{937ae54a-6f18-4771-86b6-0b2f23612c42}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 15.000000 -82.000000)" >
+   <ellipse stroke-opacity="1" fill="none" cx="308" cy="498.5" rx="11" ry="10.5" stroke="#0000ff" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{5f7ef182-9bfe-4229-a251-ec43dc985e5b}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 15.000000 -95.000000)" >
+   <ellipse stroke-opacity="1" fill="none" cx="308" cy="498.5" rx="11" ry="10.5" stroke="#0000ff" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{e9dd48e1-1dfa-4d6e-ba05-ccfc41b9437e}" >
+  <g transform="matrix(0.000000 1.000000 -1.000000 0.000000 1014.000000 -27.000000)" >
+   <ellipse stroke-opacity="1" fill="none" cx="308" cy="498.5" rx="11" ry="10.5" stroke="#0000ff" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{dd95e370-0134-46c9-867e-8489b5192330}" >
+  <g transform="matrix(0.000000 1.000000 -1.000000 0.000000 1027.000000 -27.000000)" >
+   <ellipse stroke-opacity="1" fill="none" cx="308" cy="498.5" rx="11" ry="10.5" stroke="#0000ff" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{e9969da3-3222-4e14-b056-ae1f3739a2d1}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -224.000000 -226.000000)" >
+   <polygon stroke-opacity="1" fill="#55aa00" points="631.000000,607.515000 620.652000,624.243000 641.348000,624.243000 " stroke="#55aa00" fill-opacity="1" stroke-linecap="square" stroke-width="2" clrType="0" bgclrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{7049db69-0811-4fc5-81d7-4e68b847c31d}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -74.000000 -104.000000)" >
+   <rect width="26" x="468" y="483" stroke-opacity="1" fill="none" rx="0" height="26" ry="0" stroke="#55aa00" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{fbf540b0-978e-46c8-bcb8-bd894202c886}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -115.000000 -131.000000)" >
+   <ellipse stroke-opacity="1" fill="#ff0000" cx="588.00035" cy="456.00035" rx="8.60235" ry="8.60235" stroke="#ff0000" fill-opacity="1" stroke-linecap="square" stroke-width="2" clrType="0" bgclrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{13b8a3d0-22fe-4b3f-ba10-68c16b2decb5}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -8.000000 -171.000000)" >
+   <rect width="26" x="468" y="483" stroke-opacity="1" fill="none" rx="0" height="26" ry="0" stroke="#ff0000" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{25c094be-87bb-4670-93c7-cbc26a37fda3}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -574.000000 -248.000000)" >
+   <polygon stroke-opacity="1" fill="#55aa00" points="631.000000,607.515000 620.652000,624.243000 641.348000,624.243000 " stroke="#55aa00" fill-opacity="1" stroke-linecap="square" stroke-width="2" clrType="0" bgclrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{49a4bfcb-46f0-4aff-b3dc-e53140a76918}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -424.000000 -126.000000)" >
+   <rect width="26" x="468" y="483" stroke-opacity="1" fill="none" rx="0" height="26" ry="0" stroke="#55aa00" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{f4fb7427-e210-485d-acee-485d0fe0142a}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -532.000000 -49.000000)" >
+   <ellipse stroke-opacity="1" fill="#ff0000" cx="588.00035" cy="456.00035" rx="8.60235" ry="8.60235" stroke="#ff0000" fill-opacity="1" stroke-linecap="square" stroke-width="2" clrType="0" bgclrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{a1f7ccda-8b57-4a55-845d-3bcd8afb78e7}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -425.000000 -89.000000)" >
+   <rect width="26" x="468" y="483" stroke-opacity="1" fill="none" rx="0" height="26" ry="0" stroke="#ff0000" stroke-linecap="square" stroke-width="2" clrType="0" />
+  </g>
+ </g>
+ <g type="xx" id="{ec1ddd72-803d-44f5-bbe7-dc4594dd6db2}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -23.000000 -12.000000)" >
+   <text x="149" y="384.75" font-family="SimSun" fill="#00aa00" unit="" text-anchor="middle" fill-opacity="1" font-size="14.4" bgclrType="0" >一般工业用户</text>
+  </g>
+ </g>
+ <g type="xx" id="{b73dbdfb-c2c7-4775-8afc-dd8adec0fd5f}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -23.000000 28.500000)" >
+   <text x="149" y="384.75" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="1" font-size="14.4" bgclrType="0" >普通居民用户</text>
+  </g>
+ </g>
+ <g type="xx" id="{834051d6-5325-49fd-9393-033658206d74}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 89.000000 -240.500000)" >
+   <text x="149" y="384.75" font-family="SimSun" fill="#ff0000" unit="" text-anchor="middle" fill-opacity="1" font-size="14.4" bgclrType="0" >10kV配电线路</text>
+  </g>
+ </g>
+ <g type="xx" id="{2389a115-918e-49ff-8e57-b242056a0360}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -27.750000 -32.000000)" >
+   <text x="68.5" y="66.5" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >安徽省</text>
+  </g>
+ </g>
+ <g type="xx" id="{f0760d25-e4c2-4f08-b179-653a13a6397d}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 35.750000 -32.000000)" >
+   <text x="68.5" y="66.5" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >巢湖市</text>
+  </g>
+ </g>
+ <g type="xx" id="{5f0c0c16-1f7a-4d88-a21c-4fb68f612d69}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 100.750000 -32.000000)" >
+   <text x="81.5" y="66.5" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >电网一次图</text>
+  </g>
+ </g>
+ <g type="xx" id="{cfeb28be-ccaf-4818-b957-112cfce7e149}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 -29.750000 -90.000000)" >
+   <text x="105" y="124.5" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >>></text>
+  </g>
+ </g>
+ <g type="xx" id="{fc28aa04-1891-4fa0-b6c2-464126331113}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 32.250000 -90.000000)" >
+   <text x="105" y="124.5" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >>></text>
+  </g>
+ </g>
+ <g type="xx" id="{0690c334-ccab-4cf1-b575-5e4f3c55729e}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 191.500000 -32.000000)" >
+   <text x="68.5" y="66.5" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >变电站</text>
+  </g>
+ </g>
+ <g type="xx" id="{4de51d5c-0c1d-42c6-99ec-90a5d3db9a73}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 123.000000 -91.000000)" >
+   <text x="105" y="124.5" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >>></text>
+  </g>
+ </g>
+ <g type="xx" id="{aac45043-6266-41b8-8294-54b21c27b8fe}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 187.750000 -90.500000)" >
+   <text x="105" y="124.5" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >>></text>
+  </g>
+ </g>
+ <g type="xx" id="{2ceb694a-67eb-4c32-aa83-1931ff4038fc}" >
+  <g transform="matrix(1.000000 0.000000 0.000000 1.000000 254.250000 -32.500000)" >
+   <text x="76" y="66.5" font-family="SimSun" fill="#0000ff" unit="" text-anchor="middle" fill-opacity="1" font-size="12" bgclrType="0" >10kV配变</text>
+  </g>
+ </g>
+ <g id="{0aef49f0-8eed-40ad-b77f-e7254bfaf715}" transform="matrix(0.381152 0.000000 0.000000 0.381152 177.607000 267.288000)" >
+  <rect width="125" x="-0.5" y="-0.5" fill="#ffffff" height="65" fill-opacity="0" stroke-width="0" />
+   <rect onclick="onLinkClick(evt)" linkURL="hotel.svg" width="121" x="1.5" y="1.5" fill="#000000" height="61" stroke="#ff0000" fill-opacity="0" stroke-width="0" />
+ </g>
+ <g id="{90e6d23b-3cd3-4330-b1f6-2457c83e6dbb}" transform="matrix(0.381152 0.000000 0.000000 0.381152 384.607000 379.288000)" >
+  <rect width="125" x="-0.5" y="-0.5" fill="#ffffff" height="65" fill-opacity="0" stroke-width="0" />  
+   <rect onclick="onLinkClick(evt)" linkURL="hotel.svg" width="121" x="1.5" y="1.5" fill="#000000" height="61" stroke="#ff0000" fill-opacity="0" stroke-width="0" />  
+ </g>
+ <g id="{bc6fb7c2-e2d9-4b68-8266-92090721818d}" transform="matrix(0.381152 0.000000 0.000000 0.381152 467.464000 55.898400)" >
+  <rect width="125" x="-0.5" y="-0.5" fill="#ffffff" height="65" fill-opacity="0" stroke-width="0" />  
+   <rect onclick="onLinkClick(evt)" linkURL="hotel.svg" width="121" x="1.5" y="1.5" fill="#000000" height="61" stroke="#ff0000" fill-opacity="0" stroke-width="0" />
+ </g>
+ <g id="{92fd3374-ba88-42f5-9660-0d9c596323c4}" transform="matrix(0.381152 0.000000 0.000000 0.381152 728.464000 100.898000)" >
+  <rect width="125" x="-0.5" y="-0.5" fill="#ffffff" height="65" fill-opacity="0" stroke-width="0" />
+   <rect onclick="onLinkClick(evt)" linkURL="hotel.svg" width="121" x="1.5" y="1.5" fill="#000000" height="61" stroke="#ff0000" fill-opacity="0" stroke-width="0" />
+ </g>
+ <g id="{eb8a0b81-ca7a-4672-a14a-1c2985a33108}" transform="matrix(0.381152 0.000000 0.000000 0.381152 840.464000 225.898000)" >
+  <rect width="125" x="-0.5" y="-0.5" fill="#ffffff" height="65" fill-opacity="0" stroke-width="0" />
+   <rect onclick="onLinkClick(evt)" linkURL="hotel.svg" width="121" x="1.5" y="1.5" fill="#000000" height="61" stroke="#ff0000" fill-opacity="0" stroke-width="0" />
+ </g>
+ <g id="{a016aa31-c175-4ed0-a90b-bdd452959e6b}" transform="matrix(0.381152 0.000000 0.000000 0.381152 451.464000 312.898000)" >
+  <rect width="125" x="-0.5" y="-0.5" fill="#ffffff" height="65" fill-opacity="0" stroke-width="0" />
+   <rect onclick="onLinkClick(evt)" linkURL="juming.svg" width="121" x="1.5" y="1.5" fill="#000000" height="61" stroke="#ff0000" fill-opacity="0" stroke-width="0" />
+ </g>
+ <g id="{381011ac-50dc-47b4-bae2-685e8583fe88}" transform="matrix(0.381152 0.000000 0.000000 0.381152 532.464000 134.898000)" >
+  <rect width="125" x="-0.5" y="-0.5" fill="#ffffff" height="65" fill-opacity="0" stroke-width="0" />
+   <rect onclick="onLinkClick(evt)" linkURL="juming.svg" width="121" x="1.5" y="1.5" fill="#000000" height="61" stroke="#ff0000" fill-opacity="0" stroke-width="0" />
+ </g>
+ <g id="{14790415-ccc8-4f3d-bbd7-9b4dfcb0ae3f}" transform="matrix(0.381152 0.000000 0.000000 0.381152 646.464000 208.898000)" >
+  <rect width="125" x="-0.5" y="-0.5" fill="#ffffff" height="65" fill-opacity="0" stroke-width="0" />
+   <rect onclick="onLinkClick(evt)" linkURL="juming.svg" width="121" x="1.5" y="1.5" fill="#000000" height="61" stroke="#ff0000" fill-opacity="0" stroke-width="0" />
+ </g>
+ <g id="{9040981e-6be5-4691-8588-920daca5d6f2}" transform="matrix(0.381152 0.000000 0.000000 0.381152 866.464000 340.898000)" >
+  <rect width="125" x="-0.5" y="-0.5" fill="#ffffff" height="65" fill-opacity="0" stroke-width="0" />
+   <rect onclick="onLinkClick(evt)" linkURL="juming.svg" width="121" x="1.5" y="1.5" fill="#000000" height="61" stroke="#ff0000" fill-opacity="0" stroke-width="0" />
+ </g>
+ <g id="{3e9a1ba4-14ec-4189-aa37-7a872bfe0a48}" transform="matrix(0.309918 0.000000 0.000000 0.309918 21.116600 19.654900)" >
+  <rect width="125" x="-0.5" y="-0.5" fill="#ffffff" height="65" fill-opacity="0" stroke-width="0" />
+   <rect onclick="onLinkClick(evt)" linkURL="anhui.svg" width="121" x="1.5" y="1.5" fill="#000000" height="61" stroke="#ff0000" fill-opacity="0" stroke-width="0" />
+ </g>
+ <g id="{0f1faab1-7f49-4856-bcc5-e4a3609ec112}" transform="matrix(0.309918 0.000000 0.000000 0.309918 82.064400 19.304700)" >
+  <rect width="125" x="-0.5" y="-0.5" fill="#ffffff" height="65" fill-opacity="0" stroke-width="0" />
+   <rect onclick="onLinkClick(evt)" linkURL="chaohu.svg" width="121" x="1.5" y="1.5" fill="#000000" height="61" stroke="#ff0000" fill-opacity="0" stroke-width="0" />
+ </g>
+ <g id="{b41cd354-6111-44b1-8974-4d1e022f24d5}" transform="matrix(0.518469 0.000000 0.000000 0.518469 149.550000 11.409000)" >
+  <rect width="125" x="-0.5" y="-0.5" fill="#ffffff" height="65" fill-opacity="0" stroke-width="0" />
+   <rect onclick="onLinkClick(evt)" linkURL="Sys-ZJX.svg" width="121" x="1.5" y="1.5" fill="#000000" height="61" stroke="#ff0000" fill-opacity="0" stroke-width="0" />
+ </g>
+ <g id="{9545dcb4-f479-497c-8948-03e7bbac0aa4}" transform="matrix(0.309918 0.000000 0.000000 0.309918 242.785000 21.082600)" >
+  <rect width="125" x="-0.5" y="-0.5" fill="#ffffff" height="65" fill-opacity="0" stroke-width="0" />
+   <rect onclick="onLinkClick(evt)" linkURL="qishanB.svg" width="121" x="1.5" y="1.5" fill="#000000" height="61" stroke="#ff0000" fill-opacity="0" stroke-width="0" />
+ </g>
+ <associate/>
+</svg>

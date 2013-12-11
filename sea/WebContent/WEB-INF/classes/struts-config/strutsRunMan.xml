@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+	<package name="jsonrunman" namespace="/runman" extends="baseJson">       
+		<!--运行管理 JSON Action -->
+        
+		<!--终端参数设置-->
+		<action name="terminalparaset" class="com.nari.runman.feildman.TerminalParaSetAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+        
+		<!--终端月通信流量-->
+		<action name="queryATmnlFlowMBean" class="com.nari.runman.runstatusman.ATmnlFlowMBeanAction">
+			<result type="json"></result>
+		</action>
+		
+		<!--流量超用明细表-->
+		<action name="queryATmnlFlowMBeanH" class="com.nari.runman.runstatusman.ATmnlFlowMBeanHAction">
+			<result type="json"></result>
+		</action>
+		
+		<!--主站运行状态-->
+		<action name="queryLMasterStationRes" class="com.nari.runman.runstatusman.LMasterStationResAction">
+			<result type="json">
+				<param name="excludeProperties">lMasterStationResManager</param>
+			</result>
+		</action>
+		
+		<!--电能表运行状态-->
+		<action name="queryAEventStatDBean" class="com.nari.runman.runstatusman.AEventStatDBeanAction">
+			<result type="json">
+				<param name="excludeProperties">aEventStatDBeanManager</param>
+			</result>
+		</action>
+		<!--主站异常分析-->
+		<action name="mainExceptionAnalysis" class="com.nari.runman.runstatusman.MainExcepAnalyAction">
+		    <result type="json">
+		        <param name="excludeProperties">mainExcepAnalyManager</param>
+		    </result>
+		</action>
+		<!--终端设备运行状态-->
+		<action name="queryTmnlRunStatus" class="com.nari.runman.runstatusman.TmnlRunStatusAction">
+			<result type="json">
+				<param name="excludeProperties">tmnlRunStatusManager</param>
+			</result>
+		</action>
+		
+		<!--事件屏蔽与分级-->
+		<action name="eventManage" class="com.nari.runman.abnormalhandle.EventManagerAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		
+		<!--现场设备异常-->
+		<action name="deviceAbnormal" class="com.nari.runman.abnormalhandle.DeviceAbnormalAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>	
+        
+		<!--现场设备异常-->
+		<action name="deviceException" class="com.nari.runman.abnormalhandle.DeviceExceptionAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>	
+		<!--异常监测-->
+		<action name="exceptionMonitor" class="com.nari.runman.abnormalhandle.ExceptionMonitorAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>		
+		<!--日志查询 -->
+		
+		<action name="dutyLog" class="com.nari.runman.dutylog.dutyLogAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!-- 档案同步-->
+		<action name="archives" class="com.nari.runman.archivesman.archivesmanAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!-- 组织机构维护  供电所-->
+		<action name="organizeManOrg" class="com.nari.runman.archivesman.OrganizeManOrgAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!-- 组织机构维护  变电站-->
+		<action name="organizeManSubs" class="com.nari.runman.archivesman.OrganizeManSubsAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!-- 组织机构维护  线路-->
+		<action name="organizeManLine" class="com.nari.runman.archivesman.OrganizeManLineAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!-- 档案管理 -->
+		<action name="archiveman" class="com.nari.runman.archivesman.ArchiveManAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+        
+		<!-- 档案管理终端管理 -->
+		<action name="archivetmnlman" class="com.nari.runman.archivesman.ArchiveManTmnlAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+        
+		<!-- 档案管理采集点管理 -->
+		<action name="archivercpman" class="com.nari.runman.archivesman.ArchiveManRcpAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+        
+		<!-- 档案管理计量点管理 -->
+		<action name="archivecmpman" class="com.nari.runman.archivesman.ArchiveManCmpAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+        
+		<!-- 档案管理电能表管理 -->
+		<action name="archivecmeterman" class="com.nari.runman.archivesman.ArchiveManCmeterAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+        
+       
+        
+		<!-- 档案管理采集通道管理 -->
+		<action name="collectchannelman" class="com.nari.runman.archivesman.CollectChannelManAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		
+		<!-- 档案管理拨号组管理 -->
+		<action name="dialgroupman" class="com.nari.runman.archivesman.DialGroupManAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		
+		<!-- 档案管理拨号通道管理 -->
+		<action name="dialman" class="com.nari.runman.archivesman.DialManAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		
+		<!-- 档案管理网络通道管理 -->
+		<action name="netman" class="com.nari.runman.archivesman.NetManAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		
+		<!-- 档案管理专线通道管理 -->
+		<action name="dnnman" class="com.nari.runman.archivesman.DnnManAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		
+		
+		<!-- 档案管理专变用户导入管理 -->
+		<action name="importprivacy" class="com.nari.runman.archivesman.ImportPrivacyAction">
+			<interceptor-ref name="fileUploadStack" />
+			<result type="json">
+				<param name="contentType">
+					text/html;charset=utf-8
+				</param>
+			</result>
+		</action>
+		
+		<!-- 档案管理集抄用户导入管理 -->
+		<action name="importpublic" class="com.nari.runman.archivesman.ImportPublicAction">
+			<interceptor-ref name="fileUploadStack" />
+			<result type="json">
+				<param name="contentType">
+					text/html;charset=utf-8
+				</param>
+			</result>
+		</action>
+		
+        
+		<!-- 终端安装 -->
+		<action name="terminalInstall" class="com.nari.runman.feildman.TerminalInstallAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,tiList.*,tiStatusList.*</param>
+			</result>
+		</action>
+		<!-- 终端装接调试 -->
+		<action name="tmnlInstallDetail" class="com.nari.runman.feildman.TerminalInstallAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,tmnlInstDetList.*</param>
+			</result>
+		</action>
+        
+		<!-- 终端调试信息 -->
+		<action name="tmnlDebugInfo" class="com.nari.runman.feildman.TerminalInstallAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,tmnlDebugInfoList.*,flag</param>
+			</result>
+		</action>
+        
+		<!-- 终端信息维护-->
+		<action name="tmnlInfoMaintain" class="com.nari.runman.feildman.TerminalInstallAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,protocolList.*</param>
+			</result>
+		</action>
+        
+		<!-- 电能表信息维护-->
+		<action name="meterInfoMaintain" class="com.nari.runman.feildman.TerminalInstallAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,protocolList.*</param>
+			</result>
+		</action>
+        
+		<!-- 终端变更信息 -->
+		<action name="tmnlChgInfo" class="com.nari.runman.feildman.TerminalInstallAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,tmnlChgInfoList.*</param>
+			</result>
+		</action>
+        
+		<!-- 电能表变更信息 -->
+		<action name="meterChgInfo" class="com.nari.runman.feildman.TerminalInstallAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,meterChgInfoList.*</param>
+			</result>
+		</action>
+        
+		<!-- 电能表信息维护-->
+		<action name="meterInfoMaintain" class="com.nari.runman.feildman.TerminalInstallAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,meterMaintainInfoList.*,meterCommInfoList.*</param>
+			</result>
+		</action>
+		<!-- 终端对时 -->
+		<action name="terminalCorrectTime" class="com.nari.runman.feildman.TerminalCorrectTimeAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!-- 终端复位 -->
+		<action name="terminalReset" class="com.nari.runman.feildman.TerminalResetAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!--运行状况管理      通信信道监测-->
+		<action name="queryChannelMonitor" class="com.nari.runman.runstatusman.ChannelMonitorAction">
+			<result type="json">
+				<!--<param name="excludeProperties">channelMonitorManager</param>-->
+				<param name="includeProperties">success,totalCount,channelMonitorTerminaList.*,channelMonitorOrgNoList.*,channelMonitorList.* ,channelMonitorConsTypeCollModeList.*</param>
+			</result>
+		</action>
+		<!--运行状况管理      在线状态监测-->
+		<action name="queryOnlineMonitor" class="com.nari.runman.runstatusman.OnlineMonitorAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,onofflineConsList.*</param>
+			</result>
+		</action>
+		
+		<!-- 远程调试 -->
+		<action name="remoteDebug" class="com.nari.runman.archivesman.RemoteDebugAction" >
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+	</package>
+
+</struts> 

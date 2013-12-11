@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/app/!svn/ver/7015/trunk/sea/src/service/com/nari/runman/runstatusman
+END
+MainExcepAnalyManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/app/!svn/ver/6921/trunk/sea/src/service/com/nari/runman/runstatusman/MainExcepAnalyManager.java
+END
+TmnlRunStatusManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/app/!svn/ver/6588/trunk/sea/src/service/com/nari/runman/runstatusman/TmnlRunStatusManager.java
+END
+ATmnlFlowMBeanManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/app/!svn/ver/3180/trunk/sea/src/service/com/nari/runman/runstatusman/ATmnlFlowMBeanManager.java
+END
+AEventStatDBeanManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/app/!svn/ver/5921/trunk/sea/src/service/com/nari/runman/runstatusman/AEventStatDBeanManager.java
+END
+ChannelMonitorManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/app/!svn/ver/7015/trunk/sea/src/service/com/nari/runman/runstatusman/ChannelMonitorManager.java
+END
+运行管理-运行状况管理
+K 25
+svn:wc:ra_dav:version-url
+V 165
+/svn/app/!svn/ver/2464/trunk/sea/src/service/com/nari/runman/runstatusman/%E8%BF%90%E8%A1%8C%E7%AE%A1%E7%90%86-%E8%BF%90%E8%A1%8C%E7%8A%B6%E5%86%B5%E7%AE%A1%E7%90%86
+END
+LMasterStationResManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/app/!svn/ver/3287/trunk/sea/src/service/com/nari/runman/runstatusman/LMasterStationResManager.java
+END

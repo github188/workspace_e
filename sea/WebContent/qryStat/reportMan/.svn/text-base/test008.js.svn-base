@@ -1,0 +1,206 @@
+
+//用户月负荷明细
+//consMonLoadDetailStore = new Ext.data.JsonStore({
+//			fields : ["abc", "bcd","org_name", "cons_no", "cons_name", "terminal_addr",
+//					"tmnl_asset_no"],
+//			root : "resultMap",
+//			idProperty:'cons_no',
+//			totalProperty : "counts",
+//			url : "baseapp/dataFetch!dealTree.action"
+//		});
+consMonLoadDetailStore = new Ext.ux.LocalStore({
+	dataKey : "cons_no",
+	fields : ["abc", "bcd", "org_name", "cons_no", "cons_name",
+			"terminal_addr", "tmnl_asset_no"]
+});
+var consMonLoadDetailsPanel = new Ext.Panel({
+			border : true,
+			region : 'north',
+			bodyStyle : 'padding:10px 0px',
+			// autoHeight:true,
+			layout : 'column',
+			height : 40,
+			items : [{
+						border : false,
+						columnWidth : .40,
+						labelAlign : 'right',
+						// labelWidth : 50,
+						layout : 'form',
+						items : [{
+									id : 'time_tmnl',
+									xtype : 'datefield',
+									// labelSeparator : ' ',
+									// width : 85,
+									value : new Date(),
+									fieldLabel : '选择时间',
+									format : "Y-m"
+								}]
+					}]
+		});
+
+userTerminal = new Ext.grid.CheckboxSelectionModel({});
+var userTerminaNumber = new Ext.grid.RowNumberer({
+	renderer : function(v, p, record, rowIndex) {
+		if (this.rowspan) {
+			p.cellAttr = 'rowspan="' + this.rowspan + '"';
+		}
+
+		consMonLoadDetailStore.lastOptions.params = consMonLoadDetailStore.lastOptions.params
+				|| {
+					start : 0
+				};
+		return consMonLoadDetailStore.lastOptions.params.start || 0 + rowIndex + 1;
+	}
+
+});
+
+// 报表参数列模型
+var consMonLoadDetailCm = new Ext.grid.ColumnModel( [ userTerminaNumber,
+		userTerminal, {
+			header : '供电单位',
+			dateIndex : 'org_name',
+			align : 'left'
+		}, {
+			header : '用户编号',
+			dateIndex : 'cons_no',
+			align : 'left'
+		}, {
+			header : '用户名称',
+			dateIndex : 'cons_name',
+			align : 'left'
+		}, {
+			header : '终端地址',
+			dateIndex : 'terminal_addr',
+			align : 'left'
+		} ]);
+
+consMonLoadDetailsPanelSecond = new Ext.Panel({
+			layout : 'border',
+			border : false,
+			items : [ //consMonLoadDetailsPanel, bottomParamGridPanel]//,
+
+			consMonLoadDetailsPanel, {
+						xtype : 'panel',
+						height : 120,
+						region : 'center',
+						layout : "fit",
+						autoScroll : true,
+						border : false,
+						width : 800,
+						plain : true,
+						items : [{
+									xtype : 'grid',
+									mode : 'remote',
+									id : 'consMonLoadDetailGrid',
+									name : 'consMonLoadDetailGrid',
+									// ds : consMonLoadDetailStore,
+									region : 'south',
+									cm : consMonLoadDetailCm,
+									store : consMonLoadDetailStore,
+									sm : userTerminal,
+									loadMask : false,
+									autoScroll : true,
+									autoWidth : true,
+									stripeRows : true,
+									autoDestroy:false,
+									bbar : new Ext.ux.MyToolbar({
+										store : consMonLoadDetailStore
+									}),
+									viewConfig : {
+										forceFit : false
+									}
+
+								}],
+						tbar : [{
+								xtype : 'label',
+								html : "<font font-weight:bold;>用户月负荷明细</font>"
+						}, '->', {
+							text : '删除所选用户',
+							iconCls : 'minus',
+							width : 30,
+							handler : function() {
+								var recs = userTerminal.getSelections();
+								consMonLoadDetailStore.remove(recs);
+								Ext.getCmp('consMonLoadDetailGrid').reconfigure(
+										consMonLoadDetailStore, consMonLoadDetailCm);
+							}
+						}]
+
+			}]
+		});
+
+new LeftTreeListener({
+	modelName : '用户数据报表',
+	processClick : function(p, node, e) {
+		var obj = node.attributes.attributes;
+		var type = node.attributes.type;
+		Ext.Ajax.request({
+					url : "baseapp/dataFetch!dealTree.action",
+					params : {
+						"node" : type == "usr"
+								? ("tmnl_" + obj.tmnlAssetNo + "_" + obj.tmnlAssetNo)
+								: node.id
+					},
+					success : function(response) {
+						var o = Ext.decode(response.responseText);
+						consMonLoadDetailStore.addDatas(o.resultMap);
+						Ext.getCmp('consMonLoadDetailGrid').getSelectionModel().selectAll();
+					}
+				});
+
+		// consMonLoadDetailStore.load({
+		// params : {
+		// "node" : type == "usr"
+		// ? ("tmnl_" + obj.tmnlAssetNo + "_" + obj.tmnlAssetNo)
+		// : node.id,
+		// start:0,
+		// limit:50
+		// },
+		// add : true
+		// });
+
+	},
+
+	processUserGridSelect : function(sm, row, r) {
+
+		var tmnl = r.get("tmnlAssetNo");
+		consMonLoadDetailStore.load({
+					params : {
+						node : "tmnl_" + tmnl + "_01",
+						start : 0,
+						limit : 50
+					},
+					add : true
+				})
+	}
+});
+ getParamsUrl=function(){
+		            
+				 	var time=Ext.getCmp("time_tmnl").getRawValue();
+		            var consList=new Array(); 
+		            var recs=userTerminal.getSelections();  
+		            ParamsUrl="&month='"+time+"'&consList=";
+					
+					if(null!=time){
+					timeSelect=true;
+					}
+					else{
+						 Ext.MessageBox.alert("提示","请选择时间!");
+						 timeSelect=false
+						 return;
+					}
+		           if(null==recs||0==recs.length){
+						 Ext.MessageBox.alert("提示","请选择数据!");
+						 dataSelect=false;
+						 return;
+						 		}
+					 else{
+					     dataSelect=true;
+
+					 }
+		            for(var i = 0; i < recs.length; i++){
+		            	consList[i] = recs[i].get('cons_no');
+		            	ParamsUrl=ParamsUrl + "'"+consList[i]+"'";
+		            	if(i<(recs.length-1))
+		            		ParamsUrl = ParamsUrl + ","	
+		}};

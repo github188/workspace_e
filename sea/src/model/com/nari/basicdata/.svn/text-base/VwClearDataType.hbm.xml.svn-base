@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.nari.basicdata.VwClearDataType" table="VW_CLEAR_DATA_TYPE">
+		<id name="dataType" type="java.lang.String" column="DATA_TYPE">
+			<generator class="assigned"/>
+		</id>
+
+		<property name="dataName" type="java.lang.String" column="DATA_NAME"/>
+	</class>
+</hibernate-mapping>

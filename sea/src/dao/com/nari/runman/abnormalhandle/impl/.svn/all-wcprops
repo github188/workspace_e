@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/app/!svn/ver/7033/trunk/sea/src/dao/com/nari/runman/abnormalhandle/impl
+END
+DeviceAbnormalHibernateDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/app/!svn/ver/4278/trunk/sea/src/dao/com/nari/runman/abnormalhandle/impl/DeviceAbnormalHibernateDaoImpl.java
+END
+VwDataTypeDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/runman/abnormalhandle/impl/VwDataTypeDaoImpl.java
+END
+VwProtocolCodeDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/runman/abnormalhandle/impl/VwProtocolCodeDaoImpl.java
+END
+EventNoCreateDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/app/!svn/ver/5102/trunk/sea/src/dao/com/nari/runman/abnormalhandle/impl/EventNoCreateDaoImpl.java
+END
+EventInfoDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/app/!svn/ver/5648/trunk/sea/src/dao/com/nari/runman/abnormalhandle/impl/EventInfoDaoImpl.java
+END
+DeviceExceptionDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/app/!svn/ver/5124/trunk/sea/src/dao/com/nari/runman/abnormalhandle/impl/DeviceExceptionDaoImpl.java
+END
+TmnlDataSaveORUpdateDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/app/!svn/ver/2614/trunk/sea/src/dao/com/nari/runman/abnormalhandle/impl/TmnlDataSaveORUpdateDaoImpl.java
+END
+ExceptionMonitorDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/app/!svn/ver/7033/trunk/sea/src/dao/com/nari/runman/abnormalhandle/impl/ExceptionMonitorDaoImpl.java
+END
+DeviceAbnormalDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/app/!svn/ver/5761/trunk/sea/src/dao/com/nari/runman/abnormalhandle/impl/DeviceAbnormalDaoImpl.java
+END

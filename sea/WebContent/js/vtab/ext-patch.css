@@ -1,0 +1,257 @@
+/*
+ * icyfire
+ * 
+ * http://icyfire.javaeye.com
+ */
+ /*
+ 	说明：为了适应主题变化，将部分颜色改为非法颜色，以使其失效，使用默认颜色
+ 	偷懒的方法
+ */
+ 
+ @CHARSET "UTF-8";
+
+.x-tab-panel-vertical .x-tab-panel-header {
+    background: #DVE8F6;
+    border: none;
+}
+
+.x-tab-panel-vertical-left .x-tab-panel-header {
+    float: left;
+}
+
+.x-tab-panel-vertical-right .x-tab-panel-header {
+    float: right;
+}
+
+.x-tab-panel-vertical .x-tab-strip-wrap {
+    clear: both;
+    height: 100%;
+}
+
+.x-tab-panel-vertical ul.x-tab-strip-top {
+    background: none;
+    border-bottom: none;
+    padding-top: 0px;
+}
+
+.x-tab-panel-vertical-left ul.x-tab-strip-top {
+    padding-left: 1px;
+}
+
+.x-tab-panel-vertical-right ul.x-tab-strip-top {
+    padding-right: 1px;
+}
+
+.x-tab-panel-vertical ul.x-tab-strip {
+    display: block;
+    width: 30px;
+    height: 5000px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.x-tab-panel-vertical ul.x-tab-strip li {
+    clear: both;
+    margin-left: 0px;
+    float: none;
+}
+
+.x-tab-panel-vertical ul.x-tab-strip li {
+    margin-bottom: 2px;
+}
+
+.x-tab-panel-vertical .x-tab-strip-top .x-tab-strip-active .x-tab-right
+    {
+    margin-bottom: 0px;
+}
+
+.x-tab-panel-vertical-left .x-tab-strip-top .x-tab-right {
+    margin-left: 8px;
+}
+
+.x-tab-panel-vertical-right .x-tab-strip-top .x-tab-right {
+    margin-right: 8px;
+}
+
+.x-tab-panel-vertical .x-tab-strip-top .x-tab-strip-over .x-tab-right {
+    background-color: #DDDDDD;
+    border-top: 1px solid #f4ved4;
+    border-bottom: 1px solid #f4ved4;
+}
+
+.x-tab-panel-vertical-left .x-tab-strip-top .x-tab-strip-over .x-tab-right
+    {
+    margin-left: 8px;
+    border-left: 1px solid #f4ved4;
+}
+
+.x-tab-panel-vertical-right .x-tab-strip-top .x-tab-strip-over .x-tab-right
+    {
+    margin-right: 8px;
+    border-right: 1px solid #f4ved4;
+}
+
+.x-tab-panel-vertical .x-tab-strip-top .x-tab-strip-active .x-tab-right
+    {
+    background-color: #FFFFFF;
+    border-top: 1px solid #f4ved4;
+    border-bottom: 1px solid #f4ved4;
+}
+
+.x-tab-panel-vertical-left .x-tab-strip-top .x-tab-strip-active .x-tab-right
+    {
+    margin-right: -1px;
+    margin-left: 5px;
+    border-left: 1px solid #f4ved4;
+}
+
+.x-tab-panel-vertical-right .x-tab-strip-top .x-tab-strip-active .x-tab-right
+    {
+    margin-left: -1px;
+    margin-right: 5px;
+    border-right: 1px solid #f4ved4;
+}
+
+.x-tab-panel-vertical .x-tab-strip-top .x-tab-right {
+    background: #f4ved4;
+    padding-left: 0px;
+    border-top: 1px solid #f4ved4;
+    border-bottom: 1px solid #f4ved4;
+}
+
+.x-tab-panel-vertical-left .x-tab-strip-top .x-tab-right {
+    padding-bottom: 5px;
+    border-left: 1px solid #f4ved4;
+}
+
+.x-tab-panel-vertical-right .x-tab-strip-top .x-tab-right {
+    padding-top: 5px;
+    border-right: 1px solid #f4ved4;
+}
+
+.x-tab-panel-vertical .x-tab-strip-top .x-tab-strip-active .x-tab-left {
+    background-position: 0 0;
+}
+
+.x-tab-panel-vertical .x-tab-strip-top .x-tab-left {
+    background: none;
+    padding-right: 0px;
+}
+
+.x-tab-panel-vertical-left .x-tab-strip-top .x-tab-left {
+    background: none;
+    padding-top: 5px;
+}
+
+.x-tab-panel-vertical-right .x-tab-strip-top .x-tab-left {
+    background: none;
+    padding-bottom: 5px;
+}
+
+.x-tab-panel-vertical .x-tab-strip-top .x-tab-strip-active .x-tab-strip-inner
+    {
+    background-position: 0 0;
+}
+
+.x-tab-panel-vertical .x-tab-strip-top .x-tab-strip-inner {
+    background: none;
+}
+
+.x-tab-panel-vertical .x-tab-strip-top .x-tab-right span.x-tab-strip-text
+    {
+    padding-bottom: 0px;
+}
+
+.x-tab-panel-vertical .x-tab-strip-top .x-tab-right span.x-tab-strip-text
+    {
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.x-tab-panel-vertical .x-tab-strip span.x-tab-strip-text {
+    white-space: normal;
+}
+
+.x-tab-panel-vertical .x-tab-strip-top .x-tab-right span.x-tab-strip-text
+    {
+    color: #000000;
+}
+
+.x-tab-panel-vertical .x-tab-strip-top .x-tab-strip-over .x-tab-right span.x-tab-strip-text
+    {
+    color: #000000;
+}
+
+.x-tab-panel-vertical .x-tab-strip-top .x-tab-strip-active .x-tab-right span.x-tab-strip-text
+    {
+    color: #666666;
+    font-weight: normal;
+}
+
+.x-tab-panel-vertical .x-tab-strip .x-tab-with-icon span.x-tab-strip-text
+    {
+    background-position: 2px 0;
+    background-repeat: no-repeat;
+    padding-top: 20px;
+}
+
+.x-tab-panel-vertical .x-tab-scrolling .x-tab-strip-wrap {
+    margin: 18px 0px;
+    *top: 18px;
+}
+
+.x-tab-panel-vertical .x-tab-scroller-right {
+    background: transparent url(scroll-right-v.gif) no-repeat scroll;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: auto;
+    top: auto;
+    border: none;
+}
+
+.x-tab-panel-vertical-left .x-tab-scroller-right {
+    background-position: 4px 0;
+}
+
+.x-tab-panel-vertical-right .x-tab-scroller-right {
+    background-position: 0 0;
+}
+
+.x-tab-panel-vertical .x-tab-scroller-left {
+    background: transparent url(scroll-left-v.gif) no-repeat scroll;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: auto;
+    bottom: auto;
+    border: none;
+}
+
+.x-tab-panel-vertical-left .x-tab-scroller-left {
+    background-position: 4px -18px;
+}
+
+.x-tab-panel-vertical-right .x-tab-scroller-left {
+    background-position: 0 -18px;
+}
+
+.x-tab-panel-vertical .x-tab-strip-closable .x-tab-left {
+    padding-right: 0px;
+    padding-bottom: 19px;
+}
+
+.x-tab-panel-vertical-left .x-tab-strip .x-tab-strip-closable a.x-tab-strip-close
+    {
+    right: 5px;
+    top: auto;
+    bottom: 5px;
+}
+
+.x-tab-panel-vertical-right .x-tab-strip .x-tab-strip-closable a.x-tab-strip-close
+    {
+    left: 5px;
+    top: auto;
+    bottom: 5px;
+    right: auto;
+}

@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/app/!svn/ver/6457/trunk/sea/src/service/com/nari/coherence
+END
+TaskServlet.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/2992/trunk/sea/src/service/com/nari/coherence/TaskServlet.java
+END
+FrontScheme.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/3982/trunk/sea/src/service/com/nari/coherence/FrontScheme.java
+END
+IFuture.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/app/!svn/ver/3478/trunk/sea/src/service/com/nari/coherence/IFuture.java
+END
+FrontListern.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/3292/trunk/sea/src/service/com/nari/coherence/FrontListern.java
+END
+Dispatcher.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/2464/trunk/sea/src/service/com/nari/coherence/Dispatcher.java
+END
+TaskTmnlPnRelation.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/app/!svn/ver/3292/trunk/sea/src/service/com/nari/coherence/TaskTmnlPnRelation.java
+END
+TaskDeal.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/app/!svn/ver/6457/trunk/sea/src/service/com/nari/coherence/TaskDeal.java
+END
+StartListern.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/3319/trunk/sea/src/service/com/nari/coherence/StartListern.java
+END

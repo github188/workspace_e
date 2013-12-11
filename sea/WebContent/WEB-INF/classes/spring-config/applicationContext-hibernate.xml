@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+				<prop key="connection.pool_size">100</prop>
+				<prop key="hibernate.jdbc.batch_size">100</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.default_schema">${hibernate.default_schema}</prop>
+				<prop key="hibernate.query.factory_class">org.hibernate.hql.classic.ClassicQueryTranslatorFactory</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<!-- 数据召测 -->
+				<value>com/nari/baseapp/datagatherman/DataFetchTerminal.hbm.xml</value>
+
+				<!-- 任务模板管理 -->
+				<value>com/nari/sysman/templateman/VwProtocolCode.hbm.xml</value>
+				<value>com/nari/sysman/templateman/VwTaskProperty.hbm.xml</value>
+
+				<!--视图 -->
+				<value>com/nari/basicdata/VwClearDataType.hbm.xml</value>
+				<value>com/nari/basicdata/VwCtrlSchemeType.hbm.xml</value>
+
+
+				<!-- 组织与人员 -->
+				<value>com/nari/orgnization/ODept.hbm.xml</value>
+				<value>com/nari/orgnization/OOrg.hbm.xml</value>
+				<value>com/nari/orgnization/OStaff.hbm.xml</value>
+				<value>com/nari/orgnization/OStaffPhoto.hbm.xml</value>
+				<!-- 电网 -->
+				<value>com/nari/grid/GLine.hbm.xml</value>
+				<value>com/nari/grid/GLineRela.hbm.xml</value>
+				<value>com/nari/grid/GLineTgRela.hbm.xml</value>
+				<value>com/nari/grid/GSubs.hbm.xml</value>
+				<value>com/nari/grid/GSubsLineRela.hbm.xml</value>
+				<value>com/nari/grid/GTg.hbm.xml</value>
+				<value>com/nari/grid/GTran.hbm.xml</value>
+				<!-- 客户 -->
+				<value>com/nari/customer/CPs.hbm.xml</value>
+				<value>com/nari/customer/CSp.hbm.xml</value>
+				<value>com/nari/customer/CCust.hbm.xml</value>
+				<value>com/nari/customer/CCustRela.hbm.xml</value>
+				<value>com/nari/customer/CElecAddr.hbm.xml</value>
+				<value>com/nari/customer/CCustAddr.hbm.xml</value>
+				<value>com/nari/customer/CCons.hbm.xml</value>
+				<value>com/nari/customer/CConsContactRela.hbm.xml</value>
+				<value>com/nari/customer/CContact.hbm.xml</value>
+				<!-- 资产 -->
+				<value>com/nari/device/DFmrEquip.hbm.xml</value>
+				<value>com/nari/device/DIt.hbm.xml</value>
+				<value>com/nari/device/DLcEquip.hbm.xml</value>
+				<value>com/nari/device/DMeasBox.hbm.xml</value>
+				<value>com/nari/device/DMeasCubicle.hbm.xml</value>
+				<value>com/nari/device/DMeter.hbm.xml</value>
+				<value>com/nari/device/DOtherDev.hbm.xml</value>
+				<value>com/nari/device/DStatusChg.hbm.xml</value>
+				<value>com/nari/device/DVlDev.hbm.xml</value>
+				<!-- 计量点 -->
+				<value>com/nari/measurepoint/CMpItRela.hbm.xml</value>
+				<value>com/nari/measurepoint/CMeterMpRela.hbm.xml</value>
+				<value>com/nari/measurepoint/CMp.hbm.xml</value>
+				<value>com/nari/measurepoint/CMpUse.hbm.xml</value>
+				<value>com/nari/measurepoint/CMpSect.hbm.xml</value>
+				<value>com/nari/measurepoint/CItRun.hbm.xml</value>
+				<value>com/nari/measurepoint/CMeter.hbm.xml</value>
+				<!-- 采集点 -->
+				<value>com/nari/runcontrol/RSimCharge.hbm.xml</value>
+				<value>com/nari/runcontrol/RTmnlInstScheme.hbm.xml</value>
+				<value>com/nari/runcontrol/RTmnlInstDiagram.hbm.xml</value>
+				<value>com/nari/runcontrol/RTmnlMaint.hbm.xml</value>
+				<value>com/nari/runcontrol/RTmnlMaintPlan.hbm.xml</value>
+				<value>com/nari/runcontrol/RTmnlApp.hbm.xml</value>
+				<value>com/nari/runcontrol/RTmnlIrTask.hbm.xml</value>
+				<value>com/nari/runcontrol/RTmnlIr.hbm.xml</value>
+				<value>com/nari/runcontrol/RTmnlDebug.hbm.xml</value>
+				<value>com/nari/runcontrol/RLcSwitchTurns.hbm.xml</value>
+				<value>com/nari/runcontrol/RTmnlRun.hbm.xml</value>
+				<value>com/nari/runcontrol/RTmnlRunGraph.hbm.xml</value>
+				<value>com/nari/runcontrol/RFmrEquip.hbm.xml</value>
+				<value>com/nari/runcontrol/RCollObj.hbm.xml</value>
+				<value>com/nari/runcontrol/RCp.hbm.xml</value>
+				<value>com/nari/runcontrol/RCpTsPara.hbm.xml</value>
+				<value>com/nari/runcontrol/RCpSurveyDiagram.hbm.xml</value>
+				<value>com/nari/runcontrol/RCpSurvey.hbm.xml</value>
+				<value>com/nari/runcontrol/RPatrolPlan.hbm.xml</value>
+				<value>com/nari/runcontrol/RCpSwitchPara.hbm.xml</value>
+				<value>com/nari/runcontrol/RCpCtrlPara.hbm.xml</value>
+				<value>com/nari/runcontrol/RPatrol.hbm.xml</value>
+				<value>com/nari/runcontrol/RSiteFaultRmv.hbm.xml</value>
+				<value>com/nari/runcontrol/RCpFault.hbm.xml</value>
+				<value>com/nari/runcontrol/RCpDesignScheme.hbm.xml</value>
+				<value>com/nari/runcontrol/RCpCommPara.hbm.xml</value>
+				<value>com/nari/runcontrol/RCpConsRela.hbm.xml</value>
+				<value>com/nari/runcontrol/RCpMpRela.hbm.xml</value>
+				<!--系统基本数据  -->
+				<value>com/nari/basicdata/BAnalyticalParam.hbm.xml</value>
+				<value>com/nari/basicdata/BAssist24.hbm.xml</value>
+				<value>com/nari/basicdata/BAssist96.hbm.xml</value>
+				<value>com/nari/basicdata/BAssistDay.hbm.xml</value>
+				<value>com/nari/basicdata/BClearProtocol.hbm.xml</value>
+				<value>com/nari/basicdata/BCommProtocol.hbm.xml</value>
+				<value>com/nari/basicdata/BCommProtocolItem.hbm.xml</value>
+				<value>com/nari/basicdata/BCommProtItemList.hbm.xml</value>
+				<value>com/nari/basicdata/BComputerGroup.hbm.xml</value>
+				<value>com/nari/basicdata/BCpCommScheme.hbm.xml</value>
+				<value>com/nari/basicdata/BDataMapping.hbm.xml</value>
+				<value>com/nari/basicdata/BEventDataDef.hbm.xml</value>
+				<value>com/nari/basicdata/BEventMark.hbm.xml</value>
+				<value>com/nari/basicdata/BProtocolEvent.hbm.xml</value>
+				<value>com/nari/basicdata/BSysDictionary.hbm.xml</value>
+				<value>com/nari/basicdata/BSysParameter.hbm.xml</value>
+				<value>com/nari/basicdata/BTmnlFactory.hbm.xml</value>
+				<value>com/nari/basicdata/BTmnlModelNo.hbm.xml</value>
+				<value>com/nari/basicdata/BTrade.hbm.xml</value>
+				<!-- 系统权限 -->
+				<value>com/nari/privilige/PFavorite.hbm.xml</value>
+				<value>com/nari/privilige/PPrivConsignDet.hbm.xml</value>
+				<value>com/nari/privilige/PSysUser.hbm.xml</value>
+				<value>com/nari/privilige/PUserPriv.hbm.xml</value>
+				<value>com/nari/privilige/PUserRoleRela.hbm.xml</value>
+				<value>com/nari/privilige/PMenu.hbm.xml</value>
+				<value>com/nari/privilige/PRole.hbm.xml</value>
+				<value>com/nari/privilige/PRolePrivRela.hbm.xml</value>
+				<value>com/nari/privilige/PAccessOrg.hbm.xml</value>
+				<value>com/nari/privilige/PAccessConsType.hbm.xml</value>
+				<value>com/nari/privilige/PAccessTmnlFactory.hbm.xml</value>
+				<value>com/nari/privilige/PDeptRoleRela.hbm.xml</value>
+				<value>com/nari/privilige/PDeptAccessOrg.hbm.xml</value>
+				<!-- 系统日志 -->
+				<value>com/nari/logofsys/LCalcServiceLog.hbm.xml</value>
+				<value>com/nari/logofsys/LDownCommMsgLog.hbm.xml</value>
+				<value>com/nari/logofsys/LExceptionsLog.hbm.xml</value>
+				<value>com/nari/logofsys/LLowlessMsgLog.hbm.xml</value>
+				<value>com/nari/logofsys/LMasterStationRes.hbm.xml</value>
+				<value>com/nari/logofsys/LOpTmnlLog.hbm.xml</value>
+				<value>com/nari/logofsys/LUpCommMsgLog.hbm.xml</value>
+				<value>com/nari/logofsys/LUserLogEntry.hbm.xml</value>
+				<value>com/nari/logofsys/LUserOpLog.hbm.xml</value>
+				<!--采集点参数相关  -->
+				<value>com/nari/terminalparam/RUserGroup.hbm.xml</value>
+				<value>
+					com/nari/terminalparam/RUserGroupDetail.hbm.xml
+				</value>
+				<value>com/nari/terminalparam/TTmnlTask.hbm.xml</value>
+				<value>com/nari/terminalparam/TTaskTemplate.hbm.xml</value>
+				<value>
+					com/nari/terminalparam/TTaskTemplateData.hbm.xml
+				</value>
+				<value>com/nari/terminalparam/TTmnlParam.hbm.xml</value>
+				<value>com/nari/terminalparam/TTmnlTotalInfo.hbm.xml</value>
+				<value>com/nari/terminalparam/TDataCombi.hbm.xml</value>
+				<value>com/nari/terminalparam/TTmnlMpParam.hbm.xml</value>
+				<value>com/nari/terminalparam/TTmnlGroup.hbm.xml</value>
+				<value>
+					com/nari/terminalparam/TTmnlGroupDetail.hbm.xml
+				</value>
+				<!-- 统计及报表  -->
+				<value>com/nari/statreport/ABureauStatD.hbm.xml</value>
+				<value>com/nari/statreport/ACisMeterRead.hbm.xml</value>
+				<value>com/nari/statreport/AConsStatD.hbm.xml</value>
+				<value>com/nari/statreport/AEventClassStatD.hbm.xml</value>
+				<value>com/nari/statreport/AEventStatD.hbm.xml</value>
+				<value>com/nari/statreport/ALineStatD.hbm.xml</value>
+				<value>com/nari/statreport/AMainPageCurve.hbm.xml</value>
+				<value>com/nari/statreport/AOrgStatD.hbm.xml</value>
+				<value>com/nari/statreport/ATmnlFlowD.hbm.xml</value>
+				<value>
+					com/nari/statreport/ATmnlFlowDistributeD.hbm.xml
+				</value>
+				<value>com/nari/statreport/ATmnlFlowM.hbm.xml</value>
+				<value>com/nari/statreport/ATmnlRealTime.hbm.xml</value>
+				<value>com/nari/statreport/ATmnlStatsD.hbm.xml</value>
+				<!--工单处理-->
+				<value>com/nari/flowhandle/FEventClose.hbm.xml</value>
+				<value>com/nari/flowhandle/FEventShield.hbm.xml</value>
+				<value>com/nari/flowhandle/FEventFlow.hbm.xml</value>
+				<value>com/nari/flowhandle/FEventSrc.hbm.xml</value>
+				<!-- 有序用电 -->
+				<value>
+					com/nari/orderlypower/WUrgefeeParamTemplate.hbm.xml
+				</value>
+				<value>
+					com/nari/orderlypower/WPwrctrlTemplate.hbm.xml
+				</value>
+				<value>
+					com/nari/orderlypower/WPwrctrlTemplateDetail.hbm.xml
+				</value>
+				<value>
+					com/nari/orderlypower/WFactctrlTemplate.hbm.xml
+				</value>
+				<value>com/nari/orderlypower/WFloatDownCtrl.hbm.xml</value>
+				<value>com/nari/orderlypower/WCtrlScheme.hbm.xml</value>
+				<value>
+					com/nari/orderlypower/WCtrlSchemeSection.hbm.xml
+				</value>
+				<value>com/nari/orderlypower/WCtrlSchemeTmnl.hbm.xml</value>
+				<value>com/nari/orderlypower/WSmsSend.hbm.xml</value>
+				<value>
+					com/nari/orderlypower/WSmsSendTemplate.hbm.xml
+				</value>
+				<value>com/nari/orderlypower/WSmsSendRec.hbm.xml</value>
+				<value>com/nari/orderlypower/WSmsCallingCard.hbm.xml</value>
+				<value>com/nari/orderlypower/WSmsSubscribe.hbm.xml</value>
+				<value>
+					com/nari/orderlypower/WSmsSubscribeObj.hbm.xml
+				</value>
+				<value>
+					com/nari/orderlypower/WSmsSubscribeRec.hbm.xml
+				</value>
+				<value>com/nari/orderlypower/WTmnlPaulPower.hbm.xml</value>
+				<value>com/nari/orderlypower/WTmnlReject.hbm.xml</value>
+				<value>com/nari/orderlypower/WTmnlPwrctrl.hbm.xml</value>
+				<value>
+					com/nari/orderlypower/WTmnlPwrctrlDetail.hbm.xml
+				</value>
+				<value>com/nari/orderlypower/WTmnlFactctrl.hbm.xml</value>
+				<value>com/nari/orderlypower/WTmnlMonPctrl.hbm.xml</value>
+				<value>com/nari/orderlypower/WTmnlBusiness.hbm.xml</value>
+				<value>com/nari/orderlypower/WTmnlTurn.hbm.xml</value>
+				<value>com/nari/orderlypower/WFeectrl.hbm.xml</value>
+				<value>
+					com/nari/orderlypower/WFeectrlTemplate.hbm.xml
+				</value>
+				<value>
+					com/nari/orderlypower/WFeectrlTemplateDetail.hbm.xml
+				</value>
+				<value>
+					com/nari/orderlypower/TTmnlCtrlParam.hbm.xml
+				</value>
+				<value>
+					com/nari/orderlypower/TTmnlCtrlParamDetail.hbm.xml
+				</value>
+				<!--后台任务下发-->
+				<value>com/nari/bg/TBgTask.hbm.xml</value>
+				<value>com/nari/bg/TBgTaskResult.hbm.xml</value>
+				<value>com/nari/bg/TBgTaskDetail.hbm.xml</value>
+				<value>com/nari/bg/TBgTaskSend.hbm.xml</value>
+				<!--重点用户定义 -->
+				<value>com/nari/advapp/vipconsman/VipConsManager.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+</beans>

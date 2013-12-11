@@ -1,0 +1,761 @@
+package com.nari.baseapp.datagathorman.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.springframework.jdbc.core.RowMapper;
+
+import com.nari.baseapp.datagathorman.IDataFetchJdbcDao;
+import com.nari.baseapp.planpowerconsume.impl.MapResultMapper;
+import com.nari.basedao.impl.JdbcBaseDAOImpl;
+import com.nari.privilige.PSysUser;
+import com.nari.util.AutoLang;
+import com.nari.util.ParseUtils;
+import com.nari.util.exception.DBAccessException;
+import com.nari.util.exception.ServiceException;
+
+/****
+ * 数据召测的jdbc实现
+ * 
+ * @author huangxuan *
+ *****/
+public class DataFetchJdbcDaoImpl extends JdbcBaseDAOImpl implements
+		IDataFetchJdbcDao {
+	/***
+	 * 查找一个透明公约下面的所有的透明公约 *
+	 * 
+	 * @param clearNo
+	 *            透明规约的编码
+	 * @return 按骆驼命名法返回的map
+	 **/
+	@SuppressWarnings("unchecked")
+	public List findDownF(String clearNo) {
+		// 对编号进行处理
+		String no = parseClearNo(clearNo);
+		String sql = "select * from B_CLEAR_PROTOCOL where protocol_no ";
+		if (no.length() == clearNo.length()) {
+			sql += " =?";
+			return getJdbcTemplate().query(sql, new Object[] {},
+					new MapResultMapper("[*,c]"));
+		} else {
+			int count = clearNo.length() - no.length();
+			String ff = (count == 1 ? "F" : "FF");
+			sql += " like ? and protocol_no not like '%" + ff + "'";
+			return getJdbcTemplate().query(sql, new Object[] { no + "%" },
+					new MapResultMapper("[*,c]"));
+		}
+		// return getJdbcTemplate().query(sql, args, rowMapper);
+	}
+
+	/***
+	 *字符串对透明规约的处理，来得到一个前置字符串 如1113FF返回1113 11131F返回11131 1213123返回1213123
+	 **/
+	private String parseClearNo(String clearNo) {
+		if (!clearNo.endsWith("F")) {
+			return clearNo;
+		}
+		if (clearNo.endsWith("FF")) {
+			return clearNo.substring(0, clearNo.length() - 2);
+		}
+		if (clearNo.endsWith("F")) {
+			return clearNo.substring(0, clearNo.length() - 1);
+		}
+		return clearNo;
+	}
+
+	/***
+	 * 得到一个透明规约编码的父项是多少
+	 * 
+	 * @return 如果没有父项 返回null
+	 * @throws DBAccessException
+	 * **/
+	public String getFather(String clearNo) throws DBAccessException {
+		if (clearNo.endsWith("F")) {
+			return null;
+		}
+		// 对字符串进行处理,去掉后两位，加上FF结尾
+		StringBuilder sb = new StringBuilder(clearNo);
+		sb.replace(clearNo.length() - 2, clearNo.length(), "FF");
+		// 判断有没有这个项目
+		String sql = "select protocol_no from b_clear_protocol where protocol_no = ? and rownum=1";
+		String no = "";
+		try {
+			no = (String) getJdbcTemplate().queryForObject(sql,
+					new Object[] { sb.toString() }, String.class);
+		} catch (Exception e) {
+			no = null;
+		}
+
+		if (!(null == no)) {
+			return no;
+		}
+		sb = new StringBuilder(clearNo);
+		sb.replace(clearNo.length() - 1, clearNo.length(), "F");
+		sql = "select protocol_no from b_clear_protocol where protocol_no = ? and rownum=1";
+		no = (String) getJdbcTemplate().queryForObject(sql,
+				new Object[] { sb.toString() }, String.class);
+		if (!(no == null)) {
+			return no;
+		} else {
+			throw new DBAccessException("未定义的透明编码 ");
+		}
+
+	}
+
+	/***
+	 * 查找一个召测组合下面的所有的项
+	 * 
+	 * @param combiName
+	 *            组合的名称
+	 * @param staffNo
+	 *            操作人员的编号
+	 * @return List 生成map对象 *
+	 ***/
+	public List findFetchCombiItems(String combiName, String staffNo) {
+		String sql = "select t.combi_name,t.clear_prot_no,t.staff_no,t.create_date,t.valid_days,t.is_share,b.protocol_name,b.data_type"
+				+ " from t_data_combi t "
+				+ "join b_clear_protocol b on(t.clear_prot_no=b.protocol_no)"
+				+ " where staff_no=? and combi_name=?";
+		return getJdbcTemplate().query(sql,
+				new Object[] { staffNo, combiName },
+				new MapResultMapper("[*,c]"));
+	}
+
+	/***
+	 * 查找所有的组合的项 如果有重名的 未处理有效天数，有效天数的处理
+	 * 
+	 * @param staffNo
+	 *            操作人员的id
+	 * @param isShared
+	 *            是否共享
+	 * @return 得到的mapkey为驼峰命名法 *
+	 ***/
+	public List findFetchCombi(String staffNo, boolean isShared) {
+		String change = isShared ? " or is_share=1" : "";
+		String sql = "select substr(data,1,instr(data,'_')-1) from "
+				+ "(select distinct (combi_name||'_'||staff_no) as data "
+				+ "from t_data_combi where staff_no=? "
+				+ (isShared ? "or is_share=1" : "") + ") tb";
+		return getJdbcTemplate().query(sql, new Object[] { staffNo },
+				new MapResultMapper("[*,c]"));
+	}
+
+	/**
+	 * 查找一个用户所有的组合和其中的项生成后的格式 格式如下,默认包含共享的项目<br>
+	 * {组合的名称,用户编号,有效天数，创建时间，是否共享,是不是自己的组合}:{[<br>
+	 * clearNo，<br>
+	 * 透明规约的名称,<br>
+	 * 规约的类型，//（一类，二类）<br>
+	 * 标示,<br>
+	 * 是否可能修改<br>
+	 * ]<br>
+	 * }<br>
+	 * 经查询透明公约的长度全部是6 <br>
+	 * <br>
+	 * 此方法主要是直接生成便于前台处理的数据结构
+	 * 
+	 * @author huangxuan
+	 * @param staffNo
+	 *            工作人员编号
+	 * @return 返回的格式中key采用驼峰命名法 *
+	 **/
+	@SuppressWarnings("unchecked")
+	public Map<Map, List> findAllCombi(final String staffNo)
+			throws DBAccessException {
+		String sql = "select t.combi_id,t.combi_name,t.clear_prot_no,t.staff_no,\n"
+				+ "t.create_date,t.valid_days,t.is_share,b.protocol_name\n"
+				+ ",b.data_type,b.data_group from t_data_combi t join\n"
+				+ " b_clear_protocol b on(t.clear_prot_no=b.protocol_no)\n"
+				+ " where t.staff_no=? or t.is_share=1";
+		final HashMap<Map, List> resultMap = new HashMap<Map, List>();
+		// 组装
+		getJdbcTemplate().query(sql, new Object[] { staffNo }, new RowMapper() {
+
+			@SuppressWarnings("unchecked")
+			@Override
+			public Object mapRow(ResultSet rs, int index) throws SQLException {
+				// 组装一个key到resultMap
+				HashMap key = new HashMap();
+				// key.put("combiId", rs.getObject("combi_id"));
+				key.put("combiName", rs.getObject("combi_name"));
+				// 更新时候的新值
+				key.put("newName", rs.getObject("combi_name"));
+				key.put("validDays", rs.getObject("valid_days"));
+				key.put("staffNo", rs.getObject("staff_no"));
+				key.put("createDate", rs.getObject("create_date"));
+				key.put("isShare", rs.getObject("is_share"));
+				key.put("status", "db");
+				// 值
+				HashMap value = new HashMap();
+				value.put("staus", "db");
+				value.put("clearProtNo", rs.getObject("clear_prot_no"));
+				value.put("protocolName", rs.getObject("protocol_name"));
+				value.put("dataType", rs.getObject("data_type"));
+				value.put("dataGroup", rs.getObject("data_group"));
+				value.put("staffNo", rs.getObject("staff_no"));
+				value.put("combiId", rs.getObject("combi_id"));
+				// 默认从数据库中的数据标示为db
+				value.put("status", "db");
+				if (rs.getString("staff_no").equals(staffNo)) {
+					key.put("self", "yes");
+					value.put("self", "yes");
+				} else {
+					key.put("self", "no");
+					value.put("self", "no");
+				}
+				if (resultMap.containsKey(key)) {
+					resultMap.get(key).add(value);
+				} else {
+					List list = new ArrayList();
+					list.add(value);
+					resultMap.put(key, list);
+				}
+				return null;
+			}
+		});
+		return resultMap;
+	}
+
+	/****
+	 * 判断某个名称的组合是否存在 *
+	 **/
+	public Boolean isExistsCombi(String combiName, String staffNo) {
+		String sql = "select 1 from dual  where exists\n"
+				+ "(select 1 from t_data_combi where combi_name=? and staff_no=?)";
+		try {
+			getJdbcTemplate().queryForLong(sql,
+					new Object[] { combiName, staffNo });
+
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+
+	/***
+	 * 通过一定的约定格式来进行更新 发生任何错误都会回滚 <br>
+	 * combiEdit <br>
+	 * combiDel <br>
+	 * itemDel <br>
+	 * itemAdd <br>
+	 * 
+	 * @param list
+	 *            字符串标示的命名列表<br>
+	 *            可能能发生效果的命令名称为 combiName newName staffNo isShare status
+	 *            clearProtNo combiId validDays
+	 * @param staffNo
+	 *            工作人员的列表
+	 ****/
+	public void updateMain(List<String> list, String staffNo)
+			throws DBAccessException {
+		if (null == staffNo) {
+			logger.error("操作人员工号不能");
+			throw new DBAccessException("操作人员工号不能");
+		}
+		if (null == list || list.size() == 0 || list.get(0).trim().equals("")) {
+			return;
+		}
+		for (String cmd : list) {
+			String getStaff = ParseUtils.getFirst(cmd, "staffNo");
+			// 非法分支处理
+			if (null == getStaff) {
+				getStaff = staffNo;
+			} else {
+				if (!getStaff.equals(staffNo)) {
+					logger.error("你不能修改不属于你的组合");
+					throw new DBAccessException("你不能修改不属于你的组合");
+				}
+
+			}
+			String status = ParseUtils.getFirst(cmd, "status");
+
+			String combiName = ParseUtils.getFirst(cmd, "combiName");
+			String valiDays = ParseUtils.getFirst(cmd, "validDays");
+			valiDays = "0";
+			String isShare = ParseUtils.getFirst(cmd, "isShare");
+			String combiId = ParseUtils.getFirst(cmd, "combiId");
+			if (isShare != null && isShare.equals("true")) {
+				isShare = "1";
+			} else if (isShare != null && isShare.equals("false")) {
+				isShare = "0";
+			}
+			if (status.equals("combiEdit")) {
+
+				String newName = ParseUtils.getFirst(cmd, "newName");
+				if (null == combiName) {
+					logger.error("未发现召测的组合名称");
+					continue;
+					// throw new DBAccessException("未发现召测组合的名称，无法更新数据");
+				}
+
+				// 记录参数
+				List args = new ArrayList();
+				StringBuilder sb = new StringBuilder(
+						"update t_data_combi set \n");
+				// 组装变化的字符串
+				StringBuilder change = new StringBuilder();
+
+				if (newName != null && !newName.equals(combiName)) {
+					// 判断是不是有重名的项,如果有重名的，进行回滚
+					if (isExistsCombi(newName, staffNo)) {
+						logger.error(newName + "召测组合已经存在，请重新选择一个名称");
+						throw new DBAccessException(newName
+								+ "召测组合已经存在，请重新选择一个名称");
+					}
+					change.append("combi_name=?,");
+					args.add(newName);
+				}
+				if (valiDays != null) {
+					change.append("valid_days=?,");
+					args.add(valiDays);
+				}
+				if (isShare != null) {
+					change.append("is_share=?,");
+					args.add(isShare);
+				}
+				change.replace(change.length() - 1, change.length(), "");
+				sb.append(change);
+				sb.append("  where combi_name=? and staff_no=?");
+				args.add(combiName);
+				args.add(staffNo);
+				getJdbcTemplate().update(sb.toString(), args.toArray());
+			} else if (status.equals("combiDel")) {
+				String sql = "delete from t_data_combi where\n"
+						+ " combi_name=? and staff_no=?";
+				getJdbcTemplate().update(sql,
+						new Object[] { combiName, staffNo });
+			} else if (status.equals("itemAdd")) {
+				if (null == combiName) {
+					logger.error("组合名称为空，无法确定添加项所属的组合");
+					throw new DBAccessException("组合名称为空，无法确定添加项所属的组合");
+				}
+				String clearProtNo = ParseUtils.getFirst(cmd, "clearProtNo");
+				if (clearProtNo == null) {
+					logger.error("透明公约编码丢失，插入数据失败失败");
+					throw new DBAccessException("透明公约编码丢失，插入数据失败失败");
+				}
+				// 编辑 找到公共的属性
+				Map m = findPublicInfo(combiName, staffNo);
+				// m=null说明需要重新的添加
+				if (m == null) {
+					valiDays = valiDays == null ? "90" : valiDays;
+					isShare = isShare == null ? "0" : isShare;
+					String sql = "insert into t_data_combi values\n"
+							+ " (S_T_DATA_COMBI.NEXTVAL,?,?,?,sysdate,?,?,0)";
+					getJdbcTemplate().update(
+							sql,
+							new Object[] { combiName, clearProtNo, staffNo,
+									valiDays, isShare });
+				}
+				// 如果原来已经有过这个组合，先将必要的信息读出来
+				else {
+					valiDays = m.get("valid_days").toString();
+					isShare = m.get("is_share").toString();
+					Date createDate = (Date) m.get("create_date");
+					String sql = "insert into t_data_combi values\n"
+							+ " (S_T_DATA_COMBI.NEXTVAL,?,?,?,?,?,?,0)";
+					getJdbcTemplate().update(
+							sql,
+							new Object[] { combiName, clearProtNo, staffNo,
+									createDate, valiDays, isShare });
+				}
+
+			} else if (status.equals("itemDel")) {
+				if (combiId == null) {
+					logger.error("combiId丢失，删除失败");
+					throw new DBAccessException("combiId丢失，删除失败");
+				}
+				String sql = "delete from t_data_combi where\n"
+						+ "   combi_id=? and staff_no=?";
+				getJdbcTemplate()
+						.update(sql, new Object[] { combiId, staffNo });
+			}
+		}
+	}
+
+	/****
+	 * 
+	 * 找到一个组合中的公共的信息 *
+	 ****/
+	public Map findPublicInfo(String combiName, String staffNo) {
+		String sql = "select create_date,valid_days,is_share from\n"
+				+ "t_data_combi where combi_name=? and staff_no=? and rownum=1";
+
+		List list = getJdbcTemplate().query(sql,
+				new Object[] { combiName, staffNo },
+				new MapResultMapper("[*,l]"));
+		if (list.size() == 0) {
+			return null;
+		}
+		return (Map) list.get(0);
+	}
+
+	/*****
+	 *通过透明编码的列表得到透明编码所对应的名称
+	 * 
+	 * *
+	 ****/
+	public Map<String, String> findCodeName(List<String> list)
+			throws DBAccessException {
+		if (list == null || list.size() == 0) {
+			return null;
+		}
+		list=new ArrayList<String>(new HashSet(list));
+		final Map<String, String> m = new HashMap<String, String>();
+		StringBuilder sb = new StringBuilder(
+				"select protocol_no,protocol_name from\n"
+						+ " b_clear_protocol where  ");
+//		for (int i = 0; i < list.size(); i++) {
+//			if (i != list.size() - 1) {
+//				sb.append("?,");
+//			} else {
+//				sb.append("?)");
+//			}
+//		}
+		sb.append(AutoLang.autoIn("protocol_no",list, 500));
+		getJdbcTemplate().query(sb.toString(), list.toArray(), new RowMapper() {
+
+			@Override
+			public Object mapRow(ResultSet rs, int index) throws SQLException {
+				m.put(rs.getString("protocol_no"), rs
+						.getString("protocol_name"));
+				return null;
+			}
+		});
+		return m;
+	}
+
+	/***
+	 * 通过combiId查找所有的某一个名字组合下的透明公约编码，内部进行去重名
+	 * 
+	 * @param combiId
+	 *            *
+	 ***/
+	public List<String> findCodesByName(String combiId)
+			throws DBAccessException {
+		String sql = "select  clear_prot_no from t_data_combi t where t.combi_name =\n"
+				+ "(select combi_name from t_data_combi where combi_id=?) and\n"
+				+ "staff_no=(select staff_no from t_data_combi where combi_id=?)";
+
+		final Set<String> set = new HashSet<String>();
+		getJdbcTemplate().query(sql, new Object[] { combiId, combiId },
+				new RowMapper() {
+
+					@Override
+					public Object mapRow(ResultSet rs, int index)
+							throws SQLException {
+						set.add(rs.getString("clear_prot_no"));
+						return null;
+					}
+				});
+		return new ArrayList<String>(set);
+	}
+
+	/***
+	 * 通过dataid得到dataId和测量点之间对应关系的map 如果没有找到，返回null
+	 * 
+	 * @param dataIds
+	 *            数据的id列表
+	 * @return dataid和相互关联的pt的列表 *
+	 ****/
+	public Map<String, String> findDataIdPn(List dataIds)
+			throws DBAccessException {
+		if (dataIds == null || dataIds.size() == 0) {
+			return null;
+		}
+		dataIds = removeEcho(dataIds);
+		StringBuilder sb = new StringBuilder(
+				"select id,mp_sn from e_data_mp e.is_valid=1 and where id in (");
+		for (int i = 0; i < dataIds.size(); i++) {
+			if (i == dataIds.size() - 1) {
+				sb.append("?)");
+			} else {
+				sb.append("?,");
+			}
+		}
+		final Map<String, String> mp = new HashMap<String, String>();
+		getJdbcTemplate().query(sb.toString(), dataIds.toArray(),
+				new RowMapper() {
+
+					@Override
+					public Object mapRow(ResultSet rs, int index)
+							throws SQLException {
+						mp.put(rs.getString("id"), rs.getString("mp_sn"));
+						return null;
+					}
+				});
+		return mp;
+	}
+
+	/***
+	 * 找到数据类型与数据类型名称的关系
+	 * 
+	 * @return 数据类型和值的对应关系 *
+	 ***/
+	public Map<String, String> mapTypeName() throws DBAccessException {
+		String sql = "select data_type,data_name from vw_data_type";
+		final Map<String, String> mp = new HashMap<String, String>();
+		getJdbcTemplate().query(sql, new Object[] {}, new RowMapper() {
+
+			@Override
+			public Object mapRow(ResultSet rs, int index) throws SQLException {
+				mp.put(rs.getString("data_type"), rs.getString("data_name"));
+				return null;
+			}
+		});
+		return mp;
+	}
+
+	/******
+	 * 通过事件编码号找到事件的名称 *
+	 *****/
+	@SuppressWarnings("unchecked")
+	public Map<String, String> mapEventName(List nos) throws DBAccessException {
+		if (nos == null || nos.size() == 0) {
+			return null;
+		}
+		nos = removeEcho(nos);
+		StringBuilder sb = new StringBuilder(
+				"select item_no,item_name from b_event_data_def where  ");
+		sb.append(AutoLang.autoIn("item_no",nos, 500));
+		final Map<String, String> mp = new HashMap<String, String>();
+		getJdbcTemplate().query(sb.toString(), nos.toArray(), new RowMapper() {
+
+			@Override
+			public Object mapRow(ResultSet rs, int index) throws SQLException {
+				mp.put(rs.getString("item_no"), rs.getString("item_name"));
+				return null;
+			}
+		});
+		return mp;
+	}
+
+	/******
+	 * 通过规约得到数据的类型
+	 * 
+	 * @list 规约名称的list
+	 * @return map 规约名称和数据类型之间的关联 *
+	 *****/
+	@SuppressWarnings("unchecked")
+	public Map<String, String> findCodeDataType(List<String> list)
+			throws DBAccessException {
+		if (list == null || list.size() == 0) {
+			return null;
+		}
+		list = removeEcho(list);
+		final Map<String, String> m = new HashMap<String, String>();
+		StringBuilder sb = new StringBuilder(
+				"select distinct  clear_prot_no,unit from b_comm_protocol_item b where  ");
+//		for (int i = 0; i < list.size(); i++) {
+//			if (i != list.size() - 1) {
+//				sb.append("?,");
+//			} else {
+//				sb.append("?)");
+//			}
+//		}
+		
+		sb.append(AutoLang.autoIn("b.clear_prot_no",list, 500));
+		getJdbcTemplate().query(sb.toString(), list.toArray(), new RowMapper() {
+
+			@Override
+			public Object mapRow(ResultSet rs, int index) throws SQLException {
+				m.put(rs.getString("clear_prot_no"), rs.getString("unit"));
+				return null;
+			}
+		});
+		return m;
+	}
+
+	/***
+	 *对list中的项除掉重复的 *
+	 ***/
+	@SuppressWarnings("unchecked")
+	public List removeEcho(List list) {
+		HashSet s = new HashSet(list);
+		return new ArrayList(s);
+	}
+
+	/***
+	 * 通过id来查找组合的名称 如果没有找到返回组合null
+	 * 
+	 * @param combiId
+	 * @return 组合的名称 *
+	 ***/
+	public String findNameById(String combiId) {
+		String sql = "select t.combi_name from t_data_combi t where t.combi_id=?";
+		try {
+			return (String) getJdbcTemplate().queryForObject(sql,
+					new Object[] { combiId }, String.class);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	/***
+	 * 通过id来查找组合下的所有的编码
+	 * 
+	 * @param combiId
+	 *            组合项的id *
+	 **/
+	@SuppressWarnings("unchecked")
+	public List<String> findItemsById(PSysUser user, String combiId)
+			throws DBAccessException {
+		String sql = "select t.clear_prot_no from t_data_combi t where t.staff_no=? and t.combi_name in\n"
+				+ " (select combi_name from t_data_combi tt where tt.combi_id=? and rownum=1)";
+		return getJdbcTemplate().queryForList(sql,
+				new Object[] { user.getStaffNo(), combiId }, String.class);
+	}
+
+	/***
+	 * 通过大项的列表来找到大项和大项所对应的名称 请确保codes中的项都为大项
+	 * 
+	 * @param codes
+	 *            透明编码的列表
+	 * @throws DBAccessException
+	 * @throws ServiceException
+	 *             *
+	 **/
+	public Map<String, String> findBigCodeToName(List<String> codes)
+			throws DBAccessException {
+		try {
+			final Map<String, String> m = new HashMap<String, String>();
+			if (codes == null || codes.size() == 0) {
+				return m;
+			}
+			StringBuilder sb = new StringBuilder(
+					"select b.protocol_no as no,b.protocol_name as name from b_clear_protocol b where b.protocol_no in(");
+			for (int i = 0; i < codes.size(); i++) {
+				if (i == codes.size() - 1) {
+					sb.append("?)");
+				} else {
+					sb.append("?,");
+				}
+			}
+			getJdbcTemplate().query(sb.toString(), codes.toArray(),
+					new RowMapper() {
+						@Override
+						public Object mapRow(ResultSet rs, int rowNum)
+								throws SQLException {
+							m.put(rs.getString("no"), rs.getString("name"));
+							return null;
+						}
+					});
+			return m;
+		} catch (Exception e) {
+			throw new DBAccessException(e.getMessage());
+		}
+	}
+	/*******
+	 * 通过终端资产号和pns来找到对应的表下面的用户名和用户编号
+	 * @param tmnlNo 终端资产号
+	 * @param pns 所对应的pn的列表
+	 * @return 返回一个key格式为终端资产号_pn
+	 * 值为一个map 其中的key为consNo 和consName
+	 * *****/
+	public Map<String, Map<String, String>> findMeterCons(String tmnlNo,List<String> pns)
+			throws DBAccessException {
+		try {
+			final Map<String, Map<String, String>> m = new HashMap<String, Map<String, String>>();
+			if (pns == null || pns.size() == 0) {
+				return null;
+			}
+			StringBuilder sb = new StringBuilder(
+					"select e.mp_sn,\n" +
+					"       e.tmnl_asset_no || '_' || e.mp_sn as key,\n" + 
+					"       e.cons_no,\n" + 
+					"       c.cons_name,\n" + 
+					"       cmp.mp_no,\n" + 
+					"       cmp.mp_name,\n" + 
+					"       e.asset_no,\n" + 
+					"       dlc.asset_no  fmr_asset_no\n" + 
+					"  from e_data_mp e\n" + 
+					"  left join c_meter cc on (cc.meter_id = e.meter_id)\n" + 
+					"  left join c_meter_mp_rela mmr on (e.meter_id = mmr.meter_id)\n" + 
+					"  left	join c_mp cmp on (cmp.mp_id = mmr.mp_id)\n" + 
+					"  left join c_cons c on (c.cons_no = e.cons_no)\n" + 
+					"  LEFT join D_LC_EQUIP dlc on (dlc.id = cc.fmr_asset_no)\n" +
+					" where (cmp.meter_flag = 1\n" + 
+					"or cmp.meter_flag is null)\n"+
+					"   and e.tmnl_asset_no = ?\n" + 
+					"and e.is_valid=1\n"+
+					"   and  "
+);
+			sb.append(AutoLang.autoIn("e.mp_sn",pns, 500));
+			
+			LinkedList<String> ll=new LinkedList<String>(pns);
+			ll.addFirst(tmnlNo);
+			getJdbcTemplate().query(sb.toString(),ll.toArray(),
+					new RowMapper() {
+						@Override
+						public Object mapRow(ResultSet rs, int rowNum)
+								throws SQLException {
+							Map mm = new HashMap<String, String>();
+							mm.put("consNo", rs.getString("cons_no"));
+							mm.put("consName", rs.getString("cons_name"));
+							mm.put("mpNo", rs.getString("mp_no"));
+							mm.put("mpName", rs.getString("mp_name"));
+							mm.put("assetNoM", rs.getString("asset_no"));
+							mm.put("frmAssetNo", rs.getString("fmr_asset_no"));
+							m.put(rs.getString("key"), mm);
+							return null;
+						}
+					});
+			return m;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DBAccessException(e.getMessage());
+		}
+	}
+	/**
+	 * 通过资产号得到其下的采集器，以及采集器下面对应的表
+	 * @param tmnlAssetNo
+	 */
+	@SuppressWarnings("unchecked")
+	public Map<String,List> findFrmToAsset(String tmnlAssetNo){
+		String sql=
+			"select dlc.asset_no as fmr_asset_no, e.asset_no,decode(cc.fmr_asset_no,null,1,cc.tmnl_asset_no,1,0) as is_tmnl\n" +//is_tmnl确定是不是
+			"  from e_data_mp e\n" + 
+			"  join c_meter cc on (cc.meter_id = e.meter_id)\n" + 
+			"left join D_LC_EQUIP dlc on (dlc.id = cc.fmr_asset_no) \n" +
+			" where \n" + 
+			" e.tmnl_asset_no = ?\n" + 
+			"and e.is_valid=1\n"+
+			"  order by cc.fmr_asset_no";
+		final HashMap hm=new HashMap();
+		getJdbcTemplate().query(sql, new Object[]{tmnlAssetNo}, new RowMapper(){
+			@Override
+			public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+				String key=rs.getString("fmr_asset_no");
+				String isTmnl=rs.getString("is_tmnl");
+				List list=null;
+				if(isTmnl.equals("1")||null==key){
+					key="终端";
+				}
+				if(!hm.containsKey(key)){
+					list=new ArrayList();
+				}else{
+					list=(List) hm.get(key);
+				}
+				list.add(rs.getString("asset_no"));
+				hm.put(key, list);
+				return null;
+			}});
+		return hm;
+	}
+	public static void main(String[] args) {
+		DataFetchJdbcDaoImpl t = new DataFetchJdbcDaoImpl();
+		System.out.println(t.parseClearNo("1115F"));
+		StringBuilder sb = new StringBuilder("111544");
+		String clearNo = "111544";
+		System.out.println("rs:"
+				+ sb.replace(clearNo.length() - 2, clearNo.length(), "FF"));
+	}
+}

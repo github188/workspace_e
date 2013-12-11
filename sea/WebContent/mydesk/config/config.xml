@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<config>
+	<model name="昨日电量分布"  id="1" path="mydesk/yestPowerDist.jsp" img="mydesk/images/t1.gif" />
+	<model name="当日电量负荷监视(万kW)"  id="2" path="mydesk/dayElecLoadMonitor.jsp" img="mydesk/images/t1.gif" />
+	<model name="昨日采集成功率"  id="3" path="mydesk/yestCollectionRate.jsp" img="mydesk/images/t1.gif" />
+	<model name="上月地区用电大户排名(TOP10)"  id="4" path="mydesk/areaElecLargeRank.jsp" img="mydesk/images/t1.gif" />
+	<model name="通信流量"  id="5" path="mydesk/commTraffic.jsp" img="mydesk/images/t1.gif" />
+	<!--model name="采集覆盖率"  id="4" path="mydesk/collectionCoverage.jsp" img="mydesk/images/t1.gif" />
+	<model name="重点行业周用电趋势"  id="5" path="mydesk/stressIndustryPowerTrend.jsp" img="mydesk/images/t1.gif" />
+	<model name="电压合格率"  id="7" path="mydesk/voltageQualifiedRate.jsp" img="mydesk/images/t1.gif" />
+	<model name="通信流量"  id="8" path="mydesk/commTraffic.jsp" img="mydesk/images/t1.gif" />
+	<model name="终端运行情况"  id="9" path="mydesk/runTerminal.jsp" img="mydesk/images/t1.gif" />
+	-->
+</config>

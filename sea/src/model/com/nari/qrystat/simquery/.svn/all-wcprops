@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/app/!svn/ver/5037/trunk/sea/src/model/com/nari/qrystat/simquery
+END
+SIMInstallStat.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/qrystat/simquery/SIMInstallStat.java
+END
+SimInstall.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/5037/trunk/sea/src/model/com/nari/qrystat/simquery/SimInstall.java
+END
+SimDetailFlowInfoBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/app/!svn/ver/3226/trunk/sea/src/model/com/nari/qrystat/simquery/SimDetailFlowInfoBean.java
+END
+SimTrafficInfoBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/app/!svn/ver/4078/trunk/sea/src/model/com/nari/qrystat/simquery/SimTrafficInfoBean.java
+END
+SIMOverTraffic.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/app/!svn/ver/3454/trunk/sea/src/model/com/nari/qrystat/simquery/SIMOverTraffic.java
+END

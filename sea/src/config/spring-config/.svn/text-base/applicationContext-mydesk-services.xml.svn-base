@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<!--监视主页-用电大户排名-->
+	<bean id="iMyDeskManager" class="com.nari.mydesk.impl.MyDeskManagerImpl">
+		<property name="iMyDeskDao" ref="iMyDeskDao" />
+	</bean>
+	
+	<!--监视主页-每日电量统计-->
+	<bean id="energyStatDManager" class="com.nari.mydesk.impl.EnergyStatDManagerImpl">
+		<property name="energyStatDDao" ref="energyStatDDao" />
+	</bean>
+	
+	<!--监视主页-每日线损统计-->
+	<bean id="losePowerStatAnalyseManager" class="com.nari.mydesk.impl.LosePowerStatAnalyseManagerImpl">
+		<property name="losePowerStatAnalyseDao" ref="losePowerStatAnalyseDao" />
+	</bean>
+	
+	<!--监视主页-上月电量统计-->
+	<bean id="monthPowerStatManager" class="com.nari.mydesk.impl.MonthPowerStatManagerImpl">
+		<property name="monthPowerStatDao" ref="monthPowerStatDao" />
+	</bean>
+	
+</beans>

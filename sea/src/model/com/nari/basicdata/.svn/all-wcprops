@@ -1,0 +1,407 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/app/!svn/ver/6923/trunk/sea/src/model/com/nari/basicdata
+END
+FailureStatistic.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/6529/trunk/sea/src/model/com/nari/basicdata/FailureStatistic.java
+END
+VwCtrlSchemeTypeId.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/VwCtrlSchemeTypeId.java
+END
+BEventMark.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BEventMark.java
+END
+BComputerGroup.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BComputerGroup.java
+END
+BSysDictionary.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BSysDictionary.hbm.xml
+END
+BProtocolEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/5648/trunk/sea/src/model/com/nari/basicdata/BProtocolEvent.java
+END
+BDataMapping.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BDataMapping.hbm.xml
+END
+BDataMappingId.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BDataMappingId.java
+END
+BCommProtocol.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BCommProtocol.hbm.xml
+END
+ExceptionChineseEnglishHashMap.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/app/!svn/ver/6822/trunk/sea/src/model/com/nari/basicdata/ExceptionChineseEnglishHashMap.java
+END
+BAssist96.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BAssist96.hbm.xml
+END
+BCommProtocolItem.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BCommProtocolItem.java
+END
+VwProtocolCodeBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/VwProtocolCodeBean.java
+END
+VwLimitType.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/VwLimitType.java
+END
+VwTmnlFactory.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/VwTmnlFactory.java
+END
+BAssistDay.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BAssistDay.java
+END
+BTmnlModelNo.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BTmnlModelNo.hbm.xml
+END
+BAssist24.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BAssist24.java
+END
+BTmnlModelNoId.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BTmnlModelNoId.java
+END
+LostMonitorBean2.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/6529/trunk/sea/src/model/com/nari/basicdata/LostMonitorBean2.java
+END
+VwCtrlSchemeType.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/VwCtrlSchemeType.java
+END
+BAssist96.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BAssist96.java
+END
+ElecExcepBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/6828/trunk/sea/src/model/com/nari/basicdata/ElecExcepBean.java
+END
+BCommProtItemList.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BCommProtItemList.java
+END
+BSysParameter.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BSysParameter.hbm.xml
+END
+BProtocolEvent.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/5648/trunk/sea/src/model/com/nari/basicdata/BProtocolEvent.hbm.xml
+END
+BTrade.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BTrade.hbm.xml
+END
+OrgNoNameBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/6923/trunk/sea/src/model/com/nari/basicdata/OrgNoNameBean.java
+END
+BEventDataDefId.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BEventDataDefId.java
+END
+BSysDictionaryId.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BSysDictionaryId.java
+END
+BAssist24.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BAssist24.hbm.xml
+END
+TerminalExceptionWorkBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/app/!svn/ver/6829/trunk/sea/src/model/com/nari/basicdata/TerminalExceptionWorkBean.java
+END
+BTmnlModelNo.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BTmnlModelNo.java
+END
+BAssistDay.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BAssistDay.hbm.xml
+END
+VwClearDataType.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/VwClearDataType.java
+END
+BAnalyticalParam.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BAnalyticalParam.hbm.xml
+END
+BAnalyticalParamId.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BAnalyticalParamId.java
+END
+VwConsType.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/VwConsType.java
+END
+BCommProtocolItem.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BCommProtocolItem.hbm.xml
+END
+LostMonitorBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/6529/trunk/sea/src/model/com/nari/basicdata/LostMonitorBean.java
+END
+BEventDataDef.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BEventDataDef.java
+END
+BClearProtocol.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BClearProtocol.java
+END
+BTrade.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BTrade.java
+END
+BCommProtItemListId.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BCommProtItemListId.java
+END
+BSysDictionary.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BSysDictionary.java
+END
+BCpCommScheme.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BCpCommScheme.java
+END
+BEventDataDef.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BEventDataDef.hbm.xml
+END
+BClearProtocol.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BClearProtocol.hbm.xml
+END
+BSysParameter.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BSysParameter.java
+END
+BEventMark.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BEventMark.hbm.xml
+END
+BCommProtItemList.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BCommProtItemList.hbm.xml
+END
+BAnalyticalParam.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BAnalyticalParam.java
+END
+BTmnlFactory.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BTmnlFactory.hbm.xml
+END
+TerminalEventBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/6529/trunk/sea/src/model/com/nari/basicdata/TerminalEventBean.java
+END
+BCommProtocol.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BCommProtocol.java
+END
+MainExceptionCategoryBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/app/!svn/ver/6823/trunk/sea/src/model/com/nari/basicdata/MainExceptionCategoryBean.java
+END
+BDataMapping.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BDataMapping.java
+END
+BCpCommScheme.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BCpCommScheme.hbm.xml
+END
+BComputerGroup.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BComputerGroup.hbm.xml
+END
+BEventMarkId.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BEventMarkId.java
+END
+SimpleEventDef.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/SimpleEventDef.java
+END
+VwDataTypePBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/VwDataTypePBean.java
+END
+BSysParameterId.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BSysParameterId.java
+END
+SimpleBEventMark.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/SimpleBEventMark.java
+END
+VwCtrlSchemeType.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/VwCtrlSchemeType.hbm.xml
+END
+VwClearDataType.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/VwClearDataType.hbm.xml
+END
+BTmnlFactory.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/basicdata/BTmnlFactory.java
+END

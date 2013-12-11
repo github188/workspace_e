@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	
+	<!--重点用户查询 dao -->
+	<bean id="vipConsManagerDao" class="com.nari.advapp.vipconsman.impl.VipConsManagerDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!--重点用户新增及删除 dao -->
+	<bean id="vipConsUserDao" class="com.nari.advapp.vipconsman.impl.VipConsUserDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<!--重点用户监测 dao -->
+	<bean id="vipConsMonitorDao" class="com.nari.advapp.vipconsman.impl.VipConsMonitorDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!--重点户排名分析 dao -->
+	<bean id="vipConsSortAnalyseJdbcDao" class="com.nari.advapp.vipconsman.impl.VipConsSortAnalyseJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!--重点用户监测数据 dao -->
+	<bean id="vipConsMonitorDataJdbcDao" class="com.nari.advapp.vipconsman.impl.VipConsMonitorDataJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!--数据发布 dao -->
+	<bean id="dataPubDao" class="com.nari.advapp.vipconsman.impl.DataPubDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!--统计分析  需量分析 -->
+	<bean id="collectionPointDemandDao" class="com.nari.advapp.statanalyse.impl.CollectionPointDemandDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!--统计分析  电量对比分析 -->
+	<bean id="elecContrastAnalysisDaoImpl" class="com.nari.advapp.statanalyse.impl.ElecContrastAnalysisDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!--统计分析  负荷统计分析 -->
+	<bean id="chargeStatisAnalyseDao" class="com.nari.advapp.statanalyse.impl.ChargeStatisAnalyseDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!--统计分析  电量统计分析 -->
+	<bean id="elecStatisAnalyseDao" class="com.nari.advapp.statanalyse.impl.ElecStatisAnalyseDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!--日志发布结果统计及查询 -->
+	<bean id="logReleaseQueryDao" class="com.nari.advapp.vipconsman.impl.LogReleaseQueryDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!--功率因素分析-->
+	<bean id="powerFactorAnalysisDao" class="com.nari.advapp.statanalyse.impl.PowerFactorAnalysisDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!--线路统计分析-->
+	<bean id="lineStatAnalysisDao" class="com.nari.advapp.statanalyse.impl.LineStatAnalysisDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+</beans>

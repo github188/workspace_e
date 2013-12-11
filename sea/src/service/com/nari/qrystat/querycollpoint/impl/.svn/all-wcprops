@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/6861/trunk/sea/src/service/com/nari/qrystat/querycollpoint/impl
+END
+RCPManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/app/!svn/ver/3180/trunk/sea/src/service/com/nari/qrystat/querycollpoint/impl/RCPManager.java
+END
+CollectionCountManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/app/!svn/ver/6170/trunk/sea/src/service/com/nari/qrystat/querycollpoint/impl/CollectionCountManagerImpl.java
+END
+AutoSendQueryManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/app/!svn/ver/6345/trunk/sea/src/service/com/nari/qrystat/querycollpoint/impl/AutoSendQueryManagerImpl.java
+END
+ConsumerInfoManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/app/!svn/ver/6386/trunk/sea/src/service/com/nari/qrystat/querycollpoint/impl/ConsumerInfoManagerImpl.java
+END
+TerminalCoverageManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/app/!svn/ver/6332/trunk/sea/src/service/com/nari/qrystat/querycollpoint/impl/TerminalCoverageManagerImpl.java
+END
+PublicTerminalManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/app/!svn/ver/6203/trunk/sea/src/service/com/nari/qrystat/querycollpoint/impl/PublicTerminalManagerImpl.java
+END
+SendDataQueryManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/app/!svn/ver/5970/trunk/sea/src/service/com/nari/qrystat/querycollpoint/impl/SendDataQueryManagerImpl.java
+END
+CCustManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/app/!svn/ver/6861/trunk/sea/src/service/com/nari/qrystat/querycollpoint/impl/CCustManagerImpl.java
+END
+ExcptionReportManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/app/!svn/ver/6090/trunk/sea/src/service/com/nari/qrystat/querycollpoint/impl/ExcptionReportManagerImpl.java
+END

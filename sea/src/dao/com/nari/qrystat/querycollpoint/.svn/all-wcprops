@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/app/!svn/ver/6992/trunk/sea/src/dao/com/nari/qrystat/querycollpoint
+END
+IRCPDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/3180/trunk/sea/src/dao/com/nari/qrystat/querycollpoint/IRCPDao.java
+END
+IAutoSendQueryDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/app/!svn/ver/6347/trunk/sea/src/dao/com/nari/qrystat/querycollpoint/IAutoSendQueryDao.java
+END
+ExcptionReportDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/app/!svn/ver/6090/trunk/sea/src/dao/com/nari/qrystat/querycollpoint/ExcptionReportDao.java
+END
+IConsumerInfoDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/app/!svn/ver/6386/trunk/sea/src/dao/com/nari/qrystat/querycollpoint/IConsumerInfoDao.java
+END
+ISendDataQueryDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/app/!svn/ver/5970/trunk/sea/src/dao/com/nari/qrystat/querycollpoint/ISendDataQueryDao.java
+END
+ICCustDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/app/!svn/ver/6862/trunk/sea/src/dao/com/nari/qrystat/querycollpoint/ICCustDao.java
+END
+IpublicTerminalDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/6203/trunk/sea/src/dao/com/nari/qrystat/querycollpoint/IpublicTerminalDao.java
+END
+CollectionCountDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/6170/trunk/sea/src/dao/com/nari/qrystat/querycollpoint/CollectionCountDao.java
+END

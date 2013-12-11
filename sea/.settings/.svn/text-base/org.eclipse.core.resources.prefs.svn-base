@@ -1,0 +1,5 @@
+#Mon May 31 18:00:15 CST 2010
+eclipse.preferences.version=1
+encoding//src/config/database.properties=UTF-8
+encoding//src/config/log4j.properties=UTF-8
+encoding/<project>=UTF-8

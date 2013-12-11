@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/app/!svn/ver/6992/trunk/sea/src/dao/com/nari/qrystat/querycollpoint/impl
+END
+ConsumerInfoDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/app/!svn/ver/6905/trunk/sea/src/dao/com/nari/qrystat/querycollpoint/impl/ConsumerInfoDaoImpl.java
+END
+PublicTerminalDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/app/!svn/ver/6347/trunk/sea/src/dao/com/nari/qrystat/querycollpoint/impl/PublicTerminalDaoImpl.java
+END
+SendDataQueryDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/app/!svn/ver/6992/trunk/sea/src/dao/com/nari/qrystat/querycollpoint/impl/SendDataQueryDaoImpl.java
+END
+CCustDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/app/!svn/ver/6897/trunk/sea/src/dao/com/nari/qrystat/querycollpoint/impl/CCustDaoImpl.java
+END
+ExcptionReportDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/app/!svn/ver/6113/trunk/sea/src/dao/com/nari/qrystat/querycollpoint/impl/ExcptionReportDaoImpl.java
+END
+RCPDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/app/!svn/ver/4399/trunk/sea/src/dao/com/nari/qrystat/querycollpoint/impl/RCPDaoImpl.java
+END
+CollectionCountDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/app/!svn/ver/6170/trunk/sea/src/dao/com/nari/qrystat/querycollpoint/impl/CollectionCountDaoImpl.java
+END
+AutoSendQueryDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/app/!svn/ver/6963/trunk/sea/src/dao/com/nari/qrystat/querycollpoint/impl/AutoSendQueryDaoImpl.java
+END

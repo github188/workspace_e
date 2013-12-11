@@ -1,0 +1,24 @@
+package com.nari.qrystat.reportQuery;
+
+import java.util.List;
+
+/**
+ * 报表查询DAo
+ * @author chengzh
+ * @see  ReportTypeQueryManDaoImpl 
+ */
+public interface IReportTypeQueryManDao {
+	/**
+	 * 根据报表类型查询报表列表
+	 * @param 报表类型
+	 * @return 报表列表
+	 */
+	public List<ReportJdbc> queryReportListByType(String reportType);
+	/**
+	 * 查询报表类型
+	 * @param null
+	 * @return 报表类型列表
+	 */
+	public List<ReportJdbc> queryReportTypeList();
+
+}

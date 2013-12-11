@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<!-- 数据召测 -->
+	<bean id="dataFetchManager"
+		class="com.nari.baseapp.datagathorman.impl.DataFetchManagerImpl">
+		<property name="vwClearDataTypeDao" ref="vwClearDataTypeDao" />
+		<property name="bClearProtocolDao" ref="bClearProtocolDao" />
+		<property name="tDataCombiDao" ref="tDataCombiDao" />
+		<property name="dataFetchTerminalDao" ref="dataFetchTerminalDao" />
+		<property name="idataFetchJdbcDao" ref="idataFetchJdbcDao"></property>
+	</bean>
+	<!-- 单户召测 -->
+	<bean id="dataFetchLoneManager"
+		class="com.nari.baseapp.datagathorman.impl.DataFetchLoneManagerImpl">
+		<property name="dataFetchLoneDao" ref="dataFetchLoneDao" />
+	</bean>
+	<!--终端规约项编码service-->
+	<bean id="iProtItemNoManager"
+		class=" com.nari.baseapp.planpowerconsume.impl.ProtItemNoManagerImpl">
+		<property name="iProtItemNoJdbcDao" ref="iProtItemNoJdbcDao" />
+	</bean>
+	<!--终端保电service-->
+	<bean id="iWTmnlPaulPowerManager"
+		class="com.nari.baseapp.planpowerconsume.impl.WTmnlPaulPowerManagerImpl">
+		<property name="iWTmnlPaulPowerDao" ref="iWTmnlPaulPowerDao" />
+		<property name="iWCtrlSchemeDao" ref="iWCtrlSchemeDao" />
+		<property name="iWTmnlPaulPowerJdbcDao" ref="iWTmnlPaulPowerJdbcDao" />
+		<property name="iRTmnlRunJdbcDao" ref="iRTmnlRunJdbcDao" />
+	</bean>
+	<!--终端剔除service-->
+	<bean id="iWTmnlRejectManager "
+		class="com.nari.baseapp.planpowerconsume.impl.WTmnlRejectManagerImpl ">
+		<property name="iWTmnlRejectDao" ref="iWTmnlRejectDao" />
+		<property name="iWCtrlSchemeDao" ref="iWCtrlSchemeDao" />
+		<property name="iWTmnlRejectJdbcDao" ref="iWTmnlRejectJdbcDao" />
+	</bean>
+	<!--操作终端日志service-->
+	<bean id="iLOpTmnlLogManager"
+		class="com.nari.baseapp.planpowerconsume.impl.LOpTmnlLogManagerImpl">
+		<property name="iLOpTmnlLogDao" ref="iLOpTmnlLogDao" />
+	</bean>
+	<!--用户信息service-->
+	<bean id="iWTmnlManager "
+		class="com.nari.baseapp.planpowerconsume.impl.WTmnlManagerImpl ">
+		<property name="iWTmnlJdbcDao" ref="iWTmnlJdbcDao" />
+	</bean>
+	<!--群组用户管理service-->
+	<bean id="iTTmnlGroupUserManager"
+		class="com.nari.baseapp.planpowerconsume.impl.TTmnlGroupUserManagerImpl">
+		<property name="iTTmnlGroupUserJdbcDao" ref="iTTmnlGroupUserJdbcDao" />
+	</bean>
+	<!--控制类别service-->
+	<bean id="iVwCtrlSchemeTypeManager"
+		class="com.nari.baseapp.planpowerconsume.impl.VwCtrlSchemeTypeManagerImpl">
+		<property name="vwCtrlSchemeTypeDao" ref="vwCtrlSchemeTypeDao" />
+	</bean>
+	<!--群组管理service-->
+	<bean id="iGroupSetManager"
+		class="com.nari.baseapp.planpowerconsume.impl.GroupSetManagerImpl">
+		<property name="iTTmnlGroupDao" ref="iTTmnlGroupDao" />
+		<property name="iTTmnlGroupDetailDao" ref="iTTmnlGroupDetailDao" />
+		<property name="iRUserGroupDao" ref="iRUserGroupDao" />
+		<property name="iRUserGroupDetailDao" ref="iRUserGroupDetailDao" />
+		<property name="iTTmnlGroupJdbcDao" ref="iTTmnlGroupJdbcDao" />
+		<property name="iTTmnlGroupDetailIdJdbcDao" ref="iTTmnlGroupDetailIdJdbcDao" />
+	</bean>
+	<!-- 营业报停控 -->
+	<bean id="suspensionCtrlManager"
+		class="com.nari.baseapp.planpowerconsume.impl.SuspensionCtrlManagerImpl">
+		<property name="iWCtrlSchemeDao" ref="iWCtrlSchemeDao" />
+		<property name="iSuspensionControlJdbcDao" ref="iSuspensionControlJdbcDao" />
+		<property name="vwLimitTypeJdbcDao" ref="vwLimitTypeJdbcDao" />
+		<property name="iWTmnlBusinessDao" ref="iWTmnlBusinessDao" />
+	</bean>
+	<!-- 月电量定值控 -->
+	<bean id="energyCtrlManager"
+		class="com.nari.baseapp.planpowerconsume.impl.EnergyCtrlManagerImpl">
+		<property name="iWCtrlSchemeDao" ref="iWCtrlSchemeDao" />
+		<property name="iEnergyControlJdbcDao" ref="iEnergyControlJdbcDao" />
+		<property name="iWTmnlMonPctrlDao" ref="iWTmnlMonPctrlDao" />
+	</bean>
+	<!-- 遥控 -->
+	<bean id="remoteCtrlManager"
+		class="com.nari.baseapp.planpowerconsume.impl.RemoteCtrlManagerImpl">
+		<property name="iWCtrlSchemeDao" ref="iWCtrlSchemeDao" />
+		<property name="iRemoteControlJdbcDao" ref="iRemoteControlJdbcDao" />
+		<property name="vwLimitTypeJdbcDao" ref="vwLimitTypeJdbcDao" />
+		<property name="iPSysUserDao" ref="iPSysUserDao" />
+		<property name="iLOpTmnlLogManager" ref="iLOpTmnlLogManager" />
+		<property name="wtmnlCtrlStatusManger" ref="wtmnlCtrlStatusManger" />
+	</bean>
+	<!-- 采集任务编制-->
+	<bean id="gatherTaskCompileManager"
+		class="com.nari.baseapp.datagathorman.impl.GatherTaskCompileManagerImpl">
+		<property name="gatherTaskCompileJdbcDao" ref="gatherTaskCompileJdbcDao"></property>
+		<property name="bClearProtocolJdbcDao" ref="bClearProtocolJdbcDao"></property>
+	</bean>
+	<!-- 采集质量检查-->
+	<bean id="gatherQualityEvaluateManager"
+		class="com.nari.baseapp.datagathorman.impl.GatherQualityEvaluateManagerImpl">
+		<property name="gatherQualityEvaluateJdbcDao" ref="gatherQualityEvaluateJdbcDao"></property>
+		<property name="oOrgDao" ref="oOrgDao"></property>
+	</bean>
+	<!-- 设备监测-->
+	<bean id="deviceMonitorManager"
+		class="com.nari.baseapp.datagathorman.impl.DeviceMonitorManagerImpl">
+		<property name="deviceMonitorJdbcDao" ref="deviceMonitorJdbcDao"></property>
+		<property name="oOrgDao" ref="oOrgDao"></property>
+		<property name="vwTmnlFactoryJdbcDao" ref="vwTmnlFactoryJdbcDao"></property>
+	</bean>
+	<!-- 数据发布管理-->
+	<bean id="dataPublishManager" class="com.nari.baseapp.datagathorman.impl.DataPublishManagerImpl">
+		<property name="dataPublishJdbcDao" ref="dataPublishJdbcDao"></property>
+	</bean>
+	<!-- 采集任务执行统计-->
+	<bean id="gatherTaskQueryManager"
+		class="com.nari.baseapp.datagathorman.impl.GatherTaskQueryManagerImpl">
+		<property name="gatherTaskQueryDao" ref="gatherTaskQueryDao"></property>
+	</bean>
+	<!-- 低压远程抄表-->
+	<bean id="autoSendManager"
+		class="com.nari.baseapp.datagathorman.impl.AutoSendManagerImpl">
+		<property name="autoSendJdbcDao" ref="autoSendJdbcDao"></property>
+	</bean>
+	<!-- 低压采集质量-->
+	<bean id="lowQualityEvaluateManager"
+		class="com.nari.baseapp.datagathorman.impl.LowQualityEvaluateManagerImpl">
+		<property name="lowQualityEvaluateDao" ref="lowQualityEvaluateDao"></property>
+	</bean>
+	<!--用电任务编制-->
+	<bean id="iPlanCompileManager"
+		class="com.nari.baseapp.planpowerconsume.impl.PlanCompileManagerImpl">
+		<property name="iWCtrlSchemeDao" ref="iWCtrlSchemeDao" />
+		<property name="iWCtrlSchemeJdbcDao" ref="iWCtrlSchemeJdbcDao" />
+		<property name="vwCtrlSchemeTypeDao" ref="vwCtrlSchemeTypeDao"></property>
+		<property name="vwLimitTypeJdbcDao" ref="vwLimitTypeJdbcDao"></property>
+		<property name="iOrgJdbcDao" ref="iOrgJdbcDao"></property>
+	</bean>
+
+	<!--用电任务编制  不同功控类型的统一操作-->
+	<bean id="iWTmnlSchemePublicManager"
+		class="com.nari.baseapp.planpowerconsume.impl.WTmnlSchemePublicManagerImpl">
+		<property name="iWTmnlSchemePublicDao" ref="iWTmnlSchemePublicDao"></property>
+	</bean>
+	<!--有序用电任务执行   -->
+	<bean id="iPlanExcuteManager" class="com.nari.baseapp.planpowerconsume.impl.PlanExcuteManagerImpl">
+	<property name="iWCtrlSchemeJdbcDao" ref="iWCtrlSchemeJdbcDao"></property>
+	</bean>
+		
+	<!-- 功率控制-时段控模板 -->
+	<bean id="wPwrctrlTemplateManager" class="com.nari.baseapp.planpowerconsume.impl.WPwrctrlTemplateManagerImpl">
+		<property name="wPwrctrlTemplateDao">
+			<ref bean="wPwrctrlTemplateDao" />
+		</property>
+		<property name="powerCtrlQueryDao">
+			<ref bean="powerCtrlQueryDao" />
+		</property>
+	</bean>
+	<!-- 功率控制-时段控模板 -->
+	<bean id="wFactctrlTemplateManager" class="com.nari.baseapp.planpowerconsume.impl.WFactctrlTemplateManagerImpl">
+		<property name="wFactctrlTemplateDao">
+			<ref bean="wFactctrlTemplateDao" />
+		</property>
+	</bean>
+	<!-- 功率控制-时段控模板 -->
+	<bean id="powerCtrlQueryManager" class="com.nari.baseapp.planpowerconsume.impl.PowerCtrlQueryManagerImpl">
+		<property name="powerCtrlQueryDao">
+			<ref bean="powerCtrlQueryDao" />
+		</property>
+	</bean>
+	<!-- 功率控制-时段控模板 -->
+	<bean id="wPwrctrlSchemeManager" class="com.nari.baseapp.planpowerconsume.impl.WPwrctrlSchemeManagerImpl">
+		<property name="iWCtrlSchemeDao">
+			<ref bean="iWCtrlSchemeDao" />
+		</property>
+		<property name="wCtrlSchemeSectionDao">
+			<ref bean="wCtrlSchemeSectionDao" />
+		</property>
+		<property name="wTmnlPwrctrlDao">
+			<ref bean="wTmnlPwrctrlDao" />
+		</property>
+		<property name="wTmnlFactctrlDao">
+			<ref bean="wTmnlFactctrlDao" />
+		</property>
+		<property name="wFloatDownCtrlDao">
+			<ref bean="wFloatDownCtrlDao" />
+		</property>
+		<property name="powerCtrlDao">
+			<ref bean="powerCtrlDao" />
+		</property>
+	</bean>
+	<!-- 数据采集管理-原始报文查询 -->
+	<bean id="origFrameQryManager" class="com.nari.baseapp.datagathorman.impl.OrigFrameQryManagerImpl">
+		<property name="origFrameQryDao">
+			<ref bean="origFrameQryDao" />
+		</property>
+	</bean>
+	<!-- 数据采集管理-非法报文查询 -->
+	<bean id="illegalFrameQryManager" class="com.nari.baseapp.datagathorman.impl.IllegalFrameQryManagerImpl">
+		<property name="illegalFrameQryDao">
+			<ref bean="illegalFrameQryDao" />
+		</property>
+	</bean>
+	<!-- 有序用电-终端状态 -->
+	<bean id="wtmnlCtrlStatusManger" class="com.nari.baseapp.planpowerconsume.impl.WtmnlCtrlStatusMangerImpl">
+		<property name="wtmnlCtrlStatusDao">
+			<ref bean="wtmnlCtrlStatusDao" />
+		</property>
+	</bean>
+	<!-- 有序用电-控制方案 -->
+	<bean id="iWCtrlSchemeManager" class="com.nari.baseapp.planpowerconsume.impl.WCtrlSchemeManagerImpl">
+		<property name="iWCtrlSchemeDao">
+			<ref bean="iWCtrlSchemeDao" />
+		</property>
+	</bean>
+	<!--批量巡测-->
+	<bean id="iBatchFetchManager" class="com.nari.baseapp.datagathorman.impl.BatchFetchManagerImpl">
+		<property name="idataFetchJdbcDao" ref="idataFetchJdbcDao"></property>
+		<property name="ibatchFetchJdbcDao" ref="ibatchFetchJdbcDao"></property>
+	</bean>
+	
+	<!-- 预付费管理-预付费投入调试 -->
+	<bean id="prePaidDebugManager" class="com.nari.baseapp.prepaidman.impl.PrePaidDebugManagerImpl">
+		<property name="prePaidDebugJdbcDao">
+			<ref bean="prePaidDebugJdbcDao" />
+		</property>
+		<property name="oOrgDao" ref="oOrgDao" />
+	</bean>
+	<!-- 预付费管理-用户余额查询 -->
+	<bean id="iUseValueQueryManager" class="com.nari.baseapp.prepaidman.impl.UseValueQueryManagerImpl">
+		<property name="iUseValueQueryDao">
+			<ref bean="iUseValueQueryDao" />
+		</property>
+	</bean>
+	<!-- 预付费管理-预付费情况统计 -->
+	<bean id="iPrePaidStatManager" class="com.nari.baseapp.prepaidman.impl.PrePaidStatManagerImpl">
+		<property name="iPrePaidStatDao">
+			<ref bean="iPrePaidStatDao" />
+		</property>
+	</bean>
+	
+	<!-- 接口管理-接口执行监测 -->
+	<bean id="interfaceMonitorManager" class="com.nari.baseapp.interfacemanage.impl.InterfaceMonitorManagerImpl">
+		<property name="interfaceMonitorDao">
+			<ref bean="interfaceMonitorDao" />
+		</property>
+	</bean>
+
+	<!-- 预付费管理-预付费工况信息 -->
+	<bean id="iPrePaidStatusManager" class="com.nari.baseapp.prepaidman.impl.PrePaidStatusManagerImpl">
+		<property name="iPrePaidStatusDao">
+			<ref bean="iPrePaidStatusDao" />
+		</property>
+	</bean>
+	
+	<!-- 预付费控制 -->
+	<bean id="prePaidManager" class="com.nari.baseapp.prepaidman.impl.PrePaidManagerImpl">
+		<property name="prePaidDao">
+			<ref bean="prePaidDao" />
+		</property>
+	</bean>
+	<!-- 预付费控制 -->
+	<bean id="dunningControlManager" class="com.nari.baseapp.prepaidman.impl.DunningControlManagerImpl">
+		<property name="dunningControlDao">
+			<ref bean="dunningControlDao" />
+		</property>
+	</bean>
+</beans>

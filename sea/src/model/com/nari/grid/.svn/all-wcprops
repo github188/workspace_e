@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/app/!svn/ver/5554/trunk/sea/src/model/com/nari/grid
+END
+GTran.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/grid/GTran.hbm.xml
+END
+GLineRela.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/grid/GLineRela.hbm.xml
+END
+GLineTgRela.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/grid/GLineTgRela.hbm.xml
+END
+GSubsLineRela.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/grid/GSubsLineRela.hbm.xml
+END
+GLine.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/grid/GLine.java
+END
+GTg.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/grid/GTg.java
+END
+GSubs.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/app/!svn/ver/5554/trunk/sea/src/model/com/nari/grid/GSubs.java
+END
+GTg.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/grid/GTg.hbm.xml
+END
+GSubs.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/grid/GSubs.hbm.xml
+END
+GLine.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/grid/GLine.hbm.xml
+END
+GSubsLineRela.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/grid/GSubsLineRela.java
+END
+GLineTgRela.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/grid/GLineTgRela.java
+END
+GLineRela.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/grid/GLineRela.java
+END
+GTran.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/grid/GTran.java
+END

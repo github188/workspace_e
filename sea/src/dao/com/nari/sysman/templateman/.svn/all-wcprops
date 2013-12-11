@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/app/!svn/ver/5252/trunk/sea/src/dao/com/nari/sysman/templateman
+END
+模板管理
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/sysman/templateman/%E6%A8%A1%E6%9D%BF%E7%AE%A1%E7%90%86
+END
+VwProtocolCodeDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/sysman/templateman/VwProtocolCodeDao.java
+END
+VwTaskPropertyDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/sysman/templateman/VwTaskPropertyDao.java
+END
+TmnlTaskConfigDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/4672/trunk/sea/src/dao/com/nari/sysman/templateman/TmnlTaskConfigDao.java
+END

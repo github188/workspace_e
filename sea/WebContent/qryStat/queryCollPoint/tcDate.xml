@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<chart caption="" shownames="1" showvalues="0" decimals="0" numberPrefix="">
+	<categories>
+		<category label="西宁供电公司" /> 
+		<category label="海南供电公司" /> 
+		<category label="黄化供电公司" /> 
+		<category label="海东供电公司" /> 
+		<category label="海北供电公司" /> 
+		<category label="海西供电公司"/>
+		<category label="果洛供电公司"/>
+	</categories>
+	<dataset seriesName="专变" color="AFD8F8" showValues="0">
+		<set value="89" /> 
+		<set value="80" /> 
+		<set value="91" /> 
+		<set value="78" /> 
+		<set value="69" /> 
+		<set value="86" /> 
+		<set value="81" /> 
+	</dataset>
+	<dataset seriesName="公变" color="F6BD0F" showValues="0">
+		<set value="67" /> 
+		<set value="87" /> 
+		<set value="69" /> 
+		<set value="70" /> 
+		<set value="63" /> 
+		<set value="71" /> 
+		<set value="77" /> 
+	</dataset>
+	<dataset seriesName="居民" color="8BBA00" showValues="0">
+		<set value="31" /> 
+		<set value="42" /> 
+		<set value="59" /> 
+		<set value="45" /> 
+		<set value="34" /> 
+		<set value="36" /> 
+		<set value="42" />  
+	</dataset>
+	<dataset seriesName="关口" color="FCCAFF" showValues="0">
+		<set value="30" /> 
+		<set value="31" /> 
+		<set value="35" /> 
+		<set value="31" /> 
+		<set value="42" /> 
+		<set value="21" /> 
+		<set value="32" /> 
+	</dataset>
+</chart>

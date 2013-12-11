@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/app/!svn/ver/6860/trunk/sea/src/web/com/nari/qrystat/querycollpoint
+END
+ExcptionReportAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/app/!svn/ver/6090/trunk/sea/src/web/com/nari/qrystat/querycollpoint/ExcptionReportAction.java
+END
+SendDataQueryAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/app/!svn/ver/5970/trunk/sea/src/web/com/nari/qrystat/querycollpoint/SendDataQueryAction.java
+END
+PublicTerminalAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/app/!svn/ver/6276/trunk/sea/src/web/com/nari/qrystat/querycollpoint/PublicTerminalAction.java
+END
+ConsumerInfoAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/6386/trunk/sea/src/web/com/nari/qrystat/querycollpoint/ConsumerInfoAction.java
+END
+TerminalCoverageAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/app/!svn/ver/4822/trunk/sea/src/web/com/nari/qrystat/querycollpoint/TerminalCoverageAction.java
+END
+CollectionCountAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/app/!svn/ver/6170/trunk/sea/src/web/com/nari/qrystat/querycollpoint/CollectionCountAction.java
+END
+AutoSendQueryAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/app/!svn/ver/6345/trunk/sea/src/web/com/nari/qrystat/querycollpoint/AutoSendQueryAction.java
+END
+RCPAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/app/!svn/ver/3180/trunk/sea/src/web/com/nari/qrystat/querycollpoint/RCPAction.java
+END
+ConsumerInfoSubAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/app/!svn/ver/6860/trunk/sea/src/web/com/nari/qrystat/querycollpoint/ConsumerInfoSubAction.java
+END

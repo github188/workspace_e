@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <!--终端月通信流量-->
+    <bean id="aTmnlFlowMBeanDao" class="com.nari.runman.runstatusman.impl.ATmnlFlowMBeanDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+    
+    <!--档案管理DAO-->
+    <bean id="archieveManDao" class="com.nari.runman.archivesman.impl.ArchieveManDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+        <property name="transactionTemplate">
+            <ref bean="transactionTemplate" />
+        </property>
+    </bean>
+    
+    <!--组织机构维护DAO-->
+    <bean id="iOrganizeManDao" class="com.nari.runman.archivesman.impl.OrganizeManDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+        <property name="transactionTemplate">
+            <ref bean="transactionTemplate" />
+        </property>
+    </bean>
+    
+    <!--档案管理终端管理DAO-->
+    <bean id="iArchiveTmnlManDao" class="com.nari.runman.archivesman.impl.ArchiveTmnlManDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+        <property name="transactionTemplate">
+            <ref bean="transactionTemplate" />
+        </property>
+    </bean>
+    
+    <!--档案管理采集点管理DAO-->
+    <bean id="iArchiveRcpManDao" class="com.nari.runman.archivesman.impl.ArchiveRcpManDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+        <property name="transactionTemplate">
+            <ref bean="transactionTemplate" />
+        </property>
+    </bean>
+    
+    <!--档案管理计量点管理DAO-->
+    <bean id="iArchiveCmpManDao" class="com.nari.runman.archivesman.impl.ArchiveCmpManDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+        <property name="transactionTemplate">
+            <ref bean="transactionTemplate" />
+        </property>
+    </bean>
+    
+    <!--档案管理电能表管理DAO-->
+    <bean id="iArchiveCmeterManDao" class="com.nari.runman.archivesman.impl.ArchiveCmeterManDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+        <property name="transactionTemplate">
+            <ref bean="transactionTemplate" />
+        </property>
+    </bean>
+	
+	<!--档案管理电能表管理DAO-->
+    <bean id="iCollectionChannelDao" class="com.nari.runman.archivesman.impl.CollectionChannelDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+        <property name="transactionTemplate">
+            <ref bean="transactionTemplate" />
+        </property>
+    </bean>
+    
+    <!--档案管理Excel批量导入DAO-->
+    <bean id="iImportExcelDao" class="com.nari.runman.archivesman.impl.ImportExcelDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+        <property name="transactionTemplate">
+            <ref bean="transactionTemplate" />
+        </property>
+    </bean>
+    
+    <!--主站运行状态-->
+    <bean id="lMasterStationResDao" class="com.nari.runman.runstatusman.impl.LMasterStationResDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+
+    <!--现场设备异常管理-->
+    <bean id="deviceAbnormalDao" class="com.nari.runman.abnormalhandle.impl.DeviceAbnormalDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+	
+	<!--现场设备异常查询-->
+    <bean id="deviceExceptionDao" class="com.nari.runman.abnormalhandle.impl.DeviceExceptionDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+	
+    <!--电能表运行状态-->
+    <bean id="aEventStatDBeanDao" class="com.nari.runman.runstatusman.impl.AEventStatDBeanDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+    
+	 <!--主站异常分析-->
+    <bean id="mainExcepAnalyDao" class="com.nari.runman.runstatusman.impl.MainExcepAnalyDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+    
+    <!--终端设备运行状态-->
+    <bean id="tmnlRunStatusDao" class="com.nari.runman.runstatusman.impl.TmnlRunStatusDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+	
+    <!--终端安装-->
+    <bean id="terminalInstallDao" class="com.nari.runman.feildman.impl.TerminalInstallDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+	
+    <!--运行状况管理 通信信道监测-->
+    <bean id="channelMonitorDao" class="com.nari.runman.runstatusman.impl.ChannelMonitorDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+    
+	 <!--运行状况管理 在线状态监测-->
+    <bean id="onlineMonitorDao" class="com.nari.runman.runstatusman.impl.OnlineMonitorDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+    
+    <!--后台任务下发-->
+    <bean id="backGroundTaskJdbcDao" class="com.nari.bg.impl.BackGroundTaskJdbcDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+    
+    <!--异常监测-->
+    <bean id="exceptionMonitorDao" class="com.nari.runman.abnormalhandle.impl.ExceptionMonitorDaoImpl">
+    	<property name="dataSource">
+    		<ref bean="dataSource" />
+    	</property>
+    </bean>
+	<!-- 远程调试Dao -->
+	<bean id="remoteDebugDao" class="com.nari.runman.archivesman.impl.RemoteDebugDaoImpl">
+    	<property name="dataSource">
+    		<ref bean="dataSource" />
+    	</property>
+    </bean>
+	
+</beans>

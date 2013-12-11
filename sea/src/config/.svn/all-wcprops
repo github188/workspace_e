@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/app/!svn/ver/7029/trunk/sea/src/config
+END
+xfire.properties
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/app/!svn/ver/6294/trunk/sea/src/config/xfire.properties
+END
+database.properties
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/app/!svn/ver/7029/trunk/sea/src/config/database.properties
+END
+log4j.properties
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/app/!svn/ver/4201/trunk/sea/src/config/log4j.properties
+END
+front.properties
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/app/!svn/ver/6198/trunk/sea/src/config/front.properties
+END
+config.xml
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/app/!svn/ver/6843/trunk/sea/src/config/config.xml
+END
+struts.xml
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/app/!svn/ver/7008/trunk/sea/src/config/struts.xml
+END

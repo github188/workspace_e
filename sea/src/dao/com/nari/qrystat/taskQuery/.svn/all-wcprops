@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/app/!svn/ver/4351/trunk/sea/src/dao/com/nari/qrystat/taskQuery
+END
+TaskStateDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/4288/trunk/sea/src/dao/com/nari/qrystat/taskQuery/TaskStateDao.java
+END
+TaskDetailsDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/app/!svn/ver/4351/trunk/sea/src/dao/com/nari/qrystat/taskQuery/TaskDetailsDao.java
+END

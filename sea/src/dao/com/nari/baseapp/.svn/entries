@@ -1,0 +1,43 @@
+10
+
+dir
+7061
+https://10.215.191.194/svn/app/trunk/sea/src/dao/com/nari/baseapp
+https://10.215.191.194/svn/app
+
+
+
+2010-08-23T08:59:49.921875Z
+6934
+huangx
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+26174810-d258-4126-8187-fde7cfa89691
+
+datagathorman
+dir
+
+gathorset
+dir
+
+interfacemanage
+dir
+
+planpowerconsume
+dir
+
+prepaidman
+dir
+

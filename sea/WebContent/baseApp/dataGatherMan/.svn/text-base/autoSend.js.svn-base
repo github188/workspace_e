@@ -1,0 +1,983 @@
+function recsToArray(recs) {
+	var data = new Array();
+	for (var i = 0; i < recs.length; i++) {
+		data[i] = new Array();
+
+		data[i][0] = recs[i].get('consNo');
+		data[i][1] = recs[i].get('consName');
+		data[i][2] = recs[i].get('elecAddr');
+		data[i][3] = recs[i].get('cisAssetNo');
+		data[i][4] = recs[i].get('assetNo');
+		data[i][5] = recs[i].get('commAddr1');
+		data[i][6] = '';
+		data[i][7] = '';
+		data[i][8] = recs[i].get('regSn');
+	}
+	return data;
+}
+/**
+ * @描述: 返回曲线，针对日用电负荷监测页面的曲线
+ */
+function getLineMXMLData(jsonData, keys) {
+	var xmlData = '<chart caption="" subcaption="" '
+			+ 'xAxisName="" yAxisName="" yAxisMinValue="" '
+			+ 'showValues="0" alternateHGridColor="FCB541" alternateHGridAlpha="20" '
+			+ 'divLineColor="FCB541" divLineAlpha="50" canvasBorderColor="666666" '
+			+ 'baseFontColor="666666" lineColor="FCB541">'
+
+	var i = 0;
+	Ext.each(jsonData, function(obj) {
+				xmlData += "<set name='" + obj[keys[0]] + "' value='"
+						+ obj[keys[1]] + "' isSliced='1' />";
+				i++;
+			});
+	xmlData += "</chart>";
+	return xmlData;
+}
+Ext.onReady(function() {
+
+	var ov = true;
+	var monitorOv = true;
+	var tmnlNo = '';
+	var monitorSn = '';
+
+	var consId = ''; // 需要传到后台的用户id
+	var queryTmnlNo = '';
+	var tqNameField = new Ext.form.TextField({
+				fieldLabel : '台区名称',
+				allowBlank : false,
+				labelSeparator : '',
+				readOnly : true,
+				name : 'tqName',
+				emptyText : '请从左边树选择台区用户',
+				width : 200,
+				border : false
+			});
+
+	var as_butPanel = new Ext.Panel({
+		border : false,
+		layout : 'column',
+		width : 520,
+		items : [{
+					columnWidth : .25,
+					border : false,
+					width : 120,
+					layout : 'form',
+					items : [{
+								xtype : "button",
+								text : '查询',
+								id : 'autoSend_query',
+								handler : function() {
+									if (consId != null && consId != '')
+										getASMessage();
+									else
+										Ext.Msg.alert('提示', '请从左边树选择要查询的台区用户');
+									return true;
+								}
+							}]
+				}, {
+					columnWidth : .25,
+					border : false,
+					width : 100,
+					layout : 'form',
+					items : [{
+								xtype : "button",
+								text : '实时抄表',
+								id : 'autoSend_callReal',
+								handler : function() {
+									var regSnArray = new Array();
+									var tmnlAssetNo = '';
+
+									var recs;
+									recs = as_gridSm.getSelections();
+									
+									if (recs == null || recs.length < 1) {
+										Ext.Msg.alert('', "请选择用户");
+										return true;
+									}
+
+									as_resultStore.loadData(recsToArray(recs));
+									as_resultWindow.show();
+
+									tmnlAssetNo = recs[0].data.tmnlAssetNo;
+									ov = true;
+									for (var i = 0; i < recs.length; i = i + 1) {
+										regSnArray[i] = recs[i].data.regSn;
+									}
+									getData(tmnlAssetNo, regSnArray, 0);
+								}
+							}]
+				}, {
+					columnWidth : .2,
+					border : false,
+					layout : 'form',
+					width : 100,
+					items : [{
+						xtype : "button",
+						text : '重点监测',
+						id : 'autoSend_monitor',
+						handler : function() {
+							var recs;
+							recs = as_gridSm.getSelections();
+
+							if (recs == null || recs.length < 1) {
+								Ext.Msg.alert('提示', "请选择用户");
+								return true;
+							}
+							if (recs.length > 1) {
+								Ext.Msg.alert('提示', "只能选择一个用户");
+								return true;
+							}
+
+							as_monitorStore.removeAll();
+
+							Ext.MessageBox.prompt('提示', '输入轮循时间（5-30分）:',
+									showResultText);
+						}
+					}]
+				}]
+	});
+	function showResultText(btn, text) {
+		if (btn != 'ok') {
+			return true;
+		}
+
+		if ((!isNaN(text) && text <= 30 && text >= 5) || text == 881010) {
+			var monitorRegSn = '';
+			var tmnlAssetNo = '';
+
+			var recs;
+			recs = as_gridSm.getSelections();
+
+			as_monitorStore.loadData(recsToArray(recs));
+			as_gridPanel.activate(1);
+			Ext.getCmp('asMonitorLabel').setText(
+					"<font color='red'>任务执行中...</font>", false);
+
+			Ext.getCmp('autoSend_query').disable();
+			Ext.getCmp('autoSend_callReal').disable();
+			Ext.getCmp('autoSend_monitor').disable();
+
+			tmnlAssetNo = recs[0].data.tmnlAssetNo;
+			tmnlNo = tmnlAssetNo;
+			
+			monitorOv = true;
+			
+			monitorRegSn = recs[0].data.regSn;
+			monitorSn = monitorRegSn;
+			
+			getMonitorData(tmnlAssetNo, monitorRegSn, text, 1);
+		} else {
+			Ext.Msg.alert('提示', '请输入5-30分钟的轮循时间');
+			return true;
+		}
+
+	};
+
+	/* 页面上方的查询条件和按钮------------------------------------------------------------ */
+	var as_queryPanel = new Ext.form.FormPanel({
+				labelAlign : 'right',
+				region : 'north',
+				height : 35,
+				bodyStyle : 'padding:5px 0px 5px 0px',
+				layout : 'column',
+				border : false,
+				items : [{
+							columnWidth : .4,
+							border : false,
+							layout : 'form',
+							labelWidth : 60,
+							items : [tqNameField]
+						}, {
+							columnWidth : .6,
+							border : false,
+							items : as_butPanel
+						}]
+			});
+
+	/* 居民集抄户查询结果Grid----------------------------------------------------------- */
+	var as_gridSm = new Ext.grid.CheckboxSelectionModel();
+	var as_gridCm = new Ext.grid.ColumnModel([as_gridSm, {
+		header : '供电单位',
+		dataIndex : 'orgName',
+		align : 'center',
+		sortable : true,
+		renderer : function(val) {
+			var html = '<div align = "left" ext:qtitle="供电单位" ext:qtip="' + val
+					+ '">' + val + '</div>';
+			return html;
+		}
+	}, {
+		header : '用户编号',
+		dataIndex : 'consNo',
+		align : 'center',
+		sortable : true,
+		renderer : function(val) {
+			var html = '<div align = "left" ext:qtitle="用户编号" ext:qtip="' + val
+					+ '">' + val + '</div>';
+			return html;
+		}
+	}, {
+		header : '用户名称',
+		dataIndex : 'consName',
+		align : 'center',
+		sortable : true,
+		renderer : function(val) {
+			var html = '<div align = "left" ext:qtitle="用户名称" ext:qtip="' + val
+					+ '">' + val + '</div>';
+			return html;
+		}
+	}, {
+		header : '用电地址',
+		dataIndex : 'elecAddr',
+		align : 'center',
+		sortable : true,
+		renderer : function(val) {
+			var html = '<div align = "left" ext:qtitle="用电地址" ext:qtip="' + val
+					+ '">' + val + '</div>';
+			return html;
+		}
+	}, {
+		header : '合同容量',
+		dataIndex : 'contractCap',
+		align : 'center',
+		sortable : true
+	}, {
+		header : '电能表资产',
+		dataIndex : 'assetNo',
+		align : 'center',
+		sortable : true
+	}, {
+		header : '当前示数',
+		dataIndex : 'currentValue',
+		align : 'center',
+		sortable : true,
+		renderer : function(val) {
+			if (val && val != '') {
+				if (!isNaN(val)) {
+					return "<span style='color:green'>" + val + "</span>";
+				} else
+					return "<span style='color:red'>" + val + "</span>";
+			} else
+				return '';
+		}
+	}, {
+		header : '抄表时间',
+		dataIndex : 'mrSectDate',
+		align : 'center',
+		sortable : true,
+		width : 130,
+		renderer : function(val) {
+			if (val == null)
+				val = '';
+			var html = '<div style="color:green" align = "center" ext:qtitle="抄表时间" ext:qtip="'
+					+ val + '">' + val + '</div>';
+			return html;
+		}
+	}, {
+		header : '波特率',
+		dataIndex : 'baudrate',
+		align : 'center',
+		sortable : true
+	}, {
+		header : '倍率',
+		dataIndex : 'tFactor',
+		align : 'center',
+		sortable : true
+	}, {
+		header : '采集器编码',
+		dataIndex : 'fmrAssetNo',
+		align : 'center',
+		sortable : true
+	}, {
+		header : '集中器资产',
+		dataIndex : 'cisAssetNo',
+		align : 'center',
+		sortable : true
+	}, {
+		header : '终端地址',
+		dataIndex : 'terminalAddr',
+		align : 'center',
+		sortable : true
+	},
+//	, {
+//		header : '抄表段号',
+//		dataIndex : 'mrSectNo',
+//		align : 'center',
+//		sortable : true
+//	},
+			// {header:'采集器资产',dataIndex:'assetNo',align:'center',sortable:true},
+			{
+				header : '表计资产号',
+				dataIndex : 'assetNo',
+				align : 'center',
+				sortable : true
+			}, {
+				header : '表地址',
+				dataIndex : 'commAddr1',
+				align : 'center',
+				sortable : true
+			}, {
+				header : '注册状态',
+				dataIndex : 'regStatus',
+				align : 'center',
+				sortable : true
+			}, {
+				header : '注册序号',
+				dataIndex : 'regSn',
+				id : 'regSn',
+				align : 'center',
+				sortable : true
+			},
+			// {header:'生产厂家',dataIndex:'tmnlFactory',align:'center',sortable:true,
+			// renderer : function(val) {
+			// var html = '<div align = "left" ext:qtitle="生产厂家" ext:qtip="' +
+			// val + '">'
+			// + val + '</div>';
+			// return html;
+			// }},
+			{
+				header : '投运日期',
+				dataIndex : 'instDate',
+				align : 'center',
+				sortable : true,
+				format : 'Y-m-d H:i:s',
+				width : 130,
+				renderer : function(v) {
+					var val = Ext.util.Format.date(v, 'Y-m-d H:i:s');
+					var html = '<div align = "center" ext:qtitle="投运日期" ext:qtip="'
+							+ val + '">' + val + '</div>';
+					return html;
+				}
+			}// ,
+	// {header:'通信方式',dataIndex:'commMode',align:'center',sortable:true}
+	]);
+
+	var as_gridStore = new Ext.data.Store({
+				proxy : new Ext.data.HttpProxy({
+							url : 'baseapp/autoSend!queryAutoSendInfo.action'
+						}),
+				reader : new Ext.data.JsonReader({
+							root : 'asQueryList',
+							idProperty : "regSn",
+							totalProperty : 'totalCount'
+						}, [{
+									name : 'orgName'
+								}, {
+									name : 'consNo'
+								}, {
+									name : 'contractCap'
+								}, {
+									name : 'assetNo'
+								}, {
+									name : 'baudrate'
+								}, {
+									name : 'tFactor'
+								}, {
+									name : 'fmrAssetNo'
+								}, {
+									name : 'cisAssetNo'
+								}, {
+									name : 'terminalAddr'
+								}, {
+									name : 'consName'
+								}, {
+									name : 'mrSectNo'
+								}, {
+									name : 'tmnlAssetNo'
+								}, {
+									name : 'assetNo'
+								}, {
+									name : 'commAddr1'
+								}, {
+									name : 'currentValue'
+								}, {
+									name : 'mrSectDate'
+								}, {
+									name : 'regStatus'
+								}, {
+									name : 'regSn'
+								}, {
+									name : 'commMode'
+								}, {
+									name : 'tmnlFactory'
+								}, {
+									name : 'instDate',
+									type : 'date',
+									dateFormat : 'Y-m-d\\TH:i:s'
+								}, {
+									name : 'elecAddr'
+								},{
+									name : 'tmnlAssetNo'
+								}])
+			});
+	var as_recordGrid = new Ext.grid.GridPanel({
+				title : '居民集抄户查询',
+				cm : as_gridCm,
+				sm : as_gridSm,
+				store : as_gridStore,
+				stripeRows : true,
+				autoWidth : true,
+				autoScroll : true,
+				viewConfig : {
+					forceFit : false
+				},
+				bbar : new Ext.ux.MyToolbar({
+							store : as_gridStore
+						})
+			});
+
+	/** 远程抄表时显示的页面-------------------------------------------------------------------------------------- */
+	var as_resultCm = new Ext.grid.ColumnModel([{
+		header : '用户编号',
+		dataIndex : 'consNo',
+		align : 'center',
+		sortable : true,
+		renderer : function(val) {
+			var html = '<div align = "left" ext:qtitle="用户编号" ext:qtip="' + val
+					+ '">' + val + '</div>';
+			return html;
+		}
+	}, {
+		header : '用户名称',
+		dataIndex : 'consName',
+		align : 'center',
+		sortable : true,
+		renderer : function(val) {
+			var html = '<div align = "left" ext:qtitle="用户名称" ext:qtip="' + val
+					+ '">' + val + '</div>';
+			return html;
+		}
+	}, {
+		header : '用电地址',
+		dataIndex : 'elecAddr',
+		align : 'center',
+		sortable : true,
+		width : 200,
+		renderer : function(val) {
+			var html = '<div align = "left" ext:qtitle="用电地址" ext:qtip="' + val
+					+ '">' + val + '</div>';
+			return html;
+		}
+	}, {
+		header : '集中器资产',
+		dataIndex : 'tmnlAssetNo',
+		align : 'center',
+		sortable : true
+	}, {
+		header : '表计资产号',
+		dataIndex : 'assetNo',
+		hidden : true,
+		align : 'center',
+		sortable : true
+	}, {
+		header : '表地址',
+		dataIndex : 'commAddr1',
+		hidden : true,
+		align : 'center',
+		sortable : true
+	}, {
+		header : '当前示数',
+		dataIndex : 'currentValue',
+		align : 'center',
+		sortable : true,
+		renderer : function(val) {
+			if (val && val != '') {
+				if (!isNaN(val)) {
+					return "<span style='color:green'>" + val + "</span>";
+				} else
+					return "<span style='color:red'>" + val + "</span>";
+			} else
+				return '';
+		}
+	}, {
+		header : '抄表时间',
+		dataIndex : 'mrSectDate',
+		align : 'center',
+		sortable : true,
+		width : 130,
+		renderer : function(val) {
+			if (val == null)
+				val = '';
+			var html = '<div style="color:green" align = "center" ext:qtitle="抄表时间" ext:qtip="'
+					+ val + '">' + val + '</div>';
+			return html;
+		}
+	}, {
+		header : '注册序号',
+		dataIndex : 'regSn',
+		id : 'regSn',
+		hidden : true,
+		align : 'center',
+		sortable : true
+	}]);
+	var as_resultStore = new Ext.data.Store({
+				proxy : new Ext.data.MemoryProxy(),
+				reader : new Ext.data.ArrayReader({
+							idIndex : 8,
+							fields : [{
+										name : 'consNo'
+									}, {
+										name : 'consName'
+									}, {
+										name : 'elecAddr'
+									}, {
+										name : 'tmnlAssetNo'
+									}, {
+										name : 'assetNo'
+									}, {
+										name : 'commAddr1'
+									}, {
+										name : 'currentValue'
+									}, {
+										name : 'mrSectDate'
+									}, {
+										name : 'regSn'
+									}]
+						})
+			});
+	as_resultStore.on('load', function() {
+				as_resultStore.sort('regSn', 'ASC');
+			});
+	var as_resultGrid = new Ext.grid.GridPanel({
+				cm : as_resultCm,
+				store : as_resultStore,
+				stripeRows : true,
+				autoWidth : true,
+				autoScroll : true,
+				tbar : [{
+							xtype : 'label',
+							id : 'tbarLabel',
+							html : "<font color='red'>任务执行中...</font>"
+						}]
+			});
+
+	var as_monitorStore = new Ext.data.Store({
+				proxy : new Ext.data.MemoryProxy(),
+				sortInfo : {
+					field : 'mrSectDate',
+					direction : 'ASC'
+				},
+				reader : new Ext.data.ArrayReader({}, [{
+									name : 'consNo'
+								}, {
+									name : 'consName'
+								}, {
+									name : 'elecAddr'
+								}, {
+									name : 'tmnlAssetNo'
+								}, {
+									name : 'assetNo'
+								}, {
+									name : 'commAddr1'
+								}, {
+									name : 'currentValue'
+								}, {
+									name : 'mrSectDate'
+								}, {
+									name : 'regSn'
+								}])
+			});
+	var as_monitorGrid = new Ext.grid.GridPanel({
+				title : '重点监测',
+				cm : as_resultCm,
+				store : as_monitorStore,
+				stripeRows : true,
+				autoWidth : true,
+				autoScroll : true,
+				tbar : [{
+							xtype : 'label',
+							id : 'asMonitorLabel',
+							html : "<font color='red'></font>"
+						}, {
+							xtype : 'tbfill'
+						}, {
+							text : '图形显示',
+							width : 30,
+							handler : function() {
+								genAutoSendChart();
+							}
+						}, '-', {
+							text : '停止监测',
+							width : 30,
+							handler : function() {
+								monitorOv = false;
+								tmnlNo = '';
+								monitorSn = '';
+								Ext.getCmp('asMonitorLabel').setText(
+										"<font color='red'>任务执行中止</font>",
+										false);
+								Ext.getCmp('autoSend_query').enable();
+								Ext.getCmp('autoSend_callReal').enable();
+								Ext.getCmp('autoSend_monitor').enable();
+							}
+						}]
+			});
+
+	var as_resultWindow = new Ext.Window({
+				title : '实时抄表',
+				frame : true,
+				width : 750,
+				height : 450,
+				layout : "fit",
+				autoScroll : true,
+				modal : true,
+				plain : true, // 设置背景颜色
+				resizable : false, // 不可移动
+				buttonAlign : "center", // 按钮的位置
+				closeAction : "hide", // 将窗体隐藏而并不销毁
+				items : [as_resultGrid],
+				buttons : [{
+					text : '停止抄表',
+					handler : function() {
+						ov = false;
+						Ext.getCmp('tbarLabel').setText(
+								"<font color='red'>任务执行中止</font>", false);
+					}
+				}, {
+					text : '关闭',
+					handler : function() {
+						as_resultWindow.hide();
+					}
+				}]
+			});
+	as_resultWindow.on('beforehide', function(w) {
+				ov = false;
+				as_resultStore.removeAll();
+				Ext.getCmp('tbarLabel').setText(
+						"<font color='red'>任务执行中...</font>", false);
+			});
+
+	/** 实时抄表，提交的action处理 */
+	function getData(tmnlAssetNo, regSnArray, i) {
+		if (!ov) {
+			return;
+		}
+		Ext.Ajax.request({
+					url : 'baseapp/autoSend!queryMeterData.action',
+					params : {
+						tmnlAssetNo : tmnlAssetNo,
+						regSn : regSnArray[i]
+					},
+					success : function(response) {
+						if (!ov) {
+							return;
+						}
+						var result = Ext.decode(response.responseText);
+						if (!result || !result.success) {
+							ov = false;
+							return true;
+						}
+						if (result.msg && result.msg != '') {
+							ov = false;
+							Ext.Msg.alert('提示', result.msg);
+							return true;
+						}
+
+						for (var l = 0; l < result.meterInfoList.length; l = l
+								+ 1) {
+							var rec = as_gridStore
+									.getById(result.meterInfoList[l].regSn);
+							var resultRec = as_resultStore
+									.getById(result.meterInfoList[l].regSn);
+							if (rec != null) {
+								rec.set('currentValue',
+										result.meterInfoList[l].currentValue);
+								rec.set('mrSectDate',
+										result.meterInfoList[l].mrSectDate);
+								rec.commit();
+							}
+							if (resultRec != null) {
+								resultRec.set('currentValue',
+										result.meterInfoList[l].currentValue);
+								resultRec.set('mrSectDate',
+										result.meterInfoList[l].mrSectDate);
+								resultRec.commit();
+							}
+						}
+					},
+					callback : function() {
+						var j = i + 1;
+						if (j < regSnArray.length) {
+							getData(tmnlAssetNo, regSnArray, j);
+						} else {
+							Ext.getCmp('tbarLabel').setText(
+									"<font color='red'>任务执行结束</font>", false);
+						}
+					}
+				});
+	}
+
+	/** 监听左边树点击事件------------------------------------------------------------ */
+	var as_treels = new LeftTreeListener({
+				modelName : '低压远程抄表',
+				processClick : function(p, node, e) {
+					var obj = node.attributes.attributes;
+					var type = node.attributes.type;
+					if (node.isLeaf()&& obj.consType=='2') {
+						if (queryTmnlNo == obj.tmnlAssetNo) {
+							return true;
+						}
+						tqNameField.setValue(obj.consName);
+						as_gridStore.removeAll();
+						consId = obj.consId;
+						queryTmnlNo = obj.tmnlAssetNo;
+					} else {
+						return true;
+					}
+				},
+				processUserGridSelect : function(cm, row, record) {
+					if (tqNameField.getValue() == record.get('consName')) {
+						return true;
+					}
+					tqNameField.setValue(record.get('consName'));
+					as_gridStore.removeAll();
+					consId = record.get('consId');
+					queryTmnlNo = record.get('tmnlAssetNo');
+				}
+			});
+	// //双击左边树事件
+	// function asTreeDBClick(node, e){
+	// var obj = node.attributes.attributes;
+	// var type = node.attributes.type;
+	// if (node.isLeaf()) {
+	// tqNameField.setValue(node.text);
+	// consId = obj.consId;
+	// getASMessage();
+	// } else {
+	// return true;
+	// }
+	// }
+	/**
+	 * 重点监测
+	 * ------------------------------------------------------------------------------------------------
+	 */
+	function getMonitorData(tmnlAssetNo, monitorRegsn, time, i) {
+		if (!monitorOv) {
+			return;
+		}
+		// for(var i=0;i<5;i=i+1){
+		// var as_monitorModel = new Object();
+		// as_monitorModel.consNo = 'consNo'+i;
+		// as_monitorModel.consName = 'consName'+i;
+		// as_monitorModel.elecAddr = 'elecAddr'+i;
+		// as_monitorModel.tmnlAssetNo = 'tmnlAssetNo'+i;
+		// as_monitorModel.assetNo = 'assetNo'+i;
+		// as_monitorModel.commAddr1 = 'commAddr1'+i;
+		// as_monitorModel.currentValue = '919'+i;
+		// as_monitorModel.mrSectDate = '2010-5-10 11:12:0'+i;
+		// as_monitorModel.regSn = 1;
+		// var as_monitorModelRecord = new Ext.data.Record(as_monitorModel);
+		//	
+		// as_monitorStore.add(as_monitorModelRecord);
+		//		
+		// }
+		/** 添加一行记录 */
+		if (i > 1) {
+			var as_monitorModel = new Object();
+			var asmonitorResc = as_monitorStore.getAt(0);
+			as_monitorModel.consNo = asmonitorResc.get('consNo');
+			as_monitorModel.consName = asmonitorResc.get('consName');
+			as_monitorModel.elecAddr = asmonitorResc.get('elecAddr');
+			as_monitorModel.tmnlAssetNo = asmonitorResc.get('tmnlAssetNo');
+			as_monitorModel.assetNo = asmonitorResc.get('assetNo');
+			as_monitorModel.commAddr1 = asmonitorResc.get('commAddr1');
+			as_monitorModel.currentValue = '';
+			as_monitorModel.mrSectDate = '';
+			as_monitorModel.regSn = asmonitorResc.get('regSn');
+			var as_monitorModelRecord = new Ext.data.Record(as_monitorModel);
+
+			as_monitorStore.add(as_monitorModelRecord);
+		}
+		Ext.Ajax.request({
+					url : 'baseapp/autoSend!queryMeterData.action',
+					params : {
+						tmnlAssetNo : tmnlAssetNo,
+						regSn : monitorRegsn
+					},
+					success : function(response) {
+						if (!monitorOv) {
+							tmnlNo = '';
+							monitorSn = '';
+							return true;
+						}
+						var result = Ext.decode(response.responseText);
+						if (!result || !result.success) {
+							monitorOv = false;
+							return true;
+						}
+						if (result.msg && result.msg != '') {
+							monitorOv = false;
+							tmnlNo = '';
+							monitorSn = '';
+							Ext.getCmp('asMonitorLabel').setText(
+									"<font color='red'>任务执行中止</font>", false);
+							Ext.getCmp('autoSend_query').enable();
+							Ext.getCmp('autoSend_callReal').enable();
+							Ext.getCmp('autoSend_monitor').enable();
+							Ext.Msg.alert('提示', result.msg);
+							return true;
+						}
+
+						if (result.meterInfoList
+								&& result.meterInfoList.length > 0) {
+							if (!as_monitorStore
+									|| as_monitorStore.getCount() <= 0) {
+								return true;
+							}
+							var asmonitorResc = as_monitorStore
+									.getAt(as_monitorStore.getCount() - 1);
+							if (asmonitorResc != null) {
+								asmonitorResc.set('currentValue',
+										result.meterInfoList[0].currentValue);
+								asmonitorResc.set('mrSectDate',
+										result.meterInfoList[0].mrSectDate);
+								asmonitorResc.commit();
+							}
+						}
+					},
+					callback : function() {
+						if (!monitorOv) {
+							tmnlNo = '';
+							monitorSn = '';
+							return true;
+						}
+						var j = i + 1;
+						if (isNaN(time)) {
+							Ext.getCmp('asMonitorLabel').setText(
+									"<font color='red'>任务执行中止</font>", false);
+							Ext.getCmp('autoSend_query').enable();
+							Ext.getCmp('autoSend_callReal').enable();
+							Ext.getCmp('autoSend_monitor').enable();
+							return true;
+						}
+						
+						var delayTime = time*60*1000;
+						if (time == 881010){
+							delayTime = 30*1000;
+						}
+							
+						setTimeout(function() {
+//								alert("tmnlAssetNo------"+tmnlAssetNo);
+//								alert("tmnlNo-----------"+tmnlNo);
+//								alert("monitorRegsn-----"+monitorRegsn);
+//								alert("monitorSn--------"+monitorSn);
+								if(tmnlAssetNo != tmnlNo || monitorRegsn != monitorSn){
+									return true;
+								}
+								getMonitorData(tmnlAssetNo, monitorRegsn,
+											time, j);
+								}, delayTime);
+					}
+				});
+	}
+
+	/** 生成fushionchart图形-------------------------------------------- */
+	var as_keys = new Array('mrSectDate', 'currentValue');
+	// var dm_colors = new Array('AFD8F8','F6BD0F','8BBA00');
+	var autoSMArray = [];
+	var autoSendChart;
+	function genAutoSendChart() {
+		as_chartWindow.show();
+		autoSMArray.length = 0;
+		var yMinValue = 0;
+		var yMaxValue = 100;
+		if (as_monitorStore && as_monitorStore.getCount() > 0) {
+			yMinValue = as_monitorStore.getAt(0).get('currentValue');
+			for (var i = 0; i < as_monitorStore.getCount(); i = i + 1) {
+				var chartModel = new Object();
+				chartModel.mrSectDate = as_monitorStore.getAt(i)
+						.get('mrSectDate');
+				chartModel.currentValue = as_monitorStore.getAt(i)
+						.get('currentValue');
+				if (chartModel.mrSectDate != ''
+						|| !isNaN(chartModel.currentValue)) {
+					autoSMArray.push(chartModel);
+					if (yMinValue > chartModel.currentValue)
+						yMinValue = new Number(chartModel.currentValue);
+					if (yMaxValue < chartModel.currentValue)
+						yMaxValue = new Number(chartModel.currentValue);
+				}
+			}
+		}
+		yMinValue = parseInt((yMinValue - yMinValue * 0.1) / 10) * 10;
+		yMaxValue = parseInt((yMaxValue + yMaxValue * 0.1) / 10) * 10;
+
+		var autoSendXmlData = getSingleXMLData(autoSMArray, as_keys, '', '',
+				'', null, 2, yMinValue, yMaxValue);
+		autoSendChart = new FusionCharts("./fusionCharts/Line.swf",
+				"as_ChartId", "733", "375");
+		autoSendChart.setDataXML(autoSendXmlData);
+		autoSendChart.setTransparent(true);
+		if (as_chartPanel != null)
+			autoSendChart.render(as_chartPanel.getId());
+	}
+	var as_chartPanel = new Ext.Panel({
+		border : false,
+		layout : 'fit',
+		frame : false
+			// height:450
+		});
+	var as_chartWindow = new Ext.Window({
+				title : '重点监测',
+				frame : true,
+				width : 750,
+				height : 450,
+				layout : "fit",
+				autoScroll : true,
+				modal : true,
+				plain : true, // 设置背景颜色
+				resizable : false, // 不可移动
+				buttonAlign : "center", // 按钮的位置
+				closeAction : "hide", // 将窗体隐藏而并不销毁
+				// bodyStyle : 'padding 5px 50px 5px 50px',
+				items : [as_chartPanel],
+				buttons : [{
+							text : '关闭',
+							handler : function() {
+								as_chartWindow.hide();
+							}
+						}]
+			});
+
+	/** 查询集抄户结果 */
+	function getASMessage() {
+		as_gridStore.baseParams = {
+			consId : consId,
+			queryTmnlNo : queryTmnlNo
+		};
+		as_gridStore.load({
+					params : {
+						start : 0,
+						limit : DEFAULT_PAGE_SIZE
+					}
+				});
+	}
+
+	var as_gridPanel = new Ext.TabPanel({
+				region : 'center',
+				activeTab : 0,
+				plain : true,
+				monitorResize : true,
+				items : [as_recordGrid, as_monitorGrid],
+				border : false
+			});
+	// 页面总体渲染------------------------------------------------------------------------------
+	var as_ViewPanel = new Ext.Panel({
+				bodyStyle : 'padding:5px 5px 5px 5px',
+				layout : 'border',
+				items : [as_queryPanel, as_gridPanel],
+				border : false
+			});
+	renderModel(as_ViewPanel, '低压远程抄表');
+	Ext.getCmp('低压远程抄表').on('beforehide', function() {
+				tmnlNo = '';
+				monitorSn = '';
+				monitorOv = false;
+			});
+	Ext.getCmp('低压远程抄表').on('beforeclose', function() {
+				tmnlNo = '';
+				monitorSn = '';
+				monitorOv = false;
+			});
+});

@@ -1,0 +1,107 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/app/!svn/ver/5414/trunk/sea/src/dao/com/nari/baseapp/datagathorman
+END
+IDataFetchJdbcDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/app/!svn/ver/4919/trunk/sea/src/dao/com/nari/baseapp/datagathorman/IDataFetchJdbcDao.java
+END
+LowQualityEvaluateDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/app/!svn/ver/5141/trunk/sea/src/dao/com/nari/baseapp/datagathorman/LowQualityEvaluateDao.java
+END
+IBatchFetchJdbcDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/app/!svn/ver/4726/trunk/sea/src/dao/com/nari/baseapp/datagathorman/IBatchFetchJdbcDao.java
+END
+GatherTaskQueryDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/app/!svn/ver/5414/trunk/sea/src/dao/com/nari/baseapp/datagathorman/GatherTaskQueryDao.java
+END
+基本应用-数据采集管理
+K 25
+svn:wc:ra_dav:version-url
+V 163
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/baseapp/datagathorman/%E5%9F%BA%E6%9C%AC%E5%BA%94%E7%94%A8-%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86%E7%AE%A1%E7%90%86
+END
+DataFetchTerminalDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/baseapp/datagathorman/DataFetchTerminalDao.java
+END
+OrigFrameQryDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/app/!svn/ver/3180/trunk/sea/src/dao/com/nari/baseapp/datagathorman/OrigFrameQryDao.java
+END
+ILeftTreeDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/app/!svn/ver/3180/trunk/sea/src/dao/com/nari/baseapp/datagathorman/ILeftTreeDao.java
+END
+GatherTaskCompileJdbcDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/app/!svn/ver/3864/trunk/sea/src/dao/com/nari/baseapp/datagathorman/GatherTaskCompileJdbcDao.java
+END
+AutoSendJdbcDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/app/!svn/ver/5028/trunk/sea/src/dao/com/nari/baseapp/datagathorman/AutoSendJdbcDao.java
+END
+IDoDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/5254/trunk/sea/src/dao/com/nari/baseapp/datagathorman/IDoDao.java
+END
+DataFetchProxy.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/5033/trunk/sea/src/dao/com/nari/baseapp/datagathorman/DataFetchProxy.java
+END
+GatherQualityEvaluateJdbcDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/app/!svn/ver/5266/trunk/sea/src/dao/com/nari/baseapp/datagathorman/GatherQualityEvaluateJdbcDao.java
+END
+SqlData.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/5394/trunk/sea/src/dao/com/nari/baseapp/datagathorman/SqlData.java
+END
+DeviceMonitorJdbcDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/app/!svn/ver/2524/trunk/sea/src/dao/com/nari/baseapp/datagathorman/DeviceMonitorJdbcDao.java
+END
+DataPublishJdbcDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/baseapp/datagathorman/DataPublishJdbcDao.java
+END
+IllegalFrameQryDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/app/!svn/ver/3649/trunk/sea/src/dao/com/nari/baseapp/datagathorman/IllegalFrameQryDao.java
+END

@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/app/!svn/ver/5413/trunk/sea/src/service/com/nari/baseapp/datagathorman
+END
+GatherQualityEvaluateManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/app/!svn/ver/5264/trunk/sea/src/service/com/nari/baseapp/datagathorman/GatherQualityEvaluateManager.java
+END
+DataFetchManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/app/!svn/ver/4917/trunk/sea/src/service/com/nari/baseapp/datagathorman/DataFetchManager.java
+END
+IllegalFrameQryManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/app/!svn/ver/3646/trunk/sea/src/service/com/nari/baseapp/datagathorman/IllegalFrameQryManager.java
+END
+GatherTaskCompileManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/app/!svn/ver/3861/trunk/sea/src/service/com/nari/baseapp/datagathorman/GatherTaskCompileManager.java
+END
+DeviceMonitorManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/app/!svn/ver/2524/trunk/sea/src/service/com/nari/baseapp/datagathorman/DeviceMonitorManager.java
+END
+LowQualityEvaluateManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/app/!svn/ver/5140/trunk/sea/src/service/com/nari/baseapp/datagathorman/LowQualityEvaluateManager.java
+END
+DataPublishManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/app/!svn/ver/2464/trunk/sea/src/service/com/nari/baseapp/datagathorman/DataPublishManager.java
+END
+基本应用-数据采集管理
+K 25
+svn:wc:ra_dav:version-url
+V 167
+/svn/app/!svn/ver/2464/trunk/sea/src/service/com/nari/baseapp/datagathorman/%E5%9F%BA%E6%9C%AC%E5%BA%94%E7%94%A8-%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86%E7%AE%A1%E7%90%86
+END
+AutoSendManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/5028/trunk/sea/src/service/com/nari/baseapp/datagathorman/AutoSendManager.java
+END
+GatherTaskQueryManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/app/!svn/ver/5413/trunk/sea/src/service/com/nari/baseapp/datagathorman/GatherTaskQueryManager.java
+END
+IBatchFetchManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/app/!svn/ver/5279/trunk/sea/src/service/com/nari/baseapp/datagathorman/IBatchFetchManager.java
+END
+OrigFrameQryManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/app/!svn/ver/3180/trunk/sea/src/service/com/nari/baseapp/datagathorman/OrigFrameQryManager.java
+END

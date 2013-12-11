@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/app/!svn/ver/3941/trunk/sea/src/util/com/nari/util/ws
+END
+Globals.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/app/!svn/ver/3939/trunk/sea/src/util/com/nari/util/ws/Globals.java
+END
+PropertiesUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/3941/trunk/sea/src/util/com/nari/util/ws/PropertiesUtils.java
+END
+XMLSwitchUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/app/!svn/ver/3939/trunk/sea/src/util/com/nari/util/ws/XMLSwitchUtil.java
+END
+ClientAuthenticationHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/3939/trunk/sea/src/util/com/nari/util/ws/ClientAuthenticationHandler.java
+END
+ErrorCode.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/app/!svn/ver/3939/trunk/sea/src/util/com/nari/util/ws/ErrorCode.java
+END
+ParamFieldMapUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/3939/trunk/sea/src/util/com/nari/util/ws/ParamFieldMapUtil.java
+END

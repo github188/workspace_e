@@ -1,0 +1,261 @@
+package com.nari.baseapp.datagatherman;
+
+import java.util.Date;
+
+/**
+ * 漏点补召
+ * 
+ * @author 余涛
+ */
+public class GatherByHandDto {
+	// 供电单位
+	private String orgName;
+	// 用户号
+	private String consNo;
+	// 用户名
+	private String consName;
+	// 终端地址
+	private String terminalAddr;
+
+	private Integer unGatherPoints;
+
+	private Long dataId;
+
+	private String orgNo;
+
+	private String dataSrc;
+
+	private Boolean isDenizen;
+
+	private Long templateId;
+
+	private Short applyCnt;
+
+	private Short firstCollCnt;
+
+	private Short missingCnt;
+
+	private Short powerCutCnt;
+
+	private Short recallCnt;
+
+	private Byte dataGroup;
+
+	private String denizenMp;
+
+	private String tmnlAssetNo;
+
+	private Short mpSn;
+
+	private String protNoList;
+
+	private Date statDate;
+
+	private boolean online;
+
+	private String protocolName;
+
+	private String mpNo;
+
+	private String mpName;
+
+	public String getMpNo() {
+		return mpNo;
+	}
+
+	public void setMpNo(String mpNo) {
+		this.mpNo = mpNo;
+	}
+
+	public String getMpName() {
+		return mpName;
+	}
+
+	public void setMpName(String mpName) {
+		this.mpName = mpName;
+	}
+
+	public String getProtocolName() {
+		return protocolName;
+	}
+
+	public void setProtocolName(String protocolName) {
+		this.protocolName = protocolName;
+	}
+
+	public boolean isOnline() {
+		return online;
+	}
+
+	public void setOnline(boolean online) {
+		this.online = online;
+	}
+
+	public String getOrgName() {
+		return orgName;
+	}
+
+	public void setOrgName(String orgName) {
+		this.orgName = orgName;
+	}
+
+	public String getConsNo() {
+		return consNo;
+	}
+
+	public void setConsNo(String consNo) {
+		this.consNo = consNo;
+	}
+
+	public String getConsName() {
+		return consName;
+	}
+
+	public void setConsName(String consName) {
+		this.consName = consName;
+	}
+
+	public String getTerminalAddr() {
+		return terminalAddr;
+	}
+
+	public void setTerminalAddr(String terminalAddr) {
+		this.terminalAddr = terminalAddr;
+	}
+
+	public Integer getUnGatherPoints() {
+		return unGatherPoints;
+	}
+
+	public void setUnGatherPoints(Integer unGatherPoints) {
+		this.unGatherPoints = unGatherPoints;
+	}
+
+	public Long getDataId() {
+		return dataId;
+	}
+
+	public void setDataId(Long dataId) {
+		this.dataId = dataId;
+	}
+
+	public String getOrgNo() {
+		return orgNo;
+	}
+
+	public void setOrgNo(String orgNo) {
+		this.orgNo = orgNo;
+	}
+
+	public String getDataSrc() {
+		return dataSrc;
+	}
+
+	public void setDataSrc(String dataSrc) {
+		this.dataSrc = dataSrc;
+	}
+
+	public Boolean getIsDenizen() {
+		return isDenizen;
+	}
+
+	public void setIsDenizen(Boolean isDenizen) {
+		this.isDenizen = isDenizen;
+	}
+
+	public Long getTemplateId() {
+		return templateId;
+	}
+
+	public void setTemplateId(Long templateId) {
+		this.templateId = templateId;
+	}
+
+	public Short getApplyCnt() {
+		return applyCnt;
+	}
+
+	public void setApplyCnt(Short applyCnt) {
+		this.applyCnt = applyCnt;
+	}
+
+	public Short getFirstCollCnt() {
+		return firstCollCnt;
+	}
+
+	public void setFirstCollCnt(Short firstCollCnt) {
+		this.firstCollCnt = firstCollCnt;
+	}
+
+	public Short getMissingCnt() {
+		return missingCnt;
+	}
+
+	public void setMissingCnt(Short missingCnt) {
+		this.missingCnt = missingCnt;
+	}
+
+	public Short getPowerCutCnt() {
+		return powerCutCnt;
+	}
+
+	public void setPowerCutCnt(Short powerCutCnt) {
+		this.powerCutCnt = powerCutCnt;
+	}
+
+	public Short getRecallCnt() {
+		return recallCnt;
+	}
+
+	public void setRecallCnt(Short recallCnt) {
+		this.recallCnt = recallCnt;
+	}
+
+	public Byte getDataGroup() {
+		return dataGroup;
+	}
+
+	public void setDataGroup(Byte dataGroup) {
+		this.dataGroup = dataGroup;
+	}
+
+	public String getDenizenMp() {
+		return denizenMp;
+	}
+
+	public void setDenizenMp(String denizenMp) {
+		this.denizenMp = denizenMp;
+	}
+
+	public String getTmnlAssetNo() {
+		return tmnlAssetNo;
+	}
+
+	public void setTmnlAssetNo(String tmnlAssetNo) {
+		this.tmnlAssetNo = tmnlAssetNo;
+	}
+
+	public Short getMpSn() {
+		return mpSn;
+	}
+
+	public void setMpSn(Short mpSn) {
+		this.mpSn = mpSn;
+	}
+
+	public String getProtNoList() {
+		return protNoList;
+	}
+
+	public void setProtNoList(String protNoList) {
+		this.protNoList = protNoList;
+	}
+
+	public Date getStatDate() {
+		return statDate;
+	}
+
+	public void setStatDate(Date statDate) {
+		this.statDate = statDate;
+	}
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.nari.sysman.templateman.VwTaskProperty" table="VW_TASK_PROPERTY">
+		<id name="taskProperty" type="java.lang.String" column="TASK_PROPERTY">
+			<generator class="assigned"/>
+		</id>
+		<property name="taskPropertyName" type="java.lang.String" column="TASK_PROPERTY_NAME"/>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/app/!svn/ver/4345/trunk/sea/src/dao/com/nari/bg
+END
+BackGroundTaskJdbcDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/4301/trunk/sea/src/dao/com/nari/bg/BackGroundTaskJdbcDao.java
+END
+BackGroundTaskHibernateDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/4345/trunk/sea/src/dao/com/nari/bg/BackGroundTaskHibernateDao.java
+END

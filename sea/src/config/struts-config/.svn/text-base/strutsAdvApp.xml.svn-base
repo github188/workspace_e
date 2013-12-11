@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<!--高级应用的JSON Action--> 
+	<package name="jsonadvapp" namespace="/advapp" extends="baseJson">    
+		<!--重点用户定义 action -->
+		<action name="vipconsmanager" class="com.nari.advapp.vipconsman.VipConsManagerAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+				
+		<!--重点用户定义-负荷超容量统计 -->
+		<action name="vipConsPowerOver" class="com.nari.advapp.vipconsman.VipConsPowerOverAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!--重点用户定义-功率因数越限统计 -->
+		<action name="vipConsPowerCurve" class="com.nari.advapp.vipconsman.VipConsPowerOverAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!--重点用户定义-电压合格率统计 -->
+		<action name="vipConsPowerVstat" class="com.nari.advapp.vipconsman.VipConsPowerOverAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!--重点用户监测 action -->
+		<action name="vipConsMonitor" class="com.nari.advapp.vipconsman.VipConsMonitorAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!--重点户排名分析 -->
+		<action name="vipConsPowerSortAnalyse" class="com.nari.advapp.vipconsman.VipConsSortAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,sortList.*</param>
+			</result>
+		</action>
+		
+		<!--重点用户监测数据 -->
+		<action name="vipConsMonitorData" class="com.nari.advapp.vipconsman.VipConsMonitorDataAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		
+		<!--数据发布 -->
+		<action name="dataPub" class="com.nari.advapp.vipconsman.DataPubAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		
+		<!--统计分析  需量分析-->
+		<action name="collectionPointDemand" class="com.nari.advapp.statanalyse.CollectionPointDemandAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		 <!--统计分析  电量对比分析-->
+		<action name="elecContrastAnalysisAction" class="com.nari.advapp.statanalyse.ElecContrastAnalysisAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		
+		<!--统计分析  负荷统计分析-->
+		<action name="chargeStatAnalyse" class="com.nari.advapp.statanalyse.ChargeStatisAnalyseAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		
+		<!--统计分析  电量统计分析 -->
+		<action name="elecStatAnalyse" class="com.nari.advapp.statanalyse.ElecStatisAnalyseAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!--日志发布结果统计及查询-->
+		<action name="logReleaseQueryAction" class="com.nari.advapp.vipconsman.LogReleaseQueryAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!--功率因素分析-->
+		<action name="powerFactorAnalysisAction" class="com.nari.advapp.vipconsman.PowerFactorAnalysisAction">
+			<result type="json">
+				<param name="excludeProperties"> </param>
+			</result>
+		</action>
+		<!--线路统计分析-->
+		<action name="lineStatAnalysisAction" class="com.nari.advapp.statanalyse.LineStatAnalysisAction">
+			<result type="json">
+				<param name="excludeProperties"> </param>
+			</result>
+		</action>
+		
+	</package>
+
+</struts>    

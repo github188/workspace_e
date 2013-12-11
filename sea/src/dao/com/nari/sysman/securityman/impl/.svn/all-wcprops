@@ -1,0 +1,113 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/app/!svn/ver/6951/trunk/sea/src/dao/com/nari/sysman/securityman/impl
+END
+PRoleDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/sysman/securityman/impl/PRoleDaoImpl.java
+END
+PSysUserDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/app/!svn/ver/2687/trunk/sea/src/dao/com/nari/sysman/securityman/impl/PSysUserDaoImpl.java
+END
+SysPrivilige.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/3146/trunk/sea/src/dao/com/nari/sysman/securityman/impl/SysPrivilige.java
+END
+PAccessOrgJdbcDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/sysman/securityman/impl/PAccessOrgJdbcDaoImpl.java
+END
+GenralTreeDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/6951/trunk/sea/src/dao/com/nari/sysman/securityman/impl/GenralTreeDaoImpl.java
+END
+OperatorsDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/app/!svn/ver/5410/trunk/sea/src/dao/com/nari/sysman/securityman/impl/OperatorsDaoImpl.java
+END
+PMenuDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/3037/trunk/sea/src/dao/com/nari/sysman/securityman/impl/PMenuDaoImpl.java
+END
+UserAdvanceQueryDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/app/!svn/ver/5405/trunk/sea/src/dao/com/nari/sysman/securityman/impl/UserAdvanceQueryDaoImpl.java
+END
+PUserRoleRelaJdbcDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/sysman/securityman/impl/PUserRoleRelaJdbcDaoImpl.java
+END
+ODeptDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/3161/trunk/sea/src/dao/com/nari/sysman/securityman/impl/ODeptDaoImpl.java
+END
+DictionaryDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/4530/trunk/sea/src/dao/com/nari/sysman/securityman/impl/DictionaryDaoImpl.java
+END
+PRolePrivRelaJdbcDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/app/!svn/ver/3558/trunk/sea/src/dao/com/nari/sysman/securityman/impl/PRolePrivRelaJdbcDaoImpl.java
+END
+PUserRoleRelaDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/sysman/securityman/impl/PUserRoleRelaDaoImpl.java
+END
+PAccessConsTypeJdbcDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/sysman/securityman/impl/PAccessConsTypeJdbcDaoImpl.java
+END
+PAccessTmnlFactoryJdbcDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/sysman/securityman/impl/PAccessTmnlFactoryJdbcDaoImpl.java
+END
+PRolePrivRelaDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/sysman/securityman/impl/PRolePrivRelaDaoImpl.java
+END
+AlertEventDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/app/!svn/ver/6214/trunk/sea/src/dao/com/nari/sysman/securityman/impl/AlertEventDao.java
+END
+PAccessTmnlFactoryDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/sysman/securityman/impl/PAccessTmnlFactoryDaoImpl.java
+END

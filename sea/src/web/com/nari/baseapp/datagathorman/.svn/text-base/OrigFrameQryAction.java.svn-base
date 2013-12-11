@@ -1,0 +1,147 @@
+package com.nari.baseapp.datagathorman;
+
+import java.util.List;
+import org.apache.log4j.Logger;
+import com.nari.action.baseaction.BaseAction;
+import com.nari.action.baseaction.Constans;
+import com.nari.baseapp.datagatherman.OrigFrameQry;
+import com.nari.baseapp.datagatherman.OrigFrameQryAsset;
+import com.nari.exbase.ExResult;
+import com.nari.exmain.MsgExMain;
+import com.nari.support.Page;
+
+public class OrigFrameQryAction extends BaseAction {
+	private Logger logger = Logger.getLogger(this.getClass());
+	private OrigFrameQryManager origFrameQryManager;
+	private String terminalAddr;
+	private String protocolCode;
+	private String message;
+	private String messageInfo;
+	
+	
+	public String getMessageInfo() {
+		return messageInfo;
+	}
+	public void setMessageInfo(String messageInfo) {
+		this.messageInfo = messageInfo;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	public String getProtocolCode() {
+		return protocolCode;
+	}
+	public void setProtocolCode(String protocolCode) {
+		this.protocolCode = protocolCode;
+	}
+
+	private boolean success = true; // 是否成功
+	public long start = 0;
+	public int limit = Constans.DEFAULT_PAGE_SIZE;
+	private long totalCount;
+	private String DateStart;
+	private String DateEnd;
+	private List<OrigFrameQry> origFrameQryList;
+	private String origFrameQryID;
+	private List<OrigFrameQryAsset> origFrameQryAssetList;
+	
+	
+	public long getTotalCount() {
+		return totalCount;
+	}
+	public void setTotalCount(long totalCount) {
+		this.totalCount = totalCount;
+	}
+	public String getDateStart() {
+		return DateStart;
+	}
+	public void setDateStart(String dateStart) {
+		DateStart = dateStart;
+	}
+	public String getDateEnd() {
+		return DateEnd;
+	}
+	public void setDateEnd(String dateEnd) {
+		DateEnd = dateEnd;
+	}
+	public String getOrigFrameQryID() {
+		return origFrameQryID;
+	}
+	public void setOrigFrameQryID(String origFrameQryID) {
+		this.origFrameQryID = origFrameQryID;
+	}
+	public List<OrigFrameQryAsset> getOrigFrameQryAssetList() {
+		return origFrameQryAssetList;
+	}
+	public void setOrigFrameQryAssetList(
+			List<OrigFrameQryAsset> origFrameQryAssetList) {
+		this.origFrameQryAssetList = origFrameQryAssetList;
+	}
+	public OrigFrameQryManager getOrigFrameQryManager() {
+		return origFrameQryManager;
+	}
+	public void setOrigFrameQryManager(OrigFrameQryManager origFrameQryManager) {
+		this.origFrameQryManager = origFrameQryManager;
+	}
+	public String getTerminalAddr() {
+		return terminalAddr;
+	}
+	public void setTerminalAddr(String terminalAddr) {
+		this.terminalAddr = terminalAddr;
+	}
+	public boolean isSuccess() {
+		return success;
+	}
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
+	public long getStart() {
+		return start;
+	}
+	public void setStart(long start) {
+		this.start = start;
+	}
+	public int getLimit() {
+		return limit;
+	}
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
+
+	public List<OrigFrameQry> getOrigFrameQryList() {
+		return origFrameQryList;
+	}
+	public void setOrigFrameQryList(List<OrigFrameQry> origFrameQryList) {
+		this.origFrameQryList = origFrameQryList;
+	}
+	
+	public String queryorigFrameQry() throws Exception{
+		try{
+		Page<OrigFrameQry> origFrameQryPage = this.origFrameQryManager.findOrigFrameQry(terminalAddr, DateStart, DateEnd, start, limit);
+		origFrameQryList = origFrameQryPage.getResult();
+		totalCount = origFrameQryPage.getTotalCount();
+		this.logger.debug("报文查询");
+		return SUCCESS;
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;
+	} 
+	
+	public String queryOrigFrameQryAsset() throws Exception{
+		this.origFrameQryAssetList = this.origFrameQryManager.findOrigFrameQryAsset(origFrameQryID);
+		this.logger.debug("报文查询");
+		return SUCCESS;
+	}
+	
+	public String queryOrigFrameQryMessage() throws Exception{
+		MsgExMain msgMain = MsgExMain.getInstance();
+		ExResult result = msgMain.getExResult(message, protocolCode);
+		this.setMessageInfo(result.toString());
+		this.logger.debug("报文解析");
+		return SUCCESS;
+	}
+}

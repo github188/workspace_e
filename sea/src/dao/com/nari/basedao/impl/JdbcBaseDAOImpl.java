@@ -1,0 +1,456 @@
+package com.nari.basedao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.transaction.TransactionException;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+import org.springframework.transaction.support.TransactionTemplate;
+
+import com.nari.action.baseaction.Constans;
+import com.nari.privilige.PSysUser;
+import com.nari.support.Page;
+
+/**
+ * 类 JdbcBaseDAOImpl
+ * 
+ * @author zhangzhw zhongweizhang@163.como
+ * @describe JDBC DAO 基类
+ */
+public class JdbcBaseDAOImpl extends JdbcDaoSupport {
+	// protected Logger logger = Logger.getLogger(this.getClass());
+	TransactionTemplate transactionTemplate;
+
+	/**
+	 * 方法 pagingFind
+	 * 
+	 * @param sql
+	 * @param start
+	 * @param limit
+	 * @param rowMapper
+	 * @return 分页查询返回PageInfo (分页内的数据对象List 和 总数据数)
+	 */
+	public <X> Page<X> pagingFind(String sql, long start, long limit,
+			RowMapper rowMapper) {
+
+		return pagingFind(sql, start, limit, rowMapper, new Object[] {});
+	}
+
+	/**
+	 * 方法 pagingFind
+	 * 
+	 * @param sql
+	 * @param start
+	 * @param limit
+	 * @param rowMapper
+	 * @param obj
+	 * @return 单条件分页查询返回PageInfo (分页内的数据对象List 和 总数据数)
+	 */
+	@SuppressWarnings("unchecked")
+	public <X> Page<X> pagingFind(String sql, long start, long limit,
+			RowMapper rowMapper, Object obj) {
+		try {
+			Page<X> pi = new Page<X>();
+			pi.setTotalCount(this.pagingFindCount(sql, obj));
+			pi.setResult((List<X>) this.pagingFindList(sql, start, limit,
+					rowMapper, obj));
+			return pi;
+		} catch (RuntimeException e) {
+			this.logger.error("JDBC分页查询时出错！");
+			throw e;
+		}
+	}
+
+	/**
+	 * 方法 pagingFind
+	 * 
+	 * @param sql
+	 * @param start
+	 * @param limit
+	 * @param rowMapper
+	 * @param obj
+	 * @return 按条件分页查询返回PageInfo (分页内的数据对象List 和 总数据数)
+	 */
+	@SuppressWarnings("unchecked")
+	public <X> Page<X> pagingFind(String sql, long start, long limit,
+			RowMapper rowMapper, Object[] obj) {
+		try {
+			Page<X> pi = new Page<X>();
+			if (limit == 0)
+				limit = Constans.DEFAULT_PAGE_SIZE;
+			pi.setTotalCount(this.pagingFindCount(sql, obj));
+			pi.setResult((List<X>) this.pagingFindList(sql, start, limit,
+					rowMapper, obj));
+			return pi;
+		} catch (RuntimeException e) {
+			this.logger.error("JDBC分页查询时出错！");
+			throw e;
+		}
+
+	}
+
+	/**
+	 * 方法 pagingFindList
+	 * 
+	 * @param sql
+	 * @param start
+	 * @param limit
+	 * @param rowMapper
+	 * @return 分页查询的记录对象
+	 */
+	public <X> List<X> pagingFindList(String sql, long start, long limit,
+			RowMapper rowMapper) {
+
+		return pagingFindList(sql, start, limit, rowMapper, null);
+
+	}
+
+	/**
+	 * 
+	 * @param sql
+	 * @param start
+	 * @param limit
+	 * @param rowMapper
+	 * @param obj
+	 * @return 分页查询的记录对象(单一条件查询)
+	 */
+	@SuppressWarnings("unchecked")
+	public <X> List<X> pagingFindList(String sql, long start, long limit,
+			RowMapper rowMapper, Object obj) {
+		return (List<X>) pagingFindList(sql, start, limit, rowMapper,
+				new Object[] { obj });
+
+	}
+
+	/**
+	 * 方法 pagingFindList
+	 * 
+	 * @param sql
+	 * @param start
+	 * @param limit
+	 * @param rowMapper
+	 * @param obj
+	 * @return 条件查询分页查询的记录对象
+	 */
+	@SuppressWarnings("unchecked")
+	public <X> List<X> pagingFindList(String sql, long start, long limit,
+			RowMapper rowMapper, Object[] obj) {
+		try {
+
+			String newSql = this.parseSql(sql).toString();
+			List<Object> list = new ArrayList();
+			if (obj != null) {
+				for (int i = 0; i < obj.length; i++) {
+					list.add(obj[i]);
+				}
+			}
+			list.add(start + limit);
+			list.add(start);
+
+			return (List<X>) super.getJdbcTemplate().query(newSql,
+					list.toArray(), rowMapper);
+
+		} catch (RuntimeException e) {
+			this.logger.error("JDBC分页查询，查询分页对象时出错！");
+			throw e;
+		}
+	}
+
+	// sql 语句添加条件
+	private String parseSql(String sql) {
+		// sql = sql.toLowerCase();
+		StringBuffer newsql = new StringBuffer("");
+
+		// String field = sql.substring(fieldstart, fieldend);
+
+		newsql.append(" select * ");
+		// newsql.append(field);
+		newsql.append(" from (");
+		newsql.append(" select pagetable.*");
+		// newsql.append(field);
+		newsql.append(", rownum rn  from ( ");
+		newsql.append(sql);
+		newsql.append(" \n) pagetable where rownum<= ? ) where rn > ? ");
+
+		logger.debug("new sql=" + newsql);
+		return newsql.toString();
+	}
+
+	/**
+	 * 方法 pagingFindCount
+	 * 
+	 * @param sql
+	 * @return 该sql语句能查询到的记录总数
+	 */
+	public long pagingFindCount(String sql) {
+		return pagingFindCount(sql, new Object[] {});
+	}
+
+	/**
+	 * 方法 pagingFindCount
+	 * 
+	 * @param sql
+	 * @param obj
+	 * @return 该sql语句能查询到的记录总数
+	 */
+	public long pagingFindCount(String sql, Object obj) {
+		return pagingFindCount(sql, new Object[] { obj });
+	}
+
+	/**
+	 * 方法 pagingFindCount
+	 * 
+	 * @param sql
+	 * @param obj
+	 * @return 条件查询记录总数
+	 */
+	public long pagingFindCount(String sql, Object[] obj) {
+		try {
+			// String newSql = " select count(1) "
+			// + sql.substring(sql.toLowerCase().indexOf("from"));
+			String newSql = "select count(1) from ( " + sql + "\n ) ";
+			logger.debug("new count sql =" + newSql);
+			return super.getJdbcTemplate().queryForLong(newSql, obj);
+		} catch (RuntimeException e) {
+			this.logger.error("JDBC分页查询，查询记录总数时出错！");
+			throw e;
+		}
+	}
+
+	/**
+	 * 方法 deletePara
+	 * 
+	 * @param sql
+	 * @param obj
+	 * @return 条件删除记录
+	 */
+	public int deletePara(String sql, Object[] obj) {
+		try {
+			return super.getJdbcTemplate().update(sql, obj);
+		} catch (RuntimeException e) {
+			this.logger.error("JDBC删除，删除时出错！");
+			throw e;
+		}
+	}
+
+	/**
+	 * 方法 updatePara
+	 * 
+	 * @param sql
+	 * @param obj
+	 * @return 条件更新记录
+	 */
+	public int updatePara(String sql, Object[] obj) {
+		try {
+			return super.getJdbcTemplate().update(sql, obj);
+		} catch (RuntimeException e) {
+			this.logger.error("JDBC更新，更新时出错！");
+			throw e;
+		}
+	}
+
+	/**
+	 * 
+	 * @param sqls
+	 */
+	public void doTransaction(final List<String> sqls, final List<List> args,
+			final String errorMsg) throws TransactionException {
+		final JdbcTemplate jdbcTemplate = super.getJdbcTemplate();
+
+		getTransactionTemplate().execute(
+				new TransactionCallbackWithoutResult() {
+					protected void doInTransactionWithoutResult(
+							TransactionStatus status)
+							throws TransactionException {
+						try {
+							for (int i = 0; i < sqls.size(); i++) {
+								if (null != args.get(i)
+										&& args.get(i).size() > 0)
+									jdbcTemplate.update(sqls.get(i), args
+											.get(i).toArray());
+								else
+									jdbcTemplate.update(sqls.get(i));
+							}
+
+						} catch (TransactionException e) {
+							status.setRollbackOnly(); // 回滚
+							throw e;
+
+						}
+					}
+				});
+	}
+
+	public int doTransaction(final List<String> sqls, final List<List> args)
+			throws TransactionException {
+		final JdbcTemplate jdbcTemplate = super.getJdbcTemplate();
+
+		try {
+			getTransactionTemplate().execute(
+					new TransactionCallbackWithoutResult() {
+						protected void doInTransactionWithoutResult(
+								TransactionStatus status)
+								throws TransactionException {
+							try {
+								for (int i = 0; i < sqls.size(); i++) {
+									if (null != args.get(i)
+											&& args.get(i).size() > 0)
+										jdbcTemplate.update(sqls.get(i), args
+												.get(i).toArray());
+									else
+										jdbcTemplate.update(sqls.get(i));
+								}
+							} catch (TransactionException e) {
+								status.setRollbackOnly(); // 回滚
+								throw e;
+							}
+						}
+					});
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+
+	}
+
+	/**
+	 * 方法 getETableAreaByUser
+	 * 
+	 * @param pSysUser
+	 * @return 通过登录用户取得地区代码
+	 */
+	@SuppressWarnings("unchecked")
+	public String getETableAreaByUser(PSysUser pSysUser) {
+
+		String rtn = null;
+
+		if (pSysUser.getAccessLevel().equals("02"))
+			return null;
+
+		String sql = "SELECT area_code FROM o_org ,p_sys_user WHERE o_org.org_no=p_sys_user.org_no AND p_sys_user.staff_no=?";
+
+		List<String> list = super.getJdbcTemplate().query(sql,
+				new Object[] { pSysUser.getStaffNo() }, new StringRowMapper());
+
+		if (list.size() > 0)
+			rtn = list.get(0);
+
+		return rtn;
+	}
+
+	/**
+	 * 方法 getETableAreaByOrgNo
+	 * 
+	 * @param orgNo
+	 * @return 通过　orgNo 取到的存储地区码
+	 * @describe 无法控制返回结果出错的情况，请调用者注意自己控制
+	 */
+	@SuppressWarnings("unchecked")
+	public String getETableAreaByOrgNo(String orgNo) {
+		String rtn = null;
+		String sql = "SELECT AREA_CODE FROM O_ORG WHERE ORG_NO=?";
+
+		List<String> list = super.getJdbcTemplate().query(sql,
+				new Object[] { orgNo }, new StringRowMapper());
+		if (list.size() > 0)
+			rtn = list.get(0);
+
+		return rtn;
+
+	}
+
+	/**
+	 * 方法 getETableAreaByConsNo
+	 * 
+	 * @param consNo
+	 * @return 通过　consNo 取到的存储地区码
+	 * @describe 无法控制返回结果出错的情况，请调用者注意自己控制
+	 */
+	@SuppressWarnings("unchecked")
+	public String getETableAreaByConsNo(String consNo) {
+		String rtn = null;
+		String sql = "SELECT AREA_CODE\n" + "         FROM O_ORG O, C_CONS C\n"
+				+ "        WHERE C.ORG_NO = O.ORG_NO\n"
+				+ "          AND C.CONS_NO = ?";
+
+		List<String> list = super.getJdbcTemplate().query(sql,
+				new Object[] { consNo }, new StringRowMapper());
+		if (list.size() > 0)
+			rtn = list.get(0);
+
+		return rtn;
+
+	}
+
+	/**
+	 * 方法　getETableAreaByLineId　
+	 * 
+	 * @param lineId
+	 * @return　通过线路ID取得存储地区码
+	 */
+	@SuppressWarnings("unchecked")
+	public String getETableAreaByLineId(String lineId) {
+
+		String rtn = null;
+		String sql = "SELECT O.AREA_CODE\n" + "  FROM G_LINE L,\n"
+				+ "       O_ORG  O\n" + " WHERE L.ORG_NO = O.ORG_NO\n"
+				+ "   AND L.LINE_ID = ?";
+		List<String> list = super.getJdbcTemplate().query(sql,
+				new Object[] { lineId }, new StringRowMapper());
+		if (list.size() > 0)
+			rtn = list.get(0);
+
+		return rtn;
+	}
+
+	/**
+	 * 方法　getETableAreaBySubId　
+	 * 
+	 * @param subId
+	 * @return　通过变电站ID取得存储地区码
+	 */
+	@SuppressWarnings("unchecked")
+	public String getETableAreaBySubId(String subId) {
+		String rtn = null;
+		String sql = "SELECT O.AREA_CODE\n" + "  FROM G_SUBS S,\n"
+				+ "       O_ORG  O\n" + " WHERE S.ORG_NO = O.ORG_NO\n"
+				+ "   AND S.SUBS_ID = ?";
+
+		List<String> list = super.getJdbcTemplate().query(sql,
+				new Object[] { subId }, new StringRowMapper());
+		if (list.size() > 0)
+			rtn = list.get(0);
+
+		return rtn;
+	}
+
+	// 简单RowMapper
+	class StringRowMapper implements RowMapper {
+		@Override
+		public Object mapRow(ResultSet rs, int paramInt) throws SQLException {
+			String s = null;
+			try {
+				s = rs.getString("AREA_CODE");
+				return s;
+			} catch (Exception e) {
+				return null;
+			}
+		}
+	}
+
+	public TransactionTemplate getTransactionTemplate() {
+		return transactionTemplate;
+	}
+
+	public void setTransactionTemplate(TransactionTemplate transactionTemplate) {
+		this.transactionTemplate = transactionTemplate;
+	}
+
+}

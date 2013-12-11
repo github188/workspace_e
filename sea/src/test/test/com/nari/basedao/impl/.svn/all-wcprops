@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/app/!svn/ver/2464/trunk/sea/src/test/test/com/nari/basedao/impl
+END
+JdbcBaseDAOImplTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/app/!svn/ver/2464/trunk/sea/src/test/test/com/nari/basedao/impl/JdbcBaseDAOImplTest.java
+END
+HibernateBaseDaoImplTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/app/!svn/ver/2464/trunk/sea/src/test/test/com/nari/basedao/impl/HibernateBaseDaoImplTest.java
+END

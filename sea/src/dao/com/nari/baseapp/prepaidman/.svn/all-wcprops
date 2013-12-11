@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/app/!svn/ver/7615/trunk/sea/src/dao/com/nari/baseapp/prepaidman
+END
+PrePaidDebugJdbcDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/app/!svn/ver/5974/trunk/sea/src/dao/com/nari/baseapp/prepaidman/PrePaidDebugJdbcDao.java
+END
+IPrePaidStatusDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/5931/trunk/sea/src/dao/com/nari/baseapp/prepaidman/IPrePaidStatusDao.java
+END
+DunningControlDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/6336/trunk/sea/src/dao/com/nari/baseapp/prepaidman/DunningControlDao.java
+END
+PrePaidDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/7194/trunk/sea/src/dao/com/nari/baseapp/prepaidman/PrePaidDao.java
+END
+IUseValueQueryDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/7631/trunk/sea/src/dao/com/nari/baseapp/prepaidman/IUseValueQueryDao.java
+END
+基本应用-预付费管理
+K 25
+svn:wc:ra_dav:version-url
+V 151
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/baseapp/prepaidman/%E5%9F%BA%E6%9C%AC%E5%BA%94%E7%94%A8-%E9%A2%84%E4%BB%98%E8%B4%B9%E7%AE%A1%E7%90%86
+END
+IPrePaidStatDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/app/!svn/ver/5703/trunk/sea/src/dao/com/nari/baseapp/prepaidman/IPrePaidStatDao.java
+END

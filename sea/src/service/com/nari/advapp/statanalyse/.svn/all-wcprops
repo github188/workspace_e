@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/app/!svn/ver/6998/trunk/sea/src/service/com/nari/advapp/statanalyse
+END
+CollectionPointDemandManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/app/!svn/ver/6596/trunk/sea/src/service/com/nari/advapp/statanalyse/CollectionPointDemandManager.java
+END
+ElecStatisAnalyseManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/app/!svn/ver/6600/trunk/sea/src/service/com/nari/advapp/statanalyse/ElecStatisAnalyseManager.java
+END
+PowerFactorAnalysisManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/app/!svn/ver/6997/trunk/sea/src/service/com/nari/advapp/statanalyse/PowerFactorAnalysisManager.java
+END
+ChargeStatisAnalyseManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/app/!svn/ver/6600/trunk/sea/src/service/com/nari/advapp/statanalyse/ChargeStatisAnalyseManager.java
+END
+ElecContrastAnalysisManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/app/!svn/ver/6979/trunk/sea/src/service/com/nari/advapp/statanalyse/ElecContrastAnalysisManager.java
+END
+LineStatAnalysisManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/app/!svn/ver/6989/trunk/sea/src/service/com/nari/advapp/statanalyse/LineStatAnalysisManager.java
+END

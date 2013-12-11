@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+    
+    <!--struts 常量配置-->
+    <!--正式运行时下devMode 需要改为false,以优化性能-->
+    <constant name="struts.devMode" value="false"/>
+    <constant name="struts.tag.altSyntax" value="true"/>
+    
+    <constant name="struts.i18n.encoding" value="UTF-8"/>
+    <constant name="struts.locale" value="zh_CN"/>
+    
+    <constant name="struts.url.http.port" value="8080"/>
+    <constant name="struts.multipart.saveDir" value="/tmp"/>
+    <constant name="struts.multipart.maxSize" value="512000000"/>
+    <constant name="struts.configuration.xml.reload" value="true"/>
+    <!--使用Spring 管理struts 对象-->
+    <constant name="struts.objectFactory" value="spring"/>
+   
+    <!-- struts 常量配置结束-->
+    
+    <!-- 所有JSP类型Action 的基础包 -->
+    <package name="baseJsp" extends="struts-default">
+       
+        <global-results>
+            <!-- 下面定义的结果对所有的Action都有效 -->            
+            <result name="exception" type="chain">            
+             expaction
+            </result>                   
+        </global-results>
+
+        <!-- 指Action抛出Exception异常时，转入名为exception的结果。 -->
+        <global-exception-mappings>
+            <exception-mapping exception="java.lang.Exception" result="exception"></exception-mapping>
+        </global-exception-mappings>
+
+        <action name="expaction" class="com.nari.action.baseaction.ExceptionAction">
+            <result name="success">/login.jsp</result>
+        </action>
+       
+    </package>
+    <!-- 所有JSON类型Action 的基础包 -->
+    <package name="baseJson" namespace="/testj" extends="json-default">
+        <interceptors>
+            <interceptor name="checklogin" class="com.nari.sysman.securityman.CheckLogin"></interceptor>
+            <interceptor-stack name="safeDefaultStack">
+                <interceptor-ref name="defaultStack"></interceptor-ref>
+                <interceptor-ref name="checklogin"></interceptor-ref>
+            </interceptor-stack>
+        </interceptors> 
+        
+        <default-interceptor-ref name="safeDefaultStack"></default-interceptor-ref>
+        
+        
+        <global-results>
+            <!-- 下面定义的结果对所有的Action都有效 -->            
+            <result name="exception" type="chain">            
+             expaction
+            </result>    
+            <result name="notlogin" type="chain">            
+             notlogin
+            </result>                   
+        </global-results>
+        
+        <global-exception-mappings>
+            <!-- 指Action抛出Exception异常时，转入名为exception的结果。 -->  
+            <exception-mapping exception="java.lang.Exception" result="exception">                
+            </exception-mapping>
+        </global-exception-mappings>
+        
+        
+        <action name="notlogin" class="com.nari.action.baseaction.NotLoginAction" method="notlogin">
+            <result type="json">                
+            </result>
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+        </action>
+        
+        <!-- 可在此异常基础上扩展 -->
+        <action name="expaction" class="com.nari.action.baseaction.ExceptionAction">
+            <result type="json">
+            	<param name="contentType">text/html</param>           
+            </result>
+        </action>
+
+        
+    </package>
+
+    <package name="global" extends="baseJsp">       
+        <!--系统登录-->
+        <action name="login" class="com.nari.sysman.securityman.LoginAction" method="login">
+            <result name="success" type="redirect">/index.jsp</result>
+            <result name="failure">/login.jsp</result>
+        </action>
+	
+        <action name="findAllCCons" class="com.nari.baseapp.planpowerconsume.GroupSetAction" method="getAllCCons">
+            <result name="success">/login.jsp</result>
+        </action>
+        <!--
+            <action name="userLog" class="com.nari.runman.dutylog.UserLogAction">
+                <result name="success">/runMan/dutyLog/test.jsp</result>
+            </action>
+            -->
+    </package>
+    
+    
+    <!-- 定义各个应用中的Action -->
+    <include file="struts-config/strutsAdvApp.xml" />
+    <include file="struts-config/strutsBaseApp.xml" />
+    <include file="struts-config/strutsRunMan.xml" />
+    <include file="struts-config/strutsSysMan.xml" />
+    <include file="struts-config/strutsQryStat.xml" />
+    <include file="struts-config/strutsMyDesk.xml" />
+    <include file="activesyn-config/strutsActiveSyn.xml" />
+</struts>

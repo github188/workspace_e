@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/app/!svn/ver/6944/trunk/sea/src/service/com/nari/runman/feildman
+END
+TerminalInstallManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/app/!svn/ver/6944/trunk/sea/src/service/com/nari/runman/feildman/TerminalInstallManager.java
+END
+ITerminalCorrectTimeManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/app/!svn/ver/3661/trunk/sea/src/service/com/nari/runman/feildman/ITerminalCorrectTimeManager.java
+END
+TerminalParaSetManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/app/!svn/ver/6051/trunk/sea/src/service/com/nari/runman/feildman/TerminalParaSetManager.java
+END
+运行管理-现场管理
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/svn/app/!svn/ver/2464/trunk/sea/src/service/com/nari/runman/feildman/%E8%BF%90%E8%A1%8C%E7%AE%A1%E7%90%86-%E7%8E%B0%E5%9C%BA%E7%AE%A1%E7%90%86
+END
+ITerminalResetManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/3661/trunk/sea/src/service/com/nari/runman/feildman/ITerminalResetManager.java
+END

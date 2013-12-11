@@ -1,0 +1,269 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/app/!svn/ver/6925/trunk/sea/src/model/com/nari/terminalparam
+END
+TTmnlTask.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/TTmnlTask.java
+END
+TerminalInstallBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/app/!svn/ver/6756/trunk/sea/src/model/com/nari/terminalparam/TerminalInstallBean.java
+END
+TTaskTemplate.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/TTaskTemplate.hbm.xml
+END
+TTmnlGroup.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/TTmnlGroup.hbm.xml
+END
+TTmnlGroupDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/2467/trunk/sea/src/model/com/nari/terminalparam/TTmnlGroupDto.java
+END
+TDataCombi.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/TDataCombi.java
+END
+ITmnlTaskSetupBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/app/!svn/ver/4672/trunk/sea/src/model/com/nari/terminalparam/ITmnlTaskSetupBean.java
+END
+TTmnlTotalInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/TTmnlTotalInfo.java
+END
+MeterCommBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/4679/trunk/sea/src/model/com/nari/terminalparam/MeterCommBean.java
+END
+TTaskTemplateData.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/TTaskTemplateData.hbm.xml
+END
+TerminalChgInfoBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/app/!svn/ver/3600/trunk/sea/src/model/com/nari/terminalparam/TerminalChgInfoBean.java
+END
+TTaskTemplateBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/app/!svn/ver/4552/trunk/sea/src/model/com/nari/terminalparam/TTaskTemplateBean.java
+END
+RUserGroup.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/RUserGroup.java
+END
+TTmnlParam.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/TTmnlParam.hbm.xml
+END
+TTmnlGroupDetailId.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/TTmnlGroupDetailId.java
+END
+TTaskTemplateData.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/TTaskTemplateData.java
+END
+TTmnlParamId.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/TTmnlParamId.java
+END
+TTmnlTotalInfo.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/TTmnlTotalInfo.hbm.xml
+END
+TTmnlMpParamId.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/TTmnlMpParamId.java
+END
+MeterChgInfoBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/app/!svn/ver/3607/trunk/sea/src/model/com/nari/terminalparam/MeterChgInfoBean.java
+END
+TTaskTemplate.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/TTaskTemplate.java
+END
+MeterMaintainInfoBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/app/!svn/ver/4946/trunk/sea/src/model/com/nari/terminalparam/MeterMaintainInfoBean.java
+END
+RUserGroupDetail.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/RUserGroupDetail.hbm.xml
+END
+RUserGroupDetailId.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/RUserGroupDetailId.java
+END
+ITmnlProtSentSetupBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/app/!svn/ver/4672/trunk/sea/src/model/com/nari/terminalparam/ITmnlProtSentSetupBean.java
+END
+TTmnlTaskId.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/TTmnlTaskId.java
+END
+ITmnlTask.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/6925/trunk/sea/src/model/com/nari/terminalparam/ITmnlTask.java
+END
+TTmnlGroupDetail.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/TTmnlGroupDetail.java
+END
+MpMeterInfoBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/app/!svn/ver/5646/trunk/sea/src/model/com/nari/terminalparam/MpMeterInfoBean.java
+END
+TTmnlMpParam.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/app/!svn/ver/4849/trunk/sea/src/model/com/nari/terminalparam/TTmnlMpParam.hbm.xml
+END
+TTmnlParam.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/TTmnlParam.java
+END
+TTmnlTotalInfoId.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/TTmnlTotalInfoId.java
+END
+RUserGroup.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/RUserGroup.hbm.xml
+END
+TerminalInstallDetailBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/6172/trunk/sea/src/model/com/nari/terminalparam/TerminalInstallDetailBean.java
+END
+TTmnlMpParam.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/TTmnlMpParam.java
+END
+TTmnlGroupDetail.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/TTmnlGroupDetail.hbm.xml
+END
+TTmnlGroupDetailDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/TTmnlGroupDetailDto.java
+END
+TerminalRmvAndChgBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/app/!svn/ver/6925/trunk/sea/src/model/com/nari/terminalparam/TerminalRmvAndChgBean.java
+END
+TDataCombi.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/TDataCombi.hbm.xml
+END
+TTaskTemplateDataId.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/TTaskTemplateDataId.java
+END
+TerminalDebugInfoBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/app/!svn/ver/6346/trunk/sea/src/model/com/nari/terminalparam/TerminalDebugInfoBean.java
+END
+TTmnlGroup.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/TTmnlGroup.java
+END
+RUserGroupDetail.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/RUserGroupDetail.java
+END
+TTmnlTask.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/terminalparam/TTmnlTask.hbm.xml
+END

@@ -1,0 +1,173 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/app/!svn/ver/5386/trunk/sea/src/model/com/nari/baseapp/datagatherman
+END
+TbgTaskDetail.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/app/!svn/ver/3358/trunk/sea/src/model/com/nari/baseapp/datagatherman/TbgTaskDetail.java
+END
+CommMode.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/app/!svn/ver/5265/trunk/sea/src/model/com/nari/baseapp/datagatherman/CommMode.java
+END
+OrigFrameQry.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/3064/trunk/sea/src/model/com/nari/baseapp/datagatherman/OrigFrameQry.java
+END
+GatherTaskCompileDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/baseapp/datagatherman/GatherTaskCompileDto.java
+END
+DataFetchTerminal.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/baseapp/datagatherman/DataFetchTerminal.java
+END
+TaskInfoDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/baseapp/datagatherman/TaskInfoDto.java
+END
+ConsType.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/app/!svn/ver/5265/trunk/sea/src/model/com/nari/baseapp/datagatherman/ConsType.java
+END
+DataPublishManDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/baseapp/datagatherman/DataPublishManDto.java
+END
+AutoSendDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/app/!svn/ver/4515/trunk/sea/src/model/com/nari/baseapp/datagatherman/AutoSendDto.java
+END
+TbgTaskStatisticsFinder.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/app/!svn/ver/5258/trunk/sea/src/model/com/nari/baseapp/datagatherman/TbgTaskStatisticsFinder.java
+END
+TmnlModeCode.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/5265/trunk/sea/src/model/com/nari/baseapp/datagatherman/TmnlModeCode.java
+END
+TbgTaskSend.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/app/!svn/ver/3863/trunk/sea/src/model/com/nari/baseapp/datagatherman/TbgTaskSend.java
+END
+LowQualityEvaluate.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/app/!svn/ver/5140/trunk/sea/src/model/com/nari/baseapp/datagatherman/LowQualityEvaluate.java
+END
+OrigFrameQryAsset.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/4711/trunk/sea/src/model/com/nari/baseapp/datagatherman/OrigFrameQryAsset.java
+END
+TbgTaskFinder.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/app/!svn/ver/4771/trunk/sea/src/model/com/nari/baseapp/datagatherman/TbgTaskFinder.java
+END
+IllegalFrameQry.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/app/!svn/ver/3648/trunk/sea/src/model/com/nari/baseapp/datagatherman/IllegalFrameQry.java
+END
+TbgTask.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/app/!svn/ver/3993/trunk/sea/src/model/com/nari/baseapp/datagatherman/TbgTask.java
+END
+GatherByHandDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/app/!svn/ver/4772/trunk/sea/src/model/com/nari/baseapp/datagatherman/GatherByHandDto.java
+END
+DeviceMonitorDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/baseapp/datagatherman/DeviceMonitorDto.java
+END
+ATmnlCollQuality.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/baseapp/datagatherman/ATmnlCollQuality.java
+END
+TbgTaskResult.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/app/!svn/ver/3359/trunk/sea/src/model/com/nari/baseapp/datagatherman/TbgTaskResult.java
+END
+DeviceExcepDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/baseapp/datagatherman/DeviceExcepDto.java
+END
+ProtocolGroupDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/baseapp/datagatherman/ProtocolGroupDTO.java
+END
+TblDataDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/baseapp/datagatherman/TblDataDto.java
+END
+TaskStatInfoBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/app/!svn/ver/5386/trunk/sea/src/model/com/nari/baseapp/datagatherman/TaskStatInfoBean.java
+END
+GatherParamsSendDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/app/!svn/ver/2853/trunk/sea/src/model/com/nari/baseapp/datagatherman/GatherParamsSendDto.java
+END
+DataFetchTerminal.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/baseapp/datagatherman/DataFetchTerminal.hbm.xml
+END
+EDataFinder.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/app/!svn/ver/4982/trunk/sea/src/model/com/nari/baseapp/datagatherman/EDataFinder.java
+END

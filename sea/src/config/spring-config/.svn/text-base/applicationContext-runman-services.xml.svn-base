@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <!-- 终端参数设置 -->
+    <bean id="terminalParaSetManager" class="com.nari.runman.feildman.impl.TerminalParaSetManagerImpl">
+        <property name="vwProtocolCodeDao" ref="runManVwProtocolCodeDao" />
+        <property name="vwDataTypeDao" ref="runManVwDataTypeDao" />
+        <property name="proNameDao" ref="runManProtocolNameDao" />
+        <property name="proItemDao" ref="runManProtocolItemDao" />
+        <property name="itemListDao" ref="runManItemListDao" />
+        <property name="terminalListDao" ref="runManTerminalListDao" />
+        <property name="terminalSaveDao" ref="runManTerminalSaveDao" />
+        <property name="mpInfoSaveDao" ref="runManMpInfoSaveDao" />
+        <property name="mpInfoDao" ref="runManMpInfoDao" />
+    </bean>
+
+    <!--用户操作日志-->
+    <bean id="iUserLogManager" class="com.nari.runman.dutylog.impl.UserLogManagerImpl">
+        <property name="iUserLogDao" ref="iUserLogDao" />
+    </bean>
+        
+    <!--事件屏蔽与分级-->
+    <bean id="eventManageManager" class="com.nari.runman.abnormalhandle.impl.EventManageManagerImpl">
+        <property name="vwProtocolCodeDao" ref="ahVwProtocolCodeDao" />
+        <property name="vwDataTypeDao" ref="ahVwDataTypeDao" />
+        <property name="terminalSaveORUpdateDao" ref="emTmnlDataSaveORUpdateDao" />
+        <property name="eventinfoDao" ref="emEventInfoDao" />
+    </bean>
+        
+    <!--终端月通信流量service-->
+    <bean id="aTmnlFlowMBeanManager" class="com.nari.runman.runstatusman.impl.ATmnlFlowMBeanManagerImpl">
+        <property name="aTmnlFlowMBeanDao" ref="aTmnlFlowMBeanDao" />
+    </bean>
+
+    <!--工单源生成service(供接口调用使用)-->
+    <bean id="eventNoCreateManager" class="com.nari.runman.abnormalhandle.impl.EventNoCreateManagerImpl">
+        <property name="eventNoCreateDao" ref="eventNoCreateDao" />
+    </bean>
+	
+    <!--主站运行状态service-->
+    <bean id="lMasterStationResManager" class="com.nari.runman.runstatusman.impl.LMasterStationResManagerImpl">
+        <property name="lMasterStationResDao" ref="lMasterStationResDao" />
+    </bean>	
+	
+    <!--现场设备异常管理service-->
+    <bean id="deviceAbnormalManager" class="com.nari.runman.abnormalhandle.impl.DeviceAbnormalManagerImpl">
+        <property name="deviceAbnormalDao" ref="deviceAbnormalDao" />
+        <property name="alertEventDao" ref="alertEventDao" />
+        <property name="deviceExceptionDao" ref="deviceExceptionDao" />
+        <property name="deviceAbnormalHibernateDao" ref="deviceAbnormalHibernateDao" />
+    </bean>	
+    
+    <!--现场设备异常查询service-->
+    <bean id="deviceExceptionManager" class="com.nari.runman.abnormalhandle.impl.DeviceExceptionManagerImpl">
+        <property name="deviceExceptionDao" ref="deviceExceptionDao" />
+        <property name="eventNoCreateDao" ref="eventNoCreateDao" />
+    </bean>	
+	
+    <!--电能表运行状态service-->
+    <bean id="aEventStatDBeanManager" class="com.nari.runman.runstatusman.impl.AEventStatDBeanManagerImpl">
+        <property name="aEventStatDBeanDao" ref="aEventStatDBeanDao" />
+    </bean>
+	 <!--主站异常分析service-->
+	<bean id="mainExcepAnalyManager" class="com.nari.runman.runstatusman.impl.MainExcepAnalyManagerImpl">
+	    <property name="mainExcepAnalyDao" ref="mainExcepAnalyDao" />
+	</bean>
+    <!--终端设备运行状态service-->
+    <bean id="tmnlRunStatusManager" class="com.nari.runman.runstatusman.impl.TmnlRunStatusManagerImpl">
+        <property name="tmnlRunStatusDao" ref="tmnlRunStatusDao" />
+    </bean>
+    <!--档案同步service-->
+    <bean id="archivesmanManager" class="com.nari.runman.archivesman.impl.ArchivesmanManagerImpl">
+    </bean>
+    
+    <!--档案维护service-->
+    <bean id="archiveManManager" class="com.nari.runman.archivesman.impl.ArchiveManManagerImpl">        
+        <property name="archieveManDao" ref="archieveManDao" />
+    </bean>
+    
+    <!--组织机构维护service-->
+    <bean id="iOrganizeManager" class="com.nari.runman.archivesman.impl.OrganizeManagerImpl">        
+        <property name="iOrganizeManDao" ref="iOrganizeManDao" />
+    </bean>
+    
+    <!--档案维护终端维护service-->
+    <bean id="iArchiveTmnlManManager" class="com.nari.runman.archivesman.impl.ArchiveTmnlManManagerImpl">        
+        <property name="iArchiveTmnlManDao" ref="iArchiveTmnlManDao" />
+    </bean>
+    
+    <!--档案维护采集点维护service-->
+    <bean id="iArchiveRcpManManager" class="com.nari.runman.archivesman.impl.ArchiveRcpManManagerImpl">        
+        <property name="iArchiveRcpManDao" ref="iArchiveRcpManDao" />
+    </bean>
+    
+    <!--档案维护计量点维护service-->
+    <bean id="iArchiveCmpManManager" class="com.nari.runman.archivesman.impl.ArchiveCmpManManagerImpl">        
+        <property name="iArchiveCmpManDao" ref="iArchiveCmpManDao" />
+    </bean>
+    
+    <!--档案维护电能表维护service-->
+    <bean id="iArchiveCmeterManManager" class="com.nari.runman.archivesman.impl.ArchiveCmeterManManagerImpl">        
+        <property name="iArchiveCmeterManDao" ref="iArchiveCmeterManDao" />
+    </bean>
+    
+     <!--档案维护Excel批量导入service-->
+    <bean id="iImportExcelManager" class="com.nari.runman.archivesman.impl.ImportExcelManagerImpl">        
+        <property name="iImportExcelDao" ref="iImportExcelDao" />
+    </bean>
+    
+     <!--档案维护采集通道维护service-->
+    <bean id="iCollectionChannelService" class="com.nari.runman.archivesman.impl.CollectionChannelServiceImpl">        
+        <property name="iCollectionChannelDao" ref="iCollectionChannelDao" />
+    </bean>
+    
+    <!--终端安装service-->
+    <bean id="terminalInstallManager" class="com.nari.runman.feildman.impl.TerminalInstallManagerImpl">
+        <property name="terminalInstallDao" ref="terminalInstallDao" />
+    </bean>
+    <!--终端对时service-->
+    <bean id="iTerminalCorrectTimeManager" class="com.nari.runman.feildman.impl.TerminalCorrectTimeManagerImpl">
+        <property name="iLOpTmnlLogManager" ref="iLOpTmnlLogManager" />
+    </bean>
+    <!--终端复位service-->
+    <bean id="iTerminalResetManager" class="com.nari.runman.feildman.impl.TerminalResetManagerImpl">
+        <property name="iLOpTmnlLogManager" ref="iLOpTmnlLogManager" />
+    </bean>
+	
+    <!--运行状况管理 通信信道监测 service-->
+    <bean id="channelMonitorManager" class="com.nari.runman.runstatusman.impl.ChannelMonitorManagerImpl">
+        <property name="channelMonitorDao"  ref="channelMonitorDao" />
+    </bean>
+    <!--运行状况管理 通信信道监测 service-->
+    <bean id="backGroundTaskManager" class="com.nari.bg.impl.BackGroundTaskManagerImpl">
+        <property name="backGroundTaskJdbcDao"  ref="backGroundTaskJdbcDao" />
+        <property name="backGroundTaskHibernateDao"  ref="backGroundTaskHibernateDao" />
+    </bean>
+    <!--异常监测主页 service-->
+     <bean id="exceptionMonitorManager" class="com.nari.runman.abnormalhandle.impl.ExceptionMonitorManagerImpl">
+        <property name="exceptionMonitorDao"  ref="exceptionMonitorDao" />
+    </bean>
+    
+    <!-- 远程调试Service -->
+    <bean id="remoteDebugManager" class="com.nari.runman.archivesman.impl.RemoteDebugManagerImpl" >
+    	<property name="remoteDebugDao" ref="remoteDebugDao" />
+    </bean>
+   
+</beans>

@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/app/!svn/ver/7045/trunk/sea/WebContent/qryStat/reportMan/%E5%9C%B0%E5%8C%BA%E6%95%B0%E6%8D%AE%E6%8A%A5%E8%A1%A8
+END
+collSucPerRep.js
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/app/!svn/ver/7045/trunk/sea/WebContent/qryStat/reportMan/%E5%9C%B0%E5%8C%BA%E6%95%B0%E6%8D%AE%E6%8A%A5%E8%A1%A8/collSucPerRep.js
+END
+realCollEnerStat.js
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/app/!svn/ver/7045/trunk/sea/WebContent/qryStat/reportMan/%E5%9C%B0%E5%8C%BA%E6%95%B0%E6%8D%AE%E6%8A%A5%E8%A1%A8/realCollEnerStat.js
+END
+voltDegEnerRep.js
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/app/!svn/ver/7045/trunk/sea/WebContent/qryStat/reportMan/%E5%9C%B0%E5%8C%BA%E6%95%B0%E6%8D%AE%E6%8A%A5%E8%A1%A8/voltDegEnerRep.js
+END
+failStat.js
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/app/!svn/ver/7045/trunk/sea/WebContent/qryStat/reportMan/%E5%9C%B0%E5%8C%BA%E6%95%B0%E6%8D%AE%E6%8A%A5%E8%A1%A8/failStat.js
+END
+tmnlRunDebStatus.js
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/app/!svn/ver/7045/trunk/sea/WebContent/qryStat/reportMan/%E5%9C%B0%E5%8C%BA%E6%95%B0%E6%8D%AE%E6%8A%A5%E8%A1%A8/tmnlRunDebStatus.js
+END
+IndCollEnerRep.js
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/app/!svn/ver/7045/trunk/sea/WebContent/qryStat/reportMan/%E5%9C%B0%E5%8C%BA%E6%95%B0%E6%8D%AE%E6%8A%A5%E8%A1%A8/IndCollEnerRep.js
+END
+collTmnlInstallStat.js
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/app/!svn/ver/7045/trunk/sea/WebContent/qryStat/reportMan/%E5%9C%B0%E5%8C%BA%E6%95%B0%E6%8D%AE%E6%8A%A5%E8%A1%A8/collTmnlInstallStat.js
+END
+tmnlInstallRunStat.js
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/svn/app/!svn/ver/7045/trunk/sea/WebContent/qryStat/reportMan/%E5%9C%B0%E5%8C%BA%E6%95%B0%E6%8D%AE%E6%8A%A5%E8%A1%A8/tmnlInstallRunStat.js
+END

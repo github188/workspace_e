@@ -1,0 +1,841 @@
+package com.nari.baseapp.prepaidman;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONSerializer;
+import net.sf.json.JsonConfig;
+
+import org.apache.log4j.Logger;
+
+import com.nari.action.baseaction.BaseAction;
+import com.nari.action.baseaction.Constans;
+import com.nari.basicdata.BCommProtocol;
+import com.nari.coherence.TaskDeal;
+import com.nari.fe.commdefine.define.FrontConstant;
+import com.nari.fe.commdefine.task.Item;
+import com.nari.fe.commdefine.task.MeterInfo;
+import com.nari.fe.commdefine.task.ParamItem;
+import com.nari.fe.commdefine.task.Response;
+import com.nari.fe.commdefine.task.ResponseItem;
+import com.nari.logofsys.LOpTmnlLog;
+import com.nari.privilige.PSysUser;
+import com.nari.runman.feildman.FetchInfoBean;
+import com.nari.runman.feildman.TerminalParaSetManager;
+import com.nari.terminalparam.TTmnlParam;
+import com.nari.terminalparam.TTmnlParamId;
+import com.nari.util.StatusCodeUtils;
+
+public class MeterControlAction extends BaseAction {
+	private static Logger logger = Logger.getLogger(PrePaidControlAction.class);
+
+	private boolean success = true;
+	private long totalCount;// 总数
+	private long start;
+	private long limit = Constans.DEFAULT_PAGE_SIZE;
+
+	private String orgNo;
+	private String appNo;// 购电单号
+	private String consNo;
+	private String tmnlAssetNo;
+	
+	private String cacheAndTmnlStatus = "";
+	private List<MeterInfoBean> tmnlList;
+	
+	private List<BCommProtocol> bcp;
+
+	private PrePaidManager prePaidManager;
+	// 动态注入服务层
+	private TerminalParaSetManager terminalParaSetManager;
+	
+	private long taskId;
+
+	private int taskSecond;
+	
+	// 浏览器端请求的参数
+	private String controlType;//控制类型：催费告警 01， 拉闸 02， 合闸 03
+	// 规约类型编码
+	private String protocolCode;
+	// 规约编码数据类型
+	private String dataType;
+	// 规约项数据编码
+	private String proItemNo;
+	// 规约项编码
+	private String proNO;
+	// 终端资产编号
+	private String terminalNo;
+	// 召测状态
+	private String[] status;
+	// FN号
+	private short fn;
+	// PN号
+	private short[] pn;
+	// flg
+	private int mpflg;
+	// 终端存在flg
+	private int tmnlflg;
+	// json格式数据
+	private String jsonData;
+	// 终端资产编号集合
+	private String[] tmnlAssetNoArr;
+	// 节点类型
+	private String nodeType;
+	// 节点值
+	private String nodeValue;
+	// 是否为数据库参数下发flg
+	private boolean dataFlag;
+	// 单个终端召测下发状态
+	private String statusCode;
+	
+	/**
+	 * 查询终端规约
+	 * @return
+	 * @throws Exception
+	 */
+	public String queryPortocol() throws Exception {
+		logger.debug("终端规约查询开始");
+		bcp = prePaidManager.getProtocolList(protocolCode);
+		logger.debug("终端规约查询结束");
+		return SUCCESS;
+	}
+	
+	/**
+	 * 查询终端信息。
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String queryTmnlList() throws Exception {
+		this.logger.debug("----终端查询开始----");
+		// 获取操作员信息
+		PSysUser userInfo = (PSysUser) this.getSession().getAttribute("pSysUser");
+		tmnlList = prePaidManager.queryTermList(nodeType, nodeValue, userInfo, protocolCode);
+		this.logger.debug("----终端查询结束----");
+		return SUCCESS;
+	}
+	
+	/**
+	 * 查询终端信息。
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String queryTmnlArrList() throws Exception {
+		this.logger.debug("----批量终端查询开始----");
+		// 获取操作员信息
+		PSysUser userInfo = (PSysUser) this.getSession().getAttribute("pSysUser");
+		tmnlList = prePaidManager.queryTmnlArrList(nodeType, nodeValue, userInfo, protocolCode);
+		this.logger.debug("----批量终端查询结束----");
+		return SUCCESS;
+	}
+	
+	/**
+	 * 页面参数下发。
+	 * @return
+	 * @throws Exception
+	 */
+	public String sendPagePara() {
+		logger.debug("----数据转发开始----");
+//		if (!this.isConnet()) {
+//			return SUCCESS;
+//		}
+		// 是否选中下发终端判断
+		if (tmnlAssetNoArr[0] == null || "".equals(tmnlAssetNoArr[0])) {
+			this.setTmnlflg(1);
+			return SUCCESS;
+		}
+
+		// 获取操作员信息
+		PSysUser userInfo = (PSysUser) this.getSession().getAttribute("pSysUser");
+		// 获取操作员IP地址
+		String ipAddr = getRequest().getRemoteAddr();
+
+		JSONArray jsonArray = JSONArray.fromObject(jsonData);
+		JsonConfig jsonConfig = new JsonConfig();
+
+		// json为数组的解析模式
+		jsonConfig.setArrayMode(JsonConfig.MODE_OBJECT_ARRAY);
+
+		// 指定Json数据对应的javaBean对象class名
+		jsonConfig.setRootClass(FetchInfoBean.class);
+
+		String[] statusArr = new String[tmnlAssetNoArr.length];
+		String[] tmnlAssetNoRet = new String[tmnlAssetNoArr.length];
+
+		// 终端状态
+		Map<String, String> tmnlStatusMap = new HashMap<String, String>();
+
+		List<String> keyList = null;
+		Map<List<String>, List<FetchInfoBean>> tmnlInfo = new HashMap<List<String>, List<FetchInfoBean>>();
+
+		TaskDeal taskDeal = new TaskDeal();
+		
+		// 参数项设置
+		List<ParamItem> paramList = new ArrayList<ParamItem>();
+		//组织下发参数
+		ParamItem pitem = new ParamItem();
+		pitem.setFn((short) fn);// 设置FN号
+		pitem.setPoint((short) 0); // 设置PN号
+		
+		FetchInfoBean[] bpItem = (FetchInfoBean[]) JSONSerializer.toJava(jsonArray.getJSONArray(0), jsonConfig);
+		
+		// 编码对象集合
+		List<Item> items = new ArrayList<Item>();
+		
+		for (int j = 0; j < bpItem.length; j++) {
+			Item item = new Item(bpItem[j].getProtItemNo());
+			item.setValue(bpItem[j].getCurrentValue().trim());
+			items.add(item);
+		}
+		
+		pitem.setItems((ArrayList<Item>) items);
+		paramList.add(pitem);
+		
+		//页面传入的终端电能表信息列表
+		List<Map<String,String>> meterList = createMeterInfo();
+		
+		Map<String,String> flagMap = meterList.get(0);
+		List<String> tmnlAssetNoList = new ArrayList<String>();
+		List<MeterInfo> meterInfoList = new ArrayList<MeterInfo>();
+		//循环list设置参数
+		for (int n = 0; n < meterList.size(); n++) {
+			Map<String,String> map = meterList.get(n);
+			
+			/*
+			 * 设置电能表信息 MeterInfo
+			 */
+			MeterInfo meter = new MeterInfo();
+			//设置电表ID,取自c_meter表中的meter_id
+			meter.setMeterID(Long.parseLong(map.get("meterId")));
+			//设置电表地址,取自c_meter表中的comm_addr1
+			meter.setMeterAddr(map.get("commAddr"));
+			//controlType 是页面单选框值，01 告警   02 告警解除  03 合闸  04 分闸  05 保电  06 保电解除 (还会增加) 
+			meter.setNote(controlType);	
+			
+//			终端资产号集合
+			if(n==0) {
+				tmnlAssetNoList.add(map.get("tmnlAssetNo"));//加入终端资产编号列表
+				meterInfoList.add(meter);
+				
+				if(meterList.size()==1) {//如果前台终端List长度为1，直接进行下发
+					taskDeal.qstTermParamTaskResult(tmnlAssetNoList, FrontConstant.TRANS_DATA, paramList, meterInfoList);
+					logger.debug("--调用接口--");
+				}
+				continue;
+			}
+			
+//			参数项设置
+			if(!map.get("tmnlAssetNo").equals(flagMap.get("tmnlAssetNo"))){//参数下发
+				taskDeal.qstTermParamTaskResult(tmnlAssetNoList, FrontConstant.TRANS_DATA, paramList, meterInfoList);
+				logger.debug("--调用接口--");
+				
+				//一个终端组一个包，遇到终端不同的要新建meterInfoList对象
+				meterInfoList = new ArrayList<MeterInfo>();
+				
+				tmnlAssetNoList = new ArrayList<String>();
+				tmnlAssetNoList.add(map.get("tmnlAssetNo"));
+				flagMap = map;
+			}
+			
+			meterInfoList.add(meter);
+			
+			if(n==meterList.size()-1) {//list结尾调用接口，循环结束
+				taskDeal.qstTermParamTaskResult(tmnlAssetNoList, FrontConstant.TRANS_DATA, paramList, meterInfoList);
+				logger.debug("--调用接口--");
+			}
+		}
+		
+		//等待返回结果
+		List<Response> list = taskDeal.getAllResponse(taskSecond);
+		Response res = null;
+		if (null != list && 0 < list.size()) {
+			for (int i = 0; i < list.size(); i++) {
+				res = (Response) list.get(i);
+				String tmnlAssetNo = res.getTmnlAssetNo();
+				Short tmnlStatus = res.getTaskStatus();//记录终端返回状态
+				
+				LOpTmnlLog lOpTmnlLog = new LOpTmnlLog();
+				lOpTmnlLog.setEmpNo(userInfo.getStaffNo());
+				lOpTmnlLog.setOrgNo(userInfo.getOrgNo());
+				lOpTmnlLog.setIpAddr(ipAddr);
+				lOpTmnlLog.setOpModule("数据转发");
+				lOpTmnlLog.setOpButton(getOpButtonByCtrlType(controlType));//转发按钮记录: 01 告警， 02 拉闸 03 合闸
+				lOpTmnlLog.setTmnlAssetNo(tmnlAssetNo);
+				lOpTmnlLog.setOpTime(new Date());
+				lOpTmnlLog.setOpObj((short)7);//操作对象7 电表
+				
+				//终端返回状态成功
+				if(tmnlStatus ==3) {
+					//根据终端资产编号取得终端下的电表列表
+					List<Map<String, String>> meterInTmnlList = meterInTmnlList(meterList, tmnlAssetNo);
+					List<ResponseItem> resItems = res.getResponseItems();
+					
+					for (int j = 0; j < meterInTmnlList.size(); j++) {
+						Map<String, String> meterMap = meterInTmnlList.get(j);
+						String meterId = meterMap.get("meterId");
+						
+						ResponseItem item = findResItemByMeterId(meterMap.get("meterId"), resItems);
+						
+						//错误码，当item为null时置-1
+						short errorCode = item==null?(short)-1:item.getErrorCode();
+						//errorCode大于0时 全部是成功
+						if(errorCode >=0) {
+							errorCode = (short) 1;
+						}
+						
+						lOpTmnlLog.setCurStatus(Short.toString(errorCode));
+						if(meterId !=null) {
+							try {
+								lOpTmnlLog.setOpObjNo(Long.parseLong(meterId));
+							} catch (NumberFormatException e) {
+								logger.error("----电表ID转化成Integer类型出错----");
+								e.printStackTrace();
+							}
+						}
+						
+						//将所有数据项记录操作日志
+						for (int k = 0; k < items.size(); k++) {
+							Item it = items.get(k);
+							lOpTmnlLog.setProtItemNo(it.getCode());
+							lOpTmnlLog.setCurValue(it.getValue());
+
+							this.addOpTmnlLog(lOpTmnlLog);
+						}
+						//记录下发状态
+						tmnlStatusMap.put(tmnlAssetNo + meterId, Short.toString(errorCode));
+					}
+				} else {
+					//根据终端资产编号取得终端下的电表列表
+					List<Map<String, String>> meterInTmnlList = meterInTmnlList(meterList, tmnlAssetNo);
+					if(meterInTmnlList ==null) {
+						logger.error("------前置返回终端资产编号与页面下发的终端资产编号不对应------");
+						continue;
+					}
+					for (int j = 0; j < meterInTmnlList.size(); j++) {
+						Map<String, String> map = meterInTmnlList.get(j);
+						
+						lOpTmnlLog.setCurStatus("-1");
+						lOpTmnlLog.setOpObjNo(Long.parseLong(map.get("meterId")));
+						//将所有数据项记录操作日志
+						for (int k = 0; k < items.size(); k++) {
+							Item it = items.get(k);
+							lOpTmnlLog.setProtItemNo(it.getCode());
+							lOpTmnlLog.setCurValue(it.getValue());
+
+							this.addOpTmnlLog(lOpTmnlLog);
+						}
+						
+						//记录下发状态
+						tmnlStatusMap.put(tmnlAssetNo + map.get("meterId"), "-1");
+					}
+				}
+			}
+		} else {//前置无任何返回结果，仍要记录操作日志 返回状态记录为：终端无响应
+			//循环list设置参数
+			for (int n = 0; n < meterList.size(); n++) {
+				Map<String,String> map = meterList.get(n);
+				
+				LOpTmnlLog lOpTmnlLog = new LOpTmnlLog();
+				lOpTmnlLog.setEmpNo(userInfo.getStaffNo());
+				lOpTmnlLog.setOrgNo(userInfo.getOrgNo());
+				lOpTmnlLog.setIpAddr(ipAddr);
+				lOpTmnlLog.setOpModule("数据转发");
+				lOpTmnlLog.setOpButton(getOpButtonByCtrlType(controlType));//转发按钮记录: 01 告警  02 拉闸 03 合闸
+				lOpTmnlLog.setTmnlAssetNo(map.get("tmnlAsserNo"));
+				lOpTmnlLog.setOpTime(new Date());
+				
+				lOpTmnlLog.setOpObj((short)7);//操作对象7 电表
+				lOpTmnlLog.setCurStatus("-1");
+				lOpTmnlLog.setOpObjNo(Long.parseLong(map.get("meterId")));
+				
+				//将所有数据项记录操作日志
+				for (int k = 0; k < items.size(); k++) {
+					Item it = items.get(k);
+					lOpTmnlLog.setProtItemNo(it.getCode());
+					lOpTmnlLog.setCurValue(it.getValue());
+
+					this.addOpTmnlLog(lOpTmnlLog);
+				}
+			}
+		}
+		
+		//解析下发结果MAP，返回页面
+		Set<String> tmnlSet = tmnlStatusMap.keySet();
+		if (tmnlSet != null) {
+			Iterator<String> tmnlIt = tmnlSet.iterator();
+			int i = 0;
+			while (tmnlIt.hasNext()) {
+				String key = (String) tmnlIt.next();
+				String value = tmnlStatusMap.get(key);
+				statusArr[i] = value;
+				tmnlAssetNoRet[i] = key;
+				i++;
+			}
+		}
+
+		this.setStatus(statusArr);
+		this.setMpflg(0);
+		this.setTmnlAssetNoArr(tmnlAssetNoRet);
+		logger.debug("----数据转发结束----");
+		return SUCCESS;
+	}
+	
+	/**
+	 * 根据电表ID遍历ResponseItemList，找到则返回该ResponseItem，否则返回null
+	 * @param string
+	 * @param resItems
+	 * @return
+	 */
+	private ResponseItem findResItemByMeterId(String meterId,
+			List<ResponseItem> resItems) {
+		if(resItems ==null || resItems.size()<=0 || meterId ==null) {
+			return null;
+		}
+		for (int j = 0; j < resItems.size(); j++) {
+			ResponseItem item = resItems.get(j);
+			String id = item.getValue();
+			if(meterId.equals(id)) {
+				return item;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 按控制类型编码记录控制类型
+	 * @param controlType
+	 * @return
+	 */
+	public String getOpButtonByCtrlType(String controlType) {
+		if("01".equals(controlType)) {
+			return "告警";
+		} else if ("02".equals(controlType)) {
+			return "拉闸";
+		} else if ("03".equals(controlType)) {
+			return "合闸";
+		} else {
+			return "";
+		}
+	}
+	
+	/**
+	 * status对应转换
+	 * @param sendStatus
+	 * @return
+	 */
+	public String mapStatusByResultStatus(short sendStatus) {
+		if (sendStatus ==4) {
+			// 下发失败
+			return StatusCodeUtils.PARAM_SEND_FAILE;
+		} else if (sendStatus ==1) {
+			// 终端不在线
+			return StatusCodeUtils.TMNL_OFF_LINE;
+		} else if (sendStatus==0) {
+			// 在规定的时间内缓存没有返回
+			return StatusCodeUtils.COR_UNBACK;
+		} else {
+			//终端无响应
+			return StatusCodeUtils.TMNL_NO_REPLAY;
+		}
+	}
+	
+	/**
+	 * 根据电表ID查询电表信息
+	 * @param meterList
+	 * @param meterId
+	 * @return
+	 */
+	protected Map<String, String> getMeterMapByMeterId(List<Map<String, String>> meterList, String meterId) {
+		for (int i = 0; i < meterList.size(); i++) {
+			Map<String, String> map = meterList.get(i);
+			if(map.get("meterId").equals(meterId)) {
+				return map;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * 从前台页面传入的终端list中查询终端号为指定编号的总加组list
+	 * @param tmnlList
+	 * @param tmnlAssetNo
+	 * @return
+	 */
+	protected List<Map<String, String>> meterInTmnlList(
+			List<Map<String, String>> tmnlList, String tmnlAssetNo) {
+		if (tmnlList == null || tmnlList.size() <= 0 || tmnlAssetNo == null) {
+			return null;
+		}
+		List<Map<String, String>> resList = new ArrayList<Map<String, String>>();
+		for (int i = 0; i < tmnlList.size(); i++) {
+			Map<String, String> map = tmnlList.get(i);
+			if (tmnlAssetNo.equals(map.get("tmnlAssetNo"))) {
+				resList.add(map);
+			}
+		}
+		return resList;
+	}
+	
+	/**
+	 * 判断前置机和缓存通信状态
+	 * 
+	 * @return true:正常,false：中断
+	 */
+	private boolean isConnet() {
+		boolean retCode = true;
+		// Web应用服务器与缓存服务器通信状态
+		if (!TaskDeal.isCacheRunning()) {
+			this.setMpflg(4);
+			retCode = false;
+		}
+		// 前置集群服务通信状态
+		if (!TaskDeal.isFrontAlive()) {
+			this.setMpflg(5);
+			retCode = false;
+		}
+		return retCode;
+	}
+	
+	/**
+	 * 查询数据库当前值
+	 * 
+	 * @throws Exception
+	 */
+	private List<FetchInfoBean> getTerminalInfo(String tmnlAssetNo, short pn) {
+		List<FetchInfoBean> rs = new ArrayList<FetchInfoBean>();
+		try {
+			if ("22".equals(this.dataType) || "24".equals(this.dataType)) {
+				short[] pnTotal = { pn };
+				rs = terminalParaSetManager.getTmnlMpList(this.proNO, tmnlAssetNo, pnTotal);
+			} else {
+				rs = terminalParaSetManager.getTerminalList(this.proNO, tmnlAssetNo);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return rs;
+	}
+	
+	/**
+	 * 下发前保存下发参数信息。
+	 * @return
+	 * @throws Exception
+	 */
+	private void savePara(List<FetchInfoBean> ttmInfo, short pn) {
+		try {
+			List<TTmnlParam> tmInfoList = new ArrayList<TTmnlParam>();
+			for (FetchInfoBean tt : ttmInfo) {
+				TTmnlParam ttmp = new TTmnlParam();
+				TTmnlParamId ttmpId = new TTmnlParamId();
+				ttmpId.setBlockSn(tt.getBlockSn());
+				ttmpId.setTmnlAssetNo(tt.getTmnlAssetNo());
+				ttmpId.setInnerBlockSn(tt.getInnerBlockSn());
+				ttmpId.setProtItemNo(tt.getProtItemNo());
+				ttmp.setId(ttmpId);
+				ttmp.setCurrentValue(tt.getCurrentValue());
+				ttmp.setFailureCode(tt.getFailureCode());
+				ttmp.setHistoryValue(tt.getHistoryValue());
+				ttmp.setLastSendTime(tt.getLastSendTime());
+				ttmp.setNextSendTime(tt.getNextSendTime());
+				ttmp.setResendCount(tt.getResendCount());
+				ttmp.setSaveTime(tt.getSaveTime());
+				ttmp.setSendTime(tt.getSendTime());
+				ttmp.setStaffNo(tt.getStaffNo());
+				ttmp.setStatusCode(tt.getStatusCode());
+				ttmp.setSuccessTime(tt.getSuccessTime());
+				tmInfoList.add(ttmp);
+			}
+			terminalParaSetManager.saveTerminal(tmInfoList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 解析页面传入的电表信息
+	 * @return
+	 */
+	public List<Map<String,String>> createMeterInfo() {
+		List<Map<String,String>> list = new ArrayList<Map<String, String>>();
+		for (int i = 0; i < tmnlAssetNoArr.length; i++) {
+			String[] meterInfo = tmnlAssetNoArr[i].split("`");
+			Map<String,String> map = new HashMap<String, String>();
+			map.put("tmnlAssetNo", meterInfo[0]);
+			map.put("meterId", meterInfo[1]);
+			map.put("commAddr", meterInfo[2]);
+			
+			list.add(map);
+		}
+		
+		//对终端进行排序
+		Collections.sort(list, new Comparator<Map<String,String>>(){
+			@Override
+			public int compare(Map<String,String> o1, Map<String,String> o2) {
+				if(o1.get("tmnlAssetNo").equals(o2.get("tmnlAssetNo"))) {
+					return o1.get("meterId").compareTo(o2.get("meterId"));
+				}
+				return o1.get("tmnlAssetNo").compareTo(o2.get("tmnlAssetNo"));
+			}
+		});
+		
+		return list;
+	}
+	
+	public boolean isSuccess() {
+		return success;
+	}
+
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
+
+	public long getTotalCount() {
+		return totalCount;
+	}
+
+	public void setTotalCount(long totalCount) {
+		this.totalCount = totalCount;
+	}
+
+	public long getStart() {
+		return start;
+	}
+
+	public void setStart(long start) {
+		this.start = start;
+	}
+
+	public long getLimit() {
+		return limit;
+	}
+
+	public void setLimit(long limit) {
+		this.limit = limit;
+	}
+
+	public String getCacheAndTmnlStatus() {
+		return cacheAndTmnlStatus;
+	}
+
+	public void setCacheAndTmnlStatus(String cacheAndTmnlStatus) {
+		this.cacheAndTmnlStatus = cacheAndTmnlStatus;
+	}
+
+	public void setPrePaidManager(PrePaidManager prePaidManager) {
+		this.prePaidManager = prePaidManager;
+	}
+
+	public String getOrgNo() {
+		return orgNo;
+	}
+
+	public void setOrgNo(String orgNo) {
+		this.orgNo = orgNo;
+	}
+
+	public String getAppNo() {
+		return appNo;
+	}
+
+	public void setAppNo(String appNo) {
+		this.appNo = appNo;
+	}
+
+	public String getConsNo() {
+		return consNo;
+	}
+
+	public void setConsNo(String consNo) {
+		this.consNo = consNo;
+	}
+
+	public String getTmnlAssetNo() {
+		return tmnlAssetNo;
+	}
+
+	public void setTmnlAssetNo(String tmnlAssetNo) {
+		this.tmnlAssetNo = tmnlAssetNo;
+	}
+
+	public List<BCommProtocol> getBcp() {
+		return bcp;
+	}
+
+	public void setBcp(List<BCommProtocol> bcp) {
+		this.bcp = bcp;
+	}
+
+	public String getProtocolCode() {
+		return protocolCode;
+	}
+
+	public void setProtocolCode(String protocolCode) {
+		this.protocolCode = protocolCode;
+	}
+
+	public String getDataType() {
+		return dataType;
+	}
+
+	public void setDataType(String dataType) {
+		this.dataType = dataType;
+	}
+
+	public String getProItemNo() {
+		return proItemNo;
+	}
+
+	public void setProItemNo(String proItemNo) {
+		this.proItemNo = proItemNo;
+	}
+
+	public String getProNO() {
+		return proNO;
+	}
+
+	public void setProNO(String proNO) {
+		this.proNO = proNO;
+	}
+
+	public String getTerminalNo() {
+		return terminalNo;
+	}
+
+	public void setTerminalNo(String terminalNo) {
+		this.terminalNo = terminalNo;
+	}
+
+	public String[] getStatus() {
+		return status;
+	}
+
+	public void setStatus(String[] status) {
+		this.status = status;
+	}
+
+	public short getFn() {
+		return fn;
+	}
+
+	public void setFn(short fn) {
+		this.fn = fn;
+	}
+
+	public short[] getPn() {
+		return pn;
+	}
+
+	public void setPn(short[] pn) {
+		this.pn = pn;
+	}
+
+	public int getMpflg() {
+		return mpflg;
+	}
+
+	public void setMpflg(int mpflg) {
+		this.mpflg = mpflg;
+	}
+
+	public int getTmnlflg() {
+		return tmnlflg;
+	}
+
+	public void setTmnlflg(int tmnlflg) {
+		this.tmnlflg = tmnlflg;
+	}
+
+	public String getJsonData() {
+		return jsonData;
+	}
+
+	public void setJsonData(String jsonData) {
+		this.jsonData = jsonData;
+	}
+
+	public String[] getTmnlAssetNoArr() {
+		return tmnlAssetNoArr;
+	}
+
+	public void setTmnlAssetNoArr(String[] tmnlAssetNoArr) {
+		this.tmnlAssetNoArr = tmnlAssetNoArr;
+	}
+
+	public String getNodeType() {
+		return nodeType;
+	}
+
+	public void setNodeType(String nodeType) {
+		this.nodeType = nodeType;
+	}
+
+	public String getNodeValue() {
+		return nodeValue;
+	}
+
+	public void setNodeValue(String nodeValue) {
+		this.nodeValue = nodeValue;
+	}
+
+	public boolean isDataFlag() {
+		return dataFlag;
+	}
+
+	public void setDataFlag(boolean dataFlag) {
+		this.dataFlag = dataFlag;
+	}
+
+	public String getStatusCode() {
+		return statusCode;
+	}
+
+	public void setStatusCode(String statusCode) {
+		this.statusCode = statusCode;
+	}
+
+	public long getTaskId() {
+		return taskId;
+	}
+
+	public void setTaskId(long taskId) {
+		this.taskId = taskId;
+	}
+
+	public int getTaskSecond() {
+		return taskSecond;
+	}
+
+	public void setTaskSecond(int taskSecond) {
+		this.taskSecond = taskSecond;
+	}
+
+	public List<MeterInfoBean> getTmnlList() {
+		return tmnlList;
+	}
+
+	public void setTmnlList(List<MeterInfoBean> tmnlList) {
+		this.tmnlList = tmnlList;
+	}
+
+	public void setTerminalParaSetManager(
+			TerminalParaSetManager terminalParaSetManager) {
+		this.terminalParaSetManager = terminalParaSetManager;
+	}
+
+	public String getControlType() {
+		return controlType;
+	}
+
+	public void setControlType(String controlType) {
+		this.controlType = controlType;
+	}
+}

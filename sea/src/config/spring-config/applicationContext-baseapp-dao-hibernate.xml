@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<!-- 终端规约类型视图 -->
+	<bean id="vwClearDataTypeDao" class="com.nari.basicdata.impl.VwClearDataTypeDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<!-- 透明规约召测组合 -->
+	<bean id="tDataCombiDao" class="com.nari.terminalparam.impl.TDataCombiDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<!-- 数据召测终端 -->
+	<bean id="dataFetchTerminalDao" class="com.nari.baseapp.datagathorman.impl.DataFetchTerminalDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<!--终端保电dao-->
+	<bean id="iWTmnlPaulPowerDao" class="com.nari.baseapp.planpowerconsume.impl.WTmnlPaulPowerDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<!--终端保电Jdbcdao-->
+	<bean id="iWTmnlPaulPowerJdbcDao" class="com.nari.baseapp.planpowerconsume.impl.WTmnlPaulPowerJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!--终端剔除dao-->
+	<bean id="iWTmnlRejectDao" class="com.nari.baseapp.planpowerconsume.impl.WTmnlRejectDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<!--终端剔除Jdbcdao-->
+	<bean id="iWTmnlRejectJdbcDao" class="com.nari.baseapp.planpowerconsume.impl.WTmnlRejectJdbcDaoIml">
+			<property name="dataSource">
+					<ref bean="dataSource" />
+			</property>
+	</bean>
+	<!--终端规约码Jdbcdao-->
+	<bean id="iProtItemNoJdbcDao" class="com.nari.baseapp.planpowerconsume.impl.ProtItemNoJdbcDaoImpl">
+			<property name="dataSource">
+					<ref bean="dataSource" />
+			</property>
+	</bean>
+	<!--操作终端日志dao-->
+	<bean id="iLOpTmnlLogDao" class="com.nari.baseapp.planpowerconsume.impl.LOpTmnlLogDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<!--用户信息JdbcDaodao-->
+	<bean id="iWTmnlJdbcDao" class="com.nari.baseapp.planpowerconsume.impl.WTmnlJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!--控制群组管理dao-->
+	<bean id="iTTmnlGroupDao" class="com.nari.baseapp.planpowerconsume.impl.TTmnlGroupDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	<!--控制群组明细dao-->
+	<bean id="iTTmnlGroupDetailDao" class="com.nari.baseapp.planpowerconsume.impl.TTmnlDetailDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	<!--控制群组明细Jdbcdao-->
+	<bean id="iTTmnlGroupDetailIdJdbcDao" class="com.nari.baseapp.planpowerconsume.impl.TTmnlGroupDetailIdJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!--普通群组管理dao-->
+	<bean id="iRUserGroupDao" class="com.nari.baseapp.planpowerconsume.impl.RUserDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	<!--普通群组明细dao-->
+	<bean id="iRUserGroupDetailDao" class="com.nari.baseapp.planpowerconsume.impl.RUserGroupDetailDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	<!--群组管理JdbcDao-->
+	<bean id="iTTmnlGroupUserJdbcDao" class="com.nari.baseapp.planpowerconsume.impl.TTmnlGroupUserJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!--群组查询JdbcDao-->
+	<bean id="iTTmnlGroupJdbcDao" class="com.nari.baseapp.planpowerconsume.impl.TTmnlGroupJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 控制方式 dao-->
+	<bean id="vwCtrlSchemeTypeDao" class="com.nari.basicdata.impl.VwCtrlSchemeTypeDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<!-- 控制方案表 dao-->
+	<bean id="iWCtrlSchemeDao" class="com.nari.baseapp.planpowerconsume.impl.WCtrlSchemeDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<!-- 营业报停控 表明细jdbcdao -->
+	<bean id="iSuspensionControlJdbcDao" class="com.nari.baseapp.planpowerconsume.impl.SuspensionControlJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+
+	<!-- 限电类型dao -->
+	<bean id="vwLimitTypeJdbcDao" class="com.nari.basicdata.impl.VwLimitTypeJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+
+	<!-- 营业报停控 表dao -->
+	<bean id="iWTmnlBusinessDao" class="com.nari.baseapp.planpowerconsume.impl.WTmnlBusinessDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<!-- 月电量定值控 表明细jdbcdao -->
+	<bean id="iEnergyControlJdbcDao" class="com.nari.baseapp.planpowerconsume.impl.EnergyControlJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+
+	<!-- 月电量定值控 表dao -->
+	<bean id="iWTmnlMonPctrlDao" class="com.nari.baseapp.planpowerconsume.impl.WTmnlMonPctrlDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+		<!-- 遥控 表明细jdbcdao -->
+	<bean id="iRemoteControlJdbcDao" class="com.nari.baseapp.planpowerconsume.impl.RemoteControlJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 采集任务编制dao-->
+	<bean id="gatherTaskCompileJdbcDao" class="com.nari.baseapp.datagathorman.impl.GatherTaskCompileJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 采集质量检查-->
+	<bean id="gatherQualityEvaluateJdbcDao" class="com.nari.baseapp.datagathorman.impl.GatherQualityEvaluateJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 设备监测-->
+	<bean id="deviceMonitorJdbcDao" class="com.nari.baseapp.datagathorman.impl.DeviceMonitorJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 数据发布管理-->
+	<bean id="dataPublishJdbcDao" class="com.nari.baseapp.datagathorman.impl.DataPublishJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 低压远程抄表-->
+	<bean id="autoSendJdbcDao" class="com.nari.baseapp.datagathorman.impl.AutoSendJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 低压采集质量-->
+	<bean id="lowQualityEvaluateDao" class="com.nari.baseapp.datagathorman.impl.LowQualityEvaluateDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!--采集任务执行统计-->
+	<bean id="gatherTaskQueryDao" class="com.nari.baseapp.datagathorman.impl.GatherTaskQueryDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 终端任务-->
+	<bean id="tTmnlTaskDao" class="com.nari.terminalparam.impl.TTmnlTaskDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<!-- 用电客户 -->
+	<bean id="iCConsDao" class="com.nari.baseapp.planpowerconsume.impl.CConsDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<!-- 功率控制-时段控模板 -->
+	<bean id="wPwrctrlTemplateDao" class="com.nari.baseapp.planpowerconsume.impl.WPwrctrlTemplateDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<property name="powerCtrlQueryDao">
+			<ref bean="powerCtrlQueryDao" />
+		</property>
+	</bean>
+	
+	<!-- 功率控制-厂休控模板 -->
+	<bean id="wFactctrlTemplateDao" class="com.nari.baseapp.planpowerconsume.impl.WFactctrlTemplateDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<!-- 功率控制-厂休控模板 -->
+	<bean id="powerCtrlQueryDao" class="com.nari.baseapp.planpowerconsume.impl.PowerCtrlQueryDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 功率控制-厂休控模板 -->
+	<bean id="wCtrlSchemeSectionDao" class="com.nari.baseapp.planpowerconsume.impl.WCtrlSchemeSectionDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<!-- 功率控制-终端时段控曲线 -->
+	<bean id="wTmnlPwrctrlDao" class="com.nari.baseapp.planpowerconsume.impl.WTmnlPwrctrlDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<property name="wTmnlPwrctrlDetailDao">
+			<ref bean="wTmnlPwrctrlDetailDao" />
+		</property>
+	</bean>
+	<!-- 功率控制-时段控曲线明细 -->
+	<bean id="wTmnlPwrctrlDetailDao" class="com.nari.baseapp.planpowerconsume.impl.WTmnlPwrctrlDetailDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<!-- 功率控制-终端厂休控 -->
+	<bean id="wTmnlFactctrlDao" class="com.nari.baseapp.planpowerconsume.impl.WTmnlFactctrlDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<!-- 功率控制-当前功率下浮控 -->
+	<bean id="wFloatDownCtrlDao" class="com.nari.baseapp.planpowerconsume.impl.WFloatDownCtrlDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+		<!-- 数据采集管理-原始报文查询 -->
+	<bean id="origFrameQryDao" class="com.nari.baseapp.datagathorman.impl.OrigFrameQryDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 数据采集管理-非法报文查询 -->
+	<bean id="illegalFrameQryDao" class="com.nari.baseapp.datagathorman.impl.IllegalFrameQryDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource"/>
+		</property>
+	</bean>
+	
+	<!-- 功率控制-修改 -->
+	<bean id="powerCtrlDao" class="com.nari.baseapp.planpowerconsume.impl.PowerCtrlDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 运行终端JdbcDao-->
+	<bean id="iRTmnlRunJdbcDao" class="com.nari.baseapp.planpowerconsume.impl.RTmnlRunJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+		
+	<!-- 有序用电-终端状态 -->
+	<bean id="wtmnlCtrlStatusDao" class="com.nari.baseapp.planpowerconsume.impl.WtmnlCtrlStatusDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!-- 预付费管理-预付费投入调试 -->
+	<bean id="prePaidDebugJdbcDao" class="com.nari.baseapp.prepaidman.impl.PrePaidDebugJdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>	
+	<!-- 预付费管理-用户余额查询 -->
+	<bean id="iUseValueQueryDao" class="com.nari.baseapp.prepaidman.impl.UseValueQueryDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 预付费管理-预付费情况统计 -->
+	<bean id="iPrePaidStatDao" class="com.nari.baseapp.prepaidman.impl.PrePaidStatDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!-- 接口管理-接口执行监测 -->
+	<bean id="interfaceMonitorDao" class="com.nari.baseapp.interfacemanage.impl.InterfaceMonitorDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+
+	<!-- 预付费管理-预付费工况信息 -->
+	<bean id="iPrePaidStatusDao" class="com.nari.baseapp.prepaidman.impl.PrePaidStatusDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!-- 预付费控制 -->
+	<bean id="prePaidDao" class="com.nari.baseapp.prepaidman.impl.PrePaidDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 预付费控制 -->
+	<bean id="dunningControlDao" class="com.nari.baseapp.prepaidman.impl.DunningControlDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+</beans>

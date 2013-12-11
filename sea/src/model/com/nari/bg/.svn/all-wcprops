@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/app/!svn/ver/4281/trunk/sea/src/model/com/nari/bg
+END
+TBgTaskDetail.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/app/!svn/ver/4281/trunk/sea/src/model/com/nari/bg/TBgTaskDetail.java
+END
+TBgTask.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/app/!svn/ver/4281/trunk/sea/src/model/com/nari/bg/TBgTask.java
+END
+TBgTaskSend.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/app/!svn/ver/4281/trunk/sea/src/model/com/nari/bg/TBgTaskSend.hbm.xml
+END
+TBgTaskResult.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/app/!svn/ver/4281/trunk/sea/src/model/com/nari/bg/TBgTaskResult.java
+END
+TBgTaskDetailId.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/app/!svn/ver/4281/trunk/sea/src/model/com/nari/bg/TBgTaskDetailId.java
+END
+TBgTaskId.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/app/!svn/ver/4281/trunk/sea/src/model/com/nari/bg/TBgTaskId.java
+END
+TBgTaskResult.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/app/!svn/ver/4281/trunk/sea/src/model/com/nari/bg/TBgTaskResult.hbm.xml
+END
+TBgTaskSend.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/app/!svn/ver/4281/trunk/sea/src/model/com/nari/bg/TBgTaskSend.java
+END
+TBgTaskResultId.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/app/!svn/ver/4281/trunk/sea/src/model/com/nari/bg/TBgTaskResultId.java
+END
+TBgTask.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/app/!svn/ver/4281/trunk/sea/src/model/com/nari/bg/TBgTask.hbm.xml
+END
+TBgTaskDetail.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/app/!svn/ver/4281/trunk/sea/src/model/com/nari/bg/TBgTaskDetail.hbm.xml
+END
+TBgTaskSendId.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/app/!svn/ver/4281/trunk/sea/src/model/com/nari/bg/TBgTaskSendId.java
+END

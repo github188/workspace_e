@@ -1,0 +1,197 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/app/!svn/ver/2995/trunk/sea/src/model/com/nari/privilige
+END
+PPrivConsignDet.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PPrivConsignDet.hbm.xml
+END
+PDeptRoleRela.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PDeptRoleRela.hbm.xml
+END
+PFavorite.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PFavorite.java
+END
+PDeptAccessOrg.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PDeptAccessOrg.java
+END
+PAccessOrgId.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PAccessOrgId.java
+END
+PUserPriv.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PUserPriv.java
+END
+PUserRoleRela.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PUserRoleRela.hbm.xml
+END
+PSysUser.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/app/!svn/ver/2995/trunk/sea/src/model/com/nari/privilige/PSysUser.java
+END
+PSysUserJdbc.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/2995/trunk/sea/src/model/com/nari/privilige/PSysUserJdbc.java
+END
+PAccessTmnlFactory.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PAccessTmnlFactory.hbm.xml
+END
+PAccessTmnlFactory.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PAccessTmnlFactory.java
+END
+PRole.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PRole.hbm.xml
+END
+PAccessConsTypeId.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PAccessConsTypeId.java
+END
+PUserRoleRela.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PUserRoleRela.java
+END
+PDeptAccessOrg.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PDeptAccessOrg.hbm.xml
+END
+PPrivConsignDet.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PPrivConsignDet.java
+END
+PDeptRoleRela.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PDeptRoleRela.java
+END
+PAccessOrg.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PAccessOrg.hbm.xml
+END
+PAccessOrg.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PAccessOrg.java
+END
+PMenu.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PMenu.java
+END
+PFavoriteId.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PFavoriteId.java
+END
+PRole.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PRole.java
+END
+PDeptAccessOrgId.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PDeptAccessOrgId.java
+END
+PRolePrivRela.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PRolePrivRela.hbm.xml
+END
+PAccessConsType.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PAccessConsType.hbm.xml
+END
+PAccessConsType.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PAccessConsType.java
+END
+PRolePrivRela.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PRolePrivRela.java
+END
+PSysUser.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/app/!svn/ver/2995/trunk/sea/src/model/com/nari/privilige/PSysUser.hbm.xml
+END
+PAccessTmnlFactoryId.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PAccessTmnlFactoryId.java
+END
+PUserPriv.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PUserPriv.hbm.xml
+END
+PFavorite.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PFavorite.hbm.xml
+END
+PMenu.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/privilige/PMenu.hbm.xml
+END

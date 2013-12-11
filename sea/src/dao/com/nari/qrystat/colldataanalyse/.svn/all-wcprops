@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/app/!svn/ver/5419/trunk/sea/src/dao/com/nari/qrystat/colldataanalyse
+END
+AreaPowerDistJdbcDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/app/!svn/ver/5225/trunk/sea/src/dao/com/nari/qrystat/colldataanalyse/AreaPowerDistJdbcDao.java
+END
+PowerSortAnalyseJdbcDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/app/!svn/ver/3245/trunk/sea/src/dao/com/nari/qrystat/colldataanalyse/PowerSortAnalyseJdbcDao.java
+END
+GeneralAnalyseDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/4988/trunk/sea/src/dao/com/nari/qrystat/colldataanalyse/GeneralAnalyseDao.java
+END
+LineEceltricQuantityDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/app/!svn/ver/5419/trunk/sea/src/dao/com/nari/qrystat/colldataanalyse/LineEceltricQuantityDao.java
+END
+TradeTrendlineDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/app/!svn/ver/5210/trunk/sea/src/dao/com/nari/qrystat/colldataanalyse/TradeTrendlineDao.java
+END
+CurrLoadMonitorJdbcDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/app/!svn/ver/4086/trunk/sea/src/dao/com/nari/qrystat/colldataanalyse/CurrLoadMonitorJdbcDao.java
+END
+LosePowerStatJdbcDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/app/!svn/ver/3180/trunk/sea/src/dao/com/nari/qrystat/colldataanalyse/LosePowerStatJdbcDao.java
+END

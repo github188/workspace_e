@@ -1,0 +1,10 @@
+tomcat.home=D:/Program Files/Apache Software Foundation/tomcat-6.0.20
+
+#build=${basedir}/build
+#src.dir=${basedir}/WebContent
+#compress.encoding=UTF-8
+#压缩目录
+#compress.dir=${src.dir}
+#compress.jar=${basedir}/jar/yuicompressor-2.4.2.jar
+#http://ant-contrib.sourceforge.net/
+#plugin-contrib-path=${basedir}/jar/ant-contrib-1.0b3.jar

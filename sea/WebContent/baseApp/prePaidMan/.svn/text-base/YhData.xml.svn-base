@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<chart baseFont='宋体' baseFontSize='12' caption='预付费用户统计' showPercentageValues='0'>
+	<set label='主站预付费户数' value='26' />
+	<set label='终端预付费户数' value='32' />
+	<set label='电表预付费户数' value='32' />
+</chart> 

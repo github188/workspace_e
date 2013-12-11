@@ -1,0 +1,30 @@
+package com.nari.qrystat.queryReport;
+
+import java.util.List;
+
+import com.nari.qrystat.reportQuery.ReportJdbc;
+
+
+/**
+ * 查询接口
+ * @author ChenGuoZhang
+ * @describe 报表类型查询接口
+ */
+public interface IReportTypeQueryManager {
+	/**
+	 * 方法queryReportByType
+	 * 
+	 * @param consNo
+	 * @return　通过reportType 查询ReportJdbc列表
+	 * @throws Exception
+	 */
+	public List<ReportJdbc> queryReportByType(String reportType) throws Exception;
+	/**
+	 * 查询报表类型
+	 * @param null
+	 * @return 报表类型列表
+	 */
+	public List<ReportJdbc> queryReportTypeList() throws Exception;
+
+
+}

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+    <!--高级应用的JSON Action--> 
+    <package name="jsonmyDesk" namespace="/mydesk" extends="baseJson">    
+        <action name="mydesk" class="com.nari.mydesk.MyDeskAction">
+            <result type="json">
+            </result>
+        </action>
+        
+        <!--每日电量统计-->
+		<action name="energyStatDay" class="com.nari.mydesk.EnergyStatDAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		
+		<!--线损统计-->
+		<action name="losePowerStatA" class="com.nari.mydesk.LosePowerStatAnalyseAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		
+		<!--上月电量统计-->
+		<action name="monthPowerStat" class="com.nari.mydesk.MonthPowerStatAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		
+    </package>
+
+</struts>    

@@ -1,0 +1,281 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/app/!svn/ver/7024/trunk/sea/WebContent/qryStat/collDataAnalyse
+END
+losePowerStatDetail.js
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/app/!svn/ver/4246/trunk/sea/WebContent/qryStat/collDataAnalyse/losePowerStatDetail.js
+END
+generalAnalyse.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/app/!svn/ver/4417/trunk/sea/WebContent/qryStat/collDataAnalyse/generalAnalyse.jsp
+END
+generalAnalyseGrid.js
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/app/!svn/ver/4484/trunk/sea/WebContent/qryStat/collDataAnalyse/generalAnalyseGrid.js
+END
+mpDayVstat.js
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/5771/trunk/sea/WebContent/qryStat/collDataAnalyse/mpDayVstat.js
+END
+powerSortAnalyse.js
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/app/!svn/ver/5423/trunk/sea/WebContent/qryStat/collDataAnalyse/powerSortAnalyse.js
+END
+powerSortAnalyse.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/app/!svn/ver/4168/trunk/sea/WebContent/qryStat/collDataAnalyse/powerSortAnalyse.jsp
+END
+tgLosePowerStat.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/app/!svn/ver/6054/trunk/sea/WebContent/qryStat/collDataAnalyse/tgLosePowerStat.jsp
+END
+tradeTrendline.js
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/6037/trunk/sea/WebContent/qryStat/collDataAnalyse/tradeTrendline.js
+END
+mpDayUnbalance.js
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/5771/trunk/sea/WebContent/qryStat/collDataAnalyse/mpDayUnbalance.js
+END
+mpDayComp.js
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/5771/trunk/sea/WebContent/qryStat/collDataAnalyse/mpDayComp.js
+END
+losePowerStat.js
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/7024/trunk/sea/WebContent/qryStat/collDataAnalyse/losePowerStat.js
+END
+lineLosePowerQry.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/app/!svn/ver/6123/trunk/sea/WebContent/qryStat/collDataAnalyse/lineLosePowerQry.jsp
+END
+mpMonReadAndEnergy.js
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/app/!svn/ver/5771/trunk/sea/WebContent/qryStat/collDataAnalyse/mpMonReadAndEnergy.js
+END
+areaPowerDist.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/4124/trunk/sea/WebContent/qryStat/collDataAnalyse/areaPowerDist.jsp
+END
+lineElectricQuantity.js
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/5668/trunk/sea/WebContent/qryStat/collDataAnalyse/lineElectricQuantity.js
+END
+currLoadMonitor.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/app/!svn/ver/4124/trunk/sea/WebContent/qryStat/collDataAnalyse/currLoadMonitor.jsp
+END
+mpMonPower.js
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/5771/trunk/sea/WebContent/qryStat/collDataAnalyse/mpMonPower.js
+END
+mpDayPftime.js
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/5771/trunk/sea/WebContent/qryStat/collDataAnalyse/mpDayPftime.js
+END
+mpRealCurveData.js
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/app/!svn/ver/5771/trunk/sea/WebContent/qryStat/collDataAnalyse/mpRealCurveData.js
+END
+losePowerMan.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/5618/trunk/sea/WebContent/qryStat/collDataAnalyse/losePowerMan.jsp
+END
+mpMonIstat.js
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/5771/trunk/sea/WebContent/qryStat/collDataAnalyse/mpMonIstat.js
+END
+tradeTrendline.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/app/!svn/ver/2464/trunk/sea/WebContent/qryStat/collDataAnalyse/tradeTrendline.jsp
+END
+tgLosePowerStat.js
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/app/!svn/ver/6326/trunk/sea/WebContent/qryStat/collDataAnalyse/tgLosePowerStat.js
+END
+lineLosePowerStat.js
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/app/!svn/ver/6326/trunk/sea/WebContent/qryStat/collDataAnalyse/lineLosePowerStat.js
+END
+mpMonDeman.js
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/5771/trunk/sea/WebContent/qryStat/collDataAnalyse/mpMonDeman.js
+END
+mpDayRead.js
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/5771/trunk/sea/WebContent/qryStat/collDataAnalyse/mpDayRead.js
+END
+totalPowerCurve.js
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/app/!svn/ver/6007/trunk/sea/WebContent/qryStat/collDataAnalyse/totalPowerCurve.js
+END
+lineLosePowerStat.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/app/!svn/ver/6123/trunk/sea/WebContent/qryStat/collDataAnalyse/lineLosePowerStat.jsp
+END
+mpDayPower.js
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/5771/trunk/sea/WebContent/qryStat/collDataAnalyse/mpDayPower.js
+END
+mpMonPftime.js
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/5771/trunk/sea/WebContent/qryStat/collDataAnalyse/mpMonPftime.js
+END
+mpRdayDeman.js
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/5771/trunk/sea/WebContent/qryStat/collDataAnalyse/mpRdayDeman.js
+END
+generalAnalyse.js
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/6454/trunk/sea/WebContent/qryStat/collDataAnalyse/generalAnalyse.js
+END
+losePowerMan.js
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/6617/trunk/sea/WebContent/qryStat/collDataAnalyse/losePowerMan.js
+END
+losePowerStatDetail.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/3322/trunk/sea/WebContent/qryStat/collDataAnalyse/losePowerStatDetail.jsp
+END
+mpDayIstat.js
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/5771/trunk/sea/WebContent/qryStat/collDataAnalyse/mpDayIstat.js
+END
+mpRdayRead.js
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/5771/trunk/sea/WebContent/qryStat/collDataAnalyse/mpRdayRead.js
+END
+currLoadMonitor.js
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/app/!svn/ver/4765/trunk/sea/WebContent/qryStat/collDataAnalyse/currLoadMonitor.js
+END
+lineElectricQuantity.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/app/!svn/ver/5415/trunk/sea/WebContent/qryStat/collDataAnalyse/lineElectricQuantity.jsp
+END
+mpMonVstat.js
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/5771/trunk/sea/WebContent/qryStat/collDataAnalyse/mpMonVstat.js
+END
+mpDayEnergy.js
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/5771/trunk/sea/WebContent/qryStat/collDataAnalyse/mpDayEnergy.js
+END
+mpRealDataRead.js
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/5771/trunk/sea/WebContent/qryStat/collDataAnalyse/mpRealDataRead.js
+END
+mpDayDeman.js
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/5771/trunk/sea/WebContent/qryStat/collDataAnalyse/mpDayDeman.js
+END
+areaPowerDist.js
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/5223/trunk/sea/WebContent/qryStat/collDataAnalyse/areaPowerDist.js
+END
+lineLosePowerQry.js
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/app/!svn/ver/6738/trunk/sea/WebContent/qryStat/collDataAnalyse/lineLosePowerQry.js
+END
+losePowerStat.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/3057/trunk/sea/WebContent/qryStat/collDataAnalyse/losePowerStat.jsp
+END
+mpMonUnbalance.js
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/5771/trunk/sea/WebContent/qryStat/collDataAnalyse/mpMonUnbalance.js
+END

@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/app/!svn/ver/6632/trunk/sea/src/dao/com/nari/advapp/vipconsman
+END
+VipConsSortAnalyseJdbcDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/app/!svn/ver/5052/trunk/sea/src/dao/com/nari/advapp/vipconsman/VipConsSortAnalyseJdbcDao.java
+END
+DataPubDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/6481/trunk/sea/src/dao/com/nari/advapp/vipconsman/DataPubDao.java
+END
+LogReleaseQueryDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/6631/trunk/sea/src/dao/com/nari/advapp/vipconsman/LogReleaseQueryDao.java
+END
+VipConsUserDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/app/!svn/ver/5118/trunk/sea/src/dao/com/nari/advapp/vipconsman/VipConsUserDao.java
+END
+VipConsMonitorDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/app/!svn/ver/5229/trunk/sea/src/dao/com/nari/advapp/vipconsman/VipConsMonitorDao.java
+END
+VipConsManagerDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/app/!svn/ver/5020/trunk/sea/src/dao/com/nari/advapp/vipconsman/VipConsManagerDao.java
+END
+VipConsMonitorDataJdbcDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/app/!svn/ver/5170/trunk/sea/src/dao/com/nari/advapp/vipconsman/VipConsMonitorDataJdbcDao.java
+END

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/app/!svn/ver/6547/trunk/sea/src/dao/com/nari/basedao/impl
+END
+HibernateBaseDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/basedao/impl/HibernateBaseDaoImpl.java
+END
+基本DAO实现类
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/basedao/impl/%E5%9F%BA%E6%9C%ACDAO%E5%AE%9E%E7%8E%B0%E7%B1%BB
+END
+JdbcBaseDAOImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/6547/trunk/sea/src/dao/com/nari/basedao/impl/JdbcBaseDAOImpl.java
+END
+HibernateBaseDaoSimpleImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/app/!svn/ver/3182/trunk/sea/src/dao/com/nari/basedao/impl/HibernateBaseDaoSimpleImpl.java
+END

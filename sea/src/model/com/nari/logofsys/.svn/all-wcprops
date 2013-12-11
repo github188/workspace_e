@@ -1,0 +1,155 @@
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/app/!svn/ver/3289/trunk/sea/src/model/com/nari/logofsys
+END
+LCalcServiceLog.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/logofsys/LCalcServiceLog.java
+END
+LExceptionsLogId.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/logofsys/LExceptionsLogId.java
+END
+LExceptionsLog.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/logofsys/LExceptionsLog.hbm.xml
+END
+LUpCommMsgLog.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/logofsys/LUpCommMsgLog.hbm.xml
+END
+LUserOpLog.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/logofsys/LUserOpLog.java
+END
+LMasterStationResBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/app/!svn/ver/2951/trunk/sea/src/model/com/nari/logofsys/LMasterStationResBean.java
+END
+LMasterStationRes.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/logofsys/LMasterStationRes.hbm.xml
+END
+LUserOpLogId.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/logofsys/LUserOpLogId.java
+END
+LUserLogEntry.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/logofsys/LUserLogEntry.java
+END
+LDownCommMsgLog.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/logofsys/LDownCommMsgLog.hbm.xml
+END
+LLowlessMsgLog.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/logofsys/LLowlessMsgLog.java
+END
+LOpTmnlLog.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/3289/trunk/sea/src/model/com/nari/logofsys/LOpTmnlLog.hbm.xml
+END
+LOpTmnlLog.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/app/!svn/ver/3289/trunk/sea/src/model/com/nari/logofsys/LOpTmnlLog.java
+END
+LLowlessMsgLogId.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/logofsys/LLowlessMsgLogId.java
+END
+LLowlessMsgLog.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/logofsys/LLowlessMsgLog.hbm.xml
+END
+LUserLogEntry.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/logofsys/LUserLogEntry.hbm.xml
+END
+LDownCommMsgLog.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/logofsys/LDownCommMsgLog.java
+END
+LMasterStationRes.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/logofsys/LMasterStationRes.java
+END
+LDownCommMsgLogId.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/logofsys/LDownCommMsgLogId.java
+END
+LUserOpLog.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/logofsys/LUserOpLog.hbm.xml
+END
+LUpCommMsgLog.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/logofsys/LUpCommMsgLog.java
+END
+LMasterStationResId.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/logofsys/LMasterStationResId.java
+END
+LExceptionsLog.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/logofsys/LExceptionsLog.java
+END
+LCalcServiceLog.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/logofsys/LCalcServiceLog.hbm.xml
+END
+LUpCommMsgLogId.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/logofsys/LUpCommMsgLogId.java
+END

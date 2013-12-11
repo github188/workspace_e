@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svn/app/!svn/ver/7061/trunk/sea
+END
+build.properties
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/app/!svn/ver/6192/trunk/sea/build.properties
+END
+build.xml
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/app/!svn/ver/2551/trunk/sea/build.xml
+END
+.cshrc
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/app/!svn/ver/5046/trunk/sea/.cshrc
+END
+.project
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/app/!svn/ver/2464/trunk/sea/.project
+END
+.profile
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/app/!svn/ver/5038/trunk/sea/.profile
+END
+.classpath
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/app/!svn/ver/6117/trunk/sea/.classpath
+END

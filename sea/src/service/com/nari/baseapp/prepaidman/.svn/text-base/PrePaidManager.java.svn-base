@@ -1,0 +1,139 @@
+package com.nari.baseapp.prepaidman;
+
+import java.util.List;
+
+import com.nari.basicdata.BCommProtocol;
+import com.nari.privilige.PSysUser;
+import com.nari.support.Page;
+import com.nari.util.exception.DBAccessException;
+
+/**
+ * 预付费控制Service
+ * @author 杨传文
+ */
+public interface PrePaidManager {
+
+	/**
+	 * @return 预付费参数下发用户列表
+	 * @throws DBAccessException
+	 */
+	public List<PrePaidParamSetBean> queryPrePaidParamSetList(String orgNo,
+			String sendStatus, String appNo, String consNo)
+			throws DBAccessException;
+
+	/**
+	 * @return 预付费控制用户列表
+	 * @throws DBAccessException
+	 */
+	public List<PrePaidControlBean> queryPrePaidCtrlList(String orgNo,
+			String appNo, String consNo, String tmnlAddr)
+			throws DBAccessException;
+
+	/**
+	 * @return 预付费参数下发用户分页列表
+	 * @throws DBAccessException
+	 */
+	public Page<PrePaidParamSetBean> queryPrePaidParamSetPage(PSysUser user, String orgNo,
+			String sendStatus, String appNo, String consNo,String buyFlag,
+			long start, long limit) throws DBAccessException;
+
+	/**
+	 * @return 预付费控制用户分页列表
+	 * @throws DBAccessException
+	 */
+	public Page<PrePaidControlBean> queryPrePaidCtrlPage(PSysUser user, String orgNo,
+			String appNo, String consNo, String tmnlAddr, long start, long limit)
+			throws DBAccessException;
+	
+	/**
+	 * 预付费参数后台下发
+	 * @param tmnlList
+	 * @param second
+	 * @param user
+	 * @param localIp
+	 * @return
+	 * @throws DBAccessException
+	 */
+	public List<PrePaidExecResultBean> prePaidParamSet(List<PrePaidParamSetBean> tmnlList, 
+			String turnFlag, int second, PSysUser user, String localIp) throws DBAccessException;
+	
+	/**
+	 * 预付费参数前台下发
+	 * @param tmnlList
+	 * @param second
+	 * @param user
+	 * @param localIp
+	 * @return
+	 * @throws DBAccessException
+	 */
+	public List<PrePaidExecResultBean> prePaidParamSetView(List<PrePaidParamSetTmnlBean> tmnlList, 
+			String turnFlag, int second, PSysUser user, String localIp) throws DBAccessException;
+	
+	/**
+	 * 预付费参数召测
+	 * @param tmnlList
+	 * @param second
+	 * @return
+	 * @throws DBAccessException
+	 */
+	public List<PrePaidParamSetTmnlBean> prePaidParamFetch(List<PrePaidParamSetTmnlBean> tmnlList, 
+			int second) throws DBAccessException;
+	
+	/**
+	 * 预付费参数后台下发
+	 * @param tmnlList
+	 * @param second
+	 * @param user
+	 * @param localIp
+	 * @return
+	 * @throws DBAccessException
+	 */
+	public List<PrePaidExecResultBean> prePaidControl(List<PrePaidControlBean> tmnlList, 
+			int second, PSysUser user, String localIp) throws DBAccessException;
+	
+	/**
+	 * 预付费参数前台下发
+	 * @param tmnlList
+	 * @param second
+	 * @param user
+	 * @param localIp
+	 * @return
+	 * @throws DBAccessException
+	 */
+	public List<PrePaidExecResultBean> prePaidControlView(List<PrePaidControlTmnlBean> tmnlList, 
+			int second, PSysUser user, String localIp) throws DBAccessException;
+	
+	/**
+	 * 预付费参数后台下发
+	 * @param tmnlList
+	 * @param second
+	 * @param user
+	 * @param localIp
+	 * @return
+	 * @throws DBAccessException
+	 */
+	public List<PrePaidExecResultBean> prePaidRelease(List<PrePaidControlBean> tmnlList, 
+			int second, PSysUser user, String localIp) throws DBAccessException;
+	
+	/**
+	 * 预付费参数前台下发
+	 * @param tmnlList
+	 * @param second
+	 * @param user
+	 * @param localIp
+	 * @return
+	 * @throws DBAccessException
+	 */
+	public List<PrePaidExecResultBean> prePaidReleaseView(List<PrePaidControlTmnlBean> tmnlList, 
+			int second, PSysUser user, String localIp) throws DBAccessException;
+	
+	//--------------------------电能表控制------------------------------
+	/**
+	 * 查询终端规约。
+	 * @param proCode 通信规约类型
+	 * @return 终端规约列表
+	 * @throws DBAccessException
+	 *             数据库异常
+	 */
+	public List<BCommProtocol> getProtocolList(String proCode) throws Exception;
+}

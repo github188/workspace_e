@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+	<package name="jsonqrystat" namespace="/qrystat" extends="baseJson">       
+		<!-- 统计查询Action -->
+
+		<!--SIM卡安装情况统计-->
+		<action name="querySIMStat" class="com.nari.qrystat.simquery.SIMStatAction">
+			<result type="json"></result>
+		</action>
+		<!--SIM卡流量分析-->
+		<action name="simTraffic" class="com.nari.qrystat.simquery.SIMStatAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!--采集数据综合分析-->
+		<!-- 总加组-->
+		<action name="datatotal" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,dataTotalList.*</param>
+			</result>
+		</action>
+		<!-- 测量点-->
+		<action name="datamp" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,dataMpList.*</param>
+			</result>
+		</action>
+		<!--日冻结终端统计-->
+		<action name="tmnlAndTotalStat" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,tmnlDayStat.*,tmnlMonStat.*,totalDayStat.*,totalMonStat.*</param>
+			</result>
+		</action>
+		<!--曲线图数据-->
+		<action name="generalData" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,maxValue, minValue,general.*,contrast.*,mpDayRealPower.*, mpDayRealCur.*,mpDayRealVolt.*,mpDayRealFactor.*,headers.*</param>
+			</result>
+		</action>
+		<!--日冻结终端统计列表-->
+		<action name="tmnlDayList" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,tmnlDayStatList.*</param>
+			</result>
+		</action>
+		<!--月冻结终端统计列表-->
+		<action name="tmnlMonList" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,tmnlMonStatList.*</param>
+			</result>
+		</action>
+		<!--日冻结总加组统计列表-->
+		<action name="totalDayList" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,totalDayStatList.*</param>
+			</result>
+		</action>
+		<!--月冻结总加组统计列表-->
+		<action name="totalMonList" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,totalMonStatList.*</param>
+			</result>
+		</action>		
+		<!--测量点数据统计-->
+		<action name="mpRdayRead" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,mpRdayReadList.*</param>
+			</result>
+		</action>
+		<action name="mpDayPower" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,mpDayPowerList.*</param>
+			</result>
+		</action>
+		<action name="mpDayVstat" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,mpDayVstatList.*</param>
+			</result>
+		</action>
+		<action name="mpDayIstat" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,mpDayIstatList.*</param>
+			</result>
+		</action>
+		<action name="mpDayRead" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,mpDayReadList.*</param>
+			</result>
+		</action>
+		<action name="mpDayEnergy" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,mpDayEnergyList.*</param>
+			</result>
+		</action>
+		<action name="mpDayComp" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,mpDayCompList.*</param>
+			</result>
+		</action>
+		<action name="mpMonVstat" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,mpMonVstatList.*</param>
+			</result>
+		</action>
+		<action name="mpMonRead" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,mpMonReadList.*</param>
+			</result>
+		</action>
+		<action name="mpMonEnergy" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,mpMonEnergyList.*</param>
+			</result>
+		</action>
+		<action name="mpRdayDemand" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,mpRdayDemandList.*</param>
+			</result>
+		</action>
+		<action name="mpDayDemand" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,mpDayDemandList.*</param>
+			</result>
+		</action>
+		<action name="mpDayPftime" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,mpDayPftimeList.*</param>
+			</result>
+		</action>
+		<action name="mpDayUnbalance" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,mpDayUnbalanceList.*</param>
+			</result>
+		</action>
+		<action name="mpMonUnbalance" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,mpMonUnbalanceList.*</param>
+			</result>
+		</action>
+		<action name="mpMonPftime" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,mpMonPftimeList.*</param>
+			</result>
+		</action>
+		<action name="mpMonDemand" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,mpMonDemandList.*</param>
+			</result>
+		</action>
+		<action name="mpMonPower" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,mpMonPowerList.*</param>
+			</result>
+		</action>
+		<action name="mpMonIstat" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,mpMonIstatList.*</param>
+			</result>
+		</action>
+		<action name="mpRealDataRead" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,mpRealDataReadList.*</param>
+			</result>
+		</action>
+		<action name="mpRealCurveData" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,mpRealCurveDataList.*</param>
+			</result>
+		</action>
+		<action name="queryConsTmnl" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,consTmnlList.*</param>
+			</result>
+		</action>
+		<!--查询用户编号-->
+		<action name="queryConsName" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,consName,consType</param>
+			</result>
+		</action>
+		<!--查询同行业用户-->
+		<action name="sameTradeCCons" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,totalCount,sameTradeCConsList.*</param>
+			</result>
+		</action>
+		<!--查询同行业用电趋势-->
+		<action name="tradeTrendline" class="com.nari.qrystat.colldataanalyse.TradeTrendlineAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!--查询群组列表-->
+		<action name="queryGroup" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success,groupList.*</param>
+			</result>
+		</action>
+		<!--加入群组-->
+		<action name="addToGroup" class="com.nari.qrystat.colldataanalyse.GeneralAnalyseAction">
+			<result type="json">
+				<param name="includeProperties">success</param>
+			</result>
+		</action>
+		
+		<!--客户综合查询-->
+		<action name="consumerInfoAction" class="com.nari.qrystat.querycollpoint.ConsumerInfoAction">
+			<result type="json"></result>
+		</action>
+        
+		<!--公变采集点查询-->
+		<action name="publicTerminalAction" class="com.nari.qrystat.querycollpoint.PublicTerminalAction">
+			<result type="json"></result>
+		</action>
+		<!--居名集抄户查询-->
+		<action name="autoSendQueryAction" class="com.nari.qrystat.querycollpoint.AutoSendQueryAction">
+			<result type="json"></result>
+		</action>
+		<!--抄表数据查询-->
+		<action name="sendDataQueryAction" class="com.nari.qrystat.querycollpoint.SendDataQueryAction">
+			<result type="json"></result>
+		</action>
+		<!--客户编号查询-->
+		<action name="ccustAction" class="com.nari.qrystat.querycollpoint.ConsumerInfoSubAction">
+			<result type="json"></result>
+		</action>
+		<!--运行终端查询-->
+		<action name="rcpAction" class="com.nari.qrystat.querycollpoint.RCPAction">
+			<result type="json"></result>
+		</action>
+		<!--查询台区用电损耗查询-->
+		<action name="losePowerStat" class="com.nari.qrystat.colldataanalyse.LosePowerStatAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!--查询台区用电损耗统计-->
+		<action name="tgLosePowerStat" class="com.nari.qrystat.colldataanalyse.TGLosePowerStatAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!--查询线路用电损耗查询-->
+		<action name="lineLosePowerQry" class="com.nari.qrystat.colldataanalyse.LineLosePowerQryAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!--查询线路用电损耗统计-->
+		<action name="lineLosePowerStat" class="com.nari.qrystat.colldataanalyse.LineLosePowerStatAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!--查询台区电损管理-->
+		<action name="losePowerMan" class="com.nari.qrystat.colldataanalyse.LosePowerManAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!--查询地区电量分布-->
+		<action name="areaPowerDist" class="com.nari.qrystat.colldataanalyse.AreaPowerDistAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!--客户用电排名分析-->
+		<action name="powerSortAnalyse" class="com.nari.qrystat.colldataanalyse.PowerSortAnalyseAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!--当日用电负荷监测-->
+		<action name="currLoadMonitor" class="com.nari.qrystat.colldataanalyse.CurrLoadMonitorAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!--昨日电量分布-->
+		<action name="aOrgStatDAction" class="com.nari.mydesk.AOrgStatDAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!--采集点覆盖情况查询-->
+		<action name="terminalCoverageAction" class="com.nari.qrystat.querycollpoint.TerminalCoverageAction">
+			<result type="json">
+				<param name="excludeProperties"></param>
+			</result>
+		</action>
+		<!--工单统计查询-->
+		<action name="taskState" class="com.nari.qrystat.taskQuery.TaskstateAction">
+			<result type="json">
+				<param name="excludeProperties">taskStateManager</param>
+			</result>
+		</action>
+		
+		<!--工单明细-->
+		<action name="taskDetails" class="com.nari.qrystat.taskQuery.TaskDetailsAction">
+			<result type="json">
+				<param name="excludeProperties">detailsManager</param>
+			</result>
+		</action>
+		
+		<!--采集点统计-->
+		<action name="collectionCountAction" class="com.nari.qrystat.querycollpoint.CollectionCountAction">
+			<result type="json">
+				<param name="excludeProperties">collectionCountManager</param>
+			</result>
+		</action>
+		
+		<!--报表查询-->
+		<action name="reportTypeQueryAction" class="com.nari.qrystat.reportQuery.ReportTypeQueryAction">
+			<result type="json">
+				<param name="excludeProperties">iReportTypeQueryManager</param>
+				<param name="contentType">text/html</param> 
+			</result>
+		</action>
+		
+		<!--线路电量查询-->
+		<action name="lineEcelQuery" class="com.nari.qrystat.colldataanalyse.LineEceltricQuantityAction">
+			<result type="json">
+				<param name="excludeProperties">lineEceltricQuantityManager</param>
+			</result>
+		</action>
+    <!--异常告警统计-->
+		<action name="excptionReportAction" class="com.nari.qrystat.querycollpoint.ExcptionReportAction">
+			<result type="json">
+				<param name="excludeProperties">excptionReportManager</param>
+			</result>
+		</action>
+	</package>
+	
+</struts>

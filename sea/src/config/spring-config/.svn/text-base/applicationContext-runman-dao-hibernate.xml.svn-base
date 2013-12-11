@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<!--终端规约数据类型-->
+	<bean id="runManVwDataTypeDao" class="com.nari.runman.feildman.impl.VwDataTypeDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!--规约类型-->
+	<bean id="runManVwProtocolCodeDao" class="com.nari.runman.feildman.impl.VwProtocolCodeDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+
+	<!--规约明细-->
+	<bean id="runManProtocolItemDao" class="com.nari.runman.feildman.impl.ProtocolItemDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+
+	<!--规约项明细-->
+	<bean id="runManProtocolNameDao" class="com.nari.runman.feildman.impl.ProtocolNameDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!--终端规约类型-->
+	<bean id="runManItemListDao" class="com.nari.runman.feildman.impl.ItemListDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!--终端参数-->
+	<bean id="runManTerminalListDao" class="com.nari.runman.feildman.impl.TerminalListDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!--召测数据保存-->
+	<bean id="runManTerminalSaveDao" class="com.nari.runman.feildman.impl.TerminalSaveDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<!--测量点数据保存-->
+	<bean id="runManMpInfoSaveDao" class="com.nari.runman.feildman.impl.MpInfoSaveDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<!--现场设备异常保存、更新、删除-->
+	<bean id="deviceAbnormalHibernateDao" class="com.nari.runman.abnormalhandle.impl.DeviceAbnormalHibernateDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<!--事件数据保存、更新-->
+	<bean id="emTmnlDataSaveORUpdateDao" class="com.nari.runman.abnormalhandle.impl.TmnlDataSaveORUpdateDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<!--工单源生成保存-->
+	<bean id="eventNoCreateDao" class="com.nari.runman.abnormalhandle.impl.EventNoCreateDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<!--测量点数据查询-->
+	<bean id="runManMpInfoDao" class="com.nari.runman.feildman.impl.MpInfoDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!--事件管理终端规约对应数据项查询-->
+	<bean id="ahVwDataTypeDao" class="com.nari.runman.abnormalhandle.impl.VwDataTypeDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!--事件管理事件信息查询-->
+	<bean id="emEventInfoDao" class="com.nari.runman.abnormalhandle.impl.EventInfoDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!--事件管理规约类型查询-->
+	<bean id="ahVwProtocolCodeDao" class="com.nari.runman.abnormalhandle.impl.VwProtocolCodeDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>	
+	<!-- 用户操作日志-->
+	<bean id="iUserLogDao" class="com.nari.runman.dutylog.UserLogDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean> 
+	
+	<!--后台任务下发-->
+	<bean id="backGroundTaskHibernateDao" class="com.nari.bg.impl.BackGroundTaskHibernateDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+</beans>

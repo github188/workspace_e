@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/app/!svn/ver/6393/trunk/sea/WebContent/sysMan/templateMan
+END
+gatherTaskTemplate.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/2464/trunk/sea/WebContent/sysMan/templateMan/gatherTaskTemplate.jsp
+END
+taskModel.js
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/app/!svn/ver/6393/trunk/sea/WebContent/sysMan/templateMan/taskModel.js
+END
+eventLevelManager.js
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/app/!svn/ver/6292/trunk/sea/WebContent/sysMan/templateMan/eventLevelManager.js
+END
+msgConfig.js
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/app/!svn/ver/5120/trunk/sea/WebContent/sysMan/templateMan/msgConfig.js
+END
+tmnlTaskConfig.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/app/!svn/ver/5202/trunk/sea/WebContent/sysMan/templateMan/tmnlTaskConfig.jsp
+END
+tmnlTaskConfig.js
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/5252/trunk/sea/WebContent/sysMan/templateMan/tmnlTaskConfig.js
+END
+eventLevelManager.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/5622/trunk/sea/WebContent/sysMan/templateMan/eventLevelManager.jsp
+END
+msgConfig.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/app/!svn/ver/5120/trunk/sea/WebContent/sysMan/templateMan/msgConfig.jsp
+END
+gatherTaskTemplate.js
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/2464/trunk/sea/WebContent/sysMan/templateMan/gatherTaskTemplate.js
+END
+taskModel.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/app/!svn/ver/2464/trunk/sea/WebContent/sysMan/templateMan/taskModel.jsp
+END

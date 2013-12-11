@@ -1,0 +1,37 @@
+10
+
+dir
+7061
+https://10.215.191.194/svn/app/trunk/sea/src/model/com/nari/baseapp
+https://10.215.191.194/svn/app
+
+
+
+2010-08-20T12:07:52.187500Z
+6877
+chenguozhang
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+26174810-d258-4126-8187-fde7cfa89691
+
+datagatherman
+dir
+
+interfacemanage
+dir
+
+prepaidman
+dir
+

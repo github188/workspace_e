@@ -1,0 +1,550 @@
+package com.nari.baseapp.prepaidman.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.jdbc.core.RowMapper;
+
+import com.nari.baseapp.prepaidman.MeterControlInfoBean;
+import com.nari.baseapp.prepaidman.MeterInfoBean;
+
+import com.nari.baseapp.prepaidman.PrePaidControlBean;
+import com.nari.baseapp.prepaidman.PrePaidDao;
+import com.nari.baseapp.prepaidman.PrePaidParamSetBean;
+import com.nari.basedao.impl.JdbcBaseDAOImpl;
+import com.nari.basicdata.BCommProtocol;
+import com.nari.privilige.PSysUser;
+import com.nari.support.Page;
+import com.nari.util.DateUtil;
+
+public class PrePaidDaoImpl extends JdbcBaseDAOImpl implements PrePaidDao {
+
+	@Override
+	public List<PrePaidControlBean> queryPrePaidCtrlList(String orgNo,
+			String appNo, String consNo, String tmnlAddr) {
+		return null;
+	}
+
+	/*
+	 * @Override public Page<PrePaidControlBean> queryPrePaidCtrlPage(PSysUser
+	 * user, String orgNo, String appNo, String consNo, String tmnlAddr, long
+	 * start, long limit) { String sql = "SELECT DISTINCT W.ORG_NO,\n" +
+	 * "		C.CONS_NO,\n" + "       C.CONS_NAME,\n" + "       W.TMNL_ASSET_NO,\n"
+	 * + "       R.TERMINAL_ADDR,\n" + "       W.TOTAL_NO,\n" +
+	 * "       W.BUY_ORDER APP_NO,\n" +
+	 * "       R.PS_ENSURE_FLAG TMNL_PAUL_POWER,\n" +
+	 * "		A.IS_ONLINE REAL_TIME_STATUS,\n" + "       R.PROTOCOL_CODE,\n" +
+	 * "       WU.USE_VALUE,\n" + "       W.STATUS_CODE\n" +
+	 * "  FROM W_FEECTRL        W,\n" + "       C_CONS           C,\n" +
+	 * "		O_ORG             O,\n" + "       A_TMNL_REAL_TIME A,\n" +
+	 * "       W_FEE_USEVALUE   WU,\n" + "       R_TMNL_RUN       R\n" +
+	 * " WHERE W.CONS_NO = C.CONS_NO\n" + "   AND C.ORG_NO = O.ORG_NO\n" +
+	 * "   AND W.TMNL_ASSET_NO = A.TMNL_ASSET_NO\n" +
+	 * "   AND W.TMNL_ASSET_NO = WU.TERMINAL_ID(+)\n" +
+	 * "   AND W.TMNL_ASSET_NO = R.TMNL_ASSET_NO\n";
+	 * 
+	 * //声明参数列表 List<Object> params = new ArrayList<Object>();
+	 * 
+	 * if(appNo !=null &&!"".equals(appNo)) { appNo = "%" +appNo +"%"; sql +=
+	 * "   AND W.BUY_ORDER LIKE ?\n"; params.add(appNo); }
+	 * if(orgNo==null||"".equals(orgNo)) { if(consNo !=null &&
+	 * !"".equals(consNo)) { consNo = "%" +consNo +"%"; sql +=
+	 * "   AND C.CONS_NO LIKE ?\n"; params.add(consNo); } }
+	 * if(orgNo==null||"".equals(orgNo)) { if(tmnlAddr !=null &&
+	 * !"".equals(tmnlAddr)) { tmnlAddr = "%" +tmnlAddr +"%"; sql +=
+	 * "   AND R.TERMINAL_ADDR LIKE ?\n"; params.add(tmnlAddr); } } if(orgNo
+	 * !=null && !"".equals(orgNo)) { String[] orgs = orgNo.split(",");
+	 * //按用户等级组织sql查询条件 String staffType = user.getAccessLevel();
+	 * if("02".equals(staffType)) { sql += "   AND substr(C.ORG_NO,0,5) IN (\n";
+	 * } else if ("03".equals(staffType)) { sql += "   AND C.AREA_NO IN (\n"; }
+	 * else if("04".equals(staffType)||
+	 * "05".equals(staffType)||"06".equals(staffType)) { sql +=
+	 * "   AND C.ORG_NO IN (\n"; } for (int i = 0; i < orgs.length-1; i++) { sql
+	 * += "?,"; params.add(orgs[i]); } sql += "?)";
+	 * params.add(orgs[orgs.length-1]); } return super.pagingFind(sql, start,
+	 * limit, new prePaidControlRowMapper(), params.toArray()); }
+	 */
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Page<PrePaidControlBean> queryPrePaidCtrlPage(PSysUser user,
+			String orgNo, String appNo, String consNo, String tmnlAddr,
+			long start, long limit) {
+		String sql = "SELECT DISTINCT W.ORG_NO,\n" + "		C.CONS_NO,\n"
+				+ "       C.CONS_NAME,\n" + "       W.TMNL_ASSET_NO,\n"
+				+ "       R.TERMINAL_ADDR,\n" + "       W.TOTAL_NO,\n"
+				+ "       W.BUY_ORDER APP_NO,\n"
+				+ "       R.PS_ENSURE_FLAG TMNL_PAUL_POWER,\n"
+				+ "		A.IS_ONLINE REAL_TIME_STATUS,\n"
+				+ "       R.PROTOCOL_CODE,\n" + "       WU.USE_VALUE,\n"
+				+ "       WU.OP_TIME,\n" + "       W.STATUS_CODE\n"
+				+ "  FROM W_FEECTRL        W,\n"
+				+ "       C_CONS           C,\n" + "		O_ORG             O,\n"
+				+ "       A_TMNL_REAL_TIME A,\n"
+				+ "       W_FEE_USEVALUE   WU,\n"
+				+ "       R_TMNL_RUN       R\n"
+				+ " WHERE W.CONS_NO = C.CONS_NO\n"
+				+ "   AND W.ORG_NO = O.ORG_NO\n"
+				+ "   AND W.TMNL_ASSET_NO = A.TMNL_ASSET_NO\n"
+				+ "   AND W.TMNL_ASSET_NO = WU.TERMINAL_ID(+)\n"
+				+ "   AND W.TMNL_ASSET_NO = R.TMNL_ASSET_NO\n";
+
+		// 声明参数列表
+		List<Object> params = new ArrayList<Object>();
+
+		if (appNo != null && !"".equals(appNo)) {
+			appNo = "%" + appNo + "%";
+			sql += "   AND W.BUY_ORDER LIKE ?\n";
+			params.add(appNo);
+		}
+		if (consNo == null || "".equals(consNo)) {
+			if (consNo != null && !"".equals(consNo)) {
+				consNo = "%" + consNo + "%";
+				sql += "   AND C.CONS_NO LIKE ?\n";
+				params.add(consNo);
+			}
+		}
+		if (tmnlAddr == null || "".equals(tmnlAddr)) {
+			if (tmnlAddr != null && !"".equals(tmnlAddr)) {
+				tmnlAddr = "%" + tmnlAddr + "%";
+				sql += "   AND R.TERMINAL_ADDR LIKE ?\n";
+				params.add(tmnlAddr);
+			}
+		}
+		if (orgNo != null && !"".equals(orgNo)) {
+			String[] orgs = orgNo.split(",");
+			// 按用户等级组织sql查询条件
+			String staffType = user.getAccessLevel();
+			if ("02".equals(staffType)) {
+				sql += "   AND substr(W.ORG_NO,0,5) IN (\n";
+			} else if ("03".equals(staffType)) {
+				sql += "   AND W.ORG_NO IN (\n";
+			} else if ("04".equals(staffType) || "05".equals(staffType)
+					|| "06".equals(staffType)) {
+				sql += "   AND W.ORG_NO IN (\n";
+			}
+			for (int i = 0; i < orgs.length - 1; i++) {
+				sql += "?,";
+				params.add(orgs[i]);
+			}
+			sql += "?)";
+			params.add(orgs[orgs.length - 1]);
+		}
+		Page<PrePaidControlBean> resultPage = new Page<PrePaidControlBean>();
+		List<PrePaidControlBean> resultList = this.getJdbcTemplate().query(sql,
+				params.toArray(), new prePaidControlRowMapper());
+		if (null == resultList || resultList.size() == 0)
+			return resultPage;
+		// 对查询结果按照keyId已经召测日期排序
+		Collections.sort(resultList, new Comparator<PrePaidControlBean>() {
+			@Override
+			public int compare(PrePaidControlBean o1, PrePaidControlBean o2) {
+				if (o1.getKeyId().equals(o2.getKeyId()))
+					return o2.getOpTime().compareTo(o1.getOpTime());
+				return o1.getKeyId().compareTo(o2.getKeyId());
+			}
+		});
+		// 筛选出每个总加组最近一次召测日期的记录
+		List<PrePaidControlBean> resultListByRj = new ArrayList<PrePaidControlBean>();
+		PrePaidControlBean flagBean = resultList.get(0);
+		resultListByRj.add(flagBean);
+		for (int i = 1; i < resultList.size(); i++) {
+			if (!resultList.get(i).getKeyId().equals(flagBean.getKeyId())) {
+				flagBean = resultList.get(i);
+				resultListByRj.add(flagBean);
+			}
+		}
+		// 将筛选出来的记录放入Page
+		List<PrePaidControlBean> resultPageList = new ArrayList<PrePaidControlBean>();
+		if (start + limit - 1 < resultListByRj.size()) {
+			for (long j = start; j < start + limit; j++) {
+				resultPageList.add(resultListByRj.get((int) j));
+			}
+		} else {
+			for (long k = start; k < resultListByRj.size(); k++) {
+				resultPageList.add(resultListByRj.get((int) k));
+			}
+		}
+		resultPage.setResult(resultPageList);
+		resultPage.setTotalCount(resultListByRj.size());
+		return resultPage;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<PrePaidParamSetBean> queryPrePaidParamSetList(String orgNo,
+			String sendStatus, String appNo, String consNo) {
+		String sql = "SELECT W.ORG_NO,\n" + "       C.CONS_NO,\n"
+				+ "       C.CONS_NAME,\n" + "       W.TMNL_ASSET_NO,\n"
+				+ "       R.TERMINAL_ADDR,\n" + "       W.TOTAL_NO,\n"
+				+ "       W.BUY_ORDER APP_NO,\n" + "       W.REFRESH_FLAG,\n"
+				+ "       W.BUY_FLAG,\n" + "       W.BUY_VALUE,\n"
+				+ "       W.BUY_VALUE_UNIT,\n" + "       W.ALARM_VALUE,\n"
+				+ "       W.ALARM_VALUE_UNIT,\n" + "       W.JUMP_VALUE,\n"
+				+ "       W.JUMP_VALUE_UNIT,\n" + "       W.METER_ID,\n"
+				+ "       R.PS_ENSURE_FLAG TMNL_PAUL_POWER,\n"
+				+ "       A.IS_ONLINE REAL_TIME_STATUS,\n"
+				+ "       R.PROTOCOL_CODE,\n" + "       WU.USE_VALUE,\n"
+				+ "       W.STATUS_CODE\n" + "  FROM W_FEECTRL        W,\n"
+				+ "       C_CONS           C,\n"
+				+ "       A_TMNL_REAL_TIME A,\n"
+				+ "       W_FEE_USEVALUE   WU,\n"
+				+ "       R_TMNL_RUN       R\n"
+				+ " WHERE W.CONS_NO = C.CONS_NO\n"
+				+ "   AND W.TMNL_ASSET_NO = A.TMNL_ASSET_NO\n"
+				+ "   AND W.TMNL_ASSET_NO = WU.TERMINAL_ID(+)\n"
+				+ "   AND W.TMNL_ASSET_NO = R.TMNL_ASSET_NO";
+
+		return getJdbcTemplate().query(sql, new Object[] {},
+				new prePaidParamSetRowMapper());
+	}
+
+	@Override
+	public Page<PrePaidParamSetBean> queryPrePaidParamSetPage(PSysUser user,
+			String orgNo, String sendStatus, String appNo, String consNo,
+			String buyFlag, long start, long limit) {
+		String sql = "SELECT DISTINCT W.ORG_NO,\n" + "       C.CONS_NO,\n"
+				+ "       C.CONS_NAME,\n" + "       W.TMNL_ASSET_NO,\n"
+				+ "       R.TERMINAL_ADDR,\n" + "       W.TOTAL_NO,\n"
+				+ "       W.BUY_ORDER APP_NO,\n" + "       W.REFRESH_FLAG,\n"
+				+ "       W.BUY_FLAG,\n" + "       W.BUY_VALUE,\n"
+				+ "       W.BUY_VALUE_UNIT,\n" + "       W.ALARM_VALUE,\n"
+				+ "       W.ALARM_VALUE_UNIT,\n" + "       W.JUMP_VALUE,\n"
+				+ "       W.JUMP_VALUE_UNIT,\n" + "       W.METER_ID,\n"
+				+ "       R.PS_ENSURE_FLAG TMNL_PAUL_POWER,\n"
+				+ "       A.IS_ONLINE REAL_TIME_STATUS,\n"
+				+ "       R.PROTOCOL_CODE,\n"
+				+ "       WF.FLOW_NODE_STATUS STATUS_CODE\n"
+				+ "  FROM W_FEECTRL        W,\n"
+				+ "       C_CONS           C,\n"
+				+ "       A_TMNL_REAL_TIME A,\n"
+				+ "       W_FEECTRL_FLOW   WF,\n"
+				+ "       R_TMNL_RUN       R\n"
+				+ " WHERE W.CONS_NO = C.CONS_NO\n"
+				+ "   AND W.TMNL_ASSET_NO = R.TMNL_ASSET_NO\n"
+				+ "   AND W.BUY_ORDER = WF.APP_NO \n"
+				+ "   AND R.TMNL_ASSET_NO = A.TMNL_ASSET_NO\n"
+				+ "   AND W.BUY_FLAG = ?\n";
+		// 声明参数列表
+		List<Object> params = new ArrayList<Object>();
+		params.add(buyFlag);
+		if (sendStatus != null && !"-1".equals(sendStatus)) {
+			sql += "   AND WF.FLOW_NODE_STATUS = ?\n";
+			params.add(sendStatus);
+		}
+		if (appNo != null && !"".equals(appNo)) {
+			appNo = "%" + appNo + "%";
+			sql += "   AND W.BUY_ORDER LIKE ?\n";
+			params.add(appNo);
+		}
+		if (orgNo == null || "".equals(orgNo)) {
+			if (consNo != null && !"".equals(consNo)) {
+				consNo = "%" + consNo + "%";
+				sql += "   AND C.CONS_NO LIKE ?\n";
+				params.add(consNo);
+			}
+		}
+		if (orgNo != null && !"".equals(orgNo)) {
+			String[] orgs = orgNo.split(",");
+			// 按用户等级组织sql查询条件
+			String staffType = user.getAccessLevel();
+			if ("02".equals(staffType)) {
+				sql += "   AND substr(C.ORG_NO,0,5) IN (\n";
+			} else if ("03".equals(staffType)) {
+				sql += "   AND C.AREA_NO IN (\n";
+			} else if ("04".equals(staffType) || "05".equals(staffType)
+					|| "06".equals(staffType)) {
+				sql += "   AND C.ORG_NO IN (\n";
+			}
+			for (int i = 0; i < orgs.length - 1; i++) {
+				sql += "?,";
+				params.add(orgs[i]);
+			}
+			sql += "?)";
+			params.add(orgs[orgs.length - 1]);
+		}
+		return super.pagingFind(sql, start, limit,
+				new prePaidParamSetRowMapper(), params.toArray());
+	}
+
+	@Override
+	public List<BCommProtocol> findType(String proCode) {
+		StringBuffer sb = new StringBuffer();
+		String[] para = { "510", proCode };
+		sb
+				.append(
+						"select protocol_no, protocol_name, short_name from b_comm_protocol\n")
+				.append("where p_protocol_no = ? and protocol_code = ?\n")
+				.append("order by protocol_no");
+
+		return super
+				.pagingFindList(sb.toString(), 0, 100, new dtMapper(), para);
+	}
+
+	public String dateToString(Date date) {
+		return DateUtil.dateToString(date);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<MeterInfoBean> queryTermList(String nodeType, String nodeValue,
+			PSysUser userInfo, String protocolCode) {
+		String sql = "select c.cons_name,\n"
+				+ "       o.org_name,\n"
+				+ "       t.cons_no,\n"
+				+ "       m.meter_id,\n"
+				+ "       m.comm_addr1 comm_addr,\n"
+				+ "       t.tmnl_asset_no,\n"
+				+ "       t.protocol_code,\n"
+				+ "       t.terminal_addr\n"
+				+ "  from vw_tmnl_run t, c_meter m, c_cons c, o_org o\n"
+				+ " where m.tmnl_asset_no = t.tmnl_asset_no\n"
+				+ "   and c.cons_no = t.cons_no\n"
+				+ "   and t.org_no = o.org_no\n"
+				+ "   and (t.PS_ENSURE_FLAG <> '1' or t.PS_ENSURE_FLAG is null)\n"
+				+ "   and m.tmnl_asset_no = ?";
+		return getJdbcTemplate().query(sql, new Object[] { nodeValue },
+				new meterRowMapper());
+	}
+
+	@Override
+	public List<MeterInfoBean> queryTmnlArrList(String nodeType,
+			String nodeValue, PSysUser userInfo, String protocolCode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// -------------------------------------------------------------------------------------------ROWMAPPER-------------------------------------------------------------------------------------------
+	class prePaidParamSetRowMapper implements RowMapper {
+		@Override
+		public Object mapRow(ResultSet rs, int paramInt) throws SQLException {
+			PrePaidParamSetBean prepaidparamsetbean = new PrePaidParamSetBean();
+			try {
+				prepaidparamsetbean.setOrgNo(rs.getString("ORG_NO"));
+				prepaidparamsetbean.setConsNo(rs.getString("CONS_NO"));
+				prepaidparamsetbean.setConsName(rs.getString("CONS_NAME"));
+				prepaidparamsetbean.setTmnlAssetNo(rs
+						.getString("TMNL_ASSET_NO"));
+				prepaidparamsetbean.setTerminalAddr(rs
+						.getString("TERMINAL_ADDR"));
+
+				String totalNo = rs.getString("TOTAL_NO");
+				if (totalNo != null && !"".equals(totalNo)) {
+					prepaidparamsetbean.setTotalNo(Short.parseShort(totalNo));
+				}
+				prepaidparamsetbean.setAppNo(rs.getString("APP_NO"));
+				prepaidparamsetbean
+						.setRefreshFlag(rs.getString("REFRESH_FLAG"));
+
+				String buyFlag = rs.getString("BUY_FLAG");
+				if (buyFlag != null && !"".equals(buyFlag)) {
+					prepaidparamsetbean.setBuyFlag(Byte.parseByte(buyFlag));
+				}
+
+				String buyValue = rs.getString("BUY_VALUE");
+				if (buyValue != null && !"".equals(buyValue)) {
+					prepaidparamsetbean.setBuyValue(Integer.parseInt(buyValue));
+				}
+
+				String buyValueUnit = rs.getString("BUY_VALUE_UNIT");
+				if (buyValueUnit != null && !"".equals(buyValueUnit)) {
+					prepaidparamsetbean.setBuyValueUnit(Byte
+							.parseByte(buyValueUnit));
+				}
+
+				String alarmValue = rs.getString("ALARM_VALUE");
+				if (alarmValue != null && !"".equals(alarmValue)) {
+					prepaidparamsetbean.setAlarmValue(Integer
+							.parseInt(alarmValue));
+				}
+
+				String alarmValueUnit = rs.getString("ALARM_VALUE_UNIT");
+				if (alarmValueUnit != null && !"".equals(alarmValueUnit)) {
+					prepaidparamsetbean.setAlarmValueUnit(Byte
+							.parseByte(alarmValueUnit));
+				}
+
+				String jumpValue = rs.getString("JUMP_VALUE");
+				if (jumpValue != null && !"".equals(jumpValue)) {
+					prepaidparamsetbean.setJumpValue(Integer
+							.parseInt(jumpValue));
+				}
+
+				String jumpValueUnit = rs.getString("JUMP_VALUE_UNIT");
+				if (jumpValueUnit != null && !"".equals(jumpValueUnit)) {
+					prepaidparamsetbean.setJumpValueUnit(Byte
+							.parseByte(jumpValueUnit));
+				}
+
+				String meterId = rs.getString("METER_ID");
+				if (meterId != null && !"".equals(meterId)) {
+					prepaidparamsetbean.setMeterId(Integer.parseInt(meterId));
+				}
+
+				prepaidparamsetbean.setTmnlPaulPower(rs
+						.getString("TMNL_PAUL_POWER"));
+				prepaidparamsetbean.setRealTimeStatus(rs
+						.getString("REAL_TIME_STATUS"));
+				prepaidparamsetbean.setProtocolCode(rs
+						.getString("PROTOCOL_CODE"));
+				prepaidparamsetbean.setStatusCode(rs.getString("STATUS_CODE"));
+				return prepaidparamsetbean;
+			} catch (Exception e) {
+				return null;
+			}
+		}
+	}
+
+	class prePaidControlRowMapper implements RowMapper {
+		@Override
+		public Object mapRow(ResultSet rs, int paramInt) throws SQLException {
+			PrePaidControlBean prepaidcontrolbean = new PrePaidControlBean();
+			try {
+				SimpleDateFormat sdf2 = new SimpleDateFormat(
+						"yyyy-MM-dd HH:mm:ss");
+				prepaidcontrolbean.setKeyId(rs.getString("TMNL_ASSET_NO")
+						+ rs.getString("TOTAL_NO"));
+				prepaidcontrolbean.setOrgNo(rs.getString("ORG_NO"));
+				prepaidcontrolbean.setConsNo(rs.getString("CONS_NO"));
+				prepaidcontrolbean.setConsName(rs.getString("CONS_NAME"));
+				prepaidcontrolbean
+						.setTmnlAssetNo(rs.getString("TMNL_ASSET_NO"));
+				prepaidcontrolbean.setTerminalAddr(rs
+						.getString("TERMINAL_ADDR"));
+				String totalNo = rs.getString("TOTAL_NO");
+				if (totalNo != null && !"".equals(totalNo)) {
+					prepaidcontrolbean.setTotalNo(Short.parseShort(totalNo));
+				}
+				prepaidcontrolbean.setAppNo(rs.getString("APP_NO"));
+				prepaidcontrolbean.setTmnlPaulPower(rs
+						.getString("TMNL_PAUL_POWER"));
+				prepaidcontrolbean.setRealTimeStatus(rs
+						.getString("REAL_TIME_STATUS"));
+				prepaidcontrolbean.setProtocolCode(rs
+						.getString("PROTOCOL_CODE"));
+
+				String useValue = rs.getString("USE_VALUE");
+				if (useValue != null && !"".equals(useValue)) {
+					prepaidcontrolbean.setUseValue(Float.parseFloat(useValue));
+				}
+				if (null != rs.getString("OP_TIME")
+						&& !"".equals(rs.getString("OP_TIME")))
+					prepaidcontrolbean.setOpTime(sdf2.format(rs
+							.getTimestamp("OP_TIME")));
+				prepaidcontrolbean.setStatusCode(rs.getString("STATUS_CODE"));
+				return prepaidcontrolbean;
+			} catch (Exception e) {
+				return null;
+			}
+		}
+	}
+
+	// BCommProtocol的RowMapper类
+	class dtMapper implements RowMapper {
+		@Override
+		public Object mapRow(ResultSet rs, int paramInt) throws SQLException {
+			BCommProtocol bp = new BCommProtocol();
+			try {
+				bp.setProtocolNo(rs.getString("protocol_no"));
+				bp.setProtocolName(rs.getString("protocol_name"));
+				bp.setShortName(rs.getString("short_Name"));
+				return bp;
+			} catch (Exception e) {
+				// throw new DBAccessException("dtMapper出现错误！");
+				return null;
+			}
+		}
+	}
+
+	// meterInfoBean的RowMapper类
+	class meterRowMapper implements RowMapper {
+		@Override
+		public Object mapRow(ResultSet rs, int paramInt) throws SQLException {
+			MeterInfoBean tp = new MeterInfoBean();
+			try {
+				tp.setConsName(rs.getString("CONS_NAME"));
+				tp.setConsNO(rs.getString("CONS_NO"));
+				tp.setOrgName(rs.getString("ORG_NAME"));
+				tp.setTerminalAddr(rs.getString("TERMINAL_ADDR"));
+				tp.setTmnlAssetNo(rs.getString("TMNL_ASSET_NO"));
+				tp.setProtocolCode(rs.getString("PROTOCOL_CODE"));
+				tp.setMeterId(rs.getLong("METER_ID"));
+				tp.setCommAddr(rs.getString("COMM_ADDR"));
+
+				tp.setKeyId(tp.getTmnlAssetNo() + tp.getMeterId());
+				return tp;
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+	}
+
+	// meterControlInfoBean的RowMapper类
+	class meterControlRowMapper implements RowMapper {
+		@Override
+		public Object mapRow(ResultSet rs, int paramInt) throws SQLException {
+			MeterControlInfoBean tp = new MeterControlInfoBean();
+
+			try {
+				tp.setConsName(rs.getString("CONS_NAME"));
+				tp.setConsNO(rs.getString("CONS_NO"));
+				tp.setOrgName(rs.getString("ORG_NAME"));
+				tp.setTerminalAddr(rs.getString("TERMINAL_ADDR"));
+				tp.setTmnlAssetNo(rs.getString("TMNL_ASSET_NO"));
+				tp.setProtocolCode(rs.getString("PROTOCOL_CODE"));
+				tp.setMeterId(rs.getLong("METER_ID"));
+				tp.setCommAddr(rs.getString("COMM_ADDR"));
+				tp.setMpSn(rs.getShort("MP_SN"));
+				tp.setDueStatus(rs.getString("QF_FLAG"));
+				tp.setSwitchStatus(rs.getString("ON_OFF_FLAG"));
+				String tempDueTime = rs.getString("QF_NY");
+				if (tempDueTime != null && !"".equals(tempDueTime)) {
+					tp.setDueDate(tempDueTime.substring(0, 4) + "年"
+							+ tempDueTime.substring(4, 6) + "月");
+				}
+				tp.setKeyId(tp.getTmnlAssetNo() + tp.getMeterId());
+				return tp;
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<MeterControlInfoBean> queryMeterList(String nodeType,
+			String nodeValue, PSysUser userInfo, String protocolCode) {
+		String sql = "select c.cons_name,\n"
+				+ "       o.org_name,\n"
+				+ "       c.cons_no,\n"
+				+ "       m.meter_id,\n"
+				+ "       m.comm_addr1 comm_addr,\n"
+				+ "       t.tmnl_asset_no,\n"
+				+ "       t.protocol_code,\n"
+				+ "       t.terminal_addr,\n"
+				+ "       m.reg_sn mp_sn, \n"
+				+ "       s.qf_flag,\n"
+				+ "       s.on_off_flag,\n"
+				+ "       s.qf_ny\n"
+				+ "  from vw_tmnl_run t, c_meter m, c_cons c, o_org o,sea_userqfdata_cur s\n"
+				+ "  where m.tmnl_asset_no = t.tmnl_asset_no\n"
+				+ "   and c.cons_no = m.cons_no\n"
+				+ "   and t.org_no = o.org_no\n"
+				+ "   and s.meterid = m.meter_id\n"
+				+ "   and (t.PS_ENSURE_FLAG <> '1' or t.PS_ENSURE_FLAG is null)\n"
+				+ "   and m.tmnl_asset_no = ?\n" + "   and m.comm_no = ?";
+		System.out.println(sql);
+		return getJdbcTemplate().query(sql,
+				new Object[] { nodeValue, protocolCode },
+				new meterControlRowMapper());
+
+	}
+}

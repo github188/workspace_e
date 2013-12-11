@@ -1,0 +1,18 @@
+package com.nari.baseapp.datagathorman;
+
+import java.util.List;
+
+import com.nari.baseapp.datagatherman.OrigFrameQry;
+import com.nari.baseapp.datagatherman.OrigFrameQryAsset;
+import com.nari.support.Page;
+import com.nari.util.exception.DBAccessException;
+
+/**
+ * 原始报文业务层接口
+ * @author zhaoliang
+ */
+public interface OrigFrameQryManager {
+	public Page<OrigFrameQry> findOrigFrameQry(String terminalAddr,String DateStart,String DateEnd,long start, int limit)
+	throws DBAccessException;
+	public List<OrigFrameQryAsset> findOrigFrameQryAsset(String origFrameQryID)throws DBAccessException;
+}

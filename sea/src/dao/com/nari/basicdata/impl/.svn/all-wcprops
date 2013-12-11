@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/basicdata/impl
+END
+BClearProtocolDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/basicdata/impl/BClearProtocolDaoImpl.java
+END
+VwConsTypeJdbcDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/basicdata/impl/VwConsTypeJdbcDaoImpl.java
+END
+VwCtrlSchemeTypeDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/basicdata/impl/VwCtrlSchemeTypeDaoImpl.java
+END
+VwTmnlFactoryJdbcDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/basicdata/impl/VwTmnlFactoryJdbcDaoImpl.java
+END
+BClearProtocolJdbcDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/basicdata/impl/BClearProtocolJdbcDaoImpl.java
+END
+VwLimitTypeJdbcDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/basicdata/impl/VwLimitTypeJdbcDaoImpl.java
+END
+VwClearDataTypeDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/app/!svn/ver/2464/trunk/sea/src/dao/com/nari/basicdata/impl/VwClearDataTypeDaoImpl.java
+END

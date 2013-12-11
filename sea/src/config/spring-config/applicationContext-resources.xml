@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <!--使用c3p0 jdbc 数据源-->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:database.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="${hibernate.connection.driver_class}" />
+        <property name="jdbcUrl" value="${hibernate.connection.url}"/>
+        <!--<property name="jdbcUrl" value="jdbc:oracle:thin:@
+		   (DESCRIPTION =
+		       (ADDRESS = (PROTOCOL = TCP)(HOST = 10.215.191.2)(PORT = 1521))
+		       (ADDRESS = (PROTOCOL = TCP)(HOST = 10.215.191.4)(PORT = 1521))
+		       (LOAD_BALANCE = yes)
+		       (CONNECT_DATA =
+		         (SERVER = DEDICATED)
+		         (SERVICE_NAME = sea)
+		         (FAILOVER_MODE =
+		           (TYPE = SELECT)
+		            (METHOD = BASIC)
+		           (RETRIES = 180)
+		           (DELAY = 5)
+		         )
+		       )
+		     )"
+		 />-->
+        <property name="user" value="${hibernate.connection.username}"/>
+        <property name="password" value="${hibernate.connection.password}"/>
+        <property name="minPoolSize" value="2"/>
+        <property name="maxPoolSize" value="20"/>
+        <property name="maxIdleTime" value="1800"/>
+        <property name="acquireIncrement" value="2"/>
+        <property name="maxStatements" value="0"/>
+        <property name="initialPoolSize" value="3"/>
+        <property name="idleConnectionTestPeriod" value="1800"/>
+        <property name="acquireRetryAttempts" value="4"/>
+        <property name="breakAfterAcquireFailure" value="true"/>
+        <property name="testConnectionOnCheckout" value="false"/>
+    </bean>
+
+    <!--使用jndi 数据源  tomcat 6.0.20 下有问题，请先使用tomcat 6.0.18-->
+    <!--
+        <bean id="dataSource"
+                class="org.springframework.jndi.JndiObjectFactoryBean">
+                <property name="jndiName">
+                        <value>java:comp/env/jdbc/ieig</value>
+                </property>
+        </bean>
+        -->
+    <!-- apache dbcp  驱动数据源-->
+   	<!--
+        <bean id="dataSource"
+                class="org.apache.commons.dbcp.BasicDataSource">
+                <property name="driverClassName"
+                        value="oracle.jdbc.driver.OracleDriver">
+                </property>
+                <property name="url"
+                        value="jdbc:oracle:thin:@192.168.2.26:1521:fas">
+                </property>
+                <property name="username" value="fasn"></property>
+                <property name="password" value="fasn"></property>
+        </bean>
+     -->
+    <!--WEBLOGIC JNDI数据源配置 -->
+ 	<!--
+        <bean id="dataSource"
+        class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName">
+            <value>${jndiName}</value>
+        </property>
+        <property name="resourceRef">
+            <value>false</value>
+        </property>
+        <property name="jndiEnvironment">
+            <props>
+                <prop key="java.naming.provider.url">
+                    ${java.naming.provider.url}
+                </prop>
+                <prop key="java.naming.factory.initial">
+                    weblogic.jndi.WLInitialContextFactory
+                </prop>
+            </props>
+        </property>
+    </bean> 
+	-->
+    <!-- jdbc事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource">        
+            <ref local="dataSource"/>
+        </property>
+    </bean>
+    <!--事务模板 -->
+    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager">
+            <ref local="transactionManager"/>
+        </property>
+    </bean>
+    
+</beans>

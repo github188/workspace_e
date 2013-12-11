@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/app/!svn/ver/6118/trunk/sea/src/util/com/nari/util/exception
+END
+ExceptionConstants.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/app/!svn/ver/6118/trunk/sea/src/util/com/nari/util/exception/ExceptionConstants.java
+END
+BaseException.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/2464/trunk/sea/src/util/com/nari/util/exception/BaseException.java
+END
+DBAccessException.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/app/!svn/ver/2464/trunk/sea/src/util/com/nari/util/exception/DBAccessException.java
+END
+UtilException.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/app/!svn/ver/2464/trunk/sea/src/util/com/nari/util/exception/UtilException.java
+END
+ServiceException.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/app/!svn/ver/2464/trunk/sea/src/util/com/nari/util/exception/ServiceException.java
+END

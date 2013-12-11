@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<config>
+	<model name="昨日全网电量统计(万kWh)"  id="5"  path="mydesk/energyStatD.jsp"  img="mydesk/images/t1.gif" />
+	<model name="上月售电量统计"  id="1" path="mydesk/upMonthPowerStat.jsp" img="mydesk/images/t1.gif" />
+	<model name="昨日采集成功率"  id="3" path="mydesk/yestCollectionRate.jsp" img="mydesk/images/t1.gif" />
+	<model name="通信信道监测"  id="6" path="mydesk/channelMonitor.jsp" img="mydesk/images/t1.gif" />
+	<model name="昨日线损统计"  id="7" path="mydesk/losePowerStatAnalyse.jsp" img="mydesk/images/t1.gif" />
+	<!--
+	<model name="上月地区用电大户排名(TOP10)"  id="4" path="mydesk/areaElecLargeRank.jsp" img="mydesk/images/t1.gif" />
+	<model name="当日负荷监测(万kW)"  id="2" path="mydesk/dayElecLoadMonitor.jsp" img="mydesk/images/t1.gif" />
+	<model name="通信流量"  id="5" path="mydesk/commTraffic.jsp" img="mydesk/images/t1.gif" />
+	-->
+	<!--model name="采集覆盖率"  id="4" path="mydesk/collectionCoverage.jsp" img="mydesk/images/t1.gif" />
+	<model name="重点行业周用电趋势"  id="5" path="mydesk/stressIndustryPowerTrend.jsp" img="mydesk/images/t1.gif" />
+	<model name="电压合格率"  id="7" path="mydesk/voltageQualifiedRate.jsp" img="mydesk/images/t1.gif" />
+	<model name="通信流量"  id="8" path="mydesk/commTraffic.jsp" img="mydesk/images/t1.gif" />
+	<model name="终端运行情况"  id="9" path="mydesk/runTerminal.jsp" img="mydesk/images/t1.gif" />
+	-->
+</config>

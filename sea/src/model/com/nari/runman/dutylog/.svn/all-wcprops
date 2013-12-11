@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/app/!svn/ver/6211/trunk/sea/src/model/com/nari/runman/dutylog
+END
+TmnlOpLogQuery.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/app/!svn/ver/5154/trunk/sea/src/model/com/nari/runman/dutylog/TmnlOpLogQuery.java
+END
+LUserOpLog.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/app/!svn/ver/2464/trunk/sea/src/model/com/nari/runman/dutylog/LUserOpLog.java
+END
+SaveLUserOpLog.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/app/!svn/ver/3356/trunk/sea/src/model/com/nari/runman/dutylog/SaveLUserOpLog.java
+END
+StaffFindBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/6211/trunk/sea/src/model/com/nari/runman/dutylog/StaffFindBean.java
+END
+LUserLogEntry.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/app/!svn/ver/2965/trunk/sea/src/model/com/nari/runman/dutylog/LUserLogEntry.java
+END
+TmnlTime.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/app/!svn/ver/3503/trunk/sea/src/model/com/nari/runman/dutylog/TmnlTime.java
+END
